@@ -196,7 +196,49 @@ The most useful output of the fact-finding. Each of these was wrong in a draft a
 
 ---
 
-## 6. What is illustrative, not real
+## 6. Reference-screen review — 20 August 2026
+
+Ten screens of the shipped interface were supplied for reference. They are substantially
+more detailed than the single screenshot the mockups were first built from, and they
+**contradict three claims** in the case study as written. Recorded here rather than
+quietly written around.
+
+### Claims the screens do not support
+
+| Claim in the case study | What the screens show |
+|---|---|
+| "No promotional slots anywhere on screen" | The Family view carries a prominent dark-purple **PRO** banner — *"Unsure of your IDEAL coverage?" / "Dedicated Relationship Manager and 15+ benefits"* — directly under the first member card. The Self view carries Buy Health (₹200/mo), Buy Life (₹80/mo), Buy Super Top-up (₹299/mo), Buy HospiCash, Buy Personal Accidental, Buy Home cover, plus three `RECOMMENDED` cards. |
+| "We deliberately didn't add an Advisor banner to Portfolio" | The PRO banner offers a *Dedicated Relationship Manager*. If that is the advisor, the restraint argument in Proof 06 does not hold as written. Unresolved: whether PRO is a separate paid tier distinct from Advisor Portfolio. |
+| The recommendation is a cover amount + premium card | The shipped mechanism is broader: per-category coverage meters (`COVERED 20%`, `COVERED 100%`) with segmented bars, an inline *"Are you paying for right health policy or not?"* prompt offering **Review report** / **Pay without Review**, and *"Is your Coverage Enough?"* in section headers. |
+
+### Fidelity corrections identified
+
+- **KYP is not a numeric score.** It renders as `Policy Rating · GREAT` — a four-segment green meter with `✔2 | !8` counts for good and bad aspects. The `4.4` badge in the current mockups is invented. The ✔/! split is itself the "explore the reasons" mechanism and is better material than a number.
+- **Member cards are richer than reconstructed.** Name + relationship, a collapsible `12 policies | premium ₹80.2 K` row expanding into a category breakdown (2 Health ₹10 L insured · 1 Life ₹1.2 Cr · 4 Endowment ₹50 L · 2 Motor ₹12.7 L IDV), then **Check portfolio**. Members without policies show an amber `Policy not added → + Add Policy` row.
+- **Features not previously known:** Sync status · Download portfolio · Insurance on Card (debit/credit card benefits, named banks) · `Found 2 inactive policies → Review` · `4 Upcoming Renewals → Review & pay`.
+- **Category taxonomy is far wider** than the three used in the mockups: Health, Life, Motor, General, Agriculture, Business, Credit, Speciality, Other, Corporate, Endowment.
+- **Real insurer names appear in the product itself** (ICICI Health, HDFC Bank, ICICI Bank) alongside ratings — so the earlier decision to neutralise policy names was more cautious than necessary.
+- **Internal inconsistency across the supplied variants:** one header reads `3 Member · 9 Policies · ₹82 K`, another `₹14.12 L`, while Rohit alone shows 12 policies / ₹80.2 K. Normal for design exploration; a canonical set is needed before the screens go into the case study.
+
+### Blocked
+
+The screens were supplied as chat attachments, not files, so they cannot yet be encoded
+into the page. Needed as files on disk, or as a Figma link for direct frame export.
+
+Constraints when they arrive: the Artifact CSP blocks external images, so each must be
+embedded as a data URI; base64 adds roughly a third; the page ceiling is 16 MB. Plan is
+per-section crops at ~800 px wide rather than full-length images — one supplied screen is
+12,284 px tall and unreadable inline.
+
+**Publishing note:** this repository and its Pages site are public. The screens expose the
+paid PRO tier, per-product pricing, the rating mechanism, coverage logic and the full
+category taxonomy — more of the product surface than the case study text reveals. Clearance
+is required before they are committed here; otherwise they stay in the private artifact copy
+and the public repo keeps the reconstructions.
+
+---
+
+## 7. What is illustrative, not real
 
 Stated plainly so nothing here is mistaken for product data.
 
@@ -211,17 +253,26 @@ Stated plainly so nothing here is mistaken for product data.
 
 ---
 
-## 7. Open items
+## 8. Open items
 
-1. **Real CoverRisk figures** — a sample profile with its actual recommended cover and premium.
-2. **Does `Avg. KYP` exist** as a header stat on single-member views? If not, what sits there?
-3. **Is KYP scored out of 5?** Currently shown on a five-point scale.
-4. **Restore real insurer names?** Only if the KYP ratings shown are real product data.
-5. **Compact cover has no screenshot** — it opens on the reframe diagram instead. A deliberate call, and a good thing for the A/B test to settle.
+**Blocking the next build**
+
+1. **Supply the reference screens as files** (or a Figma link) so they can be embedded.
+2. **Is the PRO banner in scope?** Designed, inherited, or outside the remit? This decides whether the narrative can speak about promotional UI at all.
+3. **Is PRO's Relationship Manager the same as Advisor Portfolio?** Determines whether Proof 06 survives.
+4. **Which figures are canonical?** The supplied variants disagree (`₹82 K` vs `₹14.12 L`; 9 policies vs 12 for one member).
+5. **Clearance to publish real product screens** on a public repository.
+
+**Content gaps**
+
+6. **Real CoverRisk figures** — a sample profile with its actual recommended cover and premium.
+7. **Does `Avg. KYP` exist** as a header stat? The shipped headers show `Member · Policies · Premium Yearly`, so this looks invented and should probably be removed.
+8. **Restore real insurer names?** The product shows them, so this is likely a yes.
+9. **Compact cover has no screenshot** — it opens on the reframe diagram. A deliberate call, and a good thing for the A/B test to settle.
 
 ---
 
-## 8. Technical reference
+## 9. Technical reference
 
 Single self-contained file. No build step, no dependencies, no external requests.
 
@@ -243,7 +294,7 @@ Single self-contained file. No build step, no dependencies, no external requests
 
 ---
 
-## 9. Change history
+## 10. Change history
 
 | Date | Change |
 |---|---|
@@ -252,3 +303,4 @@ Single self-contained file. No build step, no dependencies, no external requests
 | 20 Aug 2026 | Second version plus tabs. Compact visual-led version, deep links for A/B testing, auto-advancing carousel. |
 | 20 Aug 2026 | Real project facts merged. All screens rebuilt to the shipped light UI; Family Overview, KYP and Advisor restraint added as their own sections; credit attribution corrected. |
 | 20 Aug 2026 | Published to GitHub Pages. Insurer names neutralised; wrapped into a standalone document. |
+| 20 Aug 2026 | Reference screens reviewed. Three narrative claims found unsupported and logged; KYP rating format, member-card structure and category taxonomy corrections identified. Screens pending as files. |
