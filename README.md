@@ -4,6 +4,8 @@
 
 Product Designer · Post-MVP · UX Strategy · Personalisation · Progressive Disclosure
 
+**Live:** <https://dhanesh100.github.io/Case-study/>
+
 ---
 
 ## The work
@@ -30,6 +32,12 @@ Both versions are deep-linkable:
 
 - `index.html#compact`
 - `index.html#full`
+
+## Project log
+
+[`PROJECT-LOG.md`](PROJECT-LOG.md) records how this was built — design decisions and their
+reasoning, the fact-finding questions and answers behind the content, corrections made
+along the way, which figures are illustrative rather than real, and what remains open.
 
 ## Viewing it
 
