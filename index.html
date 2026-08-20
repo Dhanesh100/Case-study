@@ -1,0 +1,2584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoverSure Portfolio — Product Design Case Study</title>
+<meta name="description" content="Making CoverSure's Policy Portfolio respond to the user — a product design case study in two versions, compact and full.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="CoverSure Portfolio">
+<meta property="og:description" content="Making Portfolio respond to the user — not just display their policies.">
+<meta property="og:type" content="article">
+<style>
+  /* ══════════ TOKENS ══════════ */
+  :root {
+    --ground:      #f2f5fa;
+    --ground-2:    #e8edf7;
+    --surface:     #ffffff;
+    --ink:         #0c1633;
+    --ink-2:       #4a5878;
+    --ink-3:       #7c88a5;
+    --rule:        #d3dcec;
+    --rule-soft:   #e4eaf5;
+    --accent:      #1f43ff;
+    --accent-soft: #e6ebff;
+    --accent-ink:  #1631c4;
+    --signal:      #c9331f;
+    --signal-soft: #fbeae7;
+    --stage:       #0a1236;
+    --stage-ink:   #c9d4f2;
+    --stage-rule:  #22305e;
+
+    --display: "Avenir Next Condensed", "Avenir Next", "Helvetica Neue", "Arial Narrow", Arial, sans-serif;
+    --body:    Charter, "Charter Roman", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono:    "SF Mono", ui-monospace, Menlo, Consolas, "Roboto Mono", monospace;
+
+    --col: 60ch;
+    --gutter: 138px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #080d1c;
+      --ground-2:    #0d1430;
+      --surface:     #121a35;
+      --ink:         #e9edfa;
+      --ink-2:       #a4b1ce;
+      --ink-3:       #6e7c9e;
+      --rule:        #222c4e;
+      --rule-soft:   #18203c;
+      --accent:      #8296ff;
+      --accent-soft: #182147;
+      --accent-ink:  #a6b4ff;
+      --signal:      #ff7f6d;
+      --signal-soft: #2c1512;
+      --stage:       #05091a;
+      --stage-ink:   #b8c5e8;
+      --stage-rule:  #1b2748;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #080d1c;
+    --ground-2:    #0d1430;
+    --surface:     #121a35;
+    --ink:         #e9edfa;
+    --ink-2:       #a4b1ce;
+    --ink-3:       #6e7c9e;
+    --rule:        #222c4e;
+    --rule-soft:   #18203c;
+    --accent:      #8296ff;
+    --accent-soft: #182147;
+    --accent-ink:  #a6b4ff;
+    --signal:      #ff7f6d;
+    --signal-soft: #2c1512;
+    --stage:       #05091a;
+    --stage-ink:   #b8c5e8;
+    --stage-rule:  #1b2748;
+  }
+
+  /* ══════════ BASE ══════════ */
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17.5px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+
+  /* ══════════ VERSION TABS ══════════ */
+  .versions {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--ground);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .versions-in {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .versions-label {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-right: 4px;
+  }
+
+  .vtab {
+    appearance: none;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 7px;
+    padding: 8px 15px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    text-align: left;
+    font: inherit;
+    color: var(--ink-2);
+    transition: border-color 140ms ease, color 140ms ease;
+  }
+
+  .vtab b {
+    font-family: var(--display);
+    font-size: 15px;
+    font-weight: 600;
+    color: inherit;
+  }
+
+  .vtab i {
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 9px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .vtab:hover { border-color: var(--ink-3); }
+
+  .vtab[aria-selected="true"] {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .vtab[aria-selected="true"] i { color: var(--accent-ink); }
+
+  /* ══════════ SHELL ══════════ */
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+  .block {
+    display: grid;
+    grid-template-columns: var(--gutter) minmax(0, var(--col)) minmax(0, 1fr);
+    gap: 0 40px;
+    padding: 0 32px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .block > .notation { grid-column: 1; }
+  .block > .flow     { grid-column: 2; display: flex; flex-direction: column; gap: 20px; }
+  .block > .wide     { grid-column: 1 / -1; max-width: 960px; margin: 8px 0 0; }
+
+  @media (max-width: 900px) {
+    .block { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .block > .notation, .block > .flow, .block > .wide { grid-column: 1; }
+    .block > .notation { margin-bottom: 16px; }
+  }
+
+  section { padding: 82px 0; }
+  section + section { border-top: 1px solid var(--rule-soft); }
+
+  .notation {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    line-height: 1.65;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .notation span {
+    display: block;
+    margin-top: 7px;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 11.5px;
+    font-weight: 400;
+    color: var(--ink-3);
+    font-family: var(--body);
+    line-height: 1.4;
+  }
+
+  /* ══════════ TYPE ══════════ */
+  h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+
+  h1 {
+    font-size: clamp(38px, 6vw, 76px);
+    font-weight: 600;
+    line-height: 1.0;
+    letter-spacing: -0.015em;
+  }
+
+  h1 .thin { font-weight: 400; color: var(--ink-2); }
+
+  h2 {
+    font-size: clamp(28px, 4.1vw, 44px);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+
+  h3 {
+    font-size: clamp(24px, 3vw, 33px);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.008em;
+  }
+
+  p { margin: 0; }
+  p strong { font-weight: 700; color: var(--ink); }
+
+  .dek {
+    font-family: var(--body);
+    font-size: clamp(18px, 1.9vw, 21px);
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 36ch;
+  }
+
+  .kicker {
+    font-family: var(--display);
+    font-size: clamp(22px, 2.5vw, 30px);
+    font-weight: 600;
+    line-height: 1.18;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .kicker.blue { color: var(--accent); }
+
+  /* ══════════ MASTHEAD ══════════ */
+  .masthead { padding: 60px 0 0; }
+
+  .brandline {
+    display: flex;
+    align-items: baseline;
+    gap: 13px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 44px;
+  }
+
+  .brandline .mark { color: var(--ink); font-weight: 500; letter-spacing: 0.16em; }
+  .brandline .dot { color: var(--accent); }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 48px;
+    align-items: end;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; align-items: start; }
+  }
+
+  .meta-row { display: flex; flex-wrap: wrap; margin: 50px 0 0; border-top: 1px solid var(--rule); }
+
+  .meta-cell {
+    flex: 1 1 140px;
+    padding: 16px 20px 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-right: 1px solid var(--rule-soft);
+  }
+
+  .meta-cell:last-child { border-right: none; }
+
+  .meta-cell dt {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .meta-cell dd {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 16.5px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ══════════ NAVY STAGE ══════════ */
+  .stage { background: var(--stage); color: var(--stage-ink); padding: 58px 0; }
+
+  .stage-head {
+    max-width: 1080px;
+    margin: 0 auto 36px;
+    padding: 0 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 26px;
+    flex-wrap: wrap;
+  }
+
+  .stage-tag {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #6f81bd;
+  }
+
+  .stage-tag b { color: #ffffff; font-weight: 500; }
+
+  .stage-note {
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.5;
+    color: #93a3d4;
+    max-width: 46ch;
+  }
+
+  .stage-note strong { color: #dde5fc; font-weight: 700; }
+
+  .stage-rail {
+    display: flex;
+    gap: 26px;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: auto;
+    padding: 4px 32px 14px;
+  }
+
+  .stage-single { display: flex; justify-content: center; padding: 0 32px; }
+
+  .stage-foot {
+    max-width: 1080px;
+    margin: 28px auto 0;
+    padding: 20px 32px 0;
+    border-top: 1px solid var(--stage-rule);
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .stage-foot span {
+    display: block;
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 400;
+    color: #93a3d4;
+    margin-top: 6px;
+  }
+
+  /* ══════════════════════════════════════════════════
+     DEVICE — faithful to the shipped light UI.
+     Product colors are painted explicitly and do not
+     follow the page theme: these are screenshots.
+     ══════════════════════════════════════════════════ */
+  .device { flex: 0 0 auto; width: 292px; display: flex; flex-direction: column; gap: 15px; }
+
+  .device-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #7c8dcb;
+    display: flex;
+    gap: 8px;
+  }
+
+  .device-label b { color: #ffffff; font-weight: 500; }
+  .device-caption { font-family: var(--body); font-size: 13.5px; line-height: 1.48; color: #8b9ad0; }
+  .device-caption em { color: #dfe6fc; font-style: normal; }
+
+  .phone {
+    width: 292px;
+    border-radius: 30px;
+    overflow: hidden;
+    background: #f3f3f5;
+    box-shadow: 0 22px 48px -14px rgba(2, 8, 34, 0.72);
+    border: 1px solid #22305e;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #111114;
+    display: flex;
+    flex-direction: column;
+    min-height: 470px;
+  }
+
+  .ph-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 17px 4px;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #111114;
+  }
+
+  .ph-bar span:last-child { letter-spacing: 1px; font-size: 9px; }
+
+  .ph-nav {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 13px 12px;
+  }
+
+  .ph-back {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #111114;
+    flex: 0 0 auto;
+  }
+
+  .ph-title { font-size: 14.5px; font-weight: 700; letter-spacing: -0.01em; flex: 1; }
+
+  .ph-add {
+    font-size: 10.5px;
+    font-weight: 700;
+    background: #e6e6e9;
+    border-radius: 8px;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 0 0 auto;
+  }
+
+  .ph-members {
+    display: flex;
+    gap: 6px;
+    padding: 0 13px 13px;
+    overflow: hidden;
+  }
+
+  .mem {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #ffffff;
+    border: 1px solid #e6e6e9;
+    border-radius: 999px;
+    padding: 3px 11px 3px 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #8a8a90;
+  }
+
+  .mem.on { background: #111114; border-color: #111114; color: #ffffff; }
+  .mem.plus { padding: 3px 4px; color: #111114; }
+
+  .av {
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    background: linear-gradient(150deg, #f0c9a4, #d99b6c);
+  }
+
+  .av.m2 { background: linear-gradient(150deg, #e8b7a0, #c98063); }
+  .av.m3 { background: linear-gradient(150deg, #cfd6ea, #9aa6c6); }
+  .av.pair { width: 30px; background: linear-gradient(110deg, #7fae86 0 48%, #d99b6c 48% 100%); }
+  .av.blank { background: #e6e6e9; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #55555c; }
+
+  .ph-stats {
+    display: flex;
+    gap: 8px;
+    padding: 0 15px 14px;
+  }
+
+  .ph-stats div { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+
+  .ph-stats .row { flex-direction: row; align-items: center; gap: 5px; }
+  .ph-stats svg { width: 13px; height: 13px; fill: #111114; flex: 0 0 auto; }
+  .ph-stats b { font-size: 16px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+
+  .ph-stats em {
+    font-style: normal;
+    font-size: 9px;
+    color: #8a8a90;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ph-body {
+    background: #ffffff;
+    border-radius: 18px 18px 0 0;
+    padding: 14px 13px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    flex: 1;
+  }
+
+  /* member overview rows (Family view) */
+  .ov-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .ov-head b { font-size: 12px; font-weight: 800; letter-spacing: -0.01em; }
+  .ov-head em { font-style: normal; font-size: 9.5px; color: #8a8a90; font-weight: 600; }
+
+  .ov-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid #ececef;
+    border-radius: 11px;
+    padding: 9px 10px;
+  }
+
+  .ov-row .txt { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .ov-row .txt b { font-size: 11.5px; font-weight: 700; }
+  .ov-row .txt em { font-style: normal; font-size: 9.5px; color: #8a8a90; }
+  .ov-row .amt { font-size: 11.5px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+  .ov-add {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px dashed #c9c9d0;
+    border-radius: 11px;
+    padding: 9px 10px;
+    background: #fafafb;
+  }
+
+  .ov-add .txt b { font-size: 11.5px; font-weight: 700; }
+  .ov-add .txt em { font-style: normal; font-size: 9.5px; color: #8a8a90; line-height: 1.35; }
+
+  /* policy card with KYP rating */
+  .pcard {
+    border: 1px solid #ececef;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pc-top { display: flex; align-items: center; gap: 8px; }
+
+  .pc-logo {
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    flex: 0 0 auto;
+    background: #eceafd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 800;
+    color: #5b3fd4;
+  }
+
+  .pc-logo.h { background: #fde8ef; color: #c62a63; }
+  .pc-logo.m { background: #e2f4ee; color: #0b7a63; }
+
+  .pc-name { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+  .pc-name b { font-size: 11px; font-weight: 700; line-height: 1.25; }
+  .pc-name em { font-style: normal; font-size: 9px; color: #8a8a90; }
+
+  .kyp {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #f0f7f2;
+    border: 1px solid #cfe5d6;
+    border-radius: 6px;
+    padding: 3px 6px;
+    flex: 0 0 auto;
+  }
+
+  .kyp b { font-size: 10.5px; font-weight: 800; color: #1a7a45; font-variant-numeric: tabular-nums; }
+  .kyp em { font-style: normal; font-size: 7.5px; font-weight: 700; letter-spacing: 0.08em; color: #4c8a64; }
+  .kyp.mid { background: #fdf5e8; border-color: #ecd9ae; }
+  .kyp.mid b { color: #96660d; }
+  .kyp.mid em { color: #9c7c3c; }
+
+  .pc-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .pc-meta em { font-style: normal; font-size: 9.5px; color: #8a8a90; }
+  .pc-meta b { font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+  .track { display: flex; gap: 3px; height: 4px; }
+  .track i { flex: 1; border-radius: 2px; background: #ececef; }
+  .track i.paid { background: #1aa06d; }
+  .track i.due { background: #f0a52c; }
+
+  /* the contextual pitch — pinned to the bottom of the screen */
+  .pitch {
+    margin-top: auto;
+    border: 1px solid #d8d8de;
+    background: #f7f7f9;
+    border-radius: 13px;
+    padding: 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .pitch-tag {
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: #55555c;
+  }
+
+  .pitch-title { font-size: 12.5px; font-weight: 800; line-height: 1.3; letter-spacing: -0.01em; }
+  .pitch-body { font-size: 10.5px; line-height: 1.42; color: #6a6a72; }
+
+  .pitch-figs { display: flex; gap: 7px; }
+
+  .pitch-figs div {
+    flex: 1;
+    background: #ffffff;
+    border: 1px solid #e6e6e9;
+    border-radius: 9px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .pitch-figs em {
+    font-style: normal;
+    font-size: 7.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #8a8a90;
+    font-weight: 700;
+  }
+
+  .pitch-figs b { font-size: 13.5px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+
+  .pitch-cta { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .btn {
+    font-size: 10.5px;
+    font-weight: 800;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: #111114;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+
+  .btn.ghost { background: transparent; border-color: #c9c9d0; color: #111114; }
+  .btn.mute { background: #a5a5ad; }
+
+  .reason {
+    margin-top: auto;
+    border: 1px solid #e4c9c2;
+    background: #fdf4f2;
+    border-radius: 13px;
+    padding: 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .reason .pitch-tag { color: #b23a22; }
+  .reason .pitch-body { color: #6b544f; }
+
+  .banner-ghost {
+    border: 1px dashed #ddc2bc;
+    background: repeating-linear-gradient(135deg, #fdf1ef 0 6px, #fae7e3 6px 12px);
+    border-radius: 11px;
+    padding: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #a3402c;
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+
+  .ph-empty {
+    border: 1px dashed #d2d2d9;
+    border-radius: 12px;
+    padding: 17px 13px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: #fafafb;
+  }
+
+  .ph-empty b { font-size: 11.5px; font-weight: 800; }
+  .ph-empty em { font-style: normal; font-size: 10px; color: #8a8a90; line-height: 1.42; }
+
+  /* ══════════ CHAINS / RULES ══════════ */
+  .rule-line {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 15px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink-2);
+  }
+
+  .rule-line b { color: var(--ink); font-weight: 500; }
+  .rule-line .arrow { color: var(--accent); }
+  .rule-line.dead { color: var(--signal); border-color: var(--signal); }
+  .rule-line.dead b { color: var(--signal); }
+
+  .chain {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-2);
+  }
+
+  .chain b { color: var(--ink); font-weight: 500; }
+  .chain i { color: var(--accent); font-style: normal; }
+
+  .pull {
+    font-family: var(--display);
+    font-size: clamp(23px, 2.9vw, 33px);
+    font-weight: 600;
+    line-height: 1.12;
+    color: var(--ink);
+    padding: 6px 0 6px 22px;
+    border-left: 3px solid var(--accent);
+    text-wrap: balance;
+  }
+
+  .quote {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.48;
+    color: var(--ink);
+    margin: 0;
+    padding: 18px 22px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+  }
+
+  .quote cite {
+    display: block;
+    margin-top: 9px;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* ══════════ LISTS ══════════ */
+  .list { list-style: none; margin: 0; padding: 0; }
+
+  .list li {
+    display: grid;
+    grid-template-columns: 116px minmax(0, 1fr);
+    gap: 18px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: baseline;
+  }
+
+  .list li:first-child { border-top: 1px solid var(--rule); }
+
+  .list dfn {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .list p { font-size: 16.5px; line-height: 1.48; color: var(--ink-2); }
+  .list p strong { color: var(--ink); font-weight: 700; }
+
+  @media (max-width: 560px) {
+    .list li { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+  }
+
+  /* ══════════ CONDITION MAP ══════════ */
+  .mapwrap { overflow-x: auto; }
+
+  .cmap { width: 100%; min-width: 640px; border-collapse: collapse; }
+
+  .cmap th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    padding: 0 16px 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cmap td {
+    padding: 13px 16px 13px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+    font-size: 14.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
+  }
+
+  .cmap td.cap {
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .cmap td.when { color: var(--ink); }
+
+  .cmap td.where {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.03em;
+  }
+
+  .cmap tr.restraint td { background: var(--accent-soft); }
+  .cmap tr.restraint td.cap { color: var(--accent-ink); }
+
+  /* ══════════ TIERS ══════════ */
+  .tiers { display: flex; flex-direction: column; border-top: 1px solid var(--rule); }
+
+  .tier {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 26px;
+    padding: 19px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: start;
+  }
+
+  .tier-head { display: flex; flex-direction: column; gap: 8px; }
+
+  .tier-head b {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .tier-bar { height: 4px; background: var(--rule-soft); border-radius: 2px; overflow: hidden; }
+  .tier-bar i { display: block; height: 100%; background: var(--accent); border-radius: 2px; }
+
+  .tier-head em {
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .tier-items { display: flex; flex-direction: column; gap: 9px; }
+  .tier-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tier-chips span {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 6px 11px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  .tier-items p { font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+
+  .tier-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-top: 14px;
+  }
+
+  @media (max-width: 620px) {
+    .tier { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  }
+
+  /* ══════════ FIGURES ══════════ */
+  .figure { margin: 0; color: var(--ink); display: flex; flex-direction: column; gap: 15px; }
+  .figure .scroller { overflow-x: auto; }
+  .figure svg { display: block; width: 100%; min-width: 780px; height: auto; }
+
+  .figure figcaption {
+    font-family: var(--body);
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+    max-width: 64ch;
+  }
+
+  .figure figcaption strong { color: var(--ink-2); font-weight: 700; }
+
+  .svg-box { fill: var(--surface); stroke: var(--rule); stroke-width: 1.25; }
+  .svg-box-key { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.25; }
+  .svg-name { font-family: var(--mono); font-size: 12px; letter-spacing: 0.09em; fill: var(--ink); }
+  .svg-name-key { font-family: var(--mono); font-size: 12px; letter-spacing: 0.09em; fill: var(--accent-ink); }
+  .svg-sub { font-family: var(--body); font-size: 11px; fill: var(--ink-3); }
+  .svg-edge { font-family: var(--body); font-size: 11.5px; font-style: italic; fill: var(--ink-3); }
+  .svg-line { stroke: var(--ink-3); stroke-width: 1.25; fill: none; }
+  .svg-line-key { stroke: var(--accent); stroke-width: 1.5; fill: none; }
+  .svg-line-dead { stroke: var(--signal); stroke-width: 1.25; fill: none; stroke-dasharray: 4 3; }
+
+  /* ══════════ OUTCOMES ══════════ */
+  .outcomes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
+
+  .outcome {
+    padding: 20px 22px 20px 0;
+    border-right: 1px solid var(--rule-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .outcome:last-child { border-right: none; }
+
+  .outcome dfn {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-style: normal;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .outcome p { font-size: 15.5px; line-height: 1.48; color: var(--ink-2); }
+  .outcome p strong { color: var(--ink); }
+
+  @media (max-width: 760px) {
+    .outcomes { grid-template-columns: minmax(0, 1fr); }
+    .outcome { border-right: none; border-bottom: 1px solid var(--rule-soft); padding-right: 0; }
+    .outcome:last-child { border-bottom: none; }
+  }
+
+  .status {
+    background: var(--accent-soft);
+    border-left: 2px solid var(--accent);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .status b {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    font-weight: 500;
+  }
+
+  .status p { font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+  .status ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .status li {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 6px 10px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    color: var(--ink);
+  }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  .tags span {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 7px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    color: var(--ink-2);
+    background: var(--surface);
+  }
+
+  /* credit split */
+  .credit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); }
+
+  .credit > div {
+    padding: 20px 24px 20px 0;
+    border-right: 1px solid var(--rule-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .credit > div:last-child { border-right: none; }
+
+  .credit dfn {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-style: normal;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .credit ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+
+  .credit li {
+    font-size: 15.5px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    padding-left: 15px;
+    position: relative;
+  }
+
+  .credit li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rule);
+  }
+
+  .credit li strong { color: var(--ink); font-weight: 700; }
+
+  @media (max-width: 700px) {
+    .credit { grid-template-columns: minmax(0, 1fr); }
+    .credit > div { border-right: none; border-bottom: 1px solid var(--rule-soft); padding-right: 0; }
+    .credit > div:last-child { border-bottom: none; }
+  }
+
+  /* ══════════ FLIP ══════════ */
+  .flip { display: flex; flex-direction: column; gap: 18px; align-items: center; }
+
+  .switch {
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--stage-rule);
+    border-radius: 999px;
+    padding: 4px;
+    gap: 3px;
+  }
+
+  .switch button {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    padding: 9px 19px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: #8b9ad0;
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease;
+  }
+
+  .switch button[aria-pressed="true"] { background: #3559ff; color: #ffffff; }
+  .switch button:hover:not([aria-pressed="true"]) { color: #dbe3fb; }
+
+  .flip-panel[hidden] { display: none; }
+  .flip-panel { display: flex; flex-direction: column; gap: 15px; align-items: center; animation: rise 240ms ease both; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ══════════ AUTO CAROUSEL ══════════ */
+  .carousel { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .car-stack { position: relative; width: 292px; }
+  .car-slide { display: none; }
+  .car-slide.on { display: block; animation: fade 320ms ease both; }
+
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .car-cap {
+    max-width: 40ch;
+    text-align: center;
+    font-family: var(--body);
+    font-size: 13.5px;
+    line-height: 1.48;
+    color: #8b9ad0;
+    min-height: 3.4em;
+  }
+
+  .car-cap em { color: #dfe6fc; font-style: normal; }
+
+  .car-controls { display: flex; align-items: center; gap: 10px; }
+
+  .car-dot {
+    width: 34px;
+    height: 5px;
+    border-radius: 3px;
+    border: none;
+    padding: 0;
+    background: var(--stage-rule);
+    cursor: pointer;
+    transition: background 200ms ease;
+  }
+
+  .car-dot[aria-current="true"] { background: #6f8bff; }
+
+  .car-play {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--stage-rule);
+    border-radius: 999px;
+    color: #8b9ad0;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-left: 6px;
+  }
+
+  .car-play:hover { color: #dbe3fb; border-color: #3f4f80; }
+
+  /* ══════════ V2 POINTS ══════════ */
+  .points { display: flex; flex-direction: column; }
+
+  .point {
+    padding: 52px 0;
+    border-top: 1px solid var(--rule-soft);
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 34px;
+    align-items: start;
+  }
+
+  .point-skill {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    line-height: 1.5;
+    position: sticky;
+    top: 78px;
+  }
+
+  .point-skill span {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--body);
+    font-size: 11.5px;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: var(--ink-3);
+    font-weight: 400;
+  }
+
+  .point-main { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+
+  .point-claim {
+    font-family: var(--display);
+    font-size: clamp(25px, 3.3vw, 38px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .point-cap { font-size: 16px; line-height: 1.5; color: var(--ink-2); max-width: 56ch; }
+  .point-cap strong { color: var(--ink); font-weight: 700; }
+
+  @media (max-width: 820px) {
+    .point { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .point-skill { position: static; }
+  }
+
+  /* mini before/after for V2 */
+  .ba { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+
+  .ba-col { display: flex; flex-direction: column; gap: 9px; }
+
+  .ba-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .ba-card {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 14px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .ba-card.dead { border-color: var(--signal); background: var(--signal-soft); }
+  .ba-card.live { border-color: var(--accent); background: var(--accent-soft); }
+
+  .ba-card b { font-family: var(--display); font-size: 19px; font-weight: 600; line-height: 1.12; color: var(--ink); }
+  .ba-card p { font-size: 13.5px; line-height: 1.42; color: var(--ink-2); }
+
+  .ba-figs { display: flex; gap: 8px; margin-top: 2px; }
+
+  .ba-figs div {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 7px 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .ba-figs em {
+    font-style: normal;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .ba-figs i {
+    font-style: normal;
+    font-family: var(--display);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 620px) {
+    .ba { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  /* sequence strip */
+  .seq { display: flex; flex-direction: column; gap: 12px; }
+
+  .seq-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--ink-2);
+  }
+
+  .seq-row b {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 7px 11px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .seq-row b.key { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-ink); }
+  .seq-row i { color: var(--accent); font-style: normal; }
+
+  /* ══════════ CLOSE ══════════ */
+  .close { background: var(--stage); color: #ffffff; padding: 92px 0 100px; }
+
+  .close-eyebrow {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7183be;
+    margin-bottom: 24px;
+  }
+
+  .close-line {
+    font-family: var(--display);
+    font-size: clamp(28px, 4.5vw, 56px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.012em;
+    max-width: 22ch;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .close-line span { color: #7c92ff; }
+
+  .close-foot {
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid var(--stage-rule);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #7183be;
+  }
+
+  [role="tabpanel"][hidden] { display: none; }
+</style>
+</head>
+<body>
+<!-- ══════════════════ VERSION TABS ══════════════════ -->
+<div class="versions">
+  <div class="versions-in" role="tablist" aria-label="Case study version">
+    <span class="versions-label">Version</span>
+    <button class="vtab" role="tab" id="tab-compact" aria-controls="panel-compact" aria-selected="true">
+      <b>Compact</b><i>visual · 60 sec</i>
+    </button>
+    <button class="vtab" role="tab" id="tab-full" aria-controls="panel-full" aria-selected="false">
+      <b>Full study</b><i>narrative · 5 min</i>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     V2 — COMPACT, VISUAL-LED
+     ═══════════════════════════════════════════════════════════ -->
+<div role="tabpanel" id="panel-compact" aria-labelledby="tab-compact" tabindex="0">
+
+  <header class="masthead">
+    <div class="wrap">
+      <div class="brandline">
+        <span class="mark">CoverSure</span><span class="dot">/</span><span>Policy Portfolio</span>
+        <span class="dot">/</span><span>Product design</span>
+      </div>
+      <div class="hero-grid">
+        <h1>Making Portfolio&nbsp;respond to the user <span class="thin">— not just display their policies.</span></h1>
+        <p class="dek">Five capabilities the product already had, made discoverable through relevance instead of banners.</p>
+      </div>
+      <dl class="meta-row">
+        <div class="meta-cell"><dt>Role</dt><dd>Product Designer</dd></div>
+        <div class="meta-cell"><dt>Stage</dt><dd>Post-MVP</dd></div>
+        <div class="meta-cell"><dt>Surface</dt><dd>Policy Portfolio</dd></div>
+        <div class="meta-cell"><dt>Status</dt><dd>Shipped</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <section>
+    <div class="wrap">
+      <h2 style="max-width: 22ch; margin-bottom: 30px;">Users came to manage insurance — not to be sold to.</h2>
+      <figure class="figure">
+        <div class="scroller">
+          <svg viewBox="0 0 880 236" role="img"
+               aria-label="Two responses to the same brief. Adding banners competes with the screen's primary job and users skip it. Attaching each capability to a condition makes it appear only when it is useful.">
+            <defs>
+              <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0 1 L9 5 L0 9 z" fill="var(--signal)" />
+              </marker>
+              <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M0 1 L9 5 L0 9 z" fill="var(--accent)" />
+              </marker>
+            </defs>
+            <rect class="svg-box" x="20" y="86" width="186" height="62" rx="10" />
+            <text class="svg-name" x="113" y="112" text-anchor="middle">THE ASK</text>
+            <text class="svg-sub" x="113" y="132" text-anchor="middle">5 capabilities, 1 screen</text>
+
+            <path class="svg-line-dead" d="M210 104 L320 52" marker-end="url(#a1)" />
+            <path class="svg-line-key" d="M210 130 L320 182" marker-end="url(#a2)" />
+
+            <rect x="326" y="22" width="230" height="60" rx="10" fill="var(--signal-soft)" stroke="var(--signal)" stroke-width="1.25" />
+            <text class="svg-name" x="441" y="47" text-anchor="middle" fill="var(--signal)">PROMOTE EACH ONE</text>
+            <text class="svg-sub" x="441" y="66" text-anchor="middle" fill="var(--signal)">banners on the busiest screen</text>
+
+            <rect class="svg-box-key" x="326" y="152" width="230" height="60" rx="10" />
+            <text class="svg-name-key" x="441" y="177" text-anchor="middle">ONE CONDITION EACH</text>
+            <text class="svg-sub" x="441" y="196" text-anchor="middle">surface only when useful</text>
+
+            <path class="svg-line-dead" d="M560 52 L670 52" marker-end="url(#a1)" />
+            <path class="svg-line-key" d="M560 182 L670 182" marker-end="url(#a2)" />
+
+            <text class="svg-name" x="676" y="47" fill="var(--signal)">COMPETES</text>
+            <text class="svg-sub" x="676" y="66" fill="var(--ink-3)">with the screen&rsquo;s primary job</text>
+            <text class="svg-name-key" x="676" y="177">ASSISTS</text>
+            <text class="svg-sub" x="676" y="196" fill="var(--ink-3)">discovery without distraction</text>
+          </svg>
+        </div>
+        <figcaption>Portfolio&rsquo;s primary job is simple: <strong>help users see and manage the insurance they already have.</strong> Promotional banners competed with that job, so I changed the question from <em>how do we promote this</em> to <em>when does this become useful to this user.</em></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="points">
+
+      <div class="point">
+        <div class="point-skill">Strategy<span>A discovery problem, turned into a rule set</span></div>
+        <div class="point-main">
+          <p class="point-claim">Every capability earned a condition instead of a slot.</p>
+          <div class="mapwrap">
+            <table class="cmap">
+              <thead><tr><th scope="col">Capability</th><th scope="col">Surfaces when</th><th scope="col">Where</th></tr></thead>
+              <tbody>
+                <tr><td class="cap">Add Policy</td><td class="when">Always &mdash; it is the screen&rsquo;s primary job</td><td class="where">Header</td></tr>
+                <tr><td class="cap">Family Management</td><td class="when">A family member or their policy is missing</td><td class="where">Family overview</td></tr>
+                <tr><td class="cap">CoverRisk</td><td class="when">No risk report exists yet</td><td class="where">Below the policies</td></tr>
+                <tr><td class="cap">Buy Policy</td><td class="when">A report exists and a protection gap is open</td><td class="where">Below the policies</td></tr>
+                <tr><td class="cap">KYP</td><td class="when">Always &mdash; on every policy owned</td><td class="where">Policy card</td></tr>
+                <tr class="restraint"><td class="cap">Advisor Portfolio</td><td class="when">The CoverRisk report has just been generated</td><td class="where">After the report</td></tr>
+                <tr><td class="cap">Share Policy</td><td class="when">Policy is Life or Group</td><td class="where">Policy details</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="point-cap"><strong>The highlighted row got no banner at all.</strong> The Homepage already provides that entry point, so repeating it here would add noise without adding access. It appears when a report has just given the user something to ask about.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-skill">Product<span>Connecting intelligence that already existed</span></div>
+        <div class="point-main">
+          <p class="point-claim">We had the user&rsquo;s risk data. We weren&rsquo;t using it at the buying moment.</p>
+          <figure class="figure">
+            <div class="scroller">
+              <svg viewBox="0 0 880 250" role="img"
+                   aria-label="Three existing features fed nothing into Portfolio: CoverRisk's recommended coverage stayed inside its own report, KYP ratings lived in a separate section, and family policies had no shared overview. Each now surfaces on the Portfolio screen where a decision gets made.">
+                <defs>
+                  <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M0 1 L9 5 L0 9 z" fill="var(--accent)" />
+                  </marker>
+                </defs>
+                <rect class="svg-box" x="20" y="14" width="252" height="56" rx="10" />
+                <text class="svg-name" x="38" y="38">COVERRISK REPORT</text>
+                <text class="svg-sub" x="38" y="57">recommended coverage, unused elsewhere</text>
+
+                <rect class="svg-box" x="20" y="97" width="252" height="56" rx="10" />
+                <text class="svg-name" x="38" y="121">KYP RATING</text>
+                <text class="svg-sub" x="38" y="140">a section away from the policy</text>
+
+                <rect class="svg-box" x="20" y="180" width="252" height="56" rx="10" />
+                <text class="svg-name" x="38" y="204">FAMILY POLICIES</text>
+                <text class="svg-sub" x="38" y="223">no shared overview existed</text>
+
+                <path class="svg-line-key" d="M276 42 C 362 42, 382 110, 454 122" marker-end="url(#a3)" />
+                <path class="svg-line-key" d="M276 125 L454 125" marker-end="url(#a3)" />
+                <path class="svg-line-key" d="M276 208 C 362 208, 382 140, 454 128" marker-end="url(#a3)" />
+
+                <rect class="svg-box-key" x="460" y="88" width="198" height="74" rx="11" />
+                <text class="svg-name-key" x="559" y="119" text-anchor="middle">POLICY PORTFOLIO</text>
+                <text class="svg-sub" x="559" y="140" text-anchor="middle">where the user already is</text>
+
+                <path class="svg-line-key" d="M662 125 L748 125" marker-end="url(#a3)" />
+                <text class="svg-name" x="756" y="120">A DECISION</text>
+                <text class="svg-sub" x="756" y="139" fill="var(--ink-3)">with its evidence attached</text>
+              </svg>
+            </div>
+            <figcaption>Nothing here was newly built. <strong>The work was connecting three finished features back to the one screen where they change a decision.</strong></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-skill">Business<span>Why relevance beat repetition</span></div>
+        <div class="point-main">
+          <p class="point-claim">We prioritised protection &mdash; not the product catalogue.</p>
+          <div class="tiers">
+            <div class="tier">
+              <div class="tier-head"><b>Buy first</b><div class="tier-bar"><i style="width: 100%;"></i></div><em>Foundational</em></div>
+              <div class="tier-items">
+                <div class="tier-chips"><span>Health</span><span>Life</span></div>
+                <p>Absence here is the gap a family feels first. Nothing outranks it.</p>
+              </div>
+            </div>
+            <div class="tier">
+              <div class="tier-head"><b>Then deepen</b><div class="tier-bar"><i style="width: 62%;"></i></div><em>Additional</em></div>
+              <div class="tier-items">
+                <div class="tier-chips"><span>Super Top-Up</span><span>Critical Illness</span><span>Accident</span></div>
+                <p>These extend cover rather than establish it. Critical illness replaces income lost to treatment &mdash; the gap a cheap policy leaves wide open.</p>
+              </div>
+            </div>
+            <div class="tier">
+              <div class="tier-head"><b>Only on a signal</b><div class="tier-bar"><i style="width: 28%;"></i></div><em>Situational</em></div>
+              <div class="tier-items">
+                <div class="tier-chips"><span>Hospicash</span><span>Home</span><span>Other relevant needs</span></div>
+                <p>Relevant to some, irrelevant to most. Shown only when the user&rsquo;s context asks for it.</p>
+              </div>
+            </div>
+          </div>
+          <p class="tier-note">Bars show relative priority in the recommendation order &mdash; not measured data</p>
+          <p class="point-cap">Pushing a lower-priority product because it is easier or cheaper to sell creates the wrong outcome. <strong>Portfolio recommends what matters next, not what is easiest to promote.</strong></p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-skill">Decision design<span>Making a recommendation defensible</span></div>
+        <div class="point-main">
+          <p class="point-claim">Don&rsquo;t optimise for the cheapest premium. Help users start with enough protection.</p>
+          <div class="ba">
+            <div class="ba-col">
+              <span class="ba-tag">Before</span>
+              <div class="ba-card dead">
+                <b>Buy Life Insurance</b>
+                <p>Secure your family&rsquo;s future today.</p>
+                <p style="color: var(--signal);">A category name and an imperative. Nothing specific to the person reading it.</p>
+              </div>
+            </div>
+            <div class="ba-col">
+              <span class="ba-tag">After</span>
+              <div class="ba-card live">
+                <b>You may need &#8377;80,00,000 additional life cover</b>
+                <p>From your CoverRisk report &mdash; dependants, income, expenses, health and lifestyle.</p>
+                <div class="ba-figs">
+                  <div><em>Recommended cover</em><i>&#8377;80L</i></div>
+                  <div><em>Est. premium / yr</em><i>&#8377;11,800</i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="point-cap">CoverRisk asks about age, location, family, dependants, health, lifestyle, income, investments, property and expenses. <strong>Not a specific insurer. Not a cheap policy.</strong> A coverage level appropriate to their situation, and the average premium it costs.</p>
+        </div>
+      </div>
+
+      <div class="point">
+        <div class="point-skill">Behavioural UX<span>Designing for intent, not placement</span></div>
+        <div class="point-main">
+          <p class="point-claim">Don&rsquo;t just show an action. Explain why it matters now.</p>
+          <div class="seq">
+            <div class="seq-row"><b>Life or Group policy</b><i>&rarr;</i><b>Nominee context</b><i>&rarr;</i><b class="key">Reason</b><i>&rarr;</i><b>Share</b></div>
+            <div class="seq-row"><b>Understand your risk</b><i>&rarr;</i><b class="key">See the report</b><i>&rarr;</i><b>Get expert guidance</b></div>
+            <div class="seq-row"><b>Who is covered?</b><i>&rarr;</i><b class="key">Who is missing?</b><i>&rarr;</i><b>Add member &amp; policy</b></div>
+          </div>
+          <blockquote class="quote">
+            Your nominee may not be able to access this policy easily during an emergency.
+            <cite>Share Policy &middot; entry copy</cite>
+          </blockquote>
+          <p class="point-cap">Sharing a policy is a responsibility, not a convenience &mdash; and it pays off at the worst moment of someone&rsquo;s life. <strong>Reason leads. Action follows.</strong> The Family Overview works the same way: the incomplete section is the prompt, so no banner has to ask.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-tag"><b>Shipped screens</b> &nbsp;&middot;&nbsp; The same Portfolio, three users</div>
+      <p class="stage-note">Identical layout, identical features. What differs is which condition the user satisfies &mdash; and the recommendation stays <strong>below</strong> the policies in every state.</p>
+    </div>
+
+    <div class="carousel" id="car">
+      <div class="car-stack">
+
+        <div class="car-slide on" data-cap="&lt;em&gt;No policies.&lt;/em&gt; Understand their protection needs before pushing a purchase.">
+          <div class="phone">
+            <div class="ph-bar"><span>09:41</span><span>&#9646;&#9646;&#9646; &#9662; &#9648;</span></div>
+            <div class="ph-nav"><span class="ph-back">&lsaquo;</span><span class="ph-title">Policy portfolio</span><span class="ph-add">&#65291; Add Policy</span></div>
+            <div class="ph-members">
+              <span class="mem on"><i class="av"></i>Self</span>
+              <span class="mem plus"><i class="av blank">&#65291;</i></span>
+            </div>
+            <div class="ph-stats">
+              <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>0</b></div><em>Policies</em></div>
+              <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>&mdash;</b></div><em>Premium Yearly</em></div>
+              <div><div class="row"><svg viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><circle cx="12.2" cy="6" r="2.3"/><path d="M0.8 14.5c0-3 2.4-4.6 5.2-4.6s5.2 1.6 5.2 4.6z"/></svg><b>1</b></div><em>Member</em></div>
+            </div>
+            <div class="ph-body">
+              <div class="ph-empty"><b>No policies added yet</b><em>Add a policy to track premiums, renewals and documents in one place.</em></div>
+              <div class="pitch">
+                <div class="pitch-tag">Start here</div>
+                <div class="pitch-title">Find out how much cover you actually need</div>
+                <div class="pitch-body">Questions about your dependants, income, expenses, health and lifestyle. About two minutes.</div>
+                <div class="pitch-cta"><span class="btn">Check with CoverRisk</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-slide" data-cap="&lt;em&gt;Health + Motor.&lt;/em&gt; Continue what the user already told us in onboarding, instead of starting over.">
+          <div class="phone">
+            <div class="ph-bar"><span>09:41</span><span>&#9646;&#9646;&#9646; &#9662; &#9648;</span></div>
+            <div class="ph-nav"><span class="ph-back">&lsaquo;</span><span class="ph-title">Policy portfolio</span><span class="ph-add">&#65291; Add Policy</span></div>
+            <div class="ph-members">
+              <span class="mem on"><i class="av"></i>Self</span>
+              <span class="mem plus"><i class="av blank">&#65291;</i></span>
+            </div>
+            <div class="ph-stats">
+              <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>0</b></div><em>Policies</em></div>
+              <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>&mdash;</b></div><em>Premium Yearly</em></div>
+              <div><div class="row"><svg viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><circle cx="12.2" cy="6" r="2.3"/><path d="M0.8 14.5c0-3 2.4-4.6 5.2-4.6s5.2 1.6 5.2 4.6z"/></svg><b>1</b></div><em>Member</em></div>
+            </div>
+            <div class="ph-body">
+              <div class="ph-empty"><b>You told us you have Health and Motor cover</b><em>Add them to see premiums, renewals and documents together.</em></div>
+              <div class="pitch">
+                <div class="pitch-tag">From your onboarding answers</div>
+                <div class="pitch-title">Add your Health and Motor policies</div>
+                <div class="pitch-body">You mentioned two dependants. Life cover is the gap they would feel first.</div>
+                <div class="pitch-cta"><span class="btn">Add Health + Motor</span><span class="btn ghost">Consider Life</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-slide" data-cap="&lt;em&gt;CoverRisk completed.&lt;/em&gt; Turn a generic buying prompt into something actionable.">
+          <div class="phone">
+            <div class="ph-bar"><span>09:41</span><span>&#9646;&#9646;&#9646; &#9662; &#9648;</span></div>
+            <div class="ph-nav"><span class="ph-back">&lsaquo;</span><span class="ph-title">Policy portfolio</span><span class="ph-add">&#65291; Add Policy</span></div>
+            <div class="ph-members">
+              <span class="mem"><i class="av pair"></i>Family</span>
+              <span class="mem on"><i class="av"></i>Self</span>
+              <span class="mem"><i class="av m2"></i>Mother</span>
+              <span class="mem plus"><i class="av blank">&#65291;</i></span>
+            </div>
+            <div class="ph-stats">
+              <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>2</b></div><em>Policies</em></div>
+              <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>&#8377;18 K</b></div><em>Premium Yearly</em></div>
+              <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1.4l1.9 4.2 4.6.5-3.4 3.1.9 4.5L8 11.5l-4 2.2.9-4.5L1.5 6.1l4.6-.5z"/></svg><b>3.3</b></div><em>Avg. KYP</em></div>
+            </div>
+            <div class="ph-body">
+              <div class="pcard">
+                <div class="pc-top">
+                  <span class="pc-logo h">HL</span>
+                  <span class="pc-name"><b>Basic Health Plan</b><em>Health &middot; &#8377;5,00,000</em></span>
+                  <span class="kyp mid"><b>3.4</b><em>KYP</em></span>
+                </div>
+                <div class="pc-meta"><em>Next premium &middot; 14 Sep</em><b>&#8377;9,400</b></div>
+              </div>
+              <div class="pitch">
+                <div class="pitch-tag">From your CoverRisk report</div>
+                <div class="pitch-title">You may need &#8377;80,00,000 additional life cover</div>
+                <div class="pitch-figs">
+                  <div><em>Recommended cover</em><b>&#8377;80L</b></div>
+                  <div><em>Est. prem / yr</em><b>&#8377;11,800</b></div>
+                </div>
+                <div class="pitch-cta"><span class="btn">See plans</span><span class="btn ghost">Talk to an advisor</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="car-cap" id="car-cap"></p>
+
+      <div class="car-controls">
+        <button class="car-dot" type="button" aria-current="true" aria-label="No policies">&nbsp;</button>
+        <button class="car-dot" type="button" aria-current="false" aria-label="Health and Motor from onboarding">&nbsp;</button>
+        <button class="car-dot" type="button" aria-current="false" aria-label="CoverRisk completed">&nbsp;</button>
+        <button class="car-play" type="button" id="car-play" aria-pressed="true">Pause</button>
+      </div>
+    </div>
+
+    <p class="stage-foot">Two actions at a time.
+      <span>Enough direction without turning Portfolio into a checklist.</span>
+    </p>
+  </div>
+
+  <section>
+    <div class="block">
+      <div class="notation">Outcome<span>One strategy, three outcomes</span></div>
+      <div class="flow"><h2>One strategy. Three outcomes.</h2></div>
+      <div class="wide">
+        <div class="outcomes">
+          <div class="outcome">
+            <dfn>User</dfn>
+            <p><strong>Less noise. Clearer next step. Better insurance understanding.</strong></p>
+            <p>The primary task comes first; every policy now shows what it is actually worth.</p>
+          </div>
+          <div class="outcome">
+            <dfn>Business</dfn>
+            <p><strong>Important capabilities became discoverable through relevance.</strong></p>
+            <p>Add Policy, Family Management, CoverRisk, KYP, Buy Policy and Advisor Portfolio &mdash; one of them deliberately with no entry point here at all.</p>
+          </div>
+          <div class="outcome">
+            <dfn>Product</dfn>
+            <p><strong>Portfolio became part of one connected journey.</strong></p>
+            <p>Context continues across Onboarding, Homepage, Portfolio and Policy Details.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flow" style="margin-top: 24px;">
+        <div class="status">
+          <b>Recently launched</b>
+          <p>Quantitative results to follow as usage data matures. Current product impact:</p>
+          <ul>
+            <li>More contextual discovery</li>
+            <li>Clearer actions</li>
+            <li>Stronger policy understanding</li>
+            <li>Better journey continuity</li>
+          </ul>
+        </div>
+        <p class="pull">Who should see it &middot; When &middot; Why &middot; What happens next</p>
+        <p class="point-cap">I led the Portfolio experience across UX strategy, recommendation logic, interaction design, information hierarchy, progressive disclosure, KYP integration and UX writing &mdash; working closely with Product and Design leadership to shape the final strategy.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="close">
+    <div class="wrap">
+      <p class="close-eyebrow">From policy storage to active insurance management</p>
+      <p class="close-line">Not where the insurance journey <span>ended.</span> Where the next useful step became <span>clear.</span></p>
+      <div class="close-foot"><span>CoverSure &middot; Policy Portfolio</span><span>Compact version</span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     V1 — FULL NARRATIVE
+     ═══════════════════════════════════════════════════════════ -->
+<div role="tabpanel" id="panel-full" aria-labelledby="tab-full" tabindex="0" hidden>
+
+  <header class="masthead">
+    <div class="wrap">
+      <div class="brandline">
+        <span class="mark">CoverSure</span><span class="dot">/</span><span>Policy Portfolio</span>
+        <span class="dot">/</span><span>Product design case study</span>
+      </div>
+      <div class="hero-grid">
+        <h1>Making Portfolio&nbsp;respond to the user <span class="thin">— not just display their policies.</span></h1>
+        <p class="dek">Five capabilities needed to be discovered on the screen where people manage their policies. Each one got a condition instead of a banner.</p>
+      </div>
+      <dl class="meta-row">
+        <div class="meta-cell"><dt>Role</dt><dd>Product Designer</dd></div>
+        <div class="meta-cell"><dt>Stage</dt><dd>Post-MVP evolution</dd></div>
+        <div class="meta-cell"><dt>Surfaces</dt><dd>Policy Portfolio · Policy Details</dd></div>
+        <div class="meta-cell"><dt>Worked with</dt><dd>Product &amp; Design leadership</dd></div>
+        <div class="meta-cell"><dt>Status</dt><dd>Shipped</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <div class="stage" style="margin-top: 58px;">
+    <div class="stage-head">
+      <div class="stage-tag"><b>Screen 01</b> &nbsp;·&nbsp; Policy Portfolio, final state</div>
+      <p class="stage-note">Policies, premiums and KYP ratings first. The recommendation sits <strong>below</strong> what the user came for — a contextual pitch at the bottom, not a banner at the top.</p>
+    </div>
+    <div class="stage-single">
+      <div class="device">
+        <div class="phone">
+          <div class="ph-bar"><span>09:41</span><span>▮▮▮ ▾ ▰</span></div>
+          <div class="ph-nav"><span class="ph-back">‹</span><span class="ph-title">Policy portfolio</span><span class="ph-add">＋ Add Policy</span></div>
+          <div class="ph-members">
+            <span class="mem"><i class="av pair"></i>Family</span>
+            <span class="mem on"><i class="av"></i>Self</span>
+            <span class="mem"><i class="av m2"></i>Mother</span>
+            <span class="mem plus"><i class="av blank">＋</i></span>
+          </div>
+          <div class="ph-stats">
+            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>4</b></div><em>Policies</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>₹38 K</b></div><em>Premium Yearly</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1.4l1.9 4.2 4.6.5-3.4 3.1.9 4.5L8 11.5l-4 2.2.9-4.5L1.5 6.1l4.6-.5z"/></svg><b>3.9</b></div><em>Avg. KYP</em></div>
+          </div>
+          <div class="ph-body">
+            <div class="pcard">
+              <div class="pc-top">
+                <span class="pc-logo h">HL</span>
+                <span class="pc-name"><b>Comprehensive Health Plan</b><em>Health · ₹10,00,000</em></span>
+                <span class="kyp"><b>4.4</b><em>KYP</em></span>
+              </div>
+              <div class="pc-meta"><em>Next premium · 14 Sep</em><b>₹12,300</b></div>
+              <div class="track"><i class="paid"></i><i class="paid"></i><i class="due"></i><i></i></div>
+            </div>
+            <div class="pcard">
+              <div class="pc-top">
+                <span class="pc-logo">LI</span>
+                <span class="pc-name"><b>Term Life Protect</b><em>Term life · ₹40,00,000</em></span>
+                <span class="kyp"><b>4.1</b><em>KYP</em></span>
+              </div>
+              <div class="pc-meta"><em>Next premium · 02 Nov</em><b>₹10,829</b></div>
+              <div class="track"><i class="paid"></i><i class="paid"></i><i class="paid"></i><i class="due"></i></div>
+            </div>
+            <div class="pitch">
+              <div class="pitch-tag">From your CoverRisk report</div>
+              <div class="pitch-title">You may need ₹80,00,000 additional life cover</div>
+              <div class="pitch-figs">
+                <div><em>Recommended cover</em><b>₹80L</b></div>
+                <div><em>Est. prem / yr</em><b>₹11,800</b></div>
+              </div>
+              <div class="pitch-cta"><span class="btn">See plans</span><span class="btn ghost">Talk to an advisor</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section>
+    <div class="block">
+      <div class="notation">Problem<span>The ask, and the job it competed with</span></div>
+      <div class="flow">
+        <h2>Users came to manage insurance — not to be sold to.</h2>
+        <p>The Product team wanted Portfolio to do more. Five capabilities needed to be discovered:</p>
+        <div class="chain">
+          <b>Add Policy</b> <i>·</i> <b>CoverRisk</b> <i>·</i> <b>Buy Policy</b> <i>·</i> <b>Family Management</b> <i>·</i> <b>KYP</b>
+        </div>
+        <p>But Portfolio's primary job was still simple: <strong>help users see and manage the insurance they already have.</strong> Promotional banners competed with that job.</p>
+        <p>People land here to check a premium date, find a policy number, see what has lapsed. A banner doesn't fail because it is badly placed. It fails because it interrupts someone mid-task with an offer they have no way to evaluate — and some of them stop opening the section at all.</p>
+        <div class="rule-line dead">
+          <b>IF</b> a capability needs adoption <span class="arrow">→</span> <b>THEN</b> put a banner on the busiest screen &nbsp;<span>— rejected</span>
+        </div>
+        <p class="kicker blue">Not “how do we promote these features?” but “when does each feature become useful to this user?”</p>
+        <p>The second question has an answer you can build. It converts promotional slots into <strong>conditions</strong> — and a condition can be evaluated against a person's actual portfolio.</p>
+        <p class="kicker">Business needs adoption.<br>Users need relevance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRATEGY -->
+  <section>
+    <div class="block">
+      <div class="notation">Strategy<span>Screen 02 — the system</span></div>
+      <div class="flow">
+        <h2>We stopped pushing features and started using context.</h2>
+        <p>Information was already being gathered across the product. It simply wasn't being read by the screen that needed it most.</p>
+        <div class="chain">
+          <b>Onboarding</b> <i>→</i> <b>Homepage</b> <i>→</i> <b>Portfolio</b> <i>→</i> <b>Policy Details</b>
+        </div>
+        <ul class="list">
+          <li><dfn>Understand</dfn><p><strong>What do we know about this user?</strong> Policies held, family members added, CoverRisk report status, each policy's KYP rating, onboarding answers.</p></li>
+          <li><dfn>Prioritise</dfn><p><strong>What matters most for their situation?</strong> Not every gap is equally urgent, and not every product is equally foundational.</p></li>
+          <li><dfn>Guide</dfn><p><strong>Show one or two useful next actions.</strong> Never ten. The ceiling is the design.</p></li>
+          <li><dfn>Adapt</dfn><p><strong>User acts → context changes → Portfolio changes.</strong> This is what separates a system from a smarter banner.</p></li>
+        </ul>
+      </div>
+      <div class="wide">
+        <figure class="figure">
+          <div class="scroller">
+            <svg viewBox="0 0 880 252" role="img"
+                 aria-label="The Portfolio system: user context enters Understand, then Prioritise, then Guide, which surfaces one or two actions the user takes. The resulting new information returns through Adapt into Understand, closing the loop.">
+              <defs>
+                <marker id="lr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                  <path d="M0 1 L9 5 L0 9 z" fill="var(--ink-3)" />
+                </marker>
+                <marker id="lk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                  <path d="M0 1 L9 5 L0 9 z" fill="var(--accent)" />
+                </marker>
+              </defs>
+              <rect class="svg-box" x="40" y="48" width="165" height="54" rx="9" />
+              <rect class="svg-box" x="245" y="48" width="165" height="54" rx="9" />
+              <rect class="svg-box" x="450" y="48" width="165" height="54" rx="9" />
+              <rect class="svg-box-key" x="655" y="48" width="165" height="54" rx="9" />
+              <text class="svg-name" x="122.5" y="80" text-anchor="middle">UNDERSTAND</text>
+              <text class="svg-name" x="327.5" y="80" text-anchor="middle">PRIORITISE</text>
+              <text class="svg-name" x="532.5" y="80" text-anchor="middle">GUIDE</text>
+              <text class="svg-name-key" x="737.5" y="80" text-anchor="middle">USER ACTS</text>
+              <line class="svg-line" x1="209" y1="75" x2="239" y2="75" marker-end="url(#lr)" />
+              <line class="svg-line" x1="414" y1="75" x2="444" y2="75" marker-end="url(#lr)" />
+              <line class="svg-line" x1="619" y1="75" x2="649" y2="75" marker-end="url(#lr)" />
+              <text class="svg-edge" x="224" y="36" text-anchor="middle">what’s true</text>
+              <text class="svg-edge" x="429" y="36" text-anchor="middle">what matters now</text>
+              <text class="svg-edge" x="634" y="36" text-anchor="middle">1–2 actions</text>
+              <rect class="svg-box-key" x="355" y="182" width="150" height="46" rx="9" />
+              <text class="svg-name-key" x="430" y="210" text-anchor="middle">ADAPT</text>
+              <path class="svg-line-key" d="M 737.5 102 L 737.5 205 L 512 205" marker-end="url(#lk)" />
+              <path class="svg-line-key" d="M 355 205 L 122.5 205 L 122.5 110" marker-end="url(#lk)" />
+              <text class="svg-edge" x="621" y="196" text-anchor="middle">new information</text>
+              <text class="svg-edge" x="239" y="196" text-anchor="middle">more context</text>
+            </svg>
+          </div>
+          <figcaption><strong>Understand → Prioritise → Guide</strong> is what Portfolio does; the user acting is what produces new information. That information returns through <strong>Adapt</strong> into Understand — which is why the next recommendation is better than the last. Adapt isn't a stage at the end; it is the edge that closes the loop.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF 01 -->
+  <section>
+    <div class="block">
+      <div class="notation">Proof 01<span>Screens 03–05 — contextual next steps</span></div>
+      <div class="flow">
+        <h2>The same Portfolio gives different users different next steps.</h2>
+        <p>Three users, three conditions, three different recommendations. <strong>The layout never changes — only what qualifies.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-tag"><b>Screens 03 – 05</b> &nbsp;·&nbsp; Three user states</div>
+      <p class="stage-note">Identical layout, identical feature set. What differs is which condition each user satisfies.</p>
+    </div>
+    <div class="stage-rail">
+
+      <div class="device">
+        <div class="device-label"><b>03</b> No policies</div>
+        <div class="phone">
+          <div class="ph-bar"><span>09:41</span><span>▮▮▮ ▾ ▰</span></div>
+          <div class="ph-nav"><span class="ph-back">‹</span><span class="ph-title">Policy portfolio</span><span class="ph-add">＋ Add Policy</span></div>
+          <div class="ph-members">
+            <span class="mem on"><i class="av"></i>Self</span>
+            <span class="mem plus"><i class="av blank">＋</i></span>
+          </div>
+          <div class="ph-stats">
+            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>0</b></div><em>Policies</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>—</b></div><em>Premium Yearly</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><circle cx="12.2" cy="6" r="2.3"/><path d="M0.8 14.5c0-3 2.4-4.6 5.2-4.6s5.2 1.6 5.2 4.6z"/></svg><b>1</b></div><em>Member</em></div>
+          </div>
+          <div class="ph-body">
+            <div class="ph-empty"><b>No policies added yet</b><em>Add a policy to track premiums, renewals and documents in one place.</em></div>
+            <div class="pitch">
+              <div class="pitch-tag">Start here</div>
+              <div class="pitch-title">Find out how much cover you actually need</div>
+              <div class="pitch-body">Questions about dependants, income, expenses, health and lifestyle. About two minutes.</div>
+              <div class="pitch-cta"><span class="btn">Check with CoverRisk</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption"><em>Understand their protection needs before pushing a purchase.</em> Nothing to display, so Portfolio doesn't pretend otherwise.</p>
+      </div>
+
+      <div class="device">
+        <div class="device-label"><b>04</b> Health + Motor</div>
+        <div class="phone">
+          <div class="ph-bar"><span>09:41</span><span>▮▮▮ ▾ ▰</span></div>
+          <div class="ph-nav"><span class="ph-back">‹</span><span class="ph-title">Policy portfolio</span><span class="ph-add">＋ Add Policy</span></div>
+          <div class="ph-members">
+            <span class="mem on"><i class="av"></i>Self</span>
+            <span class="mem plus"><i class="av blank">＋</i></span>
+          </div>
+          <div class="ph-stats">
+            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>0</b></div><em>Policies</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>—</b></div><em>Premium Yearly</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><circle cx="12.2" cy="6" r="2.3"/><path d="M0.8 14.5c0-3 2.4-4.6 5.2-4.6s5.2 1.6 5.2 4.6z"/></svg><b>1</b></div><em>Member</em></div>
+          </div>
+          <div class="ph-body">
+            <div class="ph-empty"><b>You told us you have Health and Motor cover</b><em>Add them to see premiums, renewals and documents together.</em></div>
+            <div class="pitch">
+              <div class="pitch-tag">From your onboarding answers</div>
+              <div class="pitch-title">Add your Health and Motor policies</div>
+              <div class="pitch-body">You mentioned two dependants. Life cover is the gap they would feel first.</div>
+              <div class="pitch-cta"><span class="btn">Add Health + Motor</span><span class="btn ghost">Consider Life</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption"><em>Continue what the user already told us in onboarding.</em> Instead of starting over, Portfolio picks up the thread — which is also where Add Policy becomes discoverable.</p>
+      </div>
+
+      <div class="device">
+        <div class="device-label"><b>05</b> CoverRisk completed</div>
+        <div class="phone">
+          <div class="ph-bar"><span>09:41</span><span>▮▮▮ ▾ ▰</span></div>
+          <div class="ph-nav"><span class="ph-back">‹</span><span class="ph-title">Policy portfolio</span><span class="ph-add">＋ Add Policy</span></div>
+          <div class="ph-members">
+            <span class="mem"><i class="av pair"></i>Family</span>
+            <span class="mem on"><i class="av"></i>Self</span>
+            <span class="mem plus"><i class="av blank">＋</i></span>
+          </div>
+          <div class="ph-stats">
+            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>2</b></div><em>Policies</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>₹18 K</b></div><em>Premium Yearly</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1.4l1.9 4.2 4.6.5-3.4 3.1.9 4.5L8 11.5l-4 2.2.9-4.5L1.5 6.1l4.6-.5z"/></svg><b>3.3</b></div><em>Avg. KYP</em></div>
+          </div>
+          <div class="ph-body">
+            <div class="pcard">
+              <div class="pc-top">
+                <span class="pc-logo h">HL</span>
+                <span class="pc-name"><b>Basic Health Plan</b><em>Health · ₹5,00,000</em></span>
+                <span class="kyp mid"><b>3.4</b><em>KYP</em></span>
+              </div>
+              <div class="pc-meta"><em>Next premium · 14 Sep</em><b>₹9,400</b></div>
+            </div>
+            <div class="pitch">
+              <div class="pitch-tag">From your CoverRisk report</div>
+              <div class="pitch-title">You may need ₹80,00,000 additional life cover</div>
+              <div class="pitch-figs">
+                <div><em>Recommended cover</em><b>₹80L</b></div>
+                <div><em>Est. prem / yr</em><b>₹11,800</b></div>
+              </div>
+              <div class="pitch-cta"><span class="btn">See plans</span><span class="btn ghost">Talk to an advisor</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption"><em>Turn a generic buying prompt into something actionable.</em> Recommended cover, estimated premium, and an advisor for the questions a report raises.</p>
+      </div>
+
+    </div>
+    <p class="stage-foot">Two actions at a time.
+      <span>Enough direction without turning Portfolio into a checklist.</span>
+    </p>
+  </div>
+
+  <!-- PROOF 02 — COVERRISK -->
+  <section>
+    <div class="block">
+      <div class="notation">Proof 02<span>Personalisation — the decision layer</span></div>
+      <div class="flow">
+        <h2>We had the user's risk data. We weren't using it at the buying moment.</h2>
+        <p>CoverRisk already collects a detailed picture of the user:</p>
+        <div class="chain">
+          <b>Age</b> <i>·</i> <b>Location</b> <i>·</i> <b>Family</b> <i>·</i> <b>Dependants</b> <i>·</i> <b>Health</b> <i>·</i> <b>Lifestyle</b> <i>·</i> <b>Income</b> <i>·</i> <b>Investments</b> <i>·</i> <b>Property</b> <i>·</i> <b>Expenses</b>
+        </div>
+        <p>It generates a detailed risk report and recommends an appropriate coverage amount. <strong>Previously that intelligence largely stayed inside CoverRisk.</strong> The report was the end of the road, while the buying screen — the place where a number would change someone's mind — still showed a category name.</p>
+        <p>I connected it back to Portfolio. That was the whole intervention: no new data, no new model, just the number placed where the decision happens.</p>
+        <div class="rule-line">
+          <b>Understand</b> <span class="arrow">→</span> <b>Recommend</b> <span class="arrow">→</span> <b>Quantify</b> <span class="arrow">→</span> <b>Buy</b>
+        </div>
+        <p>Most people don't know what cover they need. Left alone, they optimise the one number they understand — the premium — and buy the cheapest policy available. Then treatment takes away their income and they discover the cover was never built for their life. That is what critical illness cover exists for, and it is invisible to anyone shopping on price.</p>
+        <p>So the recommendation names a coverage level and an average premium for it, at their age and health profile. <strong>Not a specific insurer. Not a cheap policy.</strong></p>
+        <p class="kicker blue">Don't optimise for the cheapest premium. Help users start with enough protection.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-tag"><b>Recommendation state</b> &nbsp;·&nbsp; before and after</div>
+      <p class="stage-note">Same intent, same position on the screen. Switch between them.</p>
+    </div>
+    <div class="flip">
+      <div class="switch" role="group" aria-label="Recommendation version">
+        <button type="button" id="btn-before" aria-pressed="true" aria-controls="fp-before">Before</button>
+        <button type="button" id="btn-after" aria-pressed="false" aria-controls="fp-after">After</button>
+      </div>
+      <div class="flip-panel" id="fp-before">
+        <div class="phone" style="min-height: 0; width: 318px; border-radius: 20px;">
+          <div class="ph-body" style="border-radius: 20px; padding: 17px 15px;">
+            <div class="banner-ghost">Permanent promotional slot</div>
+            <div class="pitch" style="margin-top: 0;">
+              <div class="pitch-title" style="font-size: 15px;">Buy Life Insurance</div>
+              <div class="pitch-body">Secure your family's future today.</div>
+              <div class="pitch-cta"><span class="btn mute">Explore plans</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption" style="max-width: 42ch; text-align: center;">A category name and an imperative. <em>Nothing here is specific to the person reading it.</em></p>
+      </div>
+      <div class="flip-panel" id="fp-after" hidden>
+        <div class="phone" style="min-height: 0; width: 318px; border-radius: 20px;">
+          <div class="ph-body" style="border-radius: 20px; padding: 17px 15px;">
+            <div class="pitch" style="margin-top: 0;">
+              <div class="pitch-tag">From your CoverRisk report</div>
+              <div class="pitch-title" style="font-size: 15px;">You may need ₹80,00,000 additional life cover</div>
+              <div class="pitch-body">Based on your dependants, income, expenses, lifestyle and ₹40,00,000 of existing cover.</div>
+              <div class="pitch-figs">
+                <div><em>Recommended cover</em><b>₹80L</b></div>
+                <div><em>Est. prem / yr</em><b>₹11,800</b></div>
+              </div>
+              <div class="pitch-cta"><span class="btn">See plans</span><span class="btn ghost">Talk to an advisor</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption" style="max-width: 42ch; text-align: center;">An amount, its inputs, and its cost. <em>The user can now disagree with it — which is what makes it worth trusting.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIORITISATION -->
+  <section>
+    <div class="block">
+      <div class="notation">Prioritisation<span>The recommendation order</span></div>
+      <div class="flow">
+        <h2>We prioritised protection — not the product catalogue.</h2>
+        <p>A recommendation system is only as good as its ranking. I worked with Product and Team leadership to define which insurance needs should come first, and which only make sense once those exist.</p>
+        <p><strong>CoverRisk does not decide this order.</strong> It supplies the coverage amount and the premium estimate. The sequence is a separate decision, and it holds regardless of what the report returns.</p>
+      </div>
+      <div class="wide">
+        <div class="tiers">
+          <div class="tier">
+            <div class="tier-head"><b>Foundational protection</b><div class="tier-bar"><i style="width: 100%;"></i></div><em>Recommend first</em></div>
+            <div class="tier-items">
+              <div class="tier-chips"><span>Health</span><span>Life</span></div>
+              <p>Absence here is the gap a family feels first. Nothing gets recommended over it.</p>
+            </div>
+          </div>
+          <div class="tier">
+            <div class="tier-head"><b>Additional protection</b><div class="tier-bar"><i style="width: 62%;"></i></div><em>Once the foundation exists</em></div>
+            <div class="tier-items">
+              <div class="tier-chips"><span>Super Top-Up</span><span>Critical Illness</span><span>Accident</span></div>
+              <p>These extend cover rather than establish it. Critical illness replaces income lost to treatment, which a health policy alone does not do.</p>
+            </div>
+          </div>
+          <div class="tier">
+            <div class="tier-head"><b>Situational protection</b><div class="tier-bar"><i style="width: 28%;"></i></div><em>Only on a signal</em></div>
+            <div class="tier-items">
+              <div class="tier-chips"><span>Hospicash</span><span>Home</span><span>Other relevant needs</span></div>
+              <p>Relevant to some people, irrelevant to most. Shown only when something in the user's context asks for it.</p>
+            </div>
+          </div>
+        </div>
+        <p class="tier-note">Bars show relative priority in the recommendation order — not measured data</p>
+      </div>
+      <div class="flow" style="margin-top: 24px;">
+        <div class="rule-line dead">
+          <b>No foundational cover</b> <span class="arrow">→</span> <b>pitch home insurance</b> &nbsp;<span>— never</span>
+        </div>
+        <p>The order matters. Pushing a lower-priority product simply because it is easier or cheaper to sell can create the wrong outcome — and that damage lands on the brand, not on the campaign.</p>
+        <p class="kicker">Portfolio recommends what matters next, not what is easiest to promote.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF 03 — SHARE -->
+  <section>
+    <div class="block">
+      <div class="notation">Proof 03<span>Screen 06 — behavioural UX</span></div>
+      <div class="flow">
+        <h2>Share Policy needed a reason — not another button.</h2>
+        <p>The question wasn't <em>where should Share Policy go?</em> It was <em>when does sharing become useful enough to act on?</em></p>
+        <p>Sharing an insurance policy isn't a convenience. It is a responsibility, and the moment it pays off is the worst moment of someone's life — a nominee hunting for a policy number while grieving. You can't design for that moment. You design <em>ahead of</em> it.</p>
+        <div class="rule-line">
+          <b>Important policy</b> <span class="arrow">→</span> <b>Nominee context</b> <span class="arrow">→</span> <b>Reason</b> <span class="arrow">→</span> <b>Share</b>
+        </div>
+        <p>So on Life and Group policies the entry point stopped being a button and became a sentence:</p>
+        <blockquote class="quote">
+          Your nominee may not be able to access this policy easily during an emergency.
+          <cite>Share Policy · entry copy</cite>
+        </blockquote>
+        <p><strong>Reason leads. Action follows.</strong> And the same principle runs across the whole screen: don't just show an action — explain why it matters now.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-tag"><b>Screen 06</b> &nbsp;·&nbsp; Share Policy, nominee context</div>
+      <p class="stage-note">Policy details, Life policy. The reason sits above the action, written for someone who hasn't thought about this yet.</p>
+    </div>
+    <div class="stage-single">
+      <div class="device">
+        <div class="phone">
+          <div class="ph-bar"><span>09:41</span><span>▮▮▮ ▾ ▰</span></div>
+          <div class="ph-nav"><span class="ph-back">‹</span><span class="ph-title">Policy details</span></div>
+          <div class="ph-body" style="margin-top: 4px;">
+            <div class="pcard">
+              <div class="pc-top">
+                <span class="pc-logo">LI</span>
+                <span class="pc-name"><b>Term Life Protect</b><em>Term life · ₹40,00,000</em></span>
+                <span class="kyp"><b>4.1</b><em>KYP</em></span>
+              </div>
+              <div class="pc-meta"><em>Next premium · 02 Nov 2026</em><b>₹10,829</b></div>
+              <div class="pc-meta"><em>Nominee · Meera S.</em><em>Sole nominee</em></div>
+            </div>
+            <div class="reason">
+              <div class="pitch-tag">Nominee access</div>
+              <div class="pitch-title">Your nominee may not be able to access this policy easily during an emergency.</div>
+              <div class="pitch-body">Meera can be given view access to the policy document, premium schedule and claim contact — without being able to make changes.</div>
+              <div class="pitch-cta"><span class="btn">Share with Meera</span><span class="btn ghost">Not now</span></div>
+            </div>
+            <div style="font-size: 9.5px; color: #8a8a90; text-align: center;">Shown on Life and Group policies only</div>
+          </div>
+        </div>
+        <p class="device-caption" style="text-align: center;">The nominee is named, and so is exactly what they would get. <em>Specificity is what makes an abstract good idea worth doing now.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROOF 04 — FAMILY -->
+  <section>
+    <div class="block">
+      <div class="notation">Proof 04<span>Screen 07 — family management</span></div>
+      <div class="flow">
+        <h2>Family Overview turns “Add Family” into part of Portfolio management.</h2>
+        <p>One person usually manages insurance for the whole family. But if family policies are scattered, or a member's policy is missing, then premiums, renewals and emergencies all get harder.</p>
+        <p>So the new Family Overview makes the family visible upfront. It answers three questions at a glance:</p>
+        <ul class="list">
+          <li><dfn>Who</dfn><p><strong>Who is covered?</strong> Every member, their policy count, their yearly premium.</p></li>
+          <li><dfn>Gap</dfn><p><strong>Who is missing?</strong> An incomplete overview reads as incomplete.</p></li>
+          <li><dfn>Next</dfn><p><strong>Whose policies still need to be added?</strong> The prompt is the section itself.</p></li>
+        </ul>
+        <div class="rule-line">
+          <b>Family overview</b> <span class="arrow">→</span> <b>Add family member</b> <span class="arrow">→</span> <b>Add their policy</b>
+        </div>
+        <p>The section becomes a natural prompt — <strong>instead of another promotional banner asking users to do it.</strong> That is the whole thesis applied to an adoption problem: let the structure carry the request.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-tag"><b>Screen 07</b> &nbsp;·&nbsp; Family Overview</div>
+      <p class="stage-note">Members, policies and yearly premium across the whole family. Switching to any member shows their portfolio alone.</p>
+    </div>
+    <div class="stage-single">
+      <div class="device">
+        <div class="phone">
+          <div class="ph-bar"><span>09:41</span><span>▮▮▮ ▾ ▰</span></div>
+          <div class="ph-nav"><span class="ph-back">‹</span><span class="ph-title">Policy portfolio</span><span class="ph-add">＋ Add Policy</span></div>
+          <div class="ph-members">
+            <span class="mem on"><i class="av pair"></i>Family</span>
+            <span class="mem"><i class="av"></i>Self</span>
+            <span class="mem"><i class="av m2"></i>Mother</span>
+            <span class="mem plus"><i class="av blank">＋</i></span>
+          </div>
+          <div class="ph-stats">
+            <div><div class="row"><svg viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><circle cx="12.2" cy="6" r="2.3"/><path d="M0.8 14.5c0-3 2.4-4.6 5.2-4.6s5.2 1.6 5.2 4.6z"/></svg><b>3</b></div><em>Member</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>9</b></div><em>Policies</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>₹82 K</b></div><em>Premium Yearly</em></div>
+          </div>
+          <div class="ph-body">
+            <div class="ov-head"><b>Family overview</b><em>3 of 4 added</em></div>
+            <div class="ov-row"><i class="av"></i><div class="txt"><b>Self</b><em>4 policies</em></div><span class="amt">₹38 K</span></div>
+            <div class="ov-row"><i class="av m2"></i><div class="txt"><b>Mother</b><em>3 policies</em></div><span class="amt">₹26 K</span></div>
+            <div class="ov-row"><i class="av m3"></i><div class="txt"><b>Father</b><em>2 policies</em></div><span class="amt">₹18 K</span></div>
+            <div class="ov-add">
+              <i class="av blank">＋</i>
+              <div class="txt"><b>Add a family member</b><em>Keep every policy in one place for emergencies</em></div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption" style="text-align: center;"><em>The incomplete row is the reminder.</em> No banner needed — an unfinished section is its own call to action.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROOF 05 — KYP -->
+  <section>
+    <div class="block">
+      <div class="notation">Proof 05<span>Screen 08 — KYP integration</span></div>
+      <div class="flow">
+        <h2>We brought KYP closer to the policy itself.</h2>
+        <p>Know Your Policy already helped users understand whether their policy was good or carried important limitations. <strong>But the feature lived separately from the policies users were actually looking at.</strong></p>
+        <p>We connected the KYP rating directly to the policy card. Users now see the rating where they already manage the policy, then explore the reasoning behind it:</p>
+        <div class="chain">
+          <b>Good coverage</b> <i>·</i> <b>ICU limits</b> <i>·</i> <b>Room-rent limits</b> <i>·</i> <b>Refill benefits</b> <i>·</i> <b>Other conditions</b>
+        </div>
+        <p>A room-rent cap is the kind of clause nobody reads and everybody discovers at the worst possible time. Surfacing the rating on the card is what makes it findable at all.</p>
+        <p class="kicker blue">This turns KYP from a separate feature into part of policy understanding.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-tag"><b>Screen 08</b> &nbsp;·&nbsp; Policy card + KYP rating</div>
+      <p class="stage-note">Every policy carries its rating. A weaker score isn't hidden — the point is that the user finds out now rather than at claim time.</p>
+    </div>
+    <div class="stage-single">
+      <div class="device">
+        <div class="phone">
+          <div class="ph-bar"><span>09:41</span><span>▮▮▮ ▾ ▰</span></div>
+          <div class="ph-nav"><span class="ph-back">‹</span><span class="ph-title">Policy portfolio</span><span class="ph-add">＋ Add Policy</span></div>
+          <div class="ph-members">
+            <span class="mem"><i class="av pair"></i>Family</span>
+            <span class="mem on"><i class="av"></i>Self</span>
+            <span class="mem"><i class="av m2"></i>Mother</span>
+            <span class="mem plus"><i class="av blank">＋</i></span>
+          </div>
+          <div class="ph-stats">
+            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>4</b></div><em>Policies</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>₹38 K</b></div><em>Premium Yearly</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1.4l1.9 4.2 4.6.5-3.4 3.1.9 4.5L8 11.5l-4 2.2.9-4.5L1.5 6.1l4.6-.5z"/></svg><b>3.9</b></div><em>Avg. KYP</em></div>
+          </div>
+          <div class="ph-body">
+            <div class="pcard">
+              <div class="pc-top">
+                <span class="pc-logo h">HL</span>
+                <span class="pc-name"><b>Comprehensive Health Plan</b><em>Health · ₹10,00,000</em></span>
+                <span class="kyp"><b>4.4</b><em>KYP</em></span>
+              </div>
+              <div class="pc-meta"><em>No room-rent cap · refill included</em><b>₹12,300</b></div>
+              <div class="track"><i class="paid"></i><i class="paid"></i><i class="due"></i><i></i></div>
+            </div>
+            <div class="pcard">
+              <div class="pc-top">
+                <span class="pc-logo">LI</span>
+                <span class="pc-name"><b>Term Life Protect</b><em>Term life · ₹40,00,000</em></span>
+                <span class="kyp"><b>4.1</b><em>KYP</em></span>
+              </div>
+              <div class="pc-meta"><em>Next premium · 02 Nov</em><b>₹10,829</b></div>
+            </div>
+            <div class="pcard">
+              <div class="pc-top">
+                <span class="pc-logo m">MT</span>
+                <span class="pc-name"><b>Motor Own Damage</b><em>Motor · ₹6,50,000</em></span>
+                <span class="kyp mid"><b>3.2</b><em>KYP</em></span>
+              </div>
+              <div class="pc-meta"><em>Limits apply · see why</em><b>₹6,150</b></div>
+            </div>
+          </div>
+        </div>
+        <p class="device-caption" style="text-align: center;"><em>The rating links to its reasoning.</em> A score alone would be another badge; the “see why” is what makes it useful.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROOF 06 — ADVISOR RESTRAINT -->
+  <section>
+    <div class="block">
+      <div class="notation">Proof 06<span>Restraint — the entry point I declined</span></div>
+      <div class="flow">
+        <h2>Advisor Portfolio appears when the user has a reason to ask for help.</h2>
+        <p><strong>We deliberately didn't add an Advisor banner to Portfolio.</strong> The Homepage already provides that entry point, so users have a direct route. Repeating it here would have added noise without adding access.</p>
+        <p>Instead, after CoverRisk generates the user's report, we offer an advisor — at the moment when they have context, and probably questions, that justify expert help.</p>
+        <div class="rule-line">
+          <b>Understand your risk</b> <span class="arrow">→</span> <b>See the report</b> <span class="arrow">→</span> <b>Get expert guidance</b>
+        </div>
+        <p>This makes the advisor action feel useful rather than promotional. Declining to place a feature is harder to argue for than placing one — and it is the decision I would defend first.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOOP -->
+  <section>
+    <div class="block">
+      <div class="notation">The loop<span>Why it keeps getting better</span></div>
+      <div class="flow">
+        <h2>Every action creates more context.</h2>
+        <p>Portfolio isn't a collection of independent CTAs. It works as a continuous loop, where each action returns information to the thing that made the recommendation.</p>
+        <div class="chain">
+          <b>User context</b> <i>→</i> <b>Relevant action</b> <i>→</i> <b>New information</b> <i>→</i> <b>Better recommendation</b> <i>→</i> <b>Next useful action</b>
+        </div>
+        <ul class="list">
+          <li><dfn>Add a policy</dfn><p>We understand more, and the gap being measured shrinks.</p></li>
+          <li><dfn>Finish CoverRisk</dfn><p>Recommendations become specific — categories turn into amounts.</p></li>
+          <li><dfn>Add family</dfn><p>The family picture becomes clearer, and the prompt stops appearing.</p></li>
+          <li><dfn>Explore KYP</dfn><p>Policy understanding improves, which changes what is worth recommending next.</p></li>
+        </ul>
+        <p class="pull">The Portfolio changes as the user changes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOME -->
+  <section>
+    <div class="block">
+      <div class="notation">Outcome<span>One strategy, three outcomes</span></div>
+      <div class="flow"><h2>One strategy. Three outcomes.</h2></div>
+      <div class="wide">
+        <div class="outcomes">
+          <div class="outcome">
+            <dfn>User</dfn>
+            <p><strong>Less noise. Clearer next step. Better insurance understanding.</strong></p>
+            <p>The primary task comes first, and every policy now shows what it is actually worth.</p>
+          </div>
+          <div class="outcome">
+            <dfn>Business</dfn>
+            <p><strong>Important capabilities became discoverable through relevance.</strong></p>
+            <p>Add Policy, Family Management, CoverRisk, KYP, Buy Policy and Advisor Portfolio — each tied to a condition, or in one case deliberately to no slot at all.</p>
+          </div>
+          <div class="outcome">
+            <dfn>Product</dfn>
+            <p><strong>Context continues across the journey.</strong></p>
+            <p>Onboarding, Homepage, Portfolio and Policy Details now read from the same user state, so Portfolio became part of one connected product journey.</p>
+          </div>
+        </div>
+      </div>
+      <div class="flow" style="margin-top: 24px;">
+        <div class="status">
+          <b>Recently launched</b>
+          <p>Quantitative results to follow as usage data matures. I'd rather show the reasoning now than a number I can't yet stand behind. Current product impact:</p>
+          <ul>
+            <li>More contextual discovery</li>
+            <li>Clearer actions</li>
+            <li>Stronger policy understanding</li>
+            <li>Better journey continuity</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLE -->
+  <section>
+    <div class="block">
+      <div class="notation">My role<span>Deciding what appears — and why</span></div>
+      <div class="flow">
+        <h2>My role was deciding what should appear — and why.</h2>
+        <p>I led the Portfolio experience across:</p>
+        <div class="tags">
+          <span>UX Strategy</span>
+          <span>Recommendation Logic</span>
+          <span>Interaction Design</span>
+          <span>Information Hierarchy</span>
+          <span>Progressive Disclosure</span>
+          <span>KYP Integration</span>
+          <span>UX Writing</span>
+        </div>
+        <p>I worked closely with Product and Design leadership to shape the final strategy, balancing four things that don't automatically agree:</p>
+        <div class="chain">
+          <b>User needs</b> <i>×</i> <b>Product priorities</b> <i>×</i> <b>Business goals</b> <i>×</i> <b>Insurance context</b>
+        </div>
+        <p>That last one matters more than it sounds. Our product and team leadership carry years of knowledge about this product, its users and the insurance industry — which is why the recommendation order, the protection tiering and the family structure were all worked through with them rather than designed in isolation.</p>
+        <p class="pull">The work wasn't “where should we place the CTA?” It was who should see it, when, why, and what should happen next.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="close">
+    <div class="wrap">
+      <p class="close-eyebrow">From policy storage to active insurance management</p>
+      <p class="close-line">We didn't want Portfolio to be where the insurance journey <span>ended.</span> We wanted it to be where the next useful step became <span>clear.</span></p>
+      <div class="close-foot"><span>CoverSure · Policy Portfolio</span><span>Full case study</span></div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    'use strict';
+
+    var DEFAULT_VIEW = 'compact';
+    var VIEWS = ['compact', 'full'];
+    var tabs = {}, panels = {};
+
+    VIEWS.forEach(function (v) {
+      tabs[v] = document.getElementById('tab-' + v);
+      panels[v] = document.getElementById('panel-' + v);
+    });
+
+    var carousel = (function () {
+      var root = document.getElementById('car');
+      var slides = [].slice.call(root.querySelectorAll('.car-slide'));
+      var dots = [].slice.call(root.querySelectorAll('.car-dot'));
+      var cap = document.getElementById('car-cap');
+      var playBtn = document.getElementById('car-play');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var DWELL = 3800;
+      var index = 0, timer = null, running = false, userStopped = false, hovered = false;
+
+      function render() {
+        slides.forEach(function (s, i) { s.classList.toggle('on', i === index); });
+        dots.forEach(function (d, i) { d.setAttribute('aria-current', String(i === index)); });
+        cap.innerHTML = slides[index].getAttribute('data-cap') || '';
+      }
+
+      function advance() { index = (index + 1) % slides.length; render(); }
+      function tick() { if (!timer) { timer = window.setInterval(advance, DWELL); } }
+      function untick() { window.clearInterval(timer); timer = null; }
+
+      function start() {
+        if (running || userStopped || reduce.matches) { return; }
+        running = true;
+        tick();
+        playBtn.textContent = 'Pause';
+        playBtn.setAttribute('aria-pressed', 'true');
+      }
+
+      function stop(byUser) {
+        running = false;
+        untick();
+        if (byUser) { userStopped = true; }
+        playBtn.textContent = 'Play';
+        playBtn.setAttribute('aria-pressed', 'false');
+      }
+
+      dots.forEach(function (d, i) {
+        d.addEventListener('click', function () { index = i; render(); stop(true); });
+      });
+
+      playBtn.addEventListener('click', function () {
+        if (running) { stop(true); } else { userStopped = false; start(); }
+      });
+
+      root.addEventListener('mouseenter', function () { hovered = true; if (running) { untick(); } });
+      root.addEventListener('mouseleave', function () { hovered = false; if (running) { tick(); } });
+      root.addEventListener('focusin', function () { if (running) { untick(); } });
+      root.addEventListener('focusout', function () { if (running && !hovered) { tick(); } });
+
+      render();
+
+      return {
+        sync: function () {
+          if (!panels.compact.hidden) { start(); }
+          else if (running) { untick(); running = false; }
+        }
+      };
+    })();
+
+    function showView(view, isClick) {
+      if (VIEWS.indexOf(view) === -1) { view = DEFAULT_VIEW; }
+      VIEWS.forEach(function (v) {
+        var on = v === view;
+        tabs[v].setAttribute('aria-selected', String(on));
+        tabs[v].setAttribute('tabindex', on ? '0' : '-1');
+        panels[v].hidden = !on;
+      });
+      if (isClick) {
+        history.replaceState(null, '', '#' + view);
+        window.scrollTo(0, 0);
+      }
+      carousel.sync();
+    }
+
+    VIEWS.forEach(function (v) {
+      tabs[v].addEventListener('click', function () { showView(v, true); });
+    });
+
+    document.querySelector('[role="tablist"]').addEventListener('keydown', function (e) {
+      var id = document.activeElement && document.activeElement.id;
+      if (!id || id.indexOf('tab-') !== 0) { return; }
+      var i = VIEWS.indexOf(id.replace('tab-', ''));
+      if (i === -1) { return; }
+      var next = null;
+      if (e.key === 'ArrowRight') { next = (i + 1) % VIEWS.length; }
+      else if (e.key === 'ArrowLeft') { next = (i - 1 + VIEWS.length) % VIEWS.length; }
+      else if (e.key === 'Home') { next = 0; }
+      else if (e.key === 'End') { next = VIEWS.length - 1; }
+      if (next === null) { return; }
+      e.preventDefault();
+      showView(VIEWS[next], true);
+      tabs[VIEWS[next]].focus();
+    });
+
+    var bBtn = document.getElementById('btn-before');
+    var aBtn = document.getElementById('btn-after');
+    var bPan = document.getElementById('fp-before');
+    var aPan = document.getElementById('fp-after');
+
+    function flip(isBefore) {
+      bBtn.setAttribute('aria-pressed', String(isBefore));
+      aBtn.setAttribute('aria-pressed', String(!isBefore));
+      bPan.hidden = !isBefore;
+      aPan.hidden = isBefore;
+    }
+
+    bBtn.addEventListener('click', function () { flip(true); });
+    aBtn.addEventListener('click', function () { flip(false); });
+
+    function fromHash() {
+      return (location.hash || '').replace('#', '') || DEFAULT_VIEW;
+    }
+
+    showView(fromHash(), false);
+    window.addEventListener('hashchange', function () { showView(fromHash(), false); });
+  })();
+</script>
+</body>
+</html>
