@@ -35,9 +35,14 @@ Both versions are deep-linkable:
 
 ## Project log
 
-[`PROJECT-LOG.md`](PROJECT-LOG.md) records how this was built — design decisions and their
-reasoning, the fact-finding questions and answers behind the content, corrections made
-along the way, which figures are illustrative rather than real, and what remains open.
+[`PROJECT-LOG.md`](PROJECT-LOG.md) is the working record behind this case study:
+
+- **Feedback and direction received** — every instruction given, and what each one changed
+- **Fact-finding** — the six questions asked to keep the content factual, and the answers
+- **Decision record** — decisions taken and why, including the ones later reversed
+- **Corrections made** — what was wrong in a draft and how it was fixed
+- **What is illustrative, not real** — stated plainly, so no figure is mistaken for product data
+- **Open items** and the deployment record
 
 ## Viewing it
 

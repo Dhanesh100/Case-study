@@ -1,6 +1,6 @@
 # Project log — CoverSure Policy Portfolio case study
 
-**Last updated:** 20 August 2026
+**Last updated:** 20 August 2026 · records the full discussion, feedback and decisions behind this case study
 **Deliverable:** [`index.html`](index.html) — live at <https://dhanesh100.github.io/Case-study/>
 **Author:** Dhanesh Shetye · **Built with:** Claude Code (Opus 5)
 
@@ -89,7 +89,29 @@ constant so it can be flipped in one edit.
 
 ---
 
-## 4. Fact-finding — six questions, and the answers
+## 4. Feedback and direction received
+
+The brief moved substantially across the project. Recorded in order, with what each
+instruction changed.
+
+| Direction given | What changed as a result |
+|---|---|
+| "Create a product designer case study from this" | First build from the screens outline. Seven `[SCREEN xx]` placeholders reconstructed as HTML/CSS, identity grounded in the product surface. |
+| Make it near-final: work at **two reading levels** — a 20–30 second scan and a 2–3 minute read. "Hide all the body copy… if the story still makes sense, you've succeeded." | The scan test became a hard acceptance criterion, run programmatically before every publish. The mono notation gutter exists to satisfy it. |
+| Add a second version with **version tabs**, built around five points showing strategy, UX and business understanding | The Compact version, the five skill-labelled points, and the tab shell. |
+| "I want these versions to A/B test with friends and decide from feedback" | Tabs styled with **equal weight** — no "recommended" badge, which would bias the result — plus `#compact` / `#full` deep links so each tester can be sent one version cold. |
+| "Less text, more visual — graphs, charts, maps to scan and understand easily" | Compact became diagram-led with a hard ~400-word prose budget (it landed at 220). Every point carries a visual. |
+| "We can add video or auto-scroll to showcase more UI screens" | Video is impossible under the artifact CSP and would blow the 16 MB budget, so an auto-advancing carousel with a pause control was built instead. Later, scrollable device frames served the same purpose for tall screens. |
+| Answers to the six fact-finding questions | Illustrative content replaced with real project facts. See §5. |
+| A fully rewritten narrative supplied, with an explicit spine: Problem → Decision → Strategy → Proof ×3 → Outcome → Role | Both versions restructured to that spine. Section order and headline wording follow it. |
+| "Reflect these details in all versions" | Family Overview, KYP and the Advisor restraint added as their own sections; capability list grown from four to seven. |
+| Ten reference screens supplied | Three claims in the case study found unsupported. See §8. |
+| Three Figma section links supplied | Real screens exported and embedded, replacing ten of twelve mockups. See §9. |
+| "Save the discussion, feedback and decisions in a document in the repository" | This log. |
+
+---
+
+## 5. Fact-finding — six questions, and the answers
 
 Illustrative content was replaced by asking for real project facts. Summarised below.
 
@@ -178,7 +200,48 @@ progressive disclosure and UX writing.
 
 ---
 
-## 5. Corrections made
+## 6. Decision record
+
+Decisions taken, and why. Where a decision reversed an earlier one, both are shown.
+
+### Design
+
+| Decision | Rationale |
+|---|---|
+| Identity derived from the product surface — policy navy, electric blue, cool paper | The alternative on hand was the cream / serif-display / terracotta treatment from the earlier CoverSure homepage case study. That combination is the most common look in AI-generated design work and reads as templated. |
+| Avenir Next Condensed + Charter + SF Mono, all system-available | The artifact CSP blocks font CDNs; a linked webfont would silently fall back to a default and quietly wreck the type. |
+| Points labelled by skill, not numbered `01–05` | Five parallel capabilities are not a sequence. Numbering them would be decoration pretending to be information. |
+| `Adapt` drawn on the return edge of the loop, not as a terminal box | Adapt is what closes the loop. Drawing it as a final stage would misrepresent the mechanism the diagram exists to explain. |
+| Real screens shown in fixed-height **scrollable device frames**, not cropped | One export is 6,000 px tall. Cropping picks the reader's conclusion for them; a scrollable frame keeps the whole screen explorable without dominating the page. |
+| Before/after recommendation pair left as a CSS reconstruction | The "before" is a hypothetical the product never shipped. Presenting a mockup as an export would be a false claim. |
+| Compact version opens on the reframe diagram, with no screenshot | In a 60-second read a diagram explaining the strategic move does more than a screenshot. Deliberately contentious — flagged as something the A/B test should settle. |
+
+### Publishing
+
+| Decision | Rationale |
+|---|---|
+| Both versions in one page, tabs, equal weight, deep-linkable | The A/B test needs one shareable URL per version and no visual hint of a preferred answer. |
+| Images embedded as data URIs, not relative paths | The artifact CSP blocks external hosts, and relative paths would 404 there. One self-contained file works identically as artifact and as Pages. |
+| JPEG at 620 px wide, quality 85, displayed at 292 CSS px | Displaying at under half the source width averages compression artefacts away. Total 2.4 MB against a 16 MB ceiling. |
+| Working documents (build brief, raw answers) kept out of the public repo | They hold raw internal detail. This log covers the same ground in a form fit for publishing. |
+| Real product screens published publicly | Supplied deliberately for this purpose via Figma links. Exposes the PRO tier, per-product pricing, the rating mechanism and the category taxonomy. Revisit if that changes; git history persists. |
+
+### Content integrity
+
+| Decision | Rationale |
+|---|---|
+| No metric or performance charts | The product recently launched with no mature usage data. Diagrams of logic are verifiable; a fabricated adoption chart is the fastest way to lose a senior reviewer. |
+| "Recently launched — quantitative results to follow" kept verbatim | Better to show reasoning than a number that cannot yet be stood behind. |
+| **Reversed:** "Adding three banners was a real option. Arguing it down was part of the work" — removed | The product head brought banner confusion as one of the problems, so an adversarial framing was inaccurate. |
+| Credit split by voice: "we" for team-originated work, "I" for designer-owned | Overclaiming solo credit on team work is a known portfolio red flag. Naming the lane makes every other claim more believable. |
+| Generic policy names, not real insurers | First taken as caution on a public repo. Later confirmed correct for a better reason: the names in the designs are placeholders, so real ones would be fabricated. |
+| Shipped share copy quoted **alongside** the refined line | The refined line has not shipped. Implying it had was the one claim on the page a reviewer could disprove by opening the app. |
+| The inherited PRO banner named explicitly in Proof 06 | A reader comparing copy to screenshot would spot it. Naming what was outside the remit is stronger than silence. |
+| Tier bars labelled "relative priority — not measured data" | They are the only quasi-quantitative element on the page and would otherwise read as measurement. |
+
+---
+
+## 7. Corrections made
 
 The most useful output of the fact-finding. Each of these was wrong in a draft and got fixed.
 
@@ -196,7 +259,7 @@ The most useful output of the fact-finding. Each of these was wrong in a draft a
 
 ---
 
-## 6. Reference-screen review — 20 August 2026
+## 8. Reference-screen review — 20 August 2026
 
 Ten screens of the shipped interface were supplied for reference. They are substantially
 more detailed than the single screenshot the mockups were first built from, and they
@@ -254,7 +317,7 @@ and the public repo keeps the reconstructions.
 
 ---
 
-## 7. Real screens replace the reconstructions — 20 August 2026
+## 9. Real screens replace the reconstructions — 20 August 2026
 
 Three Figma section links were supplied and the screens exported directly through the
 Figma connector, replacing ten of the twelve hand-built CSS mockups. The two that remain
@@ -291,7 +354,7 @@ from a 620-px source, so compression artefacts average out. Total page: 2.4 MB a
 
 ---
 
-## 8. What is illustrative, not real
+## 10. What is illustrative, not real
 
 Stated plainly so nothing here is mistaken for product data.
 
@@ -306,26 +369,35 @@ Stated plainly so nothing here is mistaken for product data.
 
 ---
 
-## 9. Open items
+## 11. Open items
 
-**Blocking the next build**
+Everything blocking earlier has been resolved. What remains:
 
-1. **Supply the reference screens as files** (or a Figma link) so they can be embedded.
-2. **Is the PRO banner in scope?** Designed, inherited, or outside the remit? This decides whether the narrative can speak about promotional UI at all.
-3. **Is PRO's Relationship Manager the same as Advisor Portfolio?** Determines whether Proof 06 survives.
-4. **Which figures are canonical?** The supplied variants disagree (`₹82 K` vs `₹14.12 L`; 9 policies vs 12 for one member).
-5. **Clearance to publish real product screens** on a public repository.
-
-**Content gaps**
-
-6. **Real CoverRisk figures** — a sample profile with its actual recommended cover and premium.
-7. **Does `Avg. KYP` exist** as a header stat? The shipped headers show `Member · Policies · Premium Yearly`, so this looks invented and should probably be removed.
-8. **Restore real insurer names?** The product shows them, so this is likely a yes.
-9. **Compact cover has no screenshot** — it opens on the reframe diagram. A deliberate call, and a good thing for the A/B test to settle.
+1. **Real CoverRisk figures.** The recommended cover, premium and existing-cover values in the before/after card are still illustrative. This is the last invented number on the page, and it sits in the largest element of the Compact version.
+2. **Is the refined share-policy line live anywhere?** The exported policy screen shows the looser shipped copy. Proof 03 currently carries a caveat saying the refined line is still in flight — removable if it has shipped on a surface that was not exported.
+3. **Compact cover: diagram or screenshot?** It opens on the reframe diagram with no UI. A deliberate call, and precisely the kind of thing the A/B test exists to settle.
+4. **Pick a version.** Once peer feedback is in, either consolidate on one telling or keep both with a clear default.
+5. **Public visibility of real product screens.** Decided and live, but revisitable — noted here so it stays a conscious choice rather than an accident.
 
 ---
 
-## 10. Technical reference
+## 12. Deployment record
+
+| | |
+|---|---|
+| Repository | <https://github.com/Dhanesh100/Case-study> (public) |
+| Live site | <https://dhanesh100.github.io/Case-study/> |
+| A/B links | `#compact` · `#full` |
+| Pages source | `main` branch, root path, HTTPS enforced |
+| Page weight | 2.42 MB, 10 embedded screens |
+
+Verified after deploy rather than assumed: HTTP 200 on all three URLs, doctype and charset
+present in the served HTML, all 31 ₹ glyphs rendering, all 10 data URIs present, and no
+placeholder brand names leaking into the published page.
+
+---
+
+## 13. Technical reference
 
 Single self-contained file. No build step, no dependencies, no external requests.
 
@@ -347,7 +419,7 @@ Single self-contained file. No build step, no dependencies, no external requests
 
 ---
 
-## 11. Change history
+## 14. Change history
 
 | Date | Change |
 |---|---|
