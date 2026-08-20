@@ -254,7 +254,44 @@ and the public repo keeps the reconstructions.
 
 ---
 
-## 7. What is illustrative, not real
+## 7. Real screens replace the reconstructions — 20 August 2026
+
+Three Figma section links were supplied and the screens exported directly through the
+Figma connector, replacing ten of the twelve hand-built CSS mockups. The two that remain
+CSS are the before/after recommendation pair, because the "before" is a hypothetical the
+product never shipped.
+
+| Section | Figma node | Export |
+|---|---|---|
+| Screen 01 hero, Family Overview | `3091:24982` | 824×3222 @2x |
+| No policies added | `2167:25953` | 412×916 |
+| Pending attention | `10254:35122` | 412×1260 |
+| Member portfolio | `2176:24732` | 412×1856 |
+| Life policy detail | `9640:52243` | 412×2115 |
+| Policy rating scale | `2129:17149` | 380×520 |
+
+Screens are shown inside a fixed-height scrollable device frame rather than cropped, so a
+6,000-px screen stays explorable without dominating the page. Encoded as JPEG at 620 px
+wide, quality 85, embedded as data URIs — the artifact CSP blocks external images, and one
+self-contained file works identically as the artifact and on Pages. Displayed at 292 CSS px
+from a 620-px source, so compression artefacts average out. Total page: 2.4 MB against a
+16 MB ceiling.
+
+### What the real screens changed
+
+- **The rating scale is four levels, not one.** `GREAT / GOOD / AVERAGE / POOR`, each a colour-coded four-segment meter with counts of favourable and unfavourable conditions, plus a `COMING SOON` state. The earlier `4.4` badge was invented and the single-level `GREAT` band that replaced it was still incomplete.
+- **Know Your Policy is a tab**, sitting beside Details on the policy itself — not only a badge on the card. Added to Proof 05.
+- **Coverage adequacy is contextual, not a banner.** Each category header carries its own *"Is your Coverage Enough?"* beside a meter. Where a policy is due the choice is **Review report** or **Pay without Review**.
+- **Buy suggestions sit at the foot of the screen with reasons attached** — *"Hospital treatments in metro cities can cross ₹8–12L in one admission."* This is direct evidence for the case study's central rule, and it was previously argued rather than shown.
+- **The share card is real**, positioned after the policy details, alongside an `Emergency` shortcut in the header and a collapsible `Nominee` section.
+- **Shipped share copy differs from the case study's line.** The card reads *"While any emergency, share policy with family members will be helpful."* The refined line is presented as the UX-writing contribution, with the shipped version quoted — rather than implying the polished copy is live.
+- **State labels corrected.** "Health + Motor" and "CoverRisk completed" described states that do not exist as frames; they are now "Pending attention" and "Policies added", matching what the exports show.
+
+**Publishing note:** these are real product screens on a public repository and Pages site — the PRO tier, per-product pricing, the rating mechanism and the full category taxonomy are all now publicly visible. Supplied deliberately for this purpose; revisit if that changes.
+
+---
+
+## 8. What is illustrative, not real
 
 Stated plainly so nothing here is mistaken for product data.
 
@@ -269,7 +306,7 @@ Stated plainly so nothing here is mistaken for product data.
 
 ---
 
-## 8. Open items
+## 9. Open items
 
 **Blocking the next build**
 
@@ -288,7 +325,7 @@ Stated plainly so nothing here is mistaken for product data.
 
 ---
 
-## 9. Technical reference
+## 10. Technical reference
 
 Single self-contained file. No build step, no dependencies, no external requests.
 
@@ -310,7 +347,7 @@ Single self-contained file. No build step, no dependencies, no external requests
 
 ---
 
-## 10. Change history
+## 11. Change history
 
 | Date | Change |
 |---|---|
@@ -319,5 +356,6 @@ Single self-contained file. No build step, no dependencies, no external requests
 | 20 Aug 2026 | Second version plus tabs. Compact visual-led version, deep links for A/B testing, auto-advancing carousel. |
 | 20 Aug 2026 | Real project facts merged. All screens rebuilt to the shipped light UI; Family Overview, KYP and Advisor restraint added as their own sections; credit attribution corrected. |
 | 20 Aug 2026 | Published to GitHub Pages. Insurer names neutralised; wrapped into a standalone document. |
+| 20 Aug 2026 | Real screens exported from Figma and embedded, replacing 10 of 12 CSS mockups. Rating scale, KYP tab, contextual coverage checks and reasoned buy suggestions all corrected against the shipped UI. |
 | 20 Aug 2026 | Screen questions answered. PRO confirmed out of scope and distinct from Advisor Portfolio; all figures confirmed placeholders. KYP rebuilt as the real rating band; invented `Avg. KYP` stat removed. |
 | 20 Aug 2026 | Reference screens reviewed. Three narrative claims found unsupported and logged; KYP rating format, member-card structure and category taxonomy corrections identified. Screens pending as files. |
