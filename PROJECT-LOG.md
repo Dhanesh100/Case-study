@@ -111,12 +111,12 @@ built for their situation — which is exactly what critical illness cover addre
 ### Q2 · What are the real header figures?
 
 **Answer.** The shipped header shows `Member · Policies · Premium Yearly`, with member
-avatar chips (Family / Self / Mother / +) and `Add Policy` in the top-right. A verified
-family state: **3 members · 9 policies · ₹82 K yearly premium.**
+avatar chips (Family / Self / Mother / +) and `Add Policy` in the top-right.
 
-This resolved an arithmetic inconsistency in the earlier draft, where a 9-policy header sat
-above categories totalling 7. The 9 is a *family* total, so it now decomposes cleanly:
-Self 4 (₹38 K) + Mother 3 (₹26 K) + Father 2 (₹18 K).
+**Every figure in the supplied screens is a placeholder,** and the screens depict different
+users and use cases rather than one continuous account — so cross-screen totals are not
+meant to reconcile. What matters is that each individual screen is internally consistent.
+An earlier draft had a 9-policy header above categories totalling 7; that is fixed.
 
 The Family Overview also solved an adoption problem: one person usually manages insurance
 for a whole family, and scattered or missing policies make premiums, renewals and
@@ -217,8 +217,24 @@ quietly written around.
 - **Member cards are richer than reconstructed.** Name + relationship, a collapsible `12 policies | premium ₹80.2 K` row expanding into a category breakdown (2 Health ₹10 L insured · 1 Life ₹1.2 Cr · 4 Endowment ₹50 L · 2 Motor ₹12.7 L IDV), then **Check portfolio**. Members without policies show an amber `Policy not added → + Add Policy` row.
 - **Features not previously known:** Sync status · Download portfolio · Insurance on Card (debit/credit card benefits, named banks) · `Found 2 inactive policies → Review` · `4 Upcoming Renewals → Review & pay`.
 - **Category taxonomy is far wider** than the three used in the mockups: Health, Life, Motor, General, Agriculture, Business, Credit, Speciality, Other, Corporate, Endowment.
-- **Real insurer names appear in the product itself** (ICICI Health, HDFC Bank, ICICI Bank) alongside ratings — so the earlier decision to neutralise policy names was more cautious than necessary.
+- **Insurer names in the screens are placeholders**, not live product data. The earlier decision to replace them with generic policy names was therefore correct and stands.
 - **Internal inconsistency across the supplied variants:** one header reads `3 Member · 9 Policies · ₹82 K`, another `₹14.12 L`, while Rohit alone shows 12 policies / ₹80.2 K. Normal for design exploration; a canonical set is needed before the screens go into the case study.
+
+### Resolved — 20 August 2026
+
+| Question | Answer | Consequence |
+|---|---|---|
+| Is the PRO banner in scope? | **No.** It carries over from the previous design and is being repositioned in an upcoming update. | The case study now names it explicitly as inherited and outside scope, rather than leaving a viewer to spot the mismatch. |
+| Is PRO's relationship manager the same as Advisor Portfolio? | **No.** PRO's RM covers general support — claims, legal, policy problems. Advisor Portfolio is specifically guidance on cover. | **Proof 06 survives, and is stronger.** Two distinct needs is precisely why a second advisor entry point here would have blurred both. |
+| Which figures are canonical? | None. All placeholders; the screens show different users and use cases. | No attempt to reconcile totals across screens; each screen must be internally consistent. |
+| Are the insurer names real? | No, placeholders. | Generic policy names stay. |
+
+### Applied to the build
+
+- Numeric `KYP 4.4` badges replaced with the shipped component: a `Policy Rating · GREAT` band with a four-segment meter and `✔ / !` counts (8 instances).
+- The invented `Avg. KYP` header stat removed; headers now use `Member · Policies · Premium Yearly` throughout, matching the screens.
+- KYP copy rewritten around the good/bad counts rather than a score — the ✔ / ! split is the mechanism, and it is better material than a number.
+- A "What I didn't control" note added to Proof 06 covering the inherited PRO banner.
 
 ### Blocked
 
@@ -244,7 +260,7 @@ Stated plainly so nothing here is mistaken for product data.
 
 | Item | Status |
 |---|---|
-| 3 members · 9 policies · ₹82 K yearly | **Real** (from a shipped screen) |
+| 3 members · 9 policies · ₹82 K yearly | Illustrative — confirmed placeholder |
 | Recommended cover ₹80,00,000 · premium ₹11,800/yr · existing ₹40,00,000 | Illustrative |
 | Policy names, per-policy premiums, due dates | Illustrative |
 | KYP scores (4.4 / 4.1 / 3.2) | Illustrative |
@@ -303,4 +319,5 @@ Single self-contained file. No build step, no dependencies, no external requests
 | 20 Aug 2026 | Second version plus tabs. Compact visual-led version, deep links for A/B testing, auto-advancing carousel. |
 | 20 Aug 2026 | Real project facts merged. All screens rebuilt to the shipped light UI; Family Overview, KYP and Advisor restraint added as their own sections; credit attribution corrected. |
 | 20 Aug 2026 | Published to GitHub Pages. Insurer names neutralised; wrapped into a standalone document. |
+| 20 Aug 2026 | Screen questions answered. PRO confirmed out of scope and distinct from Advisor Portfolio; all figures confirmed placeholders. KYP rebuilt as the real rating band; invented `Avg. KYP` stat removed. |
 | 20 Aug 2026 | Reference screens reviewed. Three narrative claims found unsupported and logged; KYP rating format, member-card structure and category taxonomy corrections identified. Screens pending as files. |

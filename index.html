@@ -610,22 +610,36 @@
   .pc-name b { font-size: 11px; font-weight: 700; line-height: 1.25; }
   .pc-name em { font-style: normal; font-size: 9px; color: #8a8a90; }
 
-  .kyp {
+  /* policy rating band — mirrors the shipped "Policy Rating / GREAT" component */
+  .rating {
     display: flex;
     align-items: center;
-    gap: 4px;
-    background: #f0f7f2;
-    border: 1px solid #cfe5d6;
-    border-radius: 6px;
-    padding: 3px 6px;
-    flex: 0 0 auto;
+    justify-content: space-between;
+    gap: 8px;
+    background: linear-gradient(90deg, #e0f4e7 0%, #f5fbf7 100%);
+    border-radius: 8px;
+    padding: 7px 9px;
   }
 
-  .kyp b { font-size: 10.5px; font-weight: 800; color: #1a7a45; font-variant-numeric: tabular-nums; }
-  .kyp em { font-style: normal; font-size: 7.5px; font-weight: 700; letter-spacing: 0.08em; color: #4c8a64; }
-  .kyp.mid { background: #fdf5e8; border-color: #ecd9ae; }
-  .kyp.mid b { color: #96660d; }
-  .kyp.mid em { color: #9c7c3c; }
+  .rating-l { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .rating-l em { font-style: normal; font-size: 8px; font-weight: 700; color: #4c8a64; }
+  .rating-w { display: flex; align-items: center; gap: 5px; }
+  .rating-bars { display: flex; gap: 2px; }
+  .rating-bars i { width: 6px; height: 9px; border-radius: 1.5px; background: #1aa06d; }
+  .rating-l b { font-size: 10.5px; font-weight: 800; color: #12703f; letter-spacing: 0.02em; }
+  .rating-r { display: flex; align-items: center; gap: 5px; flex: 0 0 auto; }
+
+  .rating-r span {
+    display: flex;
+    gap: 2px;
+    font-size: 9px;
+    font-weight: 800;
+    color: #3d4a5c;
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 2px 6px;
+    font-variant-numeric: tabular-nums;
+  }
 
   .pc-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
   .pc-meta em { font-style: normal; font-size: 9.5px; color: #8a8a90; }
@@ -1679,16 +1693,16 @@
             <div class="ph-stats">
               <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>2</b></div><em>Policies</em></div>
               <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>&#8377;18 K</b></div><em>Premium Yearly</em></div>
-              <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1.4l1.9 4.2 4.6.5-3.4 3.1.9 4.5L8 11.5l-4 2.2.9-4.5L1.5 6.1l4.6-.5z"/></svg><b>3.3</b></div><em>Avg. KYP</em></div>
+              <div><div class="row"><svg viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><circle cx="12.2" cy="6" r="2.3"/><path d="M0.8 14.5c0-3 2.4-4.6 5.2-4.6s5.2 1.6 5.2 4.6z"/></svg><b>1</b></div><em>Member</em></div>
             </div>
             <div class="ph-body">
               <div class="pcard">
                 <div class="pc-top">
                   <span class="pc-logo h">HL</span>
                   <span class="pc-name"><b>Basic Health Plan</b><em>Health &middot; &#8377;5,00,000</em></span>
-                  <span class="kyp mid"><b>3.4</b><em>KYP</em></span>
                 </div>
                 <div class="pc-meta"><em>Next premium &middot; 14 Sep</em><b>&#8377;9,400</b></div>
+                <div class="rating"><div class="rating-l"><em>Policy Rating</em><span class="rating-w"><span class="rating-bars"><i></i><i></i><i></i><i></i></span><b>GREAT</b></span></div><div class="rating-r"><span>✔ 2</span><span>! 8</span></div></div>
               </div>
               <div class="pitch">
                 <div class="pitch-tag">From your CoverRisk report</div>
@@ -1813,26 +1827,26 @@
           <div class="ph-stats">
             <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>4</b></div><em>Policies</em></div>
             <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>₹38 K</b></div><em>Premium Yearly</em></div>
-            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1.4l1.9 4.2 4.6.5-3.4 3.1.9 4.5L8 11.5l-4 2.2.9-4.5L1.5 6.1l4.6-.5z"/></svg><b>3.9</b></div><em>Avg. KYP</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><circle cx="12.2" cy="6" r="2.3"/><path d="M0.8 14.5c0-3 2.4-4.6 5.2-4.6s5.2 1.6 5.2 4.6z"/></svg><b>1</b></div><em>Member</em></div>
           </div>
           <div class="ph-body">
             <div class="pcard">
               <div class="pc-top">
                 <span class="pc-logo h">HL</span>
                 <span class="pc-name"><b>Comprehensive Health Plan</b><em>Health · ₹10,00,000</em></span>
-                <span class="kyp"><b>4.4</b><em>KYP</em></span>
               </div>
               <div class="pc-meta"><em>Next premium · 14 Sep</em><b>₹12,300</b></div>
               <div class="track"><i class="paid"></i><i class="paid"></i><i class="due"></i><i></i></div>
+              <div class="rating"><div class="rating-l"><em>Policy Rating</em><span class="rating-w"><span class="rating-bars"><i></i><i></i><i></i><i></i></span><b>GREAT</b></span></div><div class="rating-r"><span>✔ 3</span><span>! 6</span></div></div>
             </div>
             <div class="pcard">
               <div class="pc-top">
                 <span class="pc-logo">LI</span>
                 <span class="pc-name"><b>Term Life Protect</b><em>Term life · ₹40,00,000</em></span>
-                <span class="kyp"><b>4.1</b><em>KYP</em></span>
               </div>
               <div class="pc-meta"><em>Next premium · 02 Nov</em><b>₹10,829</b></div>
               <div class="track"><i class="paid"></i><i class="paid"></i><i class="paid"></i><i class="due"></i></div>
+              <div class="rating"><div class="rating-l"><em>Policy Rating</em><span class="rating-w"><span class="rating-bars"><i></i><i></i><i></i><i></i></span><b>GREAT</b></span></div><div class="rating-r"><span>✔ 2</span><span>! 8</span></div></div>
             </div>
             <div class="pitch">
               <div class="pitch-tag">From your CoverRisk report</div>
@@ -2014,16 +2028,16 @@
           <div class="ph-stats">
             <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>2</b></div><em>Policies</em></div>
             <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>₹18 K</b></div><em>Premium Yearly</em></div>
-            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1.4l1.9 4.2 4.6.5-3.4 3.1.9 4.5L8 11.5l-4 2.2.9-4.5L1.5 6.1l4.6-.5z"/></svg><b>3.3</b></div><em>Avg. KYP</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><circle cx="12.2" cy="6" r="2.3"/><path d="M0.8 14.5c0-3 2.4-4.6 5.2-4.6s5.2 1.6 5.2 4.6z"/></svg><b>1</b></div><em>Member</em></div>
           </div>
           <div class="ph-body">
             <div class="pcard">
               <div class="pc-top">
                 <span class="pc-logo h">HL</span>
                 <span class="pc-name"><b>Basic Health Plan</b><em>Health · ₹5,00,000</em></span>
-                <span class="kyp mid"><b>3.4</b><em>KYP</em></span>
               </div>
               <div class="pc-meta"><em>Next premium · 14 Sep</em><b>₹9,400</b></div>
+              <div class="rating"><div class="rating-l"><em>Policy Rating</em><span class="rating-w"><span class="rating-bars"><i></i><i></i><i></i><i></i></span><b>GREAT</b></span></div><div class="rating-r"><span>✔ 4</span><span>! 5</span></div></div>
             </div>
             <div class="pitch">
               <div class="pitch-tag">From your CoverRisk report</div>
@@ -2191,10 +2205,10 @@
               <div class="pc-top">
                 <span class="pc-logo">LI</span>
                 <span class="pc-name"><b>Term Life Protect</b><em>Term life · ₹40,00,000</em></span>
-                <span class="kyp"><b>4.1</b><em>KYP</em></span>
               </div>
               <div class="pc-meta"><em>Next premium · 02 Nov 2026</em><b>₹10,829</b></div>
               <div class="pc-meta"><em>Nominee · Meera S.</em><em>Sole nominee</em></div>
+              <div class="rating"><div class="rating-l"><em>Policy Rating</em><span class="rating-w"><span class="rating-bars"><i></i><i></i><i></i><i></i></span><b>GREAT</b></span></div><div class="rating-r"><span>✔ 2</span><span>! 8</span></div></div>
             </div>
             <div class="reason">
               <div class="pitch-tag">Nominee access</div>
@@ -2279,7 +2293,7 @@
         <div class="chain">
           <b>Good coverage</b> <i>·</i> <b>ICU limits</b> <i>·</i> <b>Room-rent limits</b> <i>·</i> <b>Refill benefits</b> <i>·</i> <b>Other conditions</b>
         </div>
-        <p>A room-rent cap is the kind of clause nobody reads and everybody discovers at the worst possible time. Surfacing the rating on the card is what makes it findable at all.</p>
+        <p>The rating is a plain verdict, not a number, and it arrives with a count of how many conditions work in the user's favour and how many don't. A room-rent cap is the kind of clause nobody reads and everybody discovers at the worst possible time — the count is what makes it findable at all.</p>
         <p class="kicker blue">This turns KYP from a separate feature into part of policy understanding.</p>
       </div>
     </div>
@@ -2288,7 +2302,7 @@
   <div class="stage">
     <div class="stage-head">
       <div class="stage-tag"><b>Screen 08</b> &nbsp;·&nbsp; Policy card + KYP rating</div>
-      <p class="stage-note">Every policy carries its rating. A weaker score isn't hidden — the point is that the user finds out now rather than at claim time.</p>
+      <p class="stage-note">Every policy carries its rating — a plain-language verdict plus a count of <strong>what's good and what isn't</strong>. Nothing is hidden; the point is that the user finds out now rather than at claim time.</p>
     </div>
     <div class="stage-single">
       <div class="device">
@@ -2304,37 +2318,37 @@
           <div class="ph-stats">
             <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1l6 2v5c0 3.5-6 7-6 7s-6-3.5-6-7V3z"/></svg><b>4</b></div><em>Policies</em></div>
             <div><div class="row"><svg viewBox="0 0 16 16"><rect x="1" y="3.5" width="14" height="10" rx="2.6"/></svg><b>₹38 K</b></div><em>Premium Yearly</em></div>
-            <div><div class="row"><svg viewBox="0 0 16 16"><path d="M8 1.4l1.9 4.2 4.6.5-3.4 3.1.9 4.5L8 11.5l-4 2.2.9-4.5L1.5 6.1l4.6-.5z"/></svg><b>3.9</b></div><em>Avg. KYP</em></div>
+            <div><div class="row"><svg viewBox="0 0 16 16"><circle cx="6" cy="5" r="3"/><circle cx="12.2" cy="6" r="2.3"/><path d="M0.8 14.5c0-3 2.4-4.6 5.2-4.6s5.2 1.6 5.2 4.6z"/></svg><b>1</b></div><em>Member</em></div>
           </div>
           <div class="ph-body">
             <div class="pcard">
               <div class="pc-top">
                 <span class="pc-logo h">HL</span>
                 <span class="pc-name"><b>Comprehensive Health Plan</b><em>Health · ₹10,00,000</em></span>
-                <span class="kyp"><b>4.4</b><em>KYP</em></span>
               </div>
               <div class="pc-meta"><em>No room-rent cap · refill included</em><b>₹12,300</b></div>
               <div class="track"><i class="paid"></i><i class="paid"></i><i class="due"></i><i></i></div>
+              <div class="rating"><div class="rating-l"><em>Policy Rating</em><span class="rating-w"><span class="rating-bars"><i></i><i></i><i></i><i></i></span><b>GREAT</b></span></div><div class="rating-r"><span>✔ 3</span><span>! 7</span></div></div>
             </div>
             <div class="pcard">
               <div class="pc-top">
                 <span class="pc-logo">LI</span>
                 <span class="pc-name"><b>Term Life Protect</b><em>Term life · ₹40,00,000</em></span>
-                <span class="kyp"><b>4.1</b><em>KYP</em></span>
               </div>
               <div class="pc-meta"><em>Next premium · 02 Nov</em><b>₹10,829</b></div>
+              <div class="rating"><div class="rating-l"><em>Policy Rating</em><span class="rating-w"><span class="rating-bars"><i></i><i></i><i></i><i></i></span><b>GREAT</b></span></div><div class="rating-r"><span>✔ 2</span><span>! 8</span></div></div>
             </div>
             <div class="pcard">
               <div class="pc-top">
                 <span class="pc-logo m">MT</span>
                 <span class="pc-name"><b>Motor Own Damage</b><em>Motor · ₹6,50,000</em></span>
-                <span class="kyp mid"><b>3.2</b><em>KYP</em></span>
               </div>
               <div class="pc-meta"><em>Limits apply · see why</em><b>₹6,150</b></div>
+              <div class="rating"><div class="rating-l"><em>Policy Rating</em><span class="rating-w"><span class="rating-bars"><i></i><i></i><i></i><i></i></span><b>GREAT</b></span></div><div class="rating-r"><span>✔ 4</span><span>! 4</span></div></div>
             </div>
           </div>
         </div>
-        <p class="device-caption" style="text-align: center;"><em>The rating links to its reasoning.</em> A score alone would be another badge; the “see why” is what makes it useful.</p>
+        <p class="device-caption" style="text-align: center;"><em>The counts are the reasoning.</em> A verdict alone would be another badge — the ✔ / ! split is what turns it into something a user can act on.</p>
       </div>
     </div>
   </div>
@@ -2347,10 +2361,15 @@
         <h2>Advisor Portfolio appears when the user has a reason to ask for help.</h2>
         <p><strong>We deliberately didn't add an Advisor banner to Portfolio.</strong> The Homepage already provides that entry point, so users have a direct route. Repeating it here would have added noise without adding access.</p>
         <p>Instead, after CoverRisk generates the user's report, we offer an advisor — at the moment when they have context, and probably questions, that justify expert help.</p>
+        <p>This is a different job from general support. The PRO tier's relationship manager helps with claims, legal questions and whatever else goes wrong; <strong>Advisor Portfolio is specifically for guidance on cover.</strong> Two distinct needs, so stacking a second advisor entry point here would have blurred both.</p>
         <div class="rule-line">
           <b>Understand your risk</b> <span class="arrow">→</span> <b>See the report</b> <span class="arrow">→</span> <b>Get expert guidance</b>
         </div>
         <p>This makes the advisor action feel useful rather than promotional. Declining to place a feature is harder to argue for than placing one — and it is the decision I would defend first.</p>
+        <div class="status" style="margin-top: 6px;">
+          <b>What I didn't control</b>
+          <p>The PRO subscription banner on this screen carries over from the previous design and sits outside this scope. It is already being repositioned in an upcoming update. Worth naming: the conditions described here govern the entry points I owned, not every pixel on the screen.</p>
+        </div>
       </div>
     </div>
   </section>
