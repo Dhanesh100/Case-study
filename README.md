@@ -33,6 +33,22 @@ Both versions are deep-linkable:
 - `index.html#compact`
 - `index.html#full`
 
+## Also in this repository
+
+### Tiimo teardown
+
+[`tiimo-teardown/`](tiimo-teardown/) — a competitive product design teardown of
+[Tiimo](https://www.tiimoapp.com/), Apple's iPhone App of the Year 2025, arguing that its
+value is outsourced executive function rather than planning, and that its current commercial
+direction works against the constraint that made it work.
+
+- Read it: <https://dhanesh100.github.io/Case-study/tiimo-teardown/>
+- [`ANALYSIS-BRIEF.md`](tiimo-teardown/ANALYSIS-BRIEF.md) — the reusable brief the teardown was written against
+
+Written from **public evidence only** — no hands-on use of the app. Sections that require
+using the product are marked as gaps rather than filled with speculation, and every
+substantive claim is tagged *observed*, *reported*, *inferred* or *assumed*.
+
 ## Project log
 
 [`PROJECT-LOG.md`](PROJECT-LOG.md) is the working record behind this case study:
