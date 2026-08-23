@@ -354,6 +354,30 @@ from a 620-px source, so compression artefacts average out. Total page: 2.4 MB a
 
 ---
 
+### Second export pass — 24 August 2026
+
+Five further frames pulled from the `2167:25324` portfolio-overview section, taking the page
+to 16 real screens.
+
+| State | Figma node | Why it earns a place |
+|---|---|---|
+| Group health only | `2167:26169` | One employer policy at ₹5 L insured, and **Premium Yearly reads "—"** because the user doesn't pay it. Honest data handling on a screen that could easily have shown a misleading number. |
+| One policy | `2167:26040` | Sparse-but-not-empty state |
+| Inactive policy found | `2167:26298` | A lapsed policy surfaced as service rather than noise — and the rare case where user and business interest genuinely coincide |
+| Fuller family overview | `3405:18236` | The end state, with prompts gone because their conditions are no longer true |
+| Homepage | `3348:23080` | Evidence for the cross-surface context claim |
+
+**Correction the Homepage forced.** CoverRisk does not only return a cover amount. On the
+Homepage it surfaces as a **score with a risk band — 40, "moderate risk" — alongside
+per-category coverage percentages**. The case study previously described only the amount.
+Proof 02 now records both, and the Homepage screen is included specifically to show the same
+user state being read two different ways for two different jobs.
+
+The compact carousel grew from three slides to five. The full study gained a "More
+conditions" stage carrying four states. Page weight 3.43 MB against a 16 MB ceiling.
+
+---
+
 ## 10. What is illustrative, not real
 
 Stated plainly so nothing here is mistaken for product data.
@@ -428,6 +452,7 @@ Single self-contained file. No build step, no dependencies, no external requests
 | 20 Aug 2026 | Second version plus tabs. Compact visual-led version, deep links for A/B testing, auto-advancing carousel. |
 | 20 Aug 2026 | Real project facts merged. All screens rebuilt to the shipped light UI; Family Overview, KYP and Advisor restraint added as their own sections; credit attribution corrected. |
 | 20 Aug 2026 | Published to GitHub Pages. Insurer names neutralised; wrapped into a standalone document. |
+| 24 Aug 2026 | Second export pass: five more real states including group-health-only and the Homepage. CoverRisk corrected — it returns a score and risk band, not only a cover amount. 16 screens total. |
 | 20 Aug 2026 | Real screens exported from Figma and embedded, replacing 10 of 12 CSS mockups. Rating scale, KYP tab, contextual coverage checks and reasoned buy suggestions all corrected against the shipped UI. |
 | 20 Aug 2026 | Screen questions answered. PRO confirmed out of scope and distinct from Advisor Portfolio; all figures confirmed placeholders. KYP rebuilt as the real rating band; invented `Avg. KYP` stat removed. |
 | 20 Aug 2026 | Reference screens reviewed. Three narrative claims found unsupported and logged; KYP rating format, member-card structure and category taxonomy corrections identified. Screens pending as files. |
