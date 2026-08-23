@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio Measurement Plan — CoverSure Policy Portfolio</title>
+<meta name="description" content="How to test whether the CoverSure Portfolio strategy is working: a hypothesis register, a diagnostic ladder, and the metrics that would mislead you.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="Portfolio Measurement Plan">
+<meta property="og:description" content="Measure the claims, not the clicks.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --ground:      #f2f5fa;
+    --ground-2:    #e8edf7;
+    --surface:     #ffffff;
+    --ink:         #0c1633;
+    --ink-2:       #4a5878;
+    --ink-3:       #7c88a5;
+    --rule:        #d3dcec;
+    --rule-soft:   #e4eaf5;
+    --accent:      #1f43ff;
+    --accent-soft: #e6ebff;
+    --accent-ink:  #1631c4;
+    --good:        #17724f;
+    --good-soft:   #e2f2ea;
+    --warn:        #99631a;
+    --warn-soft:   #fbf1de;
+    --risk:        #c9331f;
+    --risk-soft:   #fbeae7;
+    --stage:       #0a1236;
+
+    --display: "Avenir Next Condensed", "Avenir Next", "Helvetica Neue", "Arial Narrow", Arial, sans-serif;
+    --body:    Charter, "Charter Roman", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono:    "SF Mono", ui-monospace, Menlo, Consolas, "Roboto Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #080d1c;
+      --ground-2:    #0d1430;
+      --surface:     #121a35;
+      --ink:         #e9edfa;
+      --ink-2:       #a4b1ce;
+      --ink-3:       #6e7c9e;
+      --rule:        #222c4e;
+      --rule-soft:   #18203c;
+      --accent:      #8296ff;
+      --accent-soft: #182147;
+      --accent-ink:  #a6b4ff;
+      --good:        #4fb98a;
+      --good-soft:   #10291f;
+      --warn:        #d9a349;
+      --warn-soft:   #2a2010;
+      --risk:        #ff7f6d;
+      --risk-soft:   #2c1512;
+      --stage:       #05091a;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #080d1c;
+    --ground-2:    #0d1430;
+    --surface:     #121a35;
+    --ink:         #e9edfa;
+    --ink-2:       #a4b1ce;
+    --ink-3:       #6e7c9e;
+    --rule:        #222c4e;
+    --rule-soft:   #18203c;
+    --accent:      #8296ff;
+    --accent-soft: #182147;
+    --accent-ink:  #a6b4ff;
+    --good:        #4fb98a;
+    --good-soft:   #10291f;
+    --warn:        #d9a349;
+    --warn-soft:   #2a2010;
+    --risk:        #ff7f6d;
+    --risk-soft:   #2c1512;
+    --stage:       #05091a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+  .wrap { max-width: 800px; margin: 0 auto; padding: 0 28px; }
+  .wide { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+  header.top { padding: 62px 0 0; }
+
+  .brandline {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 40px;
+  }
+
+  .brandline b { color: var(--ink); font-weight: 500; }
+  .brandline i { color: var(--accent); font-style: normal; }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(38px, 5.6vw, 68px);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    margin: 0 0 22px;
+    text-wrap: balance;
+  }
+
+  .dek {
+    font-size: clamp(18px, 2vw, 21px);
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 52ch;
+    margin: 0;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-size: clamp(27px, 3.7vw, 40px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 32px 0 10px;
+  }
+
+  .snum {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  section { padding: 60px 0; border-top: 1px solid var(--rule-soft); }
+
+  p { margin: 0 0 17px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); font-weight: 700; }
+
+  ul, ol { padding-left: 21px; margin: 0 0 17px; }
+  li { margin-bottom: 9px; }
+
+  .kicker {
+    font-family: var(--display);
+    font-size: clamp(22px, 2.6vw, 30px);
+    font-weight: 600;
+    line-height: 1.16;
+    color: var(--ink);
+    margin: 26px 0;
+    text-wrap: balance;
+  }
+
+  .kicker.blue { color: var(--accent); }
+
+  .pull {
+    font-family: var(--display);
+    font-size: clamp(22px, 2.7vw, 31px);
+    font-weight: 600;
+    line-height: 1.14;
+    padding: 6px 0 6px 22px;
+    border-left: 3px solid var(--accent);
+    margin: 26px 0;
+    text-wrap: balance;
+  }
+
+  .scroll { overflow-x: auto; margin: 24px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+
+  th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+    padding: 0 14px 9px 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: bottom;
+  }
+
+  td {
+    padding: 14px 14px 14px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+
+  td:first-child { color: var(--ink); font-weight: 700; }
+  td strong { color: var(--ink); }
+  td code, .mono { font-family: var(--mono); font-size: 12.5px; color: var(--accent-ink); }
+
+  .t-hyp { min-width: 940px; }
+  .t-mid { min-width: 720px; }
+
+  .box {
+    border-radius: 10px;
+    padding: 22px 24px;
+    margin: 26px 0;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+  }
+
+  .box.risk { background: var(--risk-soft); border-color: var(--risk); }
+  .box.good { background: var(--good-soft); border-color: var(--good); }
+  .box.warn { background: var(--warn-soft); border-color: var(--warn); }
+
+  .box h3 {
+    margin: 0 0 12px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+  }
+
+  .box.risk h3 { color: var(--risk); }
+  .box.good h3 { color: var(--good); }
+  .box.warn h3 { color: var(--warn); }
+  .box p, .box li { font-size: 15.5px; }
+  .box ul { margin-bottom: 0; }
+  .box p:last-child { margin-bottom: 0; }
+
+  figure { margin: 30px 0; }
+  figure .scroll { margin: 0; }
+  figure svg { display: block; width: 100%; height: auto; min-width: 860px; }
+
+  figcaption {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+    margin-top: 15px;
+    max-width: 68ch;
+  }
+
+  figcaption strong { color: var(--ink-2); }
+
+  .sv-box { fill: var(--surface); stroke: var(--rule); stroke-width: 1.25; }
+  .sv-key { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.3; }
+  .sv-t   { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; fill: var(--ink); }
+  .sv-tk  { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.08em; fill: var(--accent-ink); }
+  .sv-s   { font-family: var(--body); font-size: 11.5px; fill: var(--ink-3); }
+  .sv-e   { font-family: var(--body); font-size: 11.5px; font-style: italic; fill: var(--ink-3); }
+  .sv-l   { stroke: var(--ink-3); stroke-width: 1.25; fill: none; }
+  .sv-lk  { stroke: var(--accent); stroke-width: 1.5; fill: none; }
+  .sv-lr  { stroke: var(--risk); stroke-width: 1.3; fill: none; stroke-dasharray: 5 3; }
+  .sv-tr  { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; fill: var(--risk); }
+
+  .ladder { list-style: none; padding: 0; margin: 26px 0 0; }
+
+  .ladder li {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    gap: 20px;
+    padding: 17px 0;
+    border-top: 1px solid var(--rule-soft);
+    margin: 0;
+    align-items: start;
+  }
+
+  .ladder li:first-child { border-top: 1px solid var(--rule); }
+
+  .ladder dfn {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-style: normal;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .ladder b { display: block; font-size: 17px; color: var(--ink); margin-bottom: 5px; font-family: var(--display); font-weight: 600; }
+  .ladder span { font-size: 15.5px; color: var(--ink-2); line-height: 1.5; }
+
+  @media (max-width: 620px) {
+    .ladder li { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  }
+
+  .events { font-family: var(--mono); font-size: 13px; line-height: 1.8; color: var(--ink-2); }
+  .events b { color: var(--accent-ink); font-weight: 500; }
+
+  .thesis { background: var(--stage); color: #dde5fc; padding: 44px 0; }
+  .thesis h2 { color: #ffffff; }
+  .thesis .snum { color: #7c92ff; }
+  .thesis p { color: #b3c2e8; }
+  .thesis strong { color: #ffffff; }
+
+  footer.end { padding: 50px 0 76px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brandline">
+      <b>CoverSure</b><i>/</i><span>Policy Portfolio</span><i>/</i><span>Measurement plan</span>
+    </div>
+    <h1>Measure the claims, not the clicks.</h1>
+    <p class="dek">The Portfolio redesign made a set of falsifiable promises. This is how to test each one, what would prove it wrong, and what to change when it is.</p>
+  </div>
+</header>
+
+<div class="thesis">
+  <div class="wrap">
+    <span class="snum">The governing idea</span>
+    <h2>Every design decision in this release was a hypothesis. Treat it like one.</h2>
+    <p>"Conditions beat slots." "Reason before action." "The pitch sits below the policies." Each of those is a claim that can be wrong, and each has a number attached that would show it. <strong>A dashboard of engagement counts will tell you none of them.</strong></p>
+    <p>The risk is not measuring too little. It is measuring the wrong thing well — and then optimising toward the banner strategy this release existed to replace.</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section>
+    <span class="snum">01 — The one metric that tests the thesis</span>
+    <h2>State transition rate.</h2>
+    <p>The design's own definition of progress is that <strong>a condition stops being true</strong>. A user with no policies adds one. A family overview completes. An inactive policy gets resolved. A protection gap closes.</p>
+    <p>So the headline number is: <strong class="mono">% of users who move to a better portfolio state within 30 days</strong>, measured per starting state. Nothing else captures whether the system actually moves people forward rather than merely being looked at.</p>
+    <div class="box good">
+      <h3>Why this beats a completion score</h3>
+      <p>"Portfolio completeness" sounds like the right north star, but you cannot observe how many policies a person really owns — only how many they have added. Completeness is therefore unmeasurable and easy to fake by suppressing prompts. <strong>Transitions are observable, honest, and directly attributable to the design.</strong></p>
+    </div>
+    <h3>Supporting the headline</h3>
+    <ul>
+      <li><strong>Prompt resolution rate</strong> — of conditions that became true, what share got resolved, by condition type</li>
+      <li><strong>Time to resolution</strong> — median days from a condition becoming true to it being resolved</li>
+      <li><strong>Stale condition count</strong> — conditions true for more than 60 days. A rising number means the screen is being ignored, and it rises quietly</li>
+      <li><strong>Cover adequacy ratio</strong> — see §04. This is the one the business should care most about</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="snum">02 — The diagnostic ladder</span>
+    <h2>Five questions, in this order.</h2>
+    <p>Most teams jump straight to "did they click". That skips the two questions that actually determine whether a rules-based system works.</p>
+    <figure>
+      <div class="scroll">
+        <svg viewBox="0 0 1000 300" role="img" aria-label="A five-stage diagnostic ladder: precision, reach, action, outcome and durability. Each stage has a diagnostic question and a corresponding fix. If precision fails, fix the rules. If reach fails, fix hierarchy. If action fails, fix the reason and copy. If outcome fails, fix the sequencing. If durability fails, fix the adapt step.">
+          <defs>
+            <marker id="mk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0 1 L9 5 L0 9 z" fill="var(--accent)"/>
+            </marker>
+            <marker id="mr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0 1 L9 5 L0 9 z" fill="var(--risk)"/>
+            </marker>
+          </defs>
+
+          <rect class="sv-key" x="14"  y="70" width="172" height="56" rx="9"/>
+          <rect class="sv-box" x="212" y="70" width="150" height="56" rx="9"/>
+          <rect class="sv-box" x="388" y="70" width="150" height="56" rx="9"/>
+          <rect class="sv-key" x="564" y="70" width="164" height="56" rx="9"/>
+          <rect class="sv-box" x="754" y="70" width="164" height="56" rx="9"/>
+
+          <text class="sv-tk" x="100" y="94"  text-anchor="middle">1 · PRECISION</text>
+          <text class="sv-s"  x="100" y="112" text-anchor="middle">was it the right thing?</text>
+          <text class="sv-t"  x="287" y="94"  text-anchor="middle">2 · REACH</text>
+          <text class="sv-s"  x="287" y="112" text-anchor="middle">was it seen?</text>
+          <text class="sv-t"  x="463" y="94"  text-anchor="middle">3 · ACTION</text>
+          <text class="sv-s"  x="463" y="112" text-anchor="middle">was it acted on?</text>
+          <text class="sv-tk" x="646" y="94"  text-anchor="middle">4 · OUTCOME</text>
+          <text class="sv-s"  x="646" y="112" text-anchor="middle">did the portfolio improve?</text>
+          <text class="sv-t"  x="836" y="94"  text-anchor="middle">5 · DURABILITY</text>
+          <text class="sv-s"  x="836" y="112" text-anchor="middle">did it stick?</text>
+
+          <line class="sv-lk" x1="190" y1="98" x2="208" y2="98" marker-end="url(#mk)"/>
+          <line class="sv-lk" x1="366" y1="98" x2="384" y2="98" marker-end="url(#mk)"/>
+          <line class="sv-lk" x1="542" y1="98" x2="560" y2="98" marker-end="url(#mk)"/>
+          <line class="sv-lk" x1="732" y1="98" x2="750" y2="98" marker-end="url(#mk)"/>
+
+          <text class="sv-e" x="500" y="40" text-anchor="middle">the stage that fails tells you what to change — and it is rarely the next stage down</text>
+
+          <line class="sv-lr" x1="100" y1="130" x2="100" y2="176" marker-end="url(#mr)"/>
+          <line class="sv-lr" x1="287" y1="130" x2="287" y2="176" marker-end="url(#mr)"/>
+          <line class="sv-lr" x1="463" y1="130" x2="463" y2="176" marker-end="url(#mr)"/>
+          <line class="sv-lr" x1="646" y1="130" x2="646" y2="176" marker-end="url(#mr)"/>
+          <line class="sv-lr" x1="836" y1="130" x2="836" y2="176" marker-end="url(#mr)"/>
+
+          <text class="sv-tr" x="100" y="194" text-anchor="middle">FIX THE RULES</text>
+          <text class="sv-s"  x="100" y="212" text-anchor="middle">tiering, conditions</text>
+          <text class="sv-tr" x="287" y="194" text-anchor="middle">FIX HIERARCHY</text>
+          <text class="sv-s"  x="287" y="212" text-anchor="middle">not the offer</text>
+          <text class="sv-tr" x="463" y="194" text-anchor="middle">FIX THE REASON</text>
+          <text class="sv-s"  x="463" y="212" text-anchor="middle">copy, specificity</text>
+          <text class="sv-tr" x="646" y="194" text-anchor="middle">FIX SEQUENCING</text>
+          <text class="sv-s"  x="646" y="212" text-anchor="middle">wrong thing sold</text>
+          <text class="sv-tr" x="836" y="194" text-anchor="middle">FIX ADAPT</text>
+          <text class="sv-s"  x="836" y="212" text-anchor="middle">loop not closing</text>
+
+          <rect class="sv-box" x="300" y="248" width="400" height="40" rx="8"/>
+          <text class="sv-t" x="500" y="273" text-anchor="middle">MEASURED PER PORTFOLIO STATE — ALWAYS</text>
+        </svg>
+      </div>
+      <figcaption><strong>Precision comes first.</strong> If the system recommended life cover to someone who already had enough, no amount of placement or copy work will help — and a low action rate would have been the <em>correct</em> response from the user. Auditing recommendation correctness by hand, on a sample, is unglamorous and irreplaceable.</figcaption>
+    </figure>
+    <div class="box risk">
+      <h3>The methodological rule that matters most</h3>
+      <p>This design shows different things to different people. <strong>Every metric must be cut by portfolio state.</strong> An aggregate action rate across users who saw a CoverRisk prompt, an add-family prompt and a lapsed-policy alert is a number about nothing. Averages will hide both your best result and your worst.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="snum">03 — Hypothesis register</span>
+    <h2>Each decision, and the number that would disprove it.</h2>
+    <p>Set the thresholds <em>before</em> looking at data. Writing down in advance what would change your mind is the difference between measurement and justification.</p>
+    <div class="scroll">
+      <table class="t-hyp">
+        <thead>
+          <tr><th>Decision</th><th>The claim</th><th>Metric</th><th>Would disprove it</th><th>Then change</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Conditions, not banners</td>
+            <td>Relevance-triggered entry points produce more qualified action than a permanent slot</td>
+            <td>Qualified actions per 1,000 users, vs the pre-release banner baseline</td>
+            <td>Total qualified actions fall materially with no gain in quality</td>
+            <td>Widen conditions before adding slots. Adding slots is the reversal, not the fix</td>
+          </tr>
+          <tr>
+            <td>Pitch below the policies</td>
+            <td>Users with intent scroll; placing it low costs reach but raises intent</td>
+            <td>Scroll-reach rate to the pitch; action rate among those who reach</td>
+            <td>Very few ever reach it <em>and</em> action rate among reachers is not higher</td>
+            <td>Compress the list above it or add an anchor. Do not move it to the top</td>
+          </tr>
+          <tr>
+            <td>Two actions maximum</td>
+            <td>A lower ceiling raises completion, not just clarity</td>
+            <td>Completion rate with 1 vs 2 shown; a held-back arm with 3</td>
+            <td>Three actions produce more total completions with no drop in quality</td>
+            <td>Raise the ceiling only for states where the actions are genuinely independent</td>
+          </tr>
+          <tr>
+            <td>Family overview as the prompt</td>
+            <td>Structural incompleteness drives member adds without any banner</td>
+            <td>Member-add rate among users seeing an incomplete overview; time to first add</td>
+            <td>Rate is flat against a no-overview control</td>
+            <td>Make incompleteness more legible — the mechanism may be right and just too quiet</td>
+          </tr>
+          <tr>
+            <td>KYP rating on the card</td>
+            <td>Surfacing quality where the policy lives changes what users do about weak cover</td>
+            <td>Share of users holding an AVERAGE or POOR rated policy who take any remediating action within 60 days</td>
+            <td>Rating opens rise but remediation does not</td>
+            <td>The rating is being read as a badge. Give it a next step, not more detail</td>
+          </tr>
+          <tr>
+            <td>CoverRisk numbers in Portfolio</td>
+            <td>A quantified recommendation produces better-sized decisions, not just more clicks</td>
+            <td><strong>Cover adequacy ratio</strong> — cover purchased ÷ cover recommended</td>
+            <td>Conversion rises while the ratio falls</td>
+            <td>You have made cheap purchases easier. Re-check what the card emphasises</td>
+          </tr>
+          <tr>
+            <td>Reason before action (Share)</td>
+            <td>A reason produces completions a button never did</td>
+            <td>Share completion rate; nominee access actually granted</td>
+            <td>High reads, low completion</td>
+            <td>The reason works, the flow doesn't. Fix the flow, keep the reason</td>
+          </tr>
+          <tr>
+            <td>Advisor after the report</td>
+            <td>Post-report placement yields fewer but better bookings than a banner would</td>
+            <td>Booking rate per impression, attendance rate, post-call satisfaction</td>
+            <td>Volume is low <em>and</em> quality is no better than homepage-sourced bookings</td>
+            <td>Placement is not the differentiator. Reconsider the moment, not the surface</td>
+          </tr>
+          <tr>
+            <td>Protection sequencing</td>
+            <td>Recommending foundational cover first produces better portfolios without costing revenue</td>
+            <td>Share of purchases that are foundational when a foundational gap exists; revenue per user</td>
+            <td>Revenue only holds when the sequence is broken</td>
+            <td>A real strategic conflict. Escalate it — do not quietly resolve it in the UI</td>
+          </tr>
+          <tr>
+            <td>Surfacing inactive policies</td>
+            <td>A lapsed policy is service, and service is also retention</td>
+            <td>Resolution rate of surfaced inactive policies; return rate of those users</td>
+            <td>Users see it and never resolve it</td>
+            <td>Resolution is probably blocked downstream, not unwanted</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <span class="snum">04 — The business metric</span>
+    <h2>Cover adequacy ratio.</h2>
+    <p>Of everything here, this is the number I would put in front of leadership, because it is the only one that measures the brand principle the whole strategy rests on: <em>don't sell a policy without the right coverage amount.</em></p>
+    <p class="pull">Cover purchased ÷ cover recommended. Tracked as a distribution, not an average.</p>
+    <p>Conversion rate alone cannot distinguish between the two outcomes this release was designed to separate: <strong>more people buying adequate cover</strong>, and <strong>more people buying cheap cover faster</strong>. Both raise conversion. Only one is the strategy.</p>
+    <div class="box warn">
+      <h3>Read the distribution, not the mean</h3>
+      <p>A mean ratio of 0.7 could be everyone buying roughly 70% of what they need, or half buying in full and half buying a token policy. Those demand opposite responses. Look at the shape — and specifically at the share of purchases below 0.5, which is the population the principle exists to protect.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="snum">05 — Metrics that will mislead you</span>
+    <h2>What not to optimise.</h2>
+    <p>Each of these is a plausible dashboard metric that, if improved, would push the product back toward what this release replaced.</p>
+    <div class="scroll">
+      <table class="t-mid">
+        <thead><tr><th>Tempting metric</th><th>Why it misleads here</th></tr></thead>
+        <tbody>
+          <tr><td>Recommendation CTR</td><td>Maximised by making the pitch louder and higher. That is the banner strategy with a new name.</td></tr>
+          <tr><td>Time in app</td><td>This screen's job is to answer a question quickly. Rising dwell time is as likely to mean confusion as engagement.</td></tr>
+          <tr><td>Sessions per week</td><td>Widgets exist to reduce app opens. Falling sessions with stable actions is the widgets <em>working</em>.</td></tr>
+          <tr><td>Recommendation impressions</td><td>Optimised by showing more, to more people, more often — the definition of a promotional slot.</td></tr>
+          <tr><td>Number of features discovered</td><td>Discovery was never the goal. Relevance was. A user who needs one capability and finds it is a success.</td></tr>
+          <tr><td>Policies added, in isolation</td><td>Says nothing about whether the portfolio is now accurate. Pair it with document attachment and sync health.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box risk">
+      <h3>The failure mode to name out loud</h3>
+      <p>Six months from now, someone under pressure will propose raising the recommendation up the screen because CTR is low. <strong>Write down now that low CTR on a deliberately-subordinate element is the expected result, not a defect.</strong> Pre-committing to that reading is the only thing that will survive the meeting.</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="snum">06 — Instrumentation</span>
+    <h2>The one thing that must be logged.</h2>
+    <p>Almost everything above is impossible without a single event property: <strong>the condition set that produced the surface</strong>. Log which conditions evaluated true, and which recommendation was chosen and at what rank.</p>
+    <p class="kicker blue">Without the condition set you can never measure precision — only popularity.</p>
+    <div class="box">
+      <h3>Minimum event set</h3>
+      <p class="events">
+        <b>portfolio_viewed</b> — state id, condition set, member count, policy count<br>
+        <b>recommendation_surfaced</b> — type, triggering condition, rank, position<br>
+        <b>recommendation_reached</b> — scrolled into view, dwell<br>
+        <b>recommendation_actioned</b> — type, condition, action taken<br>
+        <b>policy_added</b> — category, source (onboarding hint, manual, sync)<br>
+        <b>member_added</b> — from family overview or elsewhere<br>
+        <b>kyp_opened</b> — rating band, from card or from section<br>
+        <b>inactive_resolved</b> — days since surfaced<br>
+        <b>share_completed</b> — policy type, reason shown or not<br>
+        <b>advisor_booked</b> — surface, whether post-report<br>
+        <b>purchase_completed</b> — category, cover purchased, <b>cover recommended</b>, tier
+      </p>
+    </div>
+    <p>Two derived tables make the rest trivial: a daily snapshot of each user's condition set, so transitions can be computed retrospectively; and a recommendation log preserving what was <em>offered</em>, not only what was taken. Both are cheap now and impossible to reconstruct later.</p>
+  </section>
+
+  <section>
+    <span class="snum">07 — What numbers cannot tell you</span>
+    <h2>Three things to go and ask.</h2>
+    <ul class="ladder">
+      <li>
+        <dfn>Precision audit</dfn>
+        <div>
+          <b>Was the recommendation actually right?</b>
+          <span>Take 50 users, look at their real portfolio, and judge by hand whether the surfaced recommendation was the best available next step. This is the only way to separate "the user ignored us" from "we were wrong". Repeat quarterly.</span>
+        </div>
+      </li>
+      <li>
+        <dfn>Comprehension</dfn>
+        <div>
+          <b>Do they understand the number?</b>
+          <span>Five users, one question: "what does this recommendation mean and where do you think it came from?" If they cannot trace it to CoverRisk, the evidence is not doing its job however good the conversion looks.</span>
+        </div>
+      </li>
+      <li>
+        <dfn>The non-actors</dfn>
+        <div>
+          <b>Why didn't the people who saw it act?</b>
+          <span>The most valuable and least contacted segment. Distinguish "not now", "not relevant", "didn't understand", and "didn't notice" — four causes with four different fixes and identical analytics signatures.</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="snum">08 — Cadence</span>
+    <h2>How this becomes the Adapt step for the team.</h2>
+    <p>The product adapts to the user. The same loop should run one level up, on the strategy itself.</p>
+    <div class="scroll">
+      <table class="t-mid">
+        <thead><tr><th>When</th><th>Look at</th><th>Decision it supports</th></tr></thead>
+        <tbody>
+          <tr><td>Weekly</td><td>Instrumentation health, stale condition count, error and sync rates</td><td>Is the data trustworthy yet? Nothing else matters until yes</td></tr>
+          <tr><td>Monthly</td><td>Transition rate and prompt resolution, per state</td><td>Which conditions are working; which are quietly ignored</td></tr>
+          <tr><td>Quarterly</td><td>Cover adequacy distribution, precision audit, the hypothesis register</td><td>Confirm, revise or retire each claim in §03</td></tr>
+          <tr><td>Twice yearly</td><td>Whether the tiering still matches the portfolio shapes users actually have</td><td>Update the recommendation order itself</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box good">
+      <h3>Sequence the first ninety days</h3>
+      <ol style="margin-bottom:0">
+        <li><strong>Days 1–30:</strong> instrumentation only. Resist reporting. A number from broken logging is worse than no number, because it gets quoted for a year.</li>
+        <li><strong>Days 30–60:</strong> establish per-state baselines. No targets yet — you cannot set a threshold for a distribution you have not seen.</li>
+        <li><strong>Days 60–90:</strong> fill in the disproof thresholds in §03, then run the first experiment. The two-actions ceiling is the cheapest and cleanest place to start.</li>
+      </ol>
+    </div>
+    <p class="pull">If a claim in §03 cannot be tested a year from now, it was a preference, not a strategy.</p>
+  </section>
+
+  <footer class="end">
+    <p style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3);">
+      Companion to the Policy Portfolio case study
+    </p>
+  </footer>
+</div>
+</body>
+</html>

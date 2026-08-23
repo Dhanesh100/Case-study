@@ -405,12 +405,44 @@ Everything blocking earlier has been resolved. What remains:
 
 ---
 
-## 12. Deployment record
+## 12. Companion documents
+
+Two further deliverables now live in this repository.
+
+### Portfolio Measurement Plan — `measurement/`
+
+Written to answer the question the case study leaves open: *"quantitative results to follow as
+usage data matures."* Rather than proposing a dashboard, it converts each design decision into
+a hypothesis with a disproof threshold.
+
+Key positions taken:
+
+- **State transition rate is the headline metric.** The design's own definition of progress is that a condition stops being true, so that is what should be counted. Rejected "portfolio completeness" because the real policy count is unobservable, which makes completeness both unmeasurable and easy to fake by suppressing prompts.
+- **Precision is measured before reach or action.** If the wrong recommendation was surfaced, a low action rate was the user being correct. This is the stage teams skip.
+- **Cover adequacy ratio** — cover purchased ÷ cover recommended, as a distribution — is the business metric, because conversion cannot distinguish more people buying adequate cover from more people buying cheap cover faster. Both raise conversion; only one is the strategy.
+- **A named list of metrics that would mislead**, with recommendation CTR first. Optimising it reverts the product to the banner strategy this release replaced. The document pre-commits to reading low CTR on a deliberately-subordinate element as the expected result.
+- **Every metric must be cut by portfolio state.** A state-based design cannot be assessed in aggregate.
+- **The condition set must be logged** on every surface event. Without it, precision is unmeasurable and only popularity can be observed. Cheap now, impossible to reconstruct later.
+
+### Tiimo teardown — `tiimo-teardown/`
+
+A competitive analysis, included because the method is reusable rather than because the
+subject is related. Written from public evidence with no hands-on access, so roughly a third
+of the brief is marked as gaps instead of being filled with plausible invention. Claims are
+tagged observed / reported / inferred / assumed throughout.
+
+The reusable brief is published alongside it as `ANALYSIS-BRIEF.md`.
+
+---
+
+## 13. Deployment record
 
 | | |
 |---|---|
 | Repository | <https://github.com/Dhanesh100/Case-study> (public) |
 | Live site | <https://dhanesh100.github.io/Case-study/> |
+| Measurement plan | <https://dhanesh100.github.io/Case-study/measurement/> |
+| Tiimo teardown | <https://dhanesh100.github.io/Case-study/tiimo-teardown/> |
 | A/B links | `#compact` · `#full` |
 | Pages source | `main` branch, root path, HTTPS enforced |
 | Page weight | 2.42 MB, 10 embedded screens |
@@ -421,7 +453,7 @@ placeholder brand names leaking into the published page.
 
 ---
 
-## 13. Technical reference
+## 14. Technical reference
 
 Single self-contained file. No build step, no dependencies, no external requests.
 
@@ -443,7 +475,7 @@ Single self-contained file. No build step, no dependencies, no external requests
 
 ---
 
-## 14. Change history
+## 15. Change history
 
 | Date | Change |
 |---|---|
@@ -452,6 +484,7 @@ Single self-contained file. No build step, no dependencies, no external requests
 | 20 Aug 2026 | Second version plus tabs. Compact visual-led version, deep links for A/B testing, auto-advancing carousel. |
 | 20 Aug 2026 | Real project facts merged. All screens rebuilt to the shipped light UI; Family Overview, KYP and Advisor restraint added as their own sections; credit attribution corrected. |
 | 20 Aug 2026 | Published to GitHub Pages. Insurer names neutralised; wrapped into a standalone document. |
+| 24 Aug 2026 | Measurement plan and Tiimo teardown added as companion documents. README rewritten as an index of all deliverables, correcting two stale claims ("eight screens", "no images"). |
 | 24 Aug 2026 | Second export pass: five more real states including group-health-only and the Homepage. CoverRisk corrected — it returns a score and risk band, not only a cover amount. 16 screens total. |
 | 20 Aug 2026 | Real screens exported from Figma and embedded, replacing 10 of 12 CSS mockups. Rating scale, KYP tab, contextual coverage checks and reasoned buy suggestions all corrected against the shipped UI. |
 | 20 Aug 2026 | Screen questions answered. PRO confirmed out of scope and distinct from Advisor Portfolio; all figures confirmed placeholders. KYP rebuilt as the real rating band; invented `Avg. KYP` stat removed. |
