@@ -1721,12 +1721,44 @@
   /* ────── narrow screens ────── */
   @media (max-width: 720px) {
     .sc-card { grid-template-columns: 1fr; gap: 14px; }
-    .sc-num { padding-top: 0; display: flex; align-items: baseline; gap: 12px; }
+    .sc-num { padding-top: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
     .sc-skill { margin-top: 0; }
+    .sc-subject { margin-top: 0; }
+    .sc-sit-grid > div { grid-template-columns: 1fr; gap: 4px; }
     .sc-h1 { max-width: none; }
   }
 
   body.sc-locked { overflow: hidden; }
+
+  /* ────── orientation: what this is, before the argument starts ────── */
+  .sc-situation {
+    border: 1px solid var(--rule); border-radius: 12px;
+    background: var(--ground-2); padding: clamp(20px, 2.8vw, 28px);
+    margin: 0 0 clamp(30px, 4vw, 42px);
+  }
+  .sc-sit-h {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 400;
+    margin: 0 0 17px; padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+  }
+  .sc-sit-grid { display: grid; grid-template-columns: 1fr; gap: 17px 40px; margin: 0; }
+  @media (min-width: 780px) { .sc-sit-grid { grid-template-columns: 1fr 1fr; } }
+  .sc-sit-grid > div {
+    display: grid; grid-template-columns: 82px minmax(0, 1fr);
+    gap: 14px; align-items: baseline;
+  }
+  .sc-sit-grid dt {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--accent-ink);
+  }
+  .sc-sit-grid dd { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  .sc-sit-grid dd b { color: var(--ink); font-weight: 700; }
+
+  /* the concrete thing each card is about, under its skill tag */
+  .sc-subject {
+    display: block; margin-top: 8px; font-family: var(--body);
+    font-size: 13.5px; line-height: 1.4; color: var(--ink-3); font-style: italic;
+  }
 
   /* ────── condition table ────── */
   .sc-tablewrap { overflow-x: auto; margin: 0 0 22px; }
@@ -2685,9 +2717,35 @@
 
       <h1 class="sc-h1">Banners were the obvious answer. <span class="thin">I shipped conditions instead.</span></h1>
 
-      <p class="sc-dek">Five capabilities had to become discoverable on the screen where people manage their
-        policies. Rather than give each one a promotional slot, I gave each one a <em>condition</em> — a rule about
-        when it becomes useful to this particular user, checked against their actual portfolio.</p>
+      <p class="sc-dek">Rather than give each capability a promotional slot, I gave each one a <em>condition</em> —
+        a rule about when it becomes useful to this particular user, checked against their actual portfolio.</p>
+
+      <section class="sc-situation">
+        <h2 class="sc-sit-h">The situation</h2>
+        <dl class="sc-sit-grid">
+          <div>
+            <dt>Product</dt>
+            <dd><b>CoverSure</b> — an insurance app where people buy and manage policies, for themselves
+              and for their family.</dd>
+          </div>
+          <div>
+            <dt>Surface</dt>
+            <dd><b>Policy Portfolio</b> — the screen where people see what they already own: premiums,
+              renewal dates, what has lapsed.</dd>
+          </div>
+          <div>
+            <dt>Moment</dt>
+            <dd>Post-MVP. The screen did its job, but five capabilities the product had already built were
+              going undiscovered.</dd>
+          </div>
+          <div>
+            <dt>The ask</dt>
+            <dd>Make those five findable — <b>Add Policy</b>, <b>CoverRisk</b> (a risk assessment),
+              <b>Buy Policy</b>, <b>Family Management</b> and <b>KYP</b> (a policy-quality rating). The answer
+              already on the table was promotional banners.</dd>
+          </div>
+        </dl>
+      </section>
 
       <dl class="sc-stats">
         <div class="sc-stat">
@@ -2728,12 +2786,13 @@
 
       <!-- ══ 01 ══ -->
       <section class="sc-card">
-        <div class="sc-num">01<span class="sc-skill">UX Strategy</span></div>
+        <div class="sc-num">01<span class="sc-skill">UX Strategy</span><span class="sc-subject">The brief, and the job it competed with</span></div>
         <div class="sc-body">
           <h2 class="sc-title">I changed the question, not the layout.</h2>
-          <p class="sc-sub">Not <em>how do we promote these five features?</em> but <em>when does each one become
-            useful to this user?</em> The first question only has placements you can argue about. The second has an
-            answer you can build — and check against data the product already holds.</p>
+          <p class="sc-sub">People land on Portfolio mid-task — checking a premium date, finding what has lapsed.
+            A banner interrupts that with an offer they cannot evaluate. So the question changed: not <em>how do we
+            promote these five features?</em> but <em>when does each one become useful to this user?</em> The second
+            has an answer you can build.</p>
 
           <p class="sc-rejected"><b>Rejected</b> IF a capability needs adoption → THEN put a banner on the busiest screen</p>
 
@@ -2778,7 +2837,7 @@
 
       <!-- ══ 02 ══ -->
       <section class="sc-card">
-        <div class="sc-num">02<span class="sc-skill">Systems thinking<br>Recommendation logic</span></div>
+        <div class="sc-num">02<span class="sc-skill">Systems thinking<br>Recommendation logic</span><span class="sc-subject">The rule set behind the screen</span></div>
         <div class="sc-body">
           <h2 class="sc-title">Every capability had to earn its place.</h2>
           <p class="sc-sub">Seven capabilities, seven conditions, one rule set. The screen composes itself from
@@ -2807,8 +2866,8 @@
             <div class="sc-shot"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Policies added</b>Ratings, then suggestions</p></div>
           </div>
 
-          <p class="sc-notice">Identical layout, identical feature set. Only <strong>which conditions are true</strong>
-            changes — and the buy suggestions sit below the policies in every single state.</p>
+          <p class="sc-notice">Identical layout and feature set. Only <strong>which conditions are true</strong> changes —
+            and the buy suggestions sit below the policies in every state.</p>
 
           <p style="margin: 24px 0 0;">
             <button class="sc-more" type="button" data-open="ov-2">
@@ -2820,12 +2879,12 @@
 
       <!-- ══ 03 ══ -->
       <section class="sc-card">
-        <div class="sc-num">03<span class="sc-skill">Product judgment</span></div>
+        <div class="sc-num">03<span class="sc-skill">Product judgment</span><span class="sc-subject">Advisor Portfolio — the entry point I declined</span></div>
         <div class="sc-body">
           <h2 class="sc-title">The strongest decision was the one I didn&rsquo;t ship.</h2>
           <p class="sc-sub">Advisor Portfolio — a monetisable feature under adoption pressure — got <b>no entry point
-            on this screen at all</b>. The Homepage already provides one. Repeating it here would have added noise
-            without adding access.</p>
+            here at all</b>. The Homepage already provides one, so repeating it would add noise without adding
+            access.</p>
 
           <p class="sc-rejected"><b>Declined</b> Advisor needs adoption → add an Advisor banner to Portfolio</p>
 
@@ -2833,8 +2892,8 @@
             <div class="sc-shot wide"><div class="sc-frame" data-screen="home"></div><p class="sc-cap"><b>Homepage</b>The advisor route that already exists</p></div>
           </div>
 
-          <p class="sc-notice">The Homepage already carries the CoverRisk score, the coverage meter and the advisor
-            route. <strong>The access was never missing</strong> — only the banner was.</p>
+          <p class="sc-notice">The Homepage already carries the CoverRisk score and the advisor route.
+            <strong>The access was never missing</strong> — only the banner was.</p>
 
           <p style="margin: 24px 0 0;">
             <button class="sc-more" type="button" data-open="ov-3">
@@ -2846,7 +2905,7 @@
 
       <!-- ══ 04 ══ -->
       <section class="sc-card">
-        <div class="sc-num">04<span class="sc-skill">Decision design<br>Personalisation</span></div>
+        <div class="sc-num">04<span class="sc-skill">Decision design<br>Personalisation</span><span class="sc-subject">The buy recommendation, and the KYP rating</span></div>
         <div class="sc-body">
           <h2 class="sc-title">A category name became a number they could disagree with.</h2>
           <p class="sc-sub">&ldquo;Buy Life Insurance&rdquo; became &ldquo;You may need ₹80,00,000 additional life
@@ -2887,7 +2946,7 @@
 
       <!-- ══ 05 ══ -->
       <section class="sc-card">
-        <div class="sc-num">05<span class="sc-skill">Product ethics<br>Prioritisation</span></div>
+        <div class="sc-num">05<span class="sc-skill">Product ethics<br>Prioritisation</span><span class="sc-subject">Which cover gets recommended first</span></div>
         <div class="sc-body">
           <h2 class="sc-title">We ranked protection, not the catalogue.</h2>
           <p class="sc-sub">Foundational cover first, then what extends it, then what only matters on a signal.
@@ -2919,11 +2978,11 @@
 
       <!-- ══ 06 ══ -->
       <section class="sc-card">
-        <div class="sc-num">06<span class="sc-skill">Behavioural UX<br>UX writing</span></div>
+        <div class="sc-num">06<span class="sc-skill">Behavioural UX<br>UX writing</span><span class="sc-subject">Share Policy, and the Family Overview</span></div>
         <div class="sc-body">
           <h2 class="sc-title">The reason arrives before the ask.</h2>
           <p class="sc-sub">Share Policy stopped being a button and became a sentence about the nominee who will need
-            it. Family Overview works the same way — an unfinished section is its own prompt, so no banner has to ask.</p>
+            it. Family Overview works the same way — an unfinished section is its own prompt.</p>
 
           <div class="sc-copy">
             <p>&ldquo;Your nominee may not be able to access this policy easily during an emergency.&rdquo;</p>
