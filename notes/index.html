@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio Fact Register — CoverSure Policy Portfolio</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Working reference for the CoverSure Policy Portfolio case study: product facts, feature detail, decisions and open items, gathered so they can be verified.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f5fa">
+</head>
+<body>
+<style>
+  :root {
+    --ink:        #0c1633;
+    --ink-2:      #4a5878;
+    --ink-3:      #7c88a5;
+    --ground:     #f2f5fa;
+    --ground-2:   #e8edf7;
+    --surface:    #ffffff;
+    --rule:       #d3dcec;
+    --rule-soft:  #e4eaf5;
+    --accent:     #1f43ff;
+    --accent-ink: #1631c4;
+    --accent-soft:#e6ebff;
+    --signal:     #c9331f;
+    --signal-soft:#fbeae7;
+    --ok:         #1d7a4c;
+    --ok-soft:    #e3f4eb;
+
+    --display: "Avenir Next Condensed", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    --body:    Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --mono:    "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e9edfa; --ink-2: #a4b1ce; --ink-3: #6e7c9e;
+      --ground: #080d1c; --ground-2: #0d1430; --surface: #121a35;
+      --rule: #222c4e; --rule-soft: #18203c;
+      --accent: #8296ff; --accent-ink: #a6b4ff; --accent-soft: #182147;
+      --signal: #ff7f6d; --signal-soft: #2c1512;
+      --ok: #5fc78e; --ok-soft: #10281c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #e9edfa; --ink-2: #a4b1ce; --ink-3: #6e7c9e;
+    --ground: #080d1c; --ground-2: #0d1430; --surface: #121a35;
+    --rule: #222c4e; --rule-soft: #18203c;
+    --accent: #8296ff; --accent-ink: #a6b4ff; --accent-soft: #182147;
+    --signal: #ff7f6d; --signal-soft: #2c1512;
+    --ok: #5fc78e; --ok-soft: #10281c;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--body); font-size: 16.5px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  .shell { max-width: 1220px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 44px); }
+
+  /* ── masthead ── */
+  header.top { padding: clamp(40px, 6vw, 74px) 0 clamp(26px, 3vw, 36px); }
+  .eyebrow {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-3); margin: 0 0 18px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(32px, 5vw, 58px); line-height: 1.04; margin: 0 0 18px; max-width: 20ch;
+    text-wrap: balance;
+  }
+  .lede { font-size: clamp(16px, 1.7vw, 19px); color: var(--ink-2); max-width: 62ch; margin: 0 0 26px; }
+  .sources {
+    display: flex; flex-wrap: wrap; gap: 8px; padding-top: 20px; border-top: 1px solid var(--rule);
+  }
+  .sources span {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-2); background: var(--ground-2); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 6px 10px;
+  }
+
+  /* ── layout ── */
+  .cols { display: grid; grid-template-columns: 1fr; gap: 30px; padding-bottom: 70px; }
+  @media (min-width: 940px) {
+    .cols { grid-template-columns: 208px minmax(0, 1fr); gap: 52px; }
+    nav.index { position: sticky; top: 24px; align-self: start; max-height: calc(100vh - 48px); overflow-y: auto; }
+  }
+  nav.index ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  nav.index a {
+    display: flex; gap: 9px; text-decoration: none; padding: 5px 0;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em;
+    color: var(--ink-3); line-height: 1.4;
+  }
+  nav.index a:hover { color: var(--accent-ink); }
+  nav.index a b { color: var(--ink-3); font-weight: 400; flex: 0 0 auto; }
+  nav.index .nav-h {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-3); padding-bottom: 9px; margin-bottom: 9px; border-bottom: 1px solid var(--rule);
+  }
+
+  /* ── sections ── */
+  section { margin-bottom: clamp(38px, 5vw, 60px); scroll-margin-top: 20px; }
+  h2 {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.01em;
+    font-size: clamp(22px, 2.6vw, 31px); line-height: 1.12; margin: 0 0 6px;
+    display: flex; gap: 13px; align-items: baseline;
+  }
+  h2 .n { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); letter-spacing: 0.08em; flex: 0 0 auto; }
+  .src {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--ink-3); margin: 0 0 18px; padding-left: 0;
+  }
+  p { margin: 0 0 14px; max-width: 68ch; }
+  p.tight { margin-bottom: 8px; }
+  strong { font-weight: 700; }
+  em { font-style: italic; }
+
+  /* ── tables ── */
+  .tw { overflow-x: auto; margin: 0 0 18px; border: 1px solid var(--rule); border-radius: 9px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 500px; font-size: 14.5px; }
+  th {
+    text-align: left; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 400;
+    padding: 12px 16px; border-bottom: 1px solid var(--rule); background: var(--ground-2);
+  }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.5; color: var(--ink-2); }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { color: var(--ink); }
+  td b, th b { color: var(--ink); font-weight: 700; }
+  .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .who { font-family: var(--mono); font-size: 11px; white-space: nowrap; }
+
+  /* ── chips ── */
+  .chip {
+    display: inline-block; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; border-radius: 3px; padding: 3px 7px; white-space: nowrap;
+  }
+  .c-you  { background: var(--accent-soft); color: var(--accent-ink); }
+  .c-team { background: var(--ground-2); color: var(--ink-2); border: 1px solid var(--rule); }
+  .c-flag { background: var(--signal-soft); color: var(--signal); }
+  .c-ok   { background: var(--ok-soft); color: var(--ok); }
+
+  /* ── callouts ── */
+  .note {
+    border-left: 2px solid var(--accent); background: var(--surface);
+    padding: 15px 19px; margin: 0 0 18px; border-radius: 0 8px 8px 0;
+  }
+  .note.flag { border-left-color: var(--signal); }
+  .note p { margin: 0; font-size: 15px; color: var(--ink-2); }
+  .note p + p { margin-top: 9px; }
+  .note .h {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent-ink); margin-bottom: 8px; display: block;
+  }
+  .note.flag .h { color: var(--signal); }
+
+  ul { margin: 0 0 14px; padding-left: 20px; max-width: 68ch; }
+  li { margin-bottom: 7px; color: var(--ink-2); }
+  li strong { color: var(--ink); }
+
+  footer.end {
+    border-top: 1px solid var(--rule); padding: 22px 0 60px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3);
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;
+  }
+</style>
+
+<div class="shell">
+  <header class="top">
+    <p class="eyebrow">CoverSure · Policy Portfolio · Working reference</p>
+    <h1>Everything you've told me, in one place to check.</h1>
+    <p class="lede">Every product fact, feature detail, strategic decision and direction you've given,
+      pulled out of the project log and the case study and organised so you can verify what the case
+      study is being written from. Anything wrong here is wrong in the case study too.</p>
+    <div class="sources">
+      <span>PROJECT-LOG.md · 491 lines</span>
+      <span>index.html</span>
+      <span>README.md</span>
+      <span>assets/src · 11 exports</span>
+    </div>
+  </header>
+
+  <div class="cols">
+    <nav class="index" aria-label="Sections">
+      <p class="nav-h">Contents</p>
+      <ol>
+        <li><a href="#s1"><b>01</b> Product &amp; surface</a></li>
+        <li><a href="#s2"><b>02</b> The problems</a></li>
+        <li><a href="#s3"><b>03</b> The condition system</a></li>
+        <li><a href="#s4"><b>04</b> Features in detail</a></li>
+        <li><a href="#s5"><b>05</b> Recommendation order</a></li>
+        <li><a href="#s6"><b>06</b> The brand principle</a></li>
+        <li><a href="#s7"><b>07</b> Who owned what</a></li>
+        <li><a href="#s8"><b>08</b> Your directions</a></li>
+        <li><a href="#s9"><b>09</b> Your design decisions</a></li>
+        <li><a href="#s10"><b>10</b> Illustrative vs real</a></li>
+        <li><a href="#s11"><b>11</b> Corrections made</a></li>
+        <li><a href="#s12"><b>12</b> Open items</a></li>
+        <li><a href="#s13"><b>13</b> Things that don't add up</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <!-- 01 -->
+      <section id="s1">
+        <h2><span class="n">01</span> Product &amp; surface</h2>
+        <p class="src">Source · log §5 Q1–Q6, §9 · index.html</p>
+        <div class="tw"><table>
+          <tr><th>Item</th><th>What you've said</th></tr>
+          <tr><td><b>CoverSure</b></td><td>An insurance app where people buy and manage policies for themselves and their family. Mature product, post-MVP.</td></tr>
+          <tr><td><b>Policy Portfolio</b></td><td>The screen where people see what they already own — premiums, renewal dates, what has lapsed. Its primary job is management, not acquisition.</td></tr>
+          <tr><td><b>Journey</b></td><td>Onboarding → Homepage → Portfolio → Policy Details. All four read from the same user state.</td></tr>
+          <tr><td><b>Homepage</b></td><td>Carries the CoverRisk score as a band (<span class="num">40</span>, "moderate risk"), per-category coverage meters, family management, and a direct advisor route. Same state as Portfolio, read for a different job.</td></tr>
+          <tr><td><b>Shipped header</b></td><td><span class="num">Member · Policies · Premium Yearly</span>, with member avatar chips (Family / Self / Mother / +) and Add Policy top-right.</td></tr>
+          <tr><td><b>Category taxonomy</b></td><td>Health, Life, Motor, General, Agriculture, Business, Credit, Speciality, Other, Corporate, Endowment — wider than the three used in early mockups.</td></tr>
+          <tr><td><b>Status</b></td><td>All features shipped. Recently launched, no mature usage data.</td></tr>
+        </table></div>
+      </section>
+
+      <!-- 02 -->
+      <section id="s2">
+        <h2><span class="n">02</span> The problems</h2>
+        <p class="src">Source · log §5 Q6 — brought by the product head</p>
+        <p>These are the actual problems that started the work, and they are more specific than
+          "five capabilities needed to be discoverable":</p>
+        <ul>
+          <li><strong>Users couldn't navigate to policy details properly.</strong></li>
+          <li><strong>Promotional banners were confusing them.</strong></li>
+          <li><strong>Nobody was adding family members</strong> — because no family overview existed.</li>
+        </ul>
+        <div class="note flag">
+          <span class="h">Why this matters for the writing</span>
+          <p>Banner confusion was raised by the product head <em>as a problem to solve</em> — it was not
+            a business preference you argued down. Log correction #4 explicitly removed an adversarial
+            framing for exactly this reason. Any headline implying you fought for this is inaccurate.</p>
+        </div>
+      </section>
+
+      <!-- 03 -->
+      <section id="s3">
+        <h2><span class="n">03</span> The condition system</h2>
+        <p class="src">Source · index.html · log §5 Q3</p>
+        <p>Seven capabilities, each attached to a condition rather than a permanent slot. The screen
+          composes itself from whichever conditions are true, and never offers more than two actions at once.</p>
+        <div class="tw"><table>
+          <tr><th>Capability</th><th>Surfaces when</th><th>Where</th></tr>
+          <tr><td><b>Add Policy</b></td><td>Always — the screen's primary job</td><td class="who">Header</td></tr>
+          <tr><td><b>Family Management</b></td><td>A family member or their policy is missing</td><td class="who">Family overview</td></tr>
+          <tr><td><b>CoverRisk</b></td><td>No risk report exists yet</td><td class="who">Below the policies</td></tr>
+          <tr><td><b>Buy Policy</b></td><td>A report exists and a protection gap is open</td><td class="who">Below the policies</td></tr>
+          <tr><td><b>KYP</b></td><td>Always — on every policy owned</td><td class="who">Policy card</td></tr>
+          <tr><td><b>Advisor Portfolio</b></td><td>The CoverRisk report has just been generated</td><td class="who">After the report</td></tr>
+          <tr><td><b>Share Policy</b></td><td>Policy is Life or Group</td><td class="who">Policy details</td></tr>
+        </table></div>
+        <p>The governing rules: the pitch always sits <strong>below</strong> the policies, and the ceiling
+          is <strong>two actions at a time</strong>. Adapt closes the loop — the user acting produces new
+          information, which is why the next recommendation improves.</p>
+      </section>
+
+      <!-- 04 -->
+      <section id="s4">
+        <h2><span class="n">04</span> Features in detail</h2>
+        <p class="src">Source · log §5 Q1–Q3, §8, §9</p>
+
+        <div class="tw"><table>
+          <tr><th>Feature</th><th>What it actually is</th><th>Origin</th></tr>
+          <tr>
+            <td><b>CoverRisk</b></td>
+            <td>Collects age, location, family size, dependants, health, lifestyle, fitness, income,
+              investments, property, expenses. Returns a detailed risk report, a recommended coverage
+              amount, <b>and</b> a score with a risk band plus per-category coverage percentages.
+              Names no specific insurer. <b>Previously stayed inside its own report</b> and was used
+              nowhere else. Supplies amounts only — it does <b>not</b> decide recommendation order.</td>
+            <td><span class="chip c-team">Existed</span><br><span class="chip c-team">Entry point: prod head + team lead</span></td>
+          </tr>
+          <tr>
+            <td><b>KYP</b><br>Know Your Policy</td>
+            <td>Not a numeric score. Renders as <span class="num">Policy Rating · GREAT</span> — four levels
+              (GREAT / GOOD / AVERAGE / POOR), each a colour-coded four-segment meter with counts of
+              favourable and unfavourable conditions (<span class="num">✔2 | !8</span>), plus a COMING SOON
+              state. Also a <b>tab beside Details</b> on the policy itself, not only a card badge.
+              Covers ICU limits, room-rent limits, refill benefits.</td>
+            <td><span class="chip c-team">Rating on policy card: product lead</span></td>
+          </tr>
+          <tr>
+            <td><b>Family Overview</b></td>
+            <td>Answers who is covered (every member, policy count, yearly premium), who is missing, and
+              whose policies still need adding. Member cards carry name + relationship and a collapsible
+              premium row expanding into a category breakdown. Members without policies show an amber
+              <span class="num">Policy not added → + Add Policy</span> row. An incomplete overview is its
+              own prompt — no banner needed.</td>
+            <td><span class="chip c-team">Product head + team lead</span></td>
+          </tr>
+          <tr>
+            <td><b>Advisor Portfolio</b></td>
+            <td>Guidance specifically on <b>cover</b>. Distinct from the PRO tier's relationship manager,
+              which handles claims, legal questions and general support. Got no banner on Portfolio; appears
+              after the CoverRisk report generates.</td>
+            <td><span class="chip c-you">Restraint: yours</span></td>
+          </tr>
+          <tr>
+            <td><b>Share Policy</b></td>
+            <td>Life and Group policies only. Sits after the policy details, alongside an Emergency shortcut
+              in the header and a collapsible Nominee section. Shipped copy: <em>"While any emergency, share
+              policy with family members will be helpful."</em> Your refined line — <em>"Your nominee may not
+              be able to access this policy easily during an emergency"</em> — has <b>not shipped</b>.</td>
+            <td><span class="chip c-you">Reason-before-action: yours</span></td>
+          </tr>
+          <tr>
+            <td><b>Buy suggestions</b></td>
+            <td>Sit at the foot of the screen, each with its reason attached — <em>"Hospital treatments in
+              metro cities can cross ₹8–12L in one admission."</em> Coverage adequacy is contextual, not a
+              banner: each category header carries <em>"Is your Coverage Enough?"</em> beside a meter. Where a
+              policy is due, the choice is <b>Review report</b> or <b>Pay without Review</b>.</td>
+            <td><span class="chip c-you">Hierarchy rule: yours</span></td>
+          </tr>
+          <tr>
+            <td><b>PRO banner</b></td>
+            <td>Dark purple, <em>"Unsure of your IDEAL coverage?"</em> / <em>"Dedicated Relationship Manager
+              and 15+ benefits"</em>. Carries over from the previous design, <b>outside your scope</b>, already
+              being repositioned.</td>
+            <td><span class="chip c-flag">Inherited — not yours</span></td>
+          </tr>
+          <tr>
+            <td><b>Other shipped</b></td>
+            <td>Sync status · Download portfolio · Insurance on Card (debit/credit benefits, named banks) ·
+              <span class="num">Found 2 inactive policies → Review</span> ·
+              <span class="num">4 Upcoming Renewals → Review &amp; pay</span>.</td>
+            <td><span class="chip c-team">Existed</span></td>
+          </tr>
+        </table></div>
+      </section>
+
+      <!-- 05 -->
+      <section id="s5">
+        <h2><span class="n">05</span> Recommendation order</h2>
+        <p class="src">Source · log §5 Q4</p>
+        <p><strong>Decided by you</strong>, worked through with the product team for domain judgement.
+          CoverRisk supplies the coverage amount and premium estimate only — the sequence is a separate
+          decision that holds regardless of what the report returns.</p>
+        <div class="tw"><table>
+          <tr><th>Tier</th><th>Products</th><th>Rule</th></tr>
+          <tr><td><b>Foundational</b></td><td>Health, Life</td><td>Nothing outranks it</td></tr>
+          <tr><td><b>Additional</b></td><td>Super Top-Up, Critical Illness, Accident</td><td>Only once the foundation exists</td></tr>
+          <tr><td><b>Situational</b></td><td>Hospicash, Home, other</td><td>Only on a signal</td></tr>
+        </table></div>
+        <p>Worked example you gave: if someone has no life cover, home insurance is not pitched.</p>
+      </section>
+
+      <!-- 06 -->
+      <section id="s6">
+        <h2><span class="n">06</span> The brand principle</h2>
+        <p class="src">Source · log §5 Q5</p>
+        <div class="note">
+          <span class="h">CoverSure's existing principle</span>
+          <p>Never sell a policy without proper information and the right coverage amount, and don't push a
+            low-premium policy just because it converts — a low cover amount fails people at the moment it
+            matters.</p>
+        </div>
+        <p>Your work applied this existing company principle to <strong>the screen where the temptation to
+          break it was strongest</strong>. That's a stronger and more honest claim than presenting the ethics
+          as personally invented — and it's currently missing from the scan version.</p>
+        <div class="note flag">
+          <span class="h">Evidential status</span>
+          <p>"Users came to manage, not to be sold to" is <strong>informed judgement, not a formal study</strong>.
+            Your log says it must be framed as a stated design hypothesis. Anything that states it as a
+            research finding overstates what you have.</p>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section id="s7">
+        <h2><span class="n">07</span> Who owned what</h2>
+        <p class="src">Source · log §5 Q6 · §6 "credit split by voice"</p>
+        <p>Your own rule: <em>"we" for team-originated work, "I" for designer-owned. Overclaiming solo credit
+          on team work is a known portfolio red flag. Naming the lane makes every other claim more
+          believable.</em></p>
+        <div class="tw"><table>
+          <tr><th>Decision</th><th>Owner</th></tr>
+          <tr><td>The recommendation order and protection tiering</td><td><span class="chip c-you">You</span></td></tr>
+          <tr><td>Connecting CoverRisk's numbers back to Portfolio</td><td><span class="chip c-you">You</span></td></tr>
+          <tr><td>Declining the Advisor banner</td><td><span class="chip c-you">You</span></td></tr>
+          <tr><td>Reason-before-action for Share Policy</td><td><span class="chip c-you">You</span></td></tr>
+          <tr><td>The rule that the pitch sits below the policies</td><td><span class="chip c-you">You</span></td></tr>
+          <tr><td>Interaction design, progressive disclosure, UX writing</td><td><span class="chip c-you">You</span></td></tr>
+          <tr><td>The problem set that started the work</td><td><span class="chip c-team">Product head</span></td></tr>
+          <tr><td>Family Overview</td><td><span class="chip c-team">Product head + team lead</span></td></tr>
+          <tr><td>The CoverRisk entry point on Portfolio</td><td><span class="chip c-team">Product head + team lead</span></td></tr>
+          <tr><td>KYP ratings on the policy card</td><td><span class="chip c-team">Product lead</span></td></tr>
+        </table></div>
+        <p>Everything significant was discussed with product and team leadership, who carry years of
+          knowledge of the product, its users and the insurance industry.</p>
+      </section>
+
+      <!-- 08 -->
+      <section id="s8">
+        <h2><span class="n">08</span> Your directions</h2>
+        <p class="src">Source · log §4</p>
+        <div class="tw"><table>
+          <tr><th>What you asked for</th><th>What it changed</th></tr>
+          <tr><td>Two reading levels — a 20–30 second scan and a 2–3 minute read. <b>"Hide all the body copy… if the story still makes sense, you've succeeded."</b></td><td>The scan test became a hard acceptance criterion, checked before every publish. The mono notation gutter exists to satisfy it.</td></tr>
+          <tr><td>A second version with version tabs, built around five points showing strategy, UX and business understanding</td><td>The Compact version, five skill-labelled points, the tab shell.</td></tr>
+          <tr><td>"I want these versions to A/B test with friends and decide from feedback"</td><td>Tabs styled with equal weight — no "recommended" badge, which would bias the result — plus deep links so each tester can be sent one version cold.</td></tr>
+          <tr><td>"Less text, more visual — graphs, charts, maps to scan and understand easily"</td><td>Compact became diagram-led with a hard ~400-word prose budget. It landed at 220.</td></tr>
+          <tr><td>"We can add video or auto-scroll to showcase more UI screens"</td><td>Video impossible under the artifact CSP and over budget, so an auto-advancing carousel with pause control, then scrollable device frames for tall screens.</td></tr>
+          <tr><td>An explicit narrative spine: Problem → Decision → Strategy → Proof ×3 → Outcome → Role</td><td>Both versions restructured to it.</td></tr>
+          <tr><td>"Reflect these details in all versions"</td><td>Family Overview, KYP and the Advisor restraint became their own sections; capability list grew from four to seven.</td></tr>
+        </table></div>
+        <div class="note flag">
+          <span class="h">A criterion the scan version should be held to</span>
+          <p>Your own test — strip every paragraph and the headings alone must still tell the story — is the
+            exact thing the scan version was failing when you said the titles gave no context. With the
+            situation block and per-card subjects now in place, the headings alone read as a story. It's worth
+            re-running that test on any future edit.</p>
+        </div>
+      </section>
+
+      <!-- 09 -->
+      <section id="s9">
+        <h2><span class="n">09</span> Your design decisions</h2>
+        <p class="src">Source · log §2, §6</p>
+        <div class="tw"><table>
+          <tr><th>Decision</th><th>Your rationale</th></tr>
+          <tr><td>Identity from the product surface — policy navy, electric blue, cool paper</td><td>The cream / serif-display / terracotta alternative is the most common look in AI-generated design work and reads as templated.</td></tr>
+          <tr><td>Avenir Next Condensed + Charter + SF Mono, all system-available</td><td>The artifact CSP blocks font CDNs; a linked webfont would silently fall back and wreck the type.</td></tr>
+          <tr><td>Points labelled by skill, not numbered 01–05</td><td>Five parallel capabilities are not a sequence. Numbering would be decoration pretending to be information.</td></tr>
+          <tr><td>Adapt drawn on the return edge, not as a terminal box</td><td>Adapt is what closes the loop. Drawing it as a final stage would misrepresent the mechanism the diagram exists to explain.</td></tr>
+          <tr><td>Screens in fixed-height scrollable frames, not cropped</td><td>One export is 6,000 px tall. Cropping picks the reader's conclusion for them.</td></tr>
+          <tr><td>Before/after pair left as a CSS reconstruction</td><td>The "before" is a hypothetical the product never shipped. Presenting a mockup as an export would be a false claim.</td></tr>
+          <tr><td><b>No metric or performance charts</b></td><td>No mature usage data. Diagrams of logic are verifiable; a fabricated adoption chart is the fastest way to lose a senior reviewer.</td></tr>
+          <tr><td>Shipped share copy quoted alongside the refined line</td><td>The refined line hasn't shipped. Implying it had was the one claim a reviewer could disprove by opening the app.</td></tr>
+          <tr><td>The inherited PRO banner named explicitly</td><td>A reader comparing copy to screenshot would spot it. Naming what was outside the remit is stronger than silence.</td></tr>
+          <tr><td>Tier bars labelled "relative priority — not measured data"</td><td>They are the only quasi-quantitative element and would otherwise read as measurement.</td></tr>
+          <tr><td>Generic policy names, not real insurers</td><td>The names in the designs are placeholders, so real ones would be fabricated.</td></tr>
+        </table></div>
+      </section>
+
+      <!-- 10 -->
+      <section id="s10">
+        <h2><span class="n">10</span> Illustrative vs real</h2>
+        <p class="src">Source · log §10</p>
+        <div class="tw"><table>
+          <tr><th>Item</th><th>Status</th></tr>
+          <tr><td class="num">3 members · 9 policies · ₹82 K yearly</td><td>Illustrative — confirmed placeholder</td></tr>
+          <tr><td class="num">Recommended ₹80,00,000 · premium ₹11,800/yr · existing ₹40,00,000</td><td>Illustrative</td></tr>
+          <tr><td>Policy names, per-policy premiums, due dates</td><td>Illustrative</td></tr>
+          <tr><td class="num">KYP scores (4.4 / 4.1 / 3.2)</td><td>Illustrative</td></tr>
+          <tr><td>Member names, nominee name</td><td>Illustrative</td></tr>
+          <tr><td class="num">Avg. KYP header stat</td><td><b>Invented for the case study</b> — since removed</td></tr>
+          <tr><td>Insurer names in the screens</td><td>Placeholders, not live product data</td></tr>
+          <tr><td>Cross-screen totals</td><td>Not meant to reconcile — the screens show different users and use cases. Each screen is internally consistent only.</td></tr>
+        </table></div>
+      </section>
+
+      <!-- 11 -->
+      <section id="s11">
+        <h2><span class="n">11</span> Corrections already made</h2>
+        <p class="src">Source · log §7 — "the most useful output of the fact-finding"</p>
+        <div class="tw"><table>
+          <tr><th>What was wrong</th><th>Fix</th></tr>
+          <tr><td>Mockups built from an old navy-gradient screenshot</td><td>Rebuilt to the shipped light monochrome UI</td></tr>
+          <tr><td>Header said 9 policies; categories totalled 7</td><td>9 is the family total; decomposed 4 + 3 + 2 across three members</td></tr>
+          <tr><td>Claimed CoverRisk personalises the recommendation <em>order</em></td><td>CoverRisk supplies amounts only; sequence is a separate design decision</td></tr>
+          <tr><td><b>"Adding three banners was a real option. Arguing it down was part of the work."</b></td><td><b>Removed.</b> The product head brought banner confusion as a problem, so an adversarial framing was inaccurate</td></tr>
+          <tr><td>Real insurer names paired with invented KYP ratings</td><td>Replaced with generic policy names</td></tr>
+          <tr><td>Numeric KYP 4.4 badges</td><td>Replaced with the shipped rating band and ✔ / ! counts</td></tr>
+        </table></div>
+      </section>
+
+      <!-- 12 -->
+      <section id="s12">
+        <h2><span class="n">12</span> Open items</h2>
+        <p class="src">Source · log §11</p>
+        <ul>
+          <li><strong>Real CoverRisk figures.</strong> The cover, premium and existing-cover values in the before/after card are still illustrative — the last invented numbers on the page, sitting in the largest element.</li>
+          <li><strong>Is the refined share-policy line live anywhere?</strong> The caveat is removable if it has shipped on a surface that wasn't exported.</li>
+          <li><strong>Compact cover: diagram or screenshot?</strong> A deliberate call, and what the A/B test exists to settle.</li>
+          <li><strong>Pick a version.</strong> Once peer feedback is in, consolidate or keep a clear default.</li>
+          <li><strong>Public visibility of real product screens.</strong> Decided and live, revisitable.</li>
+        </ul>
+      </section>
+
+      <!-- 13 -->
+      <section id="s13">
+        <h2><span class="n">13</span> Things that don't add up</h2>
+        <p class="src">Found while cross-checking the log against the repo</p>
+
+        <div class="note flag">
+          <span class="h">1 · "Sixteen real screens" — wrong unit</span>
+          <p>Log §9 lists <b>6 exports</b> in the first pass and <b>5</b> in the second — <b>11 files</b>, which
+            matches <span class="num">assets/src/</span> and <span class="num">assets/web/</span> exactly, and
+            matches the 11 unique data URIs in the page.</p>
+          <p>"Sixteen" counts <b>placements</b>, not exports — several screens appear in more than one section
+            (Screens 01 and 07 in the full study are the same file). README.md:47 says "sixteen real screens,
+            <em>exported from the production Figma file</em>", which states the wrong unit. Either "eleven
+            screens" or "sixteen placements of eleven screens" is accurate.</p>
+        </div>
+
+        <div class="note flag">
+          <span class="h">2 · The log contradicts itself on screen count</span>
+          <p>§13 Deployment record says <b>"Page weight 2.42 MB, 10 embedded screens"</b> while §15 change
+            history says <b>"16 screens total"</b> and the live page is 3.66 MB. The deployment record appears
+            to predate both export passes.</p>
+        </div>
+
+        <div class="note flag">
+          <span class="h">3 · 1.25 MB of the page is duplicate base64</span>
+          <p>The three-tab <span class="num">index.html</span> embeds the same screens more than once —
+            <b>34.7% of the file</b> is duplicated image data. The standalone
+            <span class="num">scan/index.html</span> carries each screen once and is 2.34 MB against the
+            three-tab file's 3.66 MB. Deduplicating would fix it without removing anything.</p>
+        </div>
+
+        <div class="note flag">
+          <span class="h">4 · "0 new features built" was unsafe</span>
+          <p>Q6 says nobody was adding family members <em>because no family overview existed</em> — so the
+            Family Overview was new. The stat has been changed to <b>"0 new data or models"</b>, which is what
+            Q1 actually supports: the intelligence already existed inside CoverRisk.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="end">
+    <span>CoverSure · Policy Portfolio</span>
+    <span>Working reference · verify before citing</span>
+  </footer>
+</div>
+
+</body>
+</html>
