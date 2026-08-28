@@ -9,7 +9,8 @@ HTML file: no build step, no dependencies, no external requests.
 
 | # | Document | Read it | Source |
 |---|---|---|---|
-| 1 | **CoverSure Policy Portfolio** — case study, two versions | [Compact](https://dhanesh100.github.io/Case-study/#compact) · [Full study](https://dhanesh100.github.io/Case-study/#full) | [`index.html`](index.html) |
+| 1 | **CoverSure Policy Portfolio** — case study, three versions | [Scan](https://dhanesh100.github.io/Case-study/#scan) · [Compact](https://dhanesh100.github.io/Case-study/#compact) · [Full study](https://dhanesh100.github.io/Case-study/#full) | [`index.html`](index.html) |
+| 1a | **Scan version, standalone** — the same thing as one sendable file | [Read](https://dhanesh100.github.io/Case-study/scan/) | [`scan/`](scan/) |
 | 2 | **Portfolio Measurement Plan** — how to test whether the strategy works | [Read](https://dhanesh100.github.io/Case-study/measurement/) | [`measurement/`](measurement/) |
 | 3 | **Tiimo teardown** — competitive product design analysis | [Read](https://dhanesh100.github.io/Case-study/tiimo-teardown/) | [`tiimo-teardown/`](tiimo-teardown/) |
 | 4 | **Teardown analysis brief** — the reusable prompt behind #3 | — | [`ANALYSIS-BRIEF.md`](tiimo-teardown/ANALYSIS-BRIEF.md) |
@@ -31,13 +32,17 @@ So the question changed from *"how do we promote these features?"* to *"when doe
 feature become useful to this user?"* — which turns promotional slots into **conditions**
 that can be evaluated against a person's actual portfolio.
 
-Published as two tellings of the same argument, switchable by tabs and individually
+Published as three tellings of the same argument, switchable by tabs and individually
 shareable:
 
 | Version | Reading time | Approach |
 |---|---|---|
-| **Compact** — `#compact` | ~60 seconds | Visual-led. Five skill points, each carried by a diagram. |
-| **Full study** — `#full` | ~5 minutes | Narrative. Six proofs, the full reasoning. |
+| **Scan** — `#scan` | ~3 minutes | Six decisions, each a transferable principle with a screen as evidence. The reasoning behind any one opens in an overlay, so depth is opt-in and the scan stays short. |
+| **Compact** — `#compact` | ~4 minutes | Visual-led. Five skill points, each carried by a diagram. |
+| **Full study** — `#full` | ~13 minutes | Narrative. Six proofs, the full reasoning. |
+
+The Scan version is also published on its own at [`scan/`](scan/) — a single self-contained
+file, for sending to someone directly rather than as a tab among three.
 
 **Sixteen real screens**, exported from the production Figma file and shown in scrollable
 device frames rather than cropped, so a 6,000-pixel screen stays explorable. All diagrams are
