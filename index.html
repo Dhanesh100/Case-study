@@ -1430,6 +1430,374 @@
   }
 
   [role="tabpanel"][hidden] { display: none; }
+
+  /* ══════════════════════════════════════════════════════════════
+     SCAN VERSION — card spine + "Know more" overlays
+     ──────────────────────────────────────────────────────────────
+     REUSE NOTE: every rule below is prefixed .sc- and depends only
+     on the :root tokens. To reuse for another case study, copy the
+     #panel-scan markup, swap the card content, and point each
+     [data-screen] at a key in SCREEN_KEYS (see the script block).
+     ══════════════════════════════════════════════════════════════ */
+
+  .sc-wrap { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px); }
+
+  /* ────── masthead ────── */
+  .sc-mast { padding: clamp(46px, 8vw, 92px) 0 clamp(30px, 4vw, 46px); }
+
+  .sc-kicker {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-3);
+    display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: clamp(22px, 3vw, 34px);
+  }
+  .sc-kicker b { color: var(--ink-2); font-weight: 500; }
+  .sc-kicker span[aria-hidden] { color: var(--rule); }
+
+  .sc-h1 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(35px, 6.2vw, 74px); line-height: 1.02;
+    letter-spacing: -0.02em; margin: 0 0 26px; max-width: 19ch;
+  }
+  .sc-h1 .thin { color: var(--ink-3); font-weight: 500; }
+
+  .sc-dek {
+    font-size: clamp(17px, 1.9vw, 21px); line-height: 1.52;
+    color: var(--ink-2); max-width: 56ch; margin: 0 0 clamp(32px, 4.5vw, 48px);
+  }
+  .sc-dek em { color: var(--ink); font-style: italic; }
+
+  /* ────── stat row ────── */
+  .sc-stats {
+    display: flex; flex-wrap: wrap; gap: clamp(26px, 5vw, 64px);
+    padding: 26px 0; border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule); margin-bottom: 26px;
+  }
+  .sc-stat { display: flex; flex-direction: column; gap: 7px; }
+  .sc-stat b {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(30px, 3.8vw, 46px); line-height: 1;
+    letter-spacing: -0.02em; color: var(--ink);
+  }
+  .sc-stat b i { font-style: normal; color: var(--ink-3); font-size: 0.62em; padding: 0 2px; }
+  .sc-stat b em { font-style: normal; color: var(--accent); }
+  .sc-stat span {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-3); line-height: 1.5; max-width: 19ch;
+  }
+
+  .sc-role {
+    display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: baseline;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-3); margin-bottom: 30px;
+  }
+  .sc-role b { color: var(--ink-2); font-weight: 500; }
+  .sc-role .sc-shipped {
+    color: var(--accent-ink); background: var(--accent-soft);
+    border-radius: 3px; padding: 3px 8px; font-weight: 600;
+  }
+
+  /* ────── honesty / measurement note ────── */
+  .sc-honest {
+    border-left: 2px solid var(--accent); padding: 3px 0 3px 20px;
+    max-width: 62ch; font-size: 15.5px; line-height: 1.58; color: var(--ink-2);
+  }
+  .sc-honest a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+  .sc-howto {
+    display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center;
+    margin-top: clamp(38px, 5vw, 56px); padding-top: 20px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+
+  /* ────── the card spine ────── */
+  .sc-cards { display: flex; flex-direction: column; gap: clamp(52px, 7vw, 88px); padding-bottom: clamp(52px, 7vw, 88px); }
+
+  .sc-card { display: grid; grid-template-columns: 172px minmax(0, 1fr); gap: clamp(20px, 3.4vw, 46px); }
+
+  .sc-num {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.14em;
+    color: var(--ink-3); padding-top: 8px;
+  }
+  .sc-skill {
+    display: block; margin-top: 12px; font-family: var(--display);
+    font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
+    text-transform: uppercase; color: var(--accent-ink); line-height: 1.35;
+  }
+
+  .sc-body { min-width: 0; }
+
+  .sc-title {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(25px, 3.3vw, 40px); line-height: 1.1;
+    letter-spacing: -0.015em; margin: 0 0 16px; max-width: 21ch;
+  }
+  .sc-sub {
+    font-size: clamp(16px, 1.6vw, 18.5px); line-height: 1.56;
+    color: var(--ink-2); max-width: 60ch; margin: 0 0 26px;
+  }
+  .sc-sub em { color: var(--ink); font-style: italic; }
+  .sc-sub b { color: var(--ink); font-weight: 700; }
+
+  /* rejected-path chip — the alternative that was turned down */
+  .sc-rejected {
+    display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 10px;
+    font-family: var(--mono); font-size: 11.5px; line-height: 1.5;
+    color: var(--signal); background: var(--signal-soft);
+    border: 1px solid var(--signal); border-radius: 5px;
+    padding: 9px 13px; margin: 0 0 26px;
+  }
+  .sc-rejected b { font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px; }
+
+  /* ────── evidence: screens ────── */
+  .sc-shots {
+    display: flex; gap: 20px; overflow-x: auto; padding: 4px 4px 18px;
+    scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+  }
+  .sc-shot { flex: 0 0 auto; width: 236px; display: flex; flex-direction: column; gap: 11px; scroll-snap-align: start; }
+  .sc-shot.wide { width: 268px; }
+
+  .sc-frame {
+    width: 100%; height: 430px; border-radius: 26px;
+    overflow-y: auto; overflow-x: hidden; background: #f3f3f5;
+    border: 1px solid var(--stage-rule);
+    box-shadow: 0 18px 40px -14px rgba(2, 8, 34, 0.45);
+    -webkit-overflow-scrolling: touch; scrollbar-width: thin;
+  }
+  .sc-frame img { display: block; width: 100%; height: auto; }
+  .sc-shot.wide .sc-frame { height: 486px; }
+
+  .sc-cap { font-family: var(--mono); font-size: 10px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-3); }
+  .sc-cap b { display: block; color: var(--ink-2); font-weight: 500; margin-bottom: 4px; }
+
+  /* "what to notice" — turns a screenshot into evidence */
+  .sc-notice {
+    font-size: 14px; line-height: 1.65; color: var(--ink-2);
+    max-width: 68ch; margin: 2px 0 0;
+  }
+  .sc-notice::before {
+    content: "NOTICE"; display: inline-block; margin-right: 9px;
+    font-family: var(--mono); font-size: 9px;
+    letter-spacing: 0.14em; color: var(--accent-ink); background: var(--accent-soft);
+    border-radius: 3px; padding: 3px 6px; position: relative; top: -1px;
+  }
+  .sc-notice strong { color: var(--ink); font-weight: 700; }
+
+  /* ────── evidence: figures ────── */
+  .sc-fig { margin: 0 0 22px; }
+  .sc-fig .sc-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .sc-fig svg { display: block; width: 100%; min-width: 720px; height: auto; }
+
+  /* ────── know-more affordance ────── */
+  .sc-more {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--display); font-size: 14.5px; font-weight: 600;
+    letter-spacing: 0.02em; color: var(--accent-ink);
+    background: transparent; border: 1px solid var(--rule);
+    border-radius: 999px; padding: 10px 19px; cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  }
+  .sc-more:hover { background: var(--accent-soft); border-color: var(--accent); }
+  .sc-more:active { transform: scale(0.98); }
+  .sc-more .sc-plus {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 17px; height: 17px; border-radius: 50%;
+    background: var(--accent); color: #fff; font-size: 13px; line-height: 1;
+    font-family: var(--body); padding-bottom: 1px;
+  }
+
+  /* ────── overlay ────── */
+  .sc-ov {
+    position: fixed; inset: 0; z-index: 90;
+    display: flex; align-items: flex-end; justify-content: center;
+  }
+  .sc-ov[hidden] { display: none; }
+
+  .sc-ov-scrim {
+    position: absolute; inset: 0; background: rgba(4, 9, 28, 0.55);
+    -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+    border: 0; padding: 0; cursor: pointer; animation: sc-fade 0.22s ease both;
+  }
+
+  .sc-ov-panel {
+    position: relative; width: min(880px, 100%); max-height: 92vh;
+    background: var(--surface); color: var(--ink);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -12px 60px -12px rgba(2, 8, 34, 0.5);
+    display: flex; flex-direction: column; overflow: hidden;
+    animation: sc-rise 0.3s cubic-bezier(0.22, 0.9, 0.3, 1) both;
+  }
+  @media (min-width: 760px) {
+    .sc-ov { align-items: center; padding: 30px; }
+    .sc-ov-panel { border-radius: 18px; max-height: 88vh; }
+  }
+
+  @keyframes sc-rise { from { transform: translateY(26px); opacity: 0; } to { transform: none; opacity: 1; } }
+  @keyframes sc-fade { from { opacity: 0; } to { opacity: 1; } }
+
+  .sc-ov-head {
+    display: flex; align-items: flex-start; gap: 18px;
+    padding: 24px clamp(20px, 3.5vw, 40px) 18px;
+    border-bottom: 1px solid var(--rule-soft); flex: 0 0 auto;
+  }
+  .sc-ov-head .sc-skill { margin: 0 0 7px; }
+  .sc-ov-title {
+    font-family: var(--display); font-weight: 600; font-size: clamp(20px, 2.4vw, 27px);
+    line-height: 1.14; letter-spacing: -0.01em; margin: 0; max-width: 26ch;
+  }
+
+  .sc-ov-x {
+    flex: 0 0 auto; margin-left: auto; width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--rule); background: var(--ground-2); color: var(--ink-2);
+    font-size: 17px; line-height: 1; cursor: pointer; display: flex;
+    align-items: center; justify-content: center; transition: background 0.16s ease;
+  }
+  .sc-ov-x:hover { background: var(--rule-soft); color: var(--ink); }
+
+  .sc-ov-body {
+    overflow-y: auto; padding: clamp(22px, 3vw, 32px) clamp(20px, 3.5vw, 40px) clamp(30px, 4vw, 44px);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* the fixed four-part shape every overlay follows */
+  .sc-sec { margin-bottom: 30px; }
+  .sc-sec:last-child { margin-bottom: 0; }
+  .sc-sec > h4 {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 400;
+    margin: 0 0 11px; padding-bottom: 9px; border-bottom: 1px solid var(--rule-soft);
+  }
+  .sc-sec p { margin: 0 0 14px; font-size: 16px; line-height: 1.62; color: var(--ink-2); max-width: 64ch; }
+  .sc-sec p:last-child { margin-bottom: 0; }
+  .sc-sec p strong { color: var(--ink); font-weight: 700; }
+  .sc-sec p em { font-style: italic; color: var(--ink); }
+
+  .sc-lede { font-size: 17.5px !important; color: var(--ink) !important; }
+
+  .sc-quiet {
+    font-size: 14.5px !important; color: var(--ink-3) !important;
+    border-left: 2px solid var(--rule); padding-left: 16px; margin-top: 18px !important;
+  }
+
+  .sc-ov-body .sc-shots { padding-top: 2px; }
+  .sc-ov-body .sc-shot { width: 210px; }
+  .sc-ov-body .sc-frame { height: 384px; }
+
+  /* ────── close strip ────── */
+  .sc-close { background: var(--stage); color: var(--stage-ink); padding: clamp(46px, 7vw, 82px) 0; }
+  .sc-close .sc-outcomes {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: clamp(24px, 3.5vw, 44px); margin-bottom: clamp(38px, 5vw, 56px);
+  }
+  .sc-oc h4 {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #7c8dcb; font-weight: 400; margin: 0 0 12px; padding-bottom: 9px;
+    border-bottom: 1px solid var(--stage-rule);
+  }
+  .sc-oc p { margin: 0; font-size: 16px; line-height: 1.55; color: #ffffff; }
+  .sc-oc p + p { margin-top: 9px; font-size: 14px; color: var(--stage-ink); opacity: 0.72; }
+
+  .sc-close-line {
+    font-family: var(--display); font-weight: 600; font-size: clamp(23px, 3vw, 36px);
+    line-height: 1.14; letter-spacing: -0.015em; color: #ffffff; margin: 0 0 14px; max-width: 24ch;
+  }
+  .sc-close-sub { font-size: 16px; line-height: 1.55; color: var(--stage-ink); max-width: 58ch; margin: 0 0 30px; }
+  .sc-close-sub a { color: #ffffff; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+  .sc-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+  .sc-skills span {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--stage-ink); border: 1px solid var(--stage-rule); border-radius: 4px; padding: 7px 11px;
+  }
+
+  .sc-foot {
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;
+    border-top: 1px solid var(--stage-rule); padding-top: 20px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #7c8dcb;
+  }
+
+  /* ────── narrow screens ────── */
+  @media (max-width: 720px) {
+    .sc-card { grid-template-columns: 1fr; gap: 14px; }
+    .sc-num { padding-top: 0; display: flex; align-items: baseline; gap: 12px; }
+    .sc-skill { margin-top: 0; }
+    .sc-h1 { max-width: none; }
+  }
+
+  body.sc-locked { overflow: hidden; }
+
+  /* ────── condition table ────── */
+  .sc-tablewrap { overflow-x: auto; margin: 0 0 22px; }
+  .sc-table { border-collapse: collapse; width: 100%; min-width: 540px; font-size: 15px; }
+  .sc-table th {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 400; text-align: left;
+    padding: 0 16px 10px 0; border-bottom: 1px solid var(--rule);
+  }
+  .sc-table td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.45; }
+  .sc-table .sc-cap-name { font-family: var(--display); font-weight: 600; font-size: 16px; color: var(--ink); white-space: nowrap; }
+  .sc-table .sc-when { color: var(--ink-2); }
+  .sc-table .sc-where { font-family: var(--mono); font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+  .sc-table tr.sc-flag td { background: var(--accent-soft); }
+  .sc-table tr.sc-flag .sc-cap-name { color: var(--accent-ink); }
+
+  /* ────── priority tiers ────── */
+  .sc-tiers { display: flex; flex-direction: column; gap: 15px; margin: 0 0 16px; }
+  .sc-tier { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 18px; align-items: center; }
+  .sc-tier-k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); line-height: 1.5; }
+  .sc-tier-k b { display: block; font-family: var(--display); font-size: 14px; font-weight: 600; letter-spacing: 0.02em; color: var(--ink); margin-bottom: 3px; }
+  .sc-bar { height: 42px; border-radius: 6px; display: flex; align-items: center; gap: 10px; padding: 0 14px; flex-wrap: wrap; }
+  .sc-bar span { font-family: var(--display); font-size: 13.5px; font-weight: 600; letter-spacing: 0.02em; }
+  .sc-t1 { background: var(--accent); width: 100%; }
+  .sc-t1 span { color: #ffffff; }
+  .sc-t2 { background: var(--accent-soft); width: 68%; border: 1px solid var(--accent); }
+  .sc-t2 span { color: var(--accent-ink); }
+  .sc-t3 { background: var(--ground-2); width: 38%; border: 1px solid var(--rule); }
+  .sc-t3 span { color: var(--ink-3); }
+  .sc-scalenote { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 22px; }
+
+  /* ────── before / after flip ────── */
+  .sc-flip { margin: 0 0 22px; }
+  .sc-flip-tabs { display: inline-flex; gap: 4px; padding: 4px; background: var(--ground-2); border-radius: 999px; margin-bottom: 16px; }
+  .sc-flip-tabs button {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase;
+    border: 0; background: transparent; color: var(--ink-3); padding: 8px 17px;
+    border-radius: 999px; cursor: pointer; transition: background 0.18s ease, color 0.18s ease;
+  }
+  .sc-flip-tabs button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 4px rgba(2, 8, 34, 0.14); }
+
+  .sc-pane { border: 1px solid var(--rule); border-radius: 12px; padding: clamp(18px, 2.6vw, 26px); background: var(--surface); max-width: 480px; }
+  .sc-pane[hidden] { display: none; }
+  .sc-pane-k { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 12px; }
+  .sc-pane-t { font-family: var(--display); font-weight: 600; font-size: clamp(19px, 2.2vw, 24px); line-height: 1.16; letter-spacing: -0.01em; margin: 0 0 9px; color: var(--ink); }
+  .sc-pane-s { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); margin: 0; }
+  .sc-pane-figs { display: flex; gap: 26px; margin-top: 17px; padding-top: 15px; border-top: 1px solid var(--rule-soft); }
+  .sc-pane-figs div { display: flex; flex-direction: column; gap: 4px; }
+  .sc-pane-figs dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-3); }
+  .sc-pane-figs dd { margin: 0; font-family: var(--display); font-weight: 600; font-size: 21px; color: var(--ink); }
+  .sc-pane.sc-after { border-color: var(--accent); }
+  .sc-pane.sc-after .sc-pane-k { color: var(--accent-ink); }
+  .sc-flip-note { font-size: 14.5px; line-height: 1.5; color: var(--ink-3); margin: 14px 0 0; max-width: 60ch; }
+
+  /* ────── copy callout ────── */
+  .sc-copy {
+    border-left: 2px solid var(--accent); background: var(--accent-soft);
+    border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 0 0 22px; max-width: 54ch;
+  }
+  .sc-copy p { margin: 0 0 8px; font-size: 16.5px; line-height: 1.48; color: var(--ink); font-style: italic; }
+  .sc-copy cite { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--accent-ink); font-style: normal; }
+
+  /* ────── flow line ────── */
+  .sc-flow {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em;
+    color: var(--ink-2); margin: 0 0 22px;
+  }
+  .sc-flow b { color: var(--ink); font-weight: 500; background: var(--ground-2); border-radius: 4px; padding: 6px 10px; }
+  .sc-flow i { color: var(--accent); font-style: normal; }
+
 </style>
 </head>
 <body>
@@ -1437,11 +1805,14 @@
 <div class="versions">
   <div class="versions-in" role="tablist" aria-label="Case study version">
     <span class="versions-label">Version</span>
-    <button class="vtab" role="tab" id="tab-compact" aria-controls="panel-compact" aria-selected="true">
-      <b>Compact</b><i>visual · 60 sec</i>
+    <button class="vtab" role="tab" id="tab-scan" aria-controls="panel-scan" aria-selected="true">
+      <b>Scan</b><i>cards + depth · 3 min</i>
+    </button>
+    <button class="vtab" role="tab" id="tab-compact" aria-controls="panel-compact" aria-selected="false">
+      <b>Compact</b><i>visual · 4 min</i>
     </button>
     <button class="vtab" role="tab" id="tab-full" aria-controls="panel-full" aria-selected="false">
-      <b>Full study</b><i>narrative · 5 min</i>
+      <b>Full study</b><i>narrative · 13 min</i>
     </button>
   </div>
 </div>
@@ -2295,12 +2666,626 @@
   </footer>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════
+     V3 — SCAN + DEPTH
+     Six decisions on the surface; the reasoning behind each one
+     in an overlay. Scan the titles in ~2 minutes, open only what
+     matters. Screens are cloned in from the other panels at load
+     (see SCREEN_KEYS in the script) so nothing is duplicated.
+     ═══════════════════════════════════════════════════════════ -->
+<div role="tabpanel" id="panel-scan" aria-labelledby="tab-scan" tabindex="0">
+
+  <!-- ────────── masthead ────────── -->
+  <header class="sc-mast">
+    <div class="sc-wrap">
+      <div class="sc-kicker">
+        <b>CoverSure</b><span aria-hidden="true">/</span><span>Policy Portfolio</span>
+        <span aria-hidden="true">/</span><span>Product design</span>
+      </div>
+
+      <h1 class="sc-h1">Banners were the obvious answer. <span class="thin">I shipped conditions instead.</span></h1>
+
+      <p class="sc-dek">Five capabilities had to become discoverable on the screen where people manage their
+        policies. Rather than give each one a promotional slot, I gave each one a <em>condition</em> — a rule about
+        when it becomes useful to this particular user, checked against their actual portfolio.</p>
+
+      <dl class="sc-stats">
+        <div class="sc-stat">
+          <b>5<i>→</i><em>7</em></b>
+          <span>capabilities became conditions</span>
+        </div>
+        <div class="sc-stat">
+          <b>0</b>
+          <span>new features built</span>
+        </div>
+        <div class="sc-stat">
+          <b>11</b>
+          <span>real screens shipped</span>
+        </div>
+      </dl>
+
+      <div class="sc-role">
+        <b>Product Designer</b><span aria-hidden="true">·</span>
+        <span>UX strategy · recommendation logic · information hierarchy · progressive disclosure · UX writing</span>
+        <span class="sc-shipped">Shipped</span>
+      </div>
+
+      <p class="sc-honest">Shipped recently, so there is no usage data yet. Rather than borrow a number I can't stand
+        behind, I wrote the plan that would prove me wrong — every claim below as a hypothesis, with the threshold
+        that falsifies it. <a href="measurement/">Read the measurement plan →</a></p>
+
+      <p class="sc-howto">
+        <span>Six decisions · ~3 min scan</span>
+        <span aria-hidden="true">·</span>
+        <span>Open <b>Know more</b> for the reasoning behind any one</span>
+      </p>
+    </div>
+  </header>
+
+  <!-- ────────── the spine ────────── -->
+  <div class="sc-wrap">
+    <div class="sc-cards">
+
+      <!-- ══ 01 ══ -->
+      <section class="sc-card">
+        <div class="sc-num">01<span class="sc-skill">UX Strategy</span></div>
+        <div class="sc-body">
+          <h2 class="sc-title">I changed the question, not the layout.</h2>
+          <p class="sc-sub">Not <em>how do we promote these five features?</em> but <em>when does each one become
+            useful to this user?</em> The first question only has placements you can argue about. The second has an
+            answer you can build — and check against data the product already holds.</p>
+
+          <p class="sc-rejected"><b>Rejected</b> IF a capability needs adoption → THEN put a banner on the busiest screen</p>
+
+          <figure class="sc-fig">
+            <div class="sc-scroll">
+              <svg viewBox="0 0 880 236" role="img"
+                   aria-label="Two responses to the same brief. Adding banners competes with the screen's primary job and users skip it. Attaching each capability to a condition makes it appear only when it is useful.">
+                <defs>
+                  <marker id="sa1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M0 1 L9 5 L0 9 z" fill="var(--signal)" />
+                  </marker>
+                  <marker id="sa2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M0 1 L9 5 L0 9 z" fill="var(--accent)" />
+                  </marker>
+                </defs>
+                <rect class="svg-box" x="20" y="86" width="186" height="62" rx="10" />
+                <text class="svg-name" x="113" y="112" text-anchor="middle">THE ASK</text>
+                <text class="svg-sub" x="113" y="132" text-anchor="middle">5 capabilities, 1 screen</text>
+                <path class="svg-line-dead" d="M210 104 L320 52" marker-end="url(#sa1)" />
+                <path class="svg-line-key" d="M210 130 L320 182" marker-end="url(#sa2)" />
+                <rect x="326" y="22" width="230" height="60" rx="10" fill="var(--signal-soft)" stroke="var(--signal)" stroke-width="1.25" />
+                <text class="svg-name" x="441" y="47" text-anchor="middle" fill="var(--signal)">PROMOTE EACH ONE</text>
+                <text class="svg-sub" x="441" y="66" text-anchor="middle" fill="var(--signal)">banners on the busiest screen</text>
+                <rect class="svg-box-key" x="326" y="152" width="230" height="60" rx="10" />
+                <text class="svg-name-key" x="441" y="177" text-anchor="middle">ONE CONDITION EACH</text>
+                <text class="svg-sub" x="441" y="196" text-anchor="middle">surface only when useful</text>
+                <path class="svg-line-dead" d="M560 52 L670 52" marker-end="url(#sa1)" />
+                <path class="svg-line-key" d="M560 182 L670 182" marker-end="url(#sa2)" />
+                <text class="svg-name" x="676" y="47" fill="var(--signal)">COMPETES</text>
+                <text class="svg-sub" x="676" y="66" fill="var(--ink-3)">with the screen&rsquo;s primary job</text>
+                <text class="svg-name-key" x="676" y="177">ASSISTS</text>
+                <text class="svg-sub" x="676" y="196" fill="var(--ink-3)">discovery without distraction</text>
+              </svg>
+            </div>
+          </figure>
+
+          <button class="sc-more" type="button" data-open="ov-1">
+            <span class="sc-plus" aria-hidden="true">+</span> Know more
+          </button>
+        </div>
+      </section>
+
+      <!-- ══ 02 ══ -->
+      <section class="sc-card">
+        <div class="sc-num">02<span class="sc-skill">Systems thinking<br>Recommendation logic</span></div>
+        <div class="sc-body">
+          <h2 class="sc-title">Every capability had to earn its place.</h2>
+          <p class="sc-sub">Seven capabilities, seven conditions, one rule set. The screen composes itself from
+            whichever conditions are true for that person — and never offers more than <b>two actions at a time</b>.</p>
+
+          <div class="sc-tablewrap">
+            <table class="sc-table">
+              <thead>
+                <tr><th scope="col">Capability</th><th scope="col">Surfaces when</th><th scope="col">Where</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="sc-cap-name">Add Policy</td><td class="sc-when">Always — it is the screen&rsquo;s primary job</td><td class="sc-where">Header</td></tr>
+                <tr><td class="sc-cap-name">Family Management</td><td class="sc-when">A family member or their policy is missing</td><td class="sc-where">Family overview</td></tr>
+                <tr><td class="sc-cap-name">CoverRisk</td><td class="sc-when">No risk report exists yet</td><td class="sc-where">Below the policies</td></tr>
+                <tr><td class="sc-cap-name">Buy Policy</td><td class="sc-when">A report exists and a protection gap is open</td><td class="sc-where">Below the policies</td></tr>
+                <tr><td class="sc-cap-name">KYP</td><td class="sc-when">Always — on every policy owned</td><td class="sc-where">Policy card</td></tr>
+                <tr class="sc-flag"><td class="sc-cap-name">Advisor Portfolio</td><td class="sc-when">The CoverRisk report has just been generated</td><td class="sc-where">After the report</td></tr>
+                <tr><td class="sc-cap-name">Share Policy</td><td class="sc-when">Policy is Life or Group</td><td class="sc-where">Policy details</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="sc-shots">
+            <div class="sc-shot"><div class="sc-frame" data-screen="none"></div><p class="sc-cap"><b>Nothing added</b>No policies, no report</p></div>
+            <div class="sc-shot"><div class="sc-frame" data-screen="pending"></div><p class="sc-cap"><b>Pending attention</b>Renewals + inactive found</p></div>
+            <div class="sc-shot"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Policies added</b>Ratings, then suggestions</p></div>
+          </div>
+
+          <p class="sc-notice">Identical layout, identical feature set. Only <strong>which conditions are true</strong>
+            changes — and the buy suggestions sit below the policies in every single state.</p>
+
+          <p style="margin: 24px 0 0;">
+            <button class="sc-more" type="button" data-open="ov-2">
+              <span class="sc-plus" aria-hidden="true">+</span> Know more
+            </button>
+          </p>
+        </div>
+      </section>
+
+      <!-- ══ 03 ══ -->
+      <section class="sc-card">
+        <div class="sc-num">03<span class="sc-skill">Product judgment</span></div>
+        <div class="sc-body">
+          <h2 class="sc-title">The strongest decision was the one I didn&rsquo;t ship.</h2>
+          <p class="sc-sub">Advisor Portfolio — a monetisable feature under adoption pressure — got <b>no entry point
+            on this screen at all</b>. The Homepage already provides one. Repeating it here would have added noise
+            without adding access.</p>
+
+          <p class="sc-rejected"><b>Declined</b> Advisor needs adoption → add an Advisor banner to Portfolio</p>
+
+          <div class="sc-shots">
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="home"></div><p class="sc-cap"><b>Homepage</b>The advisor route that already exists</p></div>
+          </div>
+
+          <p class="sc-notice">The Homepage already carries the CoverRisk score, the coverage meter and the advisor
+            route. <strong>The access was never missing</strong> — only the banner was.</p>
+
+          <p style="margin: 24px 0 0;">
+            <button class="sc-more" type="button" data-open="ov-3">
+              <span class="sc-plus" aria-hidden="true">+</span> Know more
+            </button>
+          </p>
+        </div>
+      </section>
+
+      <!-- ══ 04 ══ -->
+      <section class="sc-card">
+        <div class="sc-num">04<span class="sc-skill">Decision design<br>Personalisation</span></div>
+        <div class="sc-body">
+          <h2 class="sc-title">A category name became a number they could disagree with.</h2>
+          <p class="sc-sub">&ldquo;Buy Life Insurance&rdquo; became &ldquo;You may need ₹80,00,000 additional life
+            cover&rdquo; — with the inputs that produced it and what it costs. A recommendation you can argue with is
+            one you can trust.</p>
+
+          <div class="sc-flip">
+            <div class="sc-flip-tabs">
+              <button type="button" id="sc-btn-before" aria-pressed="true">Before</button>
+              <button type="button" id="sc-btn-after" aria-pressed="false">After</button>
+            </div>
+
+            <div class="sc-pane" id="sc-pane-before">
+              <p class="sc-pane-k">Permanent promotional slot</p>
+              <p class="sc-pane-t">Buy Life Insurance</p>
+              <p class="sc-pane-s">Secure your family&rsquo;s future today.</p>
+            </div>
+
+            <div class="sc-pane sc-after" id="sc-pane-after" hidden>
+              <p class="sc-pane-k">From your CoverRisk report</p>
+              <p class="sc-pane-t">You may need ₹80,00,000 additional life cover</p>
+              <p class="sc-pane-s">Based on your dependants, income, expenses, lifestyle and ₹40,00,000 of existing cover.</p>
+              <dl class="sc-pane-figs">
+                <div><dt>Recommended cover</dt><dd>₹80L</dd></div>
+                <div><dt>Est. premium / yr</dt><dd>₹11,800</dd></div>
+              </dl>
+            </div>
+
+            <p class="sc-flip-note">A category name and an imperative, versus an amount, its inputs and its cost.
+              Same intent, same position on the screen.</p>
+          </div>
+
+          <button class="sc-more" type="button" data-open="ov-4">
+            <span class="sc-plus" aria-hidden="true">+</span> Know more
+          </button>
+        </div>
+      </section>
+
+      <!-- ══ 05 ══ -->
+      <section class="sc-card">
+        <div class="sc-num">05<span class="sc-skill">Product ethics<br>Prioritisation</span></div>
+        <div class="sc-body">
+          <h2 class="sc-title">We ranked protection, not the catalogue.</h2>
+          <p class="sc-sub">Foundational cover first, then what extends it, then what only matters on a signal.
+            Never what is easiest or most profitable to sell.</p>
+
+          <div class="sc-tiers">
+            <div class="sc-tier">
+              <p class="sc-tier-k"><b>Foundational</b>Recommend first</p>
+              <div class="sc-bar sc-t1"><span>Health</span><span>Life</span></div>
+            </div>
+            <div class="sc-tier">
+              <p class="sc-tier-k"><b>Additional</b>Once the foundation exists</p>
+              <div class="sc-bar sc-t2"><span>Super Top-Up</span><span>Critical Illness</span><span>Accident</span></div>
+            </div>
+            <div class="sc-tier">
+              <p class="sc-tier-k"><b>Situational</b>Only on a signal</p>
+              <div class="sc-bar sc-t3"><span>Hospicash</span><span>Home</span></div>
+            </div>
+          </div>
+          <p class="sc-scalenote">Bars show relative priority in the recommendation order — not measured data</p>
+
+          <p class="sc-rejected"><b>Never</b> No foundational cover → pitch home insurance</p>
+
+          <button class="sc-more" type="button" data-open="ov-5">
+            <span class="sc-plus" aria-hidden="true">+</span> Know more
+          </button>
+        </div>
+      </section>
+
+      <!-- ══ 06 ══ -->
+      <section class="sc-card">
+        <div class="sc-num">06<span class="sc-skill">Behavioural UX<br>UX writing</span></div>
+        <div class="sc-body">
+          <h2 class="sc-title">The reason arrives before the ask.</h2>
+          <p class="sc-sub">Share Policy stopped being a button and became a sentence about the nominee who will need
+            it. Family Overview works the same way — an unfinished section is its own prompt, so no banner has to ask.</p>
+
+          <div class="sc-copy">
+            <p>&ldquo;Your nominee may not be able to access this policy easily during an emergency.&rdquo;</p>
+            <cite>Share Policy · refined entry copy</cite>
+          </div>
+
+          <div class="sc-shots">
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="life"></div><p class="sc-cap"><b>Policy details</b>Life policy, share card at foot</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="family"></div><p class="sc-cap"><b>Family overview</b>The incomplete row is the prompt</p></div>
+          </div>
+
+          <p class="sc-notice">The share card sits <strong>after</strong> the policy details rather than competing with
+            Edit Details — and it leads with the reason, not the verb.</p>
+
+          <p style="margin: 24px 0 0;">
+            <button class="sc-more" type="button" data-open="ov-6">
+              <span class="sc-plus" aria-hidden="true">+</span> Know more
+            </button>
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ────────── close ────────── -->
+  <footer class="sc-close">
+    <div class="sc-wrap">
+      <div class="sc-outcomes">
+        <div class="sc-oc">
+          <h4>User</h4>
+          <p>Less noise. A clearer next step.</p>
+          <p>The primary task comes first, and every policy now shows what it is actually worth.</p>
+        </div>
+        <div class="sc-oc">
+          <h4>Business</h4>
+          <p>Capabilities became discoverable through relevance.</p>
+          <p>Six of them tied to a condition — and one deliberately to no slot at all.</p>
+        </div>
+        <div class="sc-oc">
+          <h4>Product</h4>
+          <p>Portfolio joined one connected journey.</p>
+          <p>Onboarding, Homepage, Portfolio and Policy Details now read from the same user state.</p>
+        </div>
+      </div>
+
+      <p class="sc-close-line">From policy storage to active insurance management.</p>
+      <p class="sc-close-sub">Not where the insurance journey ended — where the next useful step became clear.
+        The claims above are testable, and <a href="measurement/">the measurement plan</a> says what would disprove
+        each one.</p>
+
+      <div class="sc-skills">
+        <span>UX Strategy</span><span>Recommendation Logic</span><span>Interaction Design</span>
+        <span>Information Hierarchy</span><span>Progressive Disclosure</span><span>KYP Integration</span><span>UX Writing</span>
+      </div>
+
+      <p class="sc-foot">
+        <span>CoverSure · Policy Portfolio</span>
+        <span>Scan version</span>
+      </p>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════ OVERLAYS ═══════════════
+     Each one answers the hardest question a product head would ask
+     about its card, in a fixed four-part shape:
+     the tension → what I decided → why, and what I rejected → on screen
+     ════════════════════════════════════════ -->
+<div class="sc-ov" id="ov-1" hidden role="dialog" aria-modal="true" aria-labelledby="ov-1-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head">
+      <div>
+        <span class="sc-skill">UX Strategy</span>
+        <h3 class="sc-ov-title" id="ov-1-t">I changed the question, not the layout.</h3>
+      </div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="sc-ov-body">
+      <div class="sc-sec">
+        <h4>The tension</h4>
+        <p class="sc-lede">Business needed five capabilities adopted. Users came to Portfolio to check a premium date,
+          find a policy number, or see what had lapsed. Both needs were real, and they pointed in opposite directions.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>What I decided</h4>
+        <p>No capability gets a permanent promotional slot. Each one gets a <strong>condition</strong> — a statement
+          about when it becomes useful — evaluated against the user&rsquo;s actual portfolio.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>Why, and what I rejected</h4>
+        <p>A banner does not fail because it is badly placed. It fails because it interrupts someone mid-task with an
+          offer they have no way to evaluate — and some of them stop opening the section at all. That is the part that
+          made the default answer expensive rather than merely ineffective.</p>
+        <p><em>How do we promote this?</em> has no answer you can build. It only has placements you can argue about in
+          a review. <em>When does this become useful?</em> resolves to a rule — and a rule can be checked against data
+          the product already holds.</p>
+        <p>Which reframes the conflict rather than splitting it. <strong>Business needs adoption. Users need
+          relevance.</strong> A condition serves both, because a capability shown at the moment it is useful is both
+          more discoverable and less annoying than one shown permanently.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>How it shows up on screen</h4>
+        <p>The layout never changes between users. What changes is which conditions are true — which is why the same
+          screen can look sparse for one person and dense for another without either being a different design.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="ov-2" hidden role="dialog" aria-modal="true" aria-labelledby="ov-2-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head">
+      <div>
+        <span class="sc-skill">Systems thinking · Recommendation logic</span>
+        <h3 class="sc-ov-title" id="ov-2-t">Every capability had to earn its place.</h3>
+      </div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="sc-ov-body">
+      <div class="sc-sec">
+        <h4>The tension</h4>
+        <p class="sc-lede">Seven capabilities, one screen, and a finite amount of attention. A rule set that fires
+          everything at once is just a banner stack with extra steps.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>What I decided</h4>
+        <p>Four stages, running as a loop rather than a funnel:</p>
+        <p><strong>Understand</strong> — what do we know? Policies held, family members added, CoverRisk report status,
+          each policy&rsquo;s KYP rating, onboarding answers.<br>
+          <strong>Prioritise</strong> — what matters most here? Not every gap is equally urgent, and not every product
+          is equally foundational.<br>
+          <strong>Guide</strong> — show one or two useful next actions. Never ten. <strong>The ceiling is the
+          design.</strong><br>
+          <strong>Adapt</strong> — the user acts, context changes, Portfolio changes.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>Why, and what I rejected</h4>
+        <p>Adapt is not a fourth stage at the end — it is the edge that closes the loop. The user acting is what
+          produces new information, and that information returns through Understand. This is the whole difference
+          between a system and a smarter banner: <strong>the next recommendation is better than the last one because
+          of what the user just did.</strong></p>
+        <p>Add a policy and the measured gap shrinks. Finish CoverRisk and categories turn into amounts. Add family and
+          the prompt stops appearing, because its condition is no longer true.</p>
+        <p class="sc-quiet">The two-action ceiling was the constraint I defended hardest. Every capability owner wants
+          their entry point visible, and each individual request is reasonable. The ceiling is what stops seven
+          reasonable requests from adding up to an unusable screen.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>How it shows up on screen</h4>
+        <p>Four more real states. None is a layout variant — each is a different condition being true, and the screen
+          composes itself accordingly.</p>
+        <div class="sc-shots">
+          <div class="sc-shot"><div class="sc-frame" data-screen="group"></div><p class="sc-cap"><b>Group health only</b>Premium reads &ldquo;—&rdquo;</p></div>
+          <div class="sc-shot"><div class="sc-frame" data-screen="one"></div><p class="sc-cap"><b>One policy</b>Sparse, not empty</p></div>
+          <div class="sc-shot"><div class="sc-frame" data-screen="inactive"></div><p class="sc-cap"><b>Inactive found</b>Lapse surfaced</p></div>
+          <div class="sc-shot"><div class="sc-frame" data-screen="fullfam"></div><p class="sc-cap"><b>Full family</b>Prompts gone</p></div>
+        </div>
+        <p class="sc-notice">On group-only cover, <strong>Premium Yearly reads &ldquo;—&rdquo;</strong> because the
+          user does not pay it. Showing a number there would have been a lie of convenience.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="ov-3" hidden role="dialog" aria-modal="true" aria-labelledby="ov-3-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head">
+      <div>
+        <span class="sc-skill">Product judgment</span>
+        <h3 class="sc-ov-title" id="ov-3-t">The strongest decision was the one I didn&rsquo;t ship.</h3>
+      </div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="sc-ov-body">
+      <div class="sc-sec">
+        <h4>The tension</h4>
+        <p class="sc-lede">Advisor Portfolio is a monetisable feature with adoption pressure behind it, and Portfolio
+          is the busiest screen in the product. Every incentive pointed at putting a banner there.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>What I decided</h4>
+        <p>No advisor entry point on Portfolio. Instead, the advisor is offered <strong>immediately after CoverRisk
+          generates the user&rsquo;s report</strong> — the moment they have context, and probably questions.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>Why, and what I rejected</h4>
+        <p>Users already have a direct route from the Homepage. Repeating it on Portfolio would have added noise
+          without adding access — <strong>the access was never the missing part</strong>.</p>
+        <p>There was also a second entry point already competing for the same space. The PRO tier&rsquo;s relationship
+          manager handles claims, legal questions and whatever else goes wrong; Advisor Portfolio is specifically
+          guidance on cover. Two genuinely different needs — stacking them on one screen would have blurred both.</p>
+        <p>Placed after a report, the same action reads as useful rather than promotional, because by then the user has
+          something specific to ask about. <strong>Declining to place a feature is harder to argue for than placing
+          one — and it is the decision I would defend first.</strong></p>
+      </div>
+      <div class="sc-sec">
+        <h4>What I didn&rsquo;t control</h4>
+        <p class="sc-quiet">The PRO subscription banner on this screen carries over from the previous design and sits
+          outside this scope. It is already being repositioned in an upcoming update. Worth naming plainly: the
+          conditions described here govern the entry points I owned, not every pixel on the screen.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="ov-4" hidden role="dialog" aria-modal="true" aria-labelledby="ov-4-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head">
+      <div>
+        <span class="sc-skill">Decision design · Personalisation</span>
+        <h3 class="sc-ov-title" id="ov-4-t">A number they could disagree with.</h3>
+      </div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="sc-ov-body">
+      <div class="sc-sec">
+        <h4>The tension</h4>
+        <p class="sc-lede">CoverRisk already collected age, location, family, dependants, health, lifestyle, income,
+          investments, property and expenses — then produced a recommended coverage amount that stayed inside its own
+          report. Meanwhile the buying screen, where a number would actually change someone&rsquo;s mind, showed a
+          category name.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>What I decided</h4>
+        <p>Connect the existing report back to the buying moment. <strong>No new data, no new model</strong> — just the
+          number placed where the decision happens: Understand → Recommend → Quantify → Buy.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>Why, and what I rejected</h4>
+        <p>Most people do not know what cover they need. Left alone, they optimise the one number they understand — the
+          premium — and buy the cheapest policy available. Then treatment takes away their income and they discover the
+          cover was never built for their life. That is exactly what critical illness cover exists for, and it is
+          invisible to anyone shopping on price.</p>
+        <p>So the recommendation names a coverage level and the average premium for it at that age and health profile.
+          <strong>Not a specific insurer. Not a cheap policy.</strong> The rejected version of this was a
+          personalised-looking banner that still optimised for click-through on the cheapest available plan.</p>
+        <p>The point of showing the inputs is that the user can now <em>disagree</em> with the number — and a
+          recommendation you can argue with is the only kind worth trusting.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>The same principle, second proof: KYP</h4>
+        <p>A policy rating on its own is just a badge. So the rating ships as a plain-language verdict with a count of
+          how many conditions work in the user&rsquo;s favour and how many do not — and it sits on the policy card in
+          the listing, where they are already scanning what they own. On the policy itself, Know Your Policy became a
+          tab beside Details, at the same depth as the policy&rsquo;s own information.</p>
+        <div class="sc-shots">
+          <div class="sc-shot"><div class="sc-frame" data-screen="kyp"></div><p class="sc-cap"><b>Rating scale</b>Verdict + condition counts</p></div>
+        </div>
+        <p class="sc-notice">A room-rent cap is the clause nobody reads and everybody discovers at the worst possible
+          time. <strong>The counts are what make it findable at all.</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="ov-5" hidden role="dialog" aria-modal="true" aria-labelledby="ov-5-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head">
+      <div>
+        <span class="sc-skill">Product ethics · Prioritisation</span>
+        <h3 class="sc-ov-title" id="ov-5-t">We ranked protection, not the catalogue.</h3>
+      </div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="sc-ov-body">
+      <div class="sc-sec">
+        <h4>The tension</h4>
+        <p class="sc-lede">A recommendation system is only as good as its ranking — and ranking is exactly where
+          commercial pressure lands, because some products are simply easier and more profitable to sell.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>What I decided</h4>
+        <p>Three tiers, worked through with Product and Design leadership rather than designed in isolation.
+          <strong>Foundational</strong> (Health, Life) — absence here is the gap a family feels first, and nothing
+          outranks it. <strong>Additional</strong> (Super Top-Up, Critical Illness, Accident) — these extend cover
+          rather than establish it. <strong>Situational</strong> (Hospicash, Home) — relevant to some, irrelevant to
+          most, shown only when something in the user&rsquo;s context asks for it.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>Why, and what I rejected</h4>
+        <p>An important separation: <strong>CoverRisk does not decide this order.</strong> It supplies the coverage
+          amount and the premium estimate. The sequence is a separate decision, and it holds regardless of what the
+          report returns — which is what stops the ranking from drifting toward whatever is easiest to sell that
+          quarter.</p>
+        <p>Pushing a lower-priority product because it converts better creates the wrong outcome for the user, and that
+          damage lands on the brand rather than on the campaign. Portfolio recommends what matters next, not what is
+          easiest to promote.</p>
+        <p class="sc-quiet">This is also the decision most likely to be quietly reversed later under revenue pressure,
+          which is why it is written down as an explicit ordering rather than left to whoever configures the next
+          campaign.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>The honest caveat</h4>
+        <p>The bars on the previous screen show relative priority in the recommendation order. They are not measured
+          data, and nothing here should be read as a conversion figure.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="ov-6" hidden role="dialog" aria-modal="true" aria-labelledby="ov-6-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head">
+      <div>
+        <span class="sc-skill">Behavioural UX · UX writing</span>
+        <h3 class="sc-ov-title" id="ov-6-t">The reason arrives before the ask.</h3>
+      </div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="sc-ov-body">
+      <div class="sc-sec">
+        <h4>The tension</h4>
+        <p class="sc-lede">Share Policy needed adoption, and the obvious move was another button. But a button on the
+          policy screen competes with Edit Details — and loses, because sharing has no obvious payoff at the moment
+          you are looking at it.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>What I decided</h4>
+        <p>The question was never <em>where should Share Policy go?</em> It was <em>when does sharing become useful
+          enough to act on?</em> So on Life and Group policies the entry point stopped being a button and became a
+          sentence — and the card sits after the policy details rather than competing with them.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>Why, and what I rejected</h4>
+        <p>Sharing an insurance policy is not a convenience. It is a responsibility, and the moment it pays off is the
+          worst moment of someone&rsquo;s life — a nominee hunting for a policy number while grieving.
+          <strong>You cannot design for that moment. You design ahead of it.</strong></p>
+        <p>Which is why the reason has to lead. An action with no stated stake is just another button; the same action
+          with the nominee named becomes something a person can decide about.</p>
+        <p class="sc-quiet">Worth being straight about: the card that shipped makes this argument more loosely —
+          &ldquo;While any emergency, share policy with family members will be helpful.&rdquo; Tightening that into a
+          line that names the nominee and the moment is the UX-writing half of this decision, and it is still working
+          its way through.</p>
+      </div>
+      <div class="sc-sec">
+        <h4>The same principle, second proof: Family Overview</h4>
+        <p>One person usually manages insurance for a whole family, so a missing member means missed renewals and a
+          harder emergency. The Family Overview answers three questions at a glance: <strong>who is covered</strong>
+          (every member, their policy count, their yearly premium), <strong>who is missing</strong>, and
+          <strong>whose policies still need adding</strong>.</p>
+        <p>An incomplete overview reads as incomplete. That is the whole thesis applied to an adoption problem —
+          <strong>let the structure carry the request</strong> instead of a banner asking for it.</p>
+        <p class="sc-notice" style="margin-top:18px;">The incomplete row <strong>is</strong> the reminder. A member with
+          nothing added reads as unfinished work rather than as a marketing prompt.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   (function () {
     'use strict';
 
-    var DEFAULT_VIEW = 'compact';
-    var VIEWS = ['compact', 'full'];
+    var DEFAULT_VIEW = 'scan';
+    var VIEWS = ['scan', 'compact', 'full'];
     var tabs = {}, panels = {};
 
     VIEWS.forEach(function (v) {
@@ -2424,6 +3409,143 @@
     showView(fromHash(), false);
     window.addEventListener('hashchange', function () { showView(fromHash(), false); });
   })();
+
+  /* ══════════════════════════════════════════════════════════════
+     SCAN VERSION — screen wiring + "Know more" overlays
+     ──────────────────────────────────────────────────────────────
+     Screens are cloned from the markup already in the other two
+     panels, keyed by first appearance in document order. Nothing is
+     re-embedded, so adding this version costs no extra bytes.
+
+     REUSE: change SCREEN_KEYS to match your own exports, then point
+     any [data-screen="key"] at one. Everything else is generic.
+     ══════════════════════════════════════════════════════════════ */
+  (function () {
+    'use strict';
+
+    var SCREEN_KEYS = [
+      'none',     /* 0  no policies added        */
+      'pending',  /* 1  renewals + inactive      */
+      'member',   /* 2  member portfolio, full   */
+      'group',    /* 3  employer group health    */
+      'inactive', /* 4  inactive policy detected */
+      'family',   /* 5  family overview          */
+      'home',     /* 6  homepage, CoverRisk 40   */
+      'one',      /* 7  single policy added      */
+      'fullfam',  /* 8  fuller family overview   */
+      'life',     /* 9  life policy details      */
+      'kyp'       /* 10 policy rating scale      */
+    ];
+
+    /* ── resolve each key to the first <img> carrying that data URI ── */
+    function buildLibrary() {
+      var lib = {}, seen = {}, n = 0;
+      var imgs = document.querySelectorAll('img[src^="data:"]');
+      for (var i = 0; i < imgs.length; i++) {
+        var src = imgs[i].getAttribute('src');
+        if (seen[src]) { continue; }
+        seen[src] = true;
+        if (n < SCREEN_KEYS.length) { lib[SCREEN_KEYS[n]] = imgs[i]; }
+        n++;
+      }
+      return lib;
+    }
+
+    function mountScreens() {
+      var lib = buildLibrary();
+      var slots = document.querySelectorAll('[data-screen]');
+      for (var i = 0; i < slots.length; i++) {
+        var slot = slots[i];
+        if (slot.firstElementChild) { continue; }
+        var source = lib[slot.getAttribute('data-screen')];
+        if (!source) { continue; }
+        var clone = source.cloneNode(false);
+        clone.removeAttribute('id');
+        clone.setAttribute('loading', 'lazy');
+        clone.setAttribute('decoding', 'async');
+        slot.appendChild(clone);
+      }
+    }
+
+    /* ── overlays ── */
+    var FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    var openOverlay = null;
+    var lastFocused = null;
+
+    function close() {
+      if (!openOverlay) { return; }
+      openOverlay.hidden = true;
+      document.body.classList.remove('sc-locked');
+      if (lastFocused && lastFocused.focus) { lastFocused.focus(); }
+      openOverlay = null;
+      lastFocused = null;
+    }
+
+    function open(id, trigger) {
+      var ov = document.getElementById(id);
+      if (!ov) { return; }
+      if (openOverlay) { close(); }
+      lastFocused = trigger || document.activeElement;
+      ov.hidden = false;
+      document.body.classList.add('sc-locked');
+      openOverlay = ov;
+      var body = ov.querySelector('.sc-ov-body');
+      if (body) { body.scrollTop = 0; }
+      var x = ov.querySelector('.sc-ov-x');
+      if (x) { x.focus(); }
+    }
+
+    document.addEventListener('click', function (e) {
+      var opener = e.target.closest ? e.target.closest('[data-open]') : null;
+      if (opener) {
+        e.preventDefault();
+        open(opener.getAttribute('data-open'), opener);
+        return;
+      }
+      if (!openOverlay) { return; }
+      if (e.target.closest('[data-close]') || e.target.closest('.vtab') ||
+          e.target.classList.contains('sc-ov-scrim')) {
+        e.preventDefault();
+        close();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!openOverlay) { return; }
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key !== 'Tab') { return; }
+
+      var panel = openOverlay.querySelector('.sc-ov-panel');
+      var items = [].slice.call(panel.querySelectorAll(FOCUSABLE)).filter(function (el) {
+        return el.offsetParent !== null;
+      });
+      if (!items.length) { return; }
+      var first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    /* ── before / after flip (scoped to this panel) ── */
+    function wireFlip() {
+      var b = document.getElementById('sc-btn-before');
+      var a = document.getElementById('sc-btn-after');
+      var bp = document.getElementById('sc-pane-before');
+      var ap = document.getElementById('sc-pane-after');
+      if (!b || !a || !bp || !ap) { return; }
+      function flip(isBefore) {
+        b.setAttribute('aria-pressed', String(isBefore));
+        a.setAttribute('aria-pressed', String(!isBefore));
+        bp.hidden = !isBefore;
+        ap.hidden = isBefore;
+      }
+      b.addEventListener('click', function () { flip(true); });
+      a.addEventListener('click', function () { flip(false); });
+    }
+
+    mountScreens();
+    wireFlip();
+  })();
+
 </script>
 </body>
 </html>
