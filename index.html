@@ -1723,7 +1723,6 @@
     .sc-card { grid-template-columns: 1fr; gap: 14px; }
     .sc-num { padding-top: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
     .sc-skill { margin-top: 0; }
-    .sc-subject { margin-top: 0; }
     .sc-sit-grid > div { grid-template-columns: 1fr; gap: 4px; }
     .sc-h1 { max-width: none; }
   }
@@ -1754,11 +1753,6 @@
   .sc-sit-grid dd { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
   .sc-sit-grid dd b { color: var(--ink); font-weight: 700; }
 
-  /* the concrete thing each card is about, under its skill tag */
-  .sc-subject {
-    display: block; margin-top: 8px; font-family: var(--body);
-    font-size: 13.5px; line-height: 1.4; color: var(--ink-3); font-style: italic;
-  }
 
   /* ────── condition table ────── */
   .sc-tablewrap { overflow-x: auto; margin: 0 0 22px; }
@@ -1838,7 +1832,7 @@
   <div class="versions-in" role="tablist" aria-label="Case study version">
     <span class="versions-label">Version</span>
     <button class="vtab" role="tab" id="tab-scan" aria-controls="panel-scan" aria-selected="true">
-      <b>Scan</b><i>cards + depth · 3 min</i>
+      <b>Scan</b><i>cards + depth · 2 min</i>
     </button>
     <button class="vtab" role="tab" id="tab-compact" aria-controls="panel-compact" aria-selected="false">
       <b>Compact</b><i>visual · 4 min</i>
@@ -2718,32 +2712,31 @@
       <h1 class="sc-h1">I turned a discovery problem <span class="thin">into a rule set.</span></h1>
 
       <p class="sc-dek">Seven capabilities on one screen, each attached to a <em>condition</em> about when it becomes
-        useful to this user — evaluated against their real portfolio, rather than given a permanent promotional slot.</p>
+        useful — evaluated against that user's real portfolio.</p>
 
       <section class="sc-situation">
         <h2 class="sc-sit-h">The situation</h2>
         <dl class="sc-sit-grid">
           <div>
             <dt>Product</dt>
-            <dd><b>CoverSure</b> — an insurance app where people buy and manage policies for themselves and
-              their family. Mature product, post-MVP.</dd>
+            <dd><b>CoverSure</b> — buy and manage insurance for yourself and your family. Mature product,
+              post-MVP.</dd>
           </div>
           <div>
             <dt>Surface</dt>
-            <dd><b>Policy Portfolio</b> — the screen where people see what they already own: premiums,
-              renewal dates, what has lapsed.</dd>
+            <dd><b>Policy Portfolio</b> — where people see what they already own: premiums, renewals,
+              what has lapsed.</dd>
           </div>
           <div>
             <dt>Problems</dt>
-            <dd>Brought by the product head: people could not navigate to policy details properly, promotional
-              banners were confusing them, and nobody was adding family members — because no family overview
-              existed.</dd>
+            <dd>From the product head: people couldn't reach policy details, banners confused them, and nobody
+              was adding family members — no family overview existed.</dd>
           </div>
           <div>
             <dt>My remit</dt>
-            <dd>The condition system and the recommendation order; connecting CoverRisk's numbers to the buying
-              moment; declining the Advisor banner; the rule that the pitch sits below the policies. <b>Family
-              Overview and KYP-on-the-policy-card came from product leadership</b> — I designed how they work.</dd>
+            <dd>The condition system, the recommendation order, the CoverRisk connection, declining the Advisor
+              banner. <b>Family Overview and KYP-on-card came from product leadership</b> — I designed how they
+              work.</dd>
           </div>
         </dl>
       </section>
@@ -2755,7 +2748,7 @@
         </div>
         <div class="sc-stat">
           <b>0</b>
-          <span>new data or models — the intelligence already existed</span>
+          <span>new data or models built</span>
         </div>
         <div class="sc-stat">
           <b>11</b>
@@ -2769,12 +2762,11 @@
         <span class="sc-shipped">Shipped</span>
       </div>
 
-      <p class="sc-honest">Shipped recently, so there is no usage data yet. Rather than borrow a number I can't stand
-        behind, I wrote the plan that would prove me wrong — every claim below as a hypothesis, with the threshold
-        that falsifies it. <a href="measurement/">Read the measurement plan →</a></p>
+      <p class="sc-honest">No usage data yet — shipped recently. So I wrote the plan that states what would
+        disprove each claim below. <a href="measurement/">Read the measurement plan →</a></p>
 
       <p class="sc-howto">
-        <span>Six decisions · ~3 min scan</span>
+        <span>Six decisions · ~2 min scan</span>
         <span aria-hidden="true">·</span>
         <span>Open <b>Know more</b> for the reasoning behind any one</span>
       </p>
@@ -2787,13 +2779,11 @@
 
       <!-- ══ 01 ══ -->
       <section class="sc-card">
-        <div class="sc-num">01<span class="sc-skill">UX Strategy</span><span class="sc-subject">The brief, and the job it competed with</span></div>
+        <div class="sc-num">01<span class="sc-skill">UX Strategy</span></div>
         <div class="sc-body">
-          <h2 class="sc-title">I changed the question, not the layout.</h2>
-          <p class="sc-sub">Portfolio's job is helping people manage what they already own, and a permanent
-            promotional slot competes with it — my stated hypothesis, from judgement rather than a study. So the
-            question changed: not <em>how do we promote these capabilities?</em> but <em>when does each one become
-            useful to this user?</em> Only the second has an answer you can build.</p>
+          <h2 class="sc-title">Each capability got a condition, not a slot</h2>
+          <p class="sc-sub">Not <em>how do we promote five features?</em> but <em>when does each become useful to this
+            user?</em> — a question that resolves into a rule the product can check.</p>
 
           <p class="sc-rejected"><b>Rejected</b> IF a capability needs adoption → THEN put a banner on the busiest screen</p>
 
@@ -2838,11 +2828,11 @@
 
       <!-- ══ 02 ══ -->
       <section class="sc-card">
-        <div class="sc-num">02<span class="sc-skill">Systems thinking<br>Recommendation logic</span><span class="sc-subject">The rule set behind the screen</span></div>
+        <div class="sc-num">02<span class="sc-skill">Systems thinking<br>Recommendation logic</span></div>
         <div class="sc-body">
-          <h2 class="sc-title">Every capability had to earn its place.</h2>
-          <p class="sc-sub">Seven capabilities, seven conditions, one rule set. The screen composes itself from
-            whichever conditions are true for that person — and never offers more than <b>two actions at a time</b>.</p>
+          <h2 class="sc-title">Seven capabilities, seven conditions, two actions maximum</h2>
+          <p class="sc-sub">The screen composes itself from whichever conditions are true. The <b>two-action
+            ceiling</b> is a design decision, not a side effect.</p>
 
           <div class="sc-tablewrap">
             <table class="sc-table">
@@ -2867,8 +2857,7 @@
             <div class="sc-shot"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Policies added</b>Ratings, then suggestions</p></div>
           </div>
 
-          <p class="sc-notice">Identical layout and feature set. Only <strong>which conditions are true</strong> changes —
-            and the buy suggestions sit below the policies in every state.</p>
+          <p class="sc-notice">Same layout, same features. Only <strong>which conditions are true</strong> changes.</p>
 
           <p style="margin: 24px 0 0;">
             <button class="sc-more" type="button" data-open="ov-2">
@@ -2880,12 +2869,11 @@
 
       <!-- ══ 03 ══ -->
       <section class="sc-card">
-        <div class="sc-num">03<span class="sc-skill">Product judgment</span><span class="sc-subject">Advisor Portfolio — the entry point I declined</span></div>
+        <div class="sc-num">03<span class="sc-skill">Product judgment</span></div>
         <div class="sc-body">
-          <h2 class="sc-title">The strongest decision was the one I didn&rsquo;t ship.</h2>
-          <p class="sc-sub">Advisor Portfolio got <b>no entry point here at all</b>. The Homepage already provides
-            a direct route, so repeating it would add noise without adding access. It appears instead once a CoverRisk
-            report has given the user something to ask about.</p>
+          <h2 class="sc-title">Advisor Portfolio got no entry point here</h2>
+          <p class="sc-sub">The Homepage already provides a direct route. Repeating it adds noise without adding
+            access — so it appears after a CoverRisk report instead.</p>
 
           <p class="sc-rejected"><b>Declined</b> Advisor needs adoption → add an Advisor banner to Portfolio</p>
 
@@ -2893,8 +2881,7 @@
             <div class="sc-shot wide"><div class="sc-frame" data-screen="home"></div><p class="sc-cap"><b>Homepage</b>The advisor route that already exists</p></div>
           </div>
 
-          <p class="sc-notice">The Homepage already carries the CoverRisk score and the advisor route.
-            <strong>The access was never missing</strong> — only the banner was.</p>
+          <p class="sc-notice">The advisor route already exists here — <strong>access was never the missing part</strong>.</p>
 
           <p style="margin: 24px 0 0;">
             <button class="sc-more" type="button" data-open="ov-3">
@@ -2906,12 +2893,11 @@
 
       <!-- ══ 04 ══ -->
       <section class="sc-card">
-        <div class="sc-num">04<span class="sc-skill">Decision design<br>Personalisation</span><span class="sc-subject">The buy recommendation, and the KYP rating</span></div>
+        <div class="sc-num">04<span class="sc-skill">Decision design<br>Personalisation</span></div>
         <div class="sc-body">
-          <h2 class="sc-title">A category name became a number they could disagree with.</h2>
-          <p class="sc-sub">CoverRisk already collected age, dependants, income, health and lifestyle — but that
-            intelligence stayed inside its own report. I connected it to the buying moment, so a category name became
-            an amount, its inputs, and what it costs. A recommendation you can argue with is one you can trust.</p>
+          <h2 class="sc-title">CoverRisk&rsquo;s number moved to the buying moment</h2>
+          <p class="sc-sub">The risk data existed but stayed inside its own report. Connecting it turned a category
+            name into an amount, with the inputs behind it.</p>
 
           <div class="sc-flip">
             <div class="sc-flip-tabs">
@@ -2948,13 +2934,11 @@
 
       <!-- ══ 05 ══ -->
       <section class="sc-card">
-        <div class="sc-num">05<span class="sc-skill">Product ethics<br>Prioritisation</span><span class="sc-subject">Which cover gets recommended first</span></div>
+        <div class="sc-num">05<span class="sc-skill">Product ethics<br>Prioritisation</span></div>
         <div class="sc-body">
-          <h2 class="sc-title">I ranked protection, not the catalogue.</h2>
-          <p class="sc-sub">Foundational cover first, then what extends it, then what only matters on a signal.
-            CoverSure's brand principle is never to push a low-premium policy because it converts — a low cover
-            amount fails people at the moment it matters. This is that principle turned into an order the screen
-            follows.</p>
+          <h2 class="sc-title">Foundational cover ranks first, always</h2>
+          <p class="sc-sub">Health and Life before anything that extends them — CoverSure's principle that adequate
+            cover beats a cheap premium, turned into an order the screen follows.</p>
 
           <div class="sc-tiers">
             <div class="sc-tier">
@@ -2982,12 +2966,11 @@
 
       <!-- ══ 06 ══ -->
       <section class="sc-card">
-        <div class="sc-num">06<span class="sc-skill">Behavioural UX<br>UX writing</span><span class="sc-subject">Share Policy, and the Family Overview</span></div>
+        <div class="sc-num">06<span class="sc-skill">Behavioural UX<br>UX writing</span></div>
         <div class="sc-body">
-          <h2 class="sc-title">The reason arrives before the ask.</h2>
-          <p class="sc-sub">Share Policy stopped being a button and became a sentence about the nominee who will
-            need it. Product leadership brought the Family Overview; <b>I designed how it asks</b> — an unfinished
-            section is its own prompt, so no banner has to be.</p>
+          <h2 class="sc-title">Share Policy leads with the reason, not the button</h2>
+          <p class="sc-sub">A nominee who can't find a policy during an emergency is the case for sharing. Family
+            Overview asks the same way — structure, not banner.</p>
 
           <div class="sc-copy">
             <p>&ldquo;Your nominee may not be able to access this policy easily during an emergency.&rdquo;</p>
@@ -2999,8 +2982,7 @@
             <div class="sc-shot wide"><div class="sc-frame" data-screen="family"></div><p class="sc-cap"><b>Family overview</b>The incomplete row is the prompt</p></div>
           </div>
 
-          <p class="sc-notice">The share card sits <strong>after</strong> the policy details rather than competing with
-            Edit Details — and it leads with the reason, not the verb.</p>
+          <p class="sc-notice">Placed <strong>after</strong> the policy details, not competing with Edit Details.</p>
 
           <p style="margin: 24px 0 0;">
             <button class="sc-more" type="button" data-open="ov-6">
@@ -3072,6 +3054,9 @@
         <h4>The tension</h4>
         <p class="sc-lede">Business needed five capabilities adopted. Users came to Portfolio to check a premium date,
           find a policy number, or see what had lapsed. Both needs were real, and they pointed in opposite directions.</p>
+        <p class="sc-quiet">Stated as a hypothesis rather than a finding: that a permanent promotional slot competes
+          with the screen's primary job is <strong>informed judgement, not a formal study</strong>. It follows from an
+          existing CoverSure principle rather than from research I ran.</p>
       </div>
       <div class="sc-sec">
         <h4>What I decided</h4>
@@ -3234,6 +3219,8 @@
       </div>
       <div class="sc-sec">
         <h4>The same principle, second proof: KYP</h4>
+        <p class="sc-quiet">Bringing the KYP rating onto the policy card came from the <strong>product lead</strong>.
+          What follows is how it was designed to be actionable.</p>
         <p>A policy rating on its own is just a badge. So the rating ships as a plain-language verdict with a count of
           how many conditions work in the user&rsquo;s favour and how many do not — and it sits on the policy card in
           the listing, where they are already scanning what they own. On the policy itself, Know Your Policy became a
@@ -3254,7 +3241,7 @@
     <div class="sc-ov-head">
       <div>
         <span class="sc-skill">Product ethics · Prioritisation</span>
-        <h3 class="sc-ov-title" id="ov-5-t">We ranked protection, not the catalogue.</h3>
+        <h3 class="sc-ov-title" id="ov-5-t">Foundational cover ranks first, always.</h3>
       </div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button>
     </div>
@@ -3265,8 +3252,15 @@
           commercial pressure lands, because some products are simply easier and more profitable to sell.</p>
       </div>
       <div class="sc-sec">
+        <h4>The principle it rests on</h4>
+        <p class="sc-lede">CoverSure already had a brand principle: <strong>never sell a policy without proper
+          information and the right coverage amount, and never push a low-premium policy just because it
+          converts</strong> — a low cover amount fails people at the moment it matters. My work applied that existing
+          principle to the screen where the temptation to break it was strongest.</p>
+      </div>
+      <div class="sc-sec">
         <h4>What I decided</h4>
-        <p>Three tiers, worked through with Product and Design leadership rather than designed in isolation.
+        <p>Three tiers. I decided the order; the product team supplied the domain judgement behind it.
           <strong>Foundational</strong> (Health, Life) — absence here is the gap a family feels first, and nothing
           outranks it. <strong>Additional</strong> (Super Top-Up, Critical Illness, Accident) — these extend cover
           rather than establish it. <strong>Situational</strong> (Hospicash, Home) — relevant to some, irrelevant to
@@ -3331,6 +3325,8 @@
       </div>
       <div class="sc-sec">
         <h4>The same principle, second proof: Family Overview</h4>
+        <p class="sc-quiet">The Family Overview came from the <strong>product head and team lead</strong>, answering
+          an adoption problem they had identified. What follows is how I designed it to ask.</p>
         <p>One person usually manages insurance for a whole family, so a missing member means missed renewals and a
           harder emergency. The Family Overview answers three questions at a glance: <strong>who is covered</strong>
           (every member, their policy count, their yearly premium), <strong>who is missing</strong>, and
