@@ -1824,6 +1824,100 @@
   .sc-flow b { color: var(--ink); font-weight: 500; background: var(--ground-2); border-radius: 4px; padding: 6px 10px; }
   .sc-flow i { color: var(--accent); font-style: normal; }
 
+
+  /* ══════════════════════════════════════════════════════════════
+     V4 — scan-first, depth on demand
+     Pattern per section: title → one-line takeaway → visual → know more.
+     Text is deliberately thin; the diagrams and screens carry the
+     explanation. Reuses the .sc- overlay system.
+     ══════════════════════════════════════════════════════════════ */
+
+  .v4-mast { padding: clamp(42px, 7vw, 84px) 0 clamp(24px, 3vw, 34px); }
+  .v4-h1 {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(30px, 5vw, 62px); line-height: 1.04; margin: 0 0 20px; max-width: 21ch;
+  }
+  .v4-h1 .thin { color: var(--ink-3); font-weight: 500; }
+  .v4-meta {
+    display: flex; flex-wrap: wrap; gap: 7px 9px; align-items: baseline;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-3); margin: 0 0 26px;
+  }
+  .v4-meta b { color: var(--ink-2); font-weight: 500; }
+  .v4-meta .on { color: var(--accent-ink); background: var(--accent-soft); border-radius: 3px; padding: 3px 8px; font-weight: 600; }
+
+  .v4-integrity {
+    display: grid; gap: 10px; border-top: 1px solid var(--rule); padding-top: 20px;
+    font-size: 14.5px; line-height: 1.5; color: var(--ink-3); max-width: 74ch;
+  }
+  .v4-integrity a { color: var(--accent-ink); text-underline-offset: 3px; }
+  .v4-integrity b { color: var(--ink-2); font-weight: 700; }
+
+  /* ── section ── */
+  .v4-sections { display: flex; flex-direction: column; gap: clamp(46px, 6vw, 74px); padding-bottom: clamp(46px, 6vw, 74px); }
+  .v4-sec { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: clamp(18px, 3vw, 42px); }
+  .v4-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3); padding-top: 7px; line-height: 1.5;
+  }
+  .v4-tag b { display: block; color: var(--accent-ink); font-weight: 600; }
+
+  .v4-body { min-width: 0; }
+  .v4-title {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.015em;
+    font-size: clamp(22px, 2.9vw, 34px); line-height: 1.12; margin: 0 0 12px; max-width: 24ch;
+  }
+  .v4-take {
+    font-size: clamp(15.5px, 1.6vw, 18px); line-height: 1.55; color: var(--ink-2);
+    max-width: 62ch; margin: 0 0 22px;
+  }
+  .v4-take b { color: var(--ink); font-weight: 700; }
+  .v4-take em { color: var(--ink); font-style: italic; }
+
+  /* compact point list — max four, one line each */
+  .v4-points { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 7px; max-width: 66ch; }
+  .v4-points li {
+    position: relative; padding-left: 24px;
+    font-size: 15px; line-height: 1.5; color: var(--ink-2);
+  }
+  .v4-points li::before { content: "—"; position: absolute; left: 0; top: 0; color: var(--accent); }
+  .v4-points b { color: var(--ink); font-weight: 700; }
+
+  /* the one-line decision rule */
+  .v4-rule {
+    display: flex; gap: 11px; align-items: baseline; flex-wrap: wrap;
+    border-left: 2px solid var(--accent); padding: 10px 0 10px 16px;
+    margin: 0 0 22px; max-width: 62ch;
+    font-size: 15px; line-height: 1.5; color: var(--ink);
+  }
+  .v4-rule::before {
+    content: "RULE"; font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em;
+    color: var(--accent-ink); flex: 0 0 auto;
+  }
+
+  .v4-fig { margin: 0 0 22px; }
+  .v4-fig .v4-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .v4-fig svg { display: block; width: 100%; min-width: 660px; height: auto; }
+  .v4-cap {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-3); margin: 9px 0 0;
+  }
+
+  /* ── outcomes ── */
+  .v4-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: clamp(20px, 3vw, 38px); margin: 0 0 clamp(30px, 4vw, 44px); }
+  .v4-oc h4 {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #7c8dcb; font-weight: 400; margin: 0 0 11px; padding-bottom: 9px; border-bottom: 1px solid var(--stage-rule);
+  }
+  .v4-oc p { margin: 0; font-size: 15.5px; line-height: 1.5; color: #ffffff; }
+  .v4-oc p + p { margin-top: 8px; font-size: 13.5px; color: var(--stage-ink); opacity: 0.74; }
+
+  @media (max-width: 720px) {
+    .v4-sec { grid-template-columns: 1fr; gap: 12px; }
+    .v4-tag { padding-top: 0; display: flex; flex-wrap: wrap; gap: 5px 11px; }
+    .v4-tag b { display: inline; }
+  }
+
 </style>
 </head>
 <body>
@@ -1831,7 +1925,10 @@
 <div class="versions">
   <div class="versions-in" role="tablist" aria-label="Case study version">
     <span class="versions-label">Version</span>
-    <button class="vtab" role="tab" id="tab-scan" aria-controls="panel-scan" aria-selected="true">
+    <button class="vtab" role="tab" id="tab-v4" aria-controls="panel-v4" aria-selected="true">
+      <b>V4</b><i>scan-first · 3 min</i>
+    </button>
+    <button class="vtab" role="tab" id="tab-scan" aria-controls="panel-scan" aria-selected="false">
       <b>Scan</b><i>cards + depth · 2 min</i>
     </button>
     <button class="vtab" role="tab" id="tab-compact" aria-controls="panel-compact" aria-selected="false">
@@ -3340,12 +3437,727 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════
+     V4 — SCAN-FIRST, DEPTH ON DEMAND
+     Title states the decision · one-line takeaway · a visual that
+     does the explaining · Know more for the reasoning.
+     ═══════════════════════════════════════════════════════════ -->
+<div role="tabpanel" id="panel-v4" aria-labelledby="tab-v4" tabindex="0">
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <marker id="v4k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 1 L9 5 L0 9 z" fill="var(--accent)" />
+      </marker>
+      <marker id="v4r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 1 L9 5 L0 9 z" fill="var(--signal)" />
+      </marker>
+    </defs>
+  </svg>
+
+  <header class="v4-mast">
+    <div class="sc-wrap">
+      <div class="sc-kicker">
+        <b>CoverSure</b><span aria-hidden="true">/</span><span>Policy Portfolio</span>
+      </div>
+      <h1 class="v4-h1">Making Portfolio respond to the user&rsquo;s situation
+        <span class="thin">— not just display their policies.</span></h1>
+      <p class="v4-meta">
+        <b>Product Designer</b><span aria-hidden="true">·</span>
+        <span>Post-MVP evolution</span><span aria-hidden="true">·</span>
+        <span>UX strategy · Interaction design · Progressive disclosure</span>
+        <span class="on">Shipped</span>
+      </p>
+      <div class="v4-integrity">
+        <p style="margin:0"><b>No usage data yet</b> — shipped recently. The
+          <a href="measurement/">measurement plan</a> states what would disprove each claim below.</p>
+        <p style="margin:0">Screen figures are <b>illustrative placeholders</b>, not product data.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="sc-wrap">
+    <div class="v4-sections">
+
+      <!-- ══ 01 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">01<b>The problem</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">Portfolio had a relevance problem, not just a navigation problem.</h2>
+          <p class="v4-take">The capabilities existed. What was missing was a decision about <em>when</em> each
+            becomes useful.</p>
+          <ul class="v4-points">
+            <li>Policy details weren&rsquo;t easy to reach</li>
+            <li>Promotional banners interrupted the portfolio experience</li>
+            <li>No family-level view — so <b>nobody was adding family members</b></li>
+            <li>CoverRisk, KYP, Advisor and buying all lived in separate contexts</li>
+          </ul>
+          <figure class="v4-fig">
+            <div class="v4-scroll">
+              <svg viewBox="0 0 860 210" role="img"
+                   aria-label="Four disconnected capabilities — CoverRisk, KYP, Family and Buy — each sitting in its own context, feeding into a single question: when does each become useful to this user.">
+                <defs>
+                  <marker id="v4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M0 1 L9 5 L0 9 z" fill="var(--ink-3)" />
+                  </marker>
+                </defs>
+                <text class="svg-sub" x="20" y="18">SEPARATE CONTEXTS</text>
+                <rect class="svg-box" x="20" y="30" width="150" height="34" rx="7" />
+                <text class="svg-name" x="34" y="52">COVERRISK</text>
+                <rect class="svg-box" x="20" y="72" width="150" height="34" rx="7" />
+                <text class="svg-name" x="34" y="94">KYP</text>
+                <rect class="svg-box" x="20" y="114" width="150" height="34" rx="7" />
+                <text class="svg-name" x="34" y="136">FAMILY</text>
+                <rect class="svg-box" x="20" y="156" width="150" height="34" rx="7" />
+                <text class="svg-name" x="34" y="178">BUY</text>
+                <path class="svg-line" d="M174 47 L300 100" marker-end="url(#v4a)" />
+                <path class="svg-line" d="M174 89 L300 104" marker-end="url(#v4a)" />
+                <path class="svg-line" d="M174 131 L300 112" marker-end="url(#v4a)" />
+                <path class="svg-line" d="M174 173 L300 116" marker-end="url(#v4a)" />
+                <rect class="svg-box-key" x="310" y="78" width="256" height="60" rx="10" />
+                <text class="svg-name-key" x="330" y="103">ONE QUESTION</text>
+                <text class="svg-sub" x="330" y="123">when does each become useful?</text>
+                <path class="svg-line-key" d="M570 108 L636 108" marker-end="url(#v4k)" />
+                <text class="svg-name-key" x="646" y="103">A CONDITION</text>
+                <text class="svg-sub" x="646" y="123">checked against this portfolio</text>
+              </svg>
+            </div>
+            <p class="v4-cap">The capabilities existed · the timing did not</p>
+          </figure>
+          <button class="sc-more" type="button" data-open="v4-ov-1"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+        </div>
+      </section>
+
+      <!-- ══ 02 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">02<b>The strategy</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">Portfolio became a contextual decision layer.</h2>
+          <p class="v4-take">Portfolio reads signals the product <b>already holds</b>, and surfaces what changes
+            a decision.</p>
+          <figure class="v4-fig">
+            <div class="v4-scroll">
+              <svg viewBox="0 0 860 250" role="img"
+                   aria-label="Five existing signals — onboarding, CoverRisk, policy data, family data and KYP — feed into a four-stage loop: Understand, Prioritise, Guide. The user acts, and Adapt returns the new information to Understand, closing the loop.">
+                <rect class="svg-box" x="16" y="16" width="176" height="30" rx="6" />
+                <text class="svg-sub" x="30" y="36">Onboarding — what they own</text>
+                <rect class="svg-box" x="16" y="54" width="176" height="30" rx="6" />
+                <text class="svg-sub" x="30" y="74">CoverRisk — protection needs</text>
+                <rect class="svg-box" x="16" y="92" width="176" height="30" rx="6" />
+                <text class="svg-sub" x="30" y="112">Policy data — actual cover</text>
+                <rect class="svg-box" x="16" y="130" width="176" height="30" rx="6" />
+                <text class="svg-sub" x="30" y="150">Family data — the gaps</text>
+                <rect class="svg-box" x="16" y="168" width="176" height="30" rx="6" />
+                <text class="svg-sub" x="30" y="188">KYP — policy quality</text>
+                <path class="svg-line-key" d="M196 107 L246 107" marker-end="url(#v4k)" />
+                <rect class="svg-box-key" x="256" y="86" width="122" height="42" rx="8" />
+                <text class="svg-name-key" x="270" y="112">UNDERSTAND</text>
+                <path class="svg-line-key" d="M382 107 L420 107" marker-end="url(#v4k)" />
+                <rect class="svg-box-key" x="430" y="86" width="118" height="42" rx="8" />
+                <text class="svg-name-key" x="444" y="112">PRIORITISE</text>
+                <path class="svg-line-key" d="M552 107 L590 107" marker-end="url(#v4k)" />
+                <rect class="svg-box-key" x="600" y="86" width="100" height="42" rx="8" />
+                <text class="svg-name-key" x="614" y="112">GUIDE</text>
+                <path class="svg-line-key" d="M704 107 L748 107" marker-end="url(#v4k)" />
+                <text class="svg-name" x="756" y="103">USER</text>
+                <text class="svg-name" x="756" y="121">ACTS</text>
+                <path class="svg-line-key" d="M790 132 L790 214 L317 214 L317 132" marker-end="url(#v4k)" />
+                <rect x="452" y="196" width="176" height="34" rx="8" fill="var(--ground)" stroke="var(--accent)" stroke-width="1.25" stroke-dasharray="4 3" />
+                <text class="svg-name-key" x="516" y="218" text-anchor="middle">ADAPT</text>
+              </svg>
+            </div>
+            <p class="v4-cap">Adapt is the return edge, not a final stage — the user acting is what produces new information</p>
+          </figure>
+          <button class="sc-more" type="button" data-open="v4-ov-2"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+        </div>
+      </section>
+
+      <!-- ══ 03 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">03<b>Contextual actions</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">The primary action changes with the user&rsquo;s insurance state.</h2>
+          <p class="v4-take">Same layout, same feature set — only the conditions differ.</p>
+          <div class="sc-tablewrap">
+            <table class="sc-table">
+              <thead><tr><th scope="col">User state</th><th scope="col">Primary direction</th></tr></thead>
+              <tbody>
+                <tr><td class="sc-cap-name">No policies, no report</td><td class="sc-when">Add a policy · start CoverRisk</td></tr>
+                <tr><td class="sc-cap-name">Policies added, no report</td><td class="sc-when">Complete CoverRisk</td></tr>
+                <tr><td class="sc-cap-name">Report done, gap open</td><td class="sc-when">Recommended cover + estimated premium</td></tr>
+                <tr><td class="sc-cap-name">Family member with no policy</td><td class="sc-when">Add their policy</td></tr>
+                <tr><td class="sc-cap-name">Renewal due</td><td class="sc-when">Review report, or pay without review</td></tr>
+                <tr><td class="sc-cap-name">Inactive policy found</td><td class="sc-when">Review it</td></tr>
+                <tr class="sc-flag"><td class="sc-cap-name">Employer cover only</td><td class="sc-when">Premium reads &ldquo;—&rdquo; — the user doesn&rsquo;t pay it</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="v4-rule">A maximum of <b>two relevant actions</b> — rather than turning Portfolio into a checklist.</p>
+          <div class="sc-shots">
+            <div class="sc-shot"><div class="sc-frame" data-screen="none"></div><p class="sc-cap"><b>No policies</b>Nothing to display</p></div>
+            <div class="sc-shot"><div class="sc-frame" data-screen="pending"></div><p class="sc-cap"><b>Pending attention</b>Renewals · inactive found</p></div>
+            <div class="sc-shot"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Policies added</b>Ratings, then suggestions</p></div>
+            <div class="sc-shot"><div class="sc-frame" data-screen="group"></div><p class="sc-cap"><b>Group only</b>Premium reads &ldquo;—&rdquo;</p></div>
+          </div>
+          <button class="sc-more" type="button" data-open="v4-ov-3"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+        </div>
+      </section>
+
+      <!-- ══ 04 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">04<b>Personalisation</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">CoverRisk now continues into the buying journey.</h2>
+          <p class="v4-take">The intelligence existed; it stopped at the report. <b>No new engine</b> — better use of
+            what the product already knew.</p>
+          <figure class="v4-fig">
+            <div class="v4-scroll">
+              <svg viewBox="0 0 860 172" role="img"
+                   aria-label="CoverRisk collects age, family, dependants, health, income and expenses, produces a recommendation, which becomes a coverage amount and an estimated premium, which leads to buy. Previously the chain stopped at the report.">
+                <text class="svg-sub" x="16" y="20">COLLECTED ALREADY</text>
+                <rect class="svg-box" x="16" y="30" width="196" height="46" rx="8" />
+                <text class="svg-sub" x="30" y="50">age · family · dependants</text>
+                <text class="svg-sub" x="30" y="66">health · income · expenses</text>
+                <path class="svg-line-key" d="M216 53 L254 53" marker-end="url(#v4k)" />
+                <rect class="svg-box-key" x="264" y="32" width="132" height="42" rx="8" />
+                <text class="svg-name-key" x="278" y="58">RECOMMEND</text>
+                <path class="svg-line-dead" d="M330 80 L330 124" marker-end="url(#v4r)" />
+                <text class="svg-sub" x="284" y="142" fill="var(--signal)">stopped inside the report</text>
+                <path class="svg-line-key" d="M400 53 L438 53" marker-end="url(#v4k)" />
+                <rect class="svg-box-key" x="448" y="32" width="150" height="42" rx="8" />
+                <text class="svg-name-key" x="462" y="50">COVER AMOUNT</text>
+                <text class="svg-sub" x="462" y="66">+ estimated premium</text>
+                <path class="svg-line-key" d="M602 53 L640 53" marker-end="url(#v4k)" />
+                <rect class="svg-box-key" x="650" y="32" width="94" height="42" rx="8" />
+                <text class="svg-name-key" x="664" y="58">BUY</text>
+              </svg>
+            </div>
+            <p class="v4-cap">The chain that already existed, extended one step further</p>
+          </figure>
+          <div class="sc-flip">
+            <div class="sc-flip-tabs">
+              <button type="button" id="v4-btn-before" aria-pressed="true">Before</button>
+              <button type="button" id="v4-btn-after" aria-pressed="false">After</button>
+            </div>
+            <div class="sc-pane" id="v4-pane-before">
+              <p class="sc-pane-k">Permanent promotional slot</p>
+              <p class="sc-pane-t">Buy Life Insurance</p>
+              <p class="sc-pane-s">Secure your family&rsquo;s future today.</p>
+            </div>
+            <div class="sc-pane sc-after" id="v4-pane-after" hidden>
+              <p class="sc-pane-k">From your CoverRisk report</p>
+              <p class="sc-pane-t">You may need ₹80,00,000 additional life cover</p>
+              <p class="sc-pane-s">Based on your dependants, income, expenses, lifestyle and existing cover.</p>
+              <dl class="sc-pane-figs">
+                <div><dt>Recommended cover</dt><dd>₹80L</dd></div>
+                <div><dt>Est. premium / yr</dt><dd>₹11,800</dd></div>
+              </dl>
+            </div>
+            <p class="sc-flip-note">Figures illustrative. The recommendation names <b>no specific insurer</b> —
+              a coverage level appropriate to the person, and what it costs.</p>
+          </div>
+          <button class="sc-more" type="button" data-open="v4-ov-4"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+        </div>
+      </section>
+
+      <!-- ══ 05 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">05<b>Prioritisation</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">Protection priority shaped what gets recommended.</h2>
+          <p class="v4-take">So Portfolio would not promote whichever product was easiest to sell.</p>
+          <div class="sc-tiers">
+            <div class="sc-tier">
+              <p class="sc-tier-k"><b>01 · Foundational</b>Recommend first</p>
+              <div class="sc-bar sc-t1"><span>Health</span><span>Life</span></div>
+            </div>
+            <div class="sc-tier">
+              <p class="sc-tier-k"><b>02 · Additional</b>Once the foundation exists</p>
+              <div class="sc-bar sc-t2"><span>Super Top-Up</span><span>Critical Illness</span><span>Accident</span></div>
+            </div>
+            <div class="sc-tier">
+              <p class="sc-tier-k"><b>03 · Situational</b>Only on a signal</p>
+              <div class="sc-bar sc-t3"><span>Hospicash</span><span>Home</span></div>
+            </div>
+          </div>
+          <p class="sc-scalenote">Bars show relative priority in the recommendation order — not measured data</p>
+          <p class="v4-rule"><b>CoverRisk answers how much</b> cover may be needed.
+            <b>Portfolio decides what comes next.</b></p>
+          <button class="sc-more" type="button" data-open="v4-ov-5"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+        </div>
+      </section>
+
+      <!-- ══ 06 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">06<b>Family coverage</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">Family gaps became the call to action.</h2>
+          <p class="v4-take"><b>Add Family stopped being a promotional CTA.</b> The missing policy became the CTA.</p>
+          <p class="sc-flow">
+            <b>Who is covered</b><i>→</i><b>How many policies</b><i>→</i><b>Who is missing</b><i>→</i><b>Add policy</b>
+          </p>
+          <div class="sc-shots">
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="family"></div><p class="sc-cap"><b>Family overview</b>Members, counts, premiums</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="fullfam"></div><p class="sc-cap"><b>End state</b>Prompts gone — conditions false</p></div>
+          </div>
+          <p class="sc-notice">An amber <strong>Policy not added → Add Policy</strong> row. The incomplete
+            section is the prompt.</p>
+          <p style="margin:22px 0 0">
+            <button class="sc-more" type="button" data-open="v4-ov-6"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+          </p>
+        </div>
+      </section>
+
+      <!-- ══ 07 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">07<b>Policy understanding</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">KYP moved to where the policy decision happens.</h2>
+          <p class="v4-take">The rating sits on the policy card, and Know Your Policy became a <b>tab beside
+            Details</b>.</p>
+          <ul class="v4-points">
+            <li>A plain verdict — <b>GREAT / GOOD / AVERAGE / POOR</b> — not a number</li>
+            <li>Counts of what works in the user&rsquo;s favour and what doesn&rsquo;t</li>
+            <li>Covers ICU limits · room-rent limits · refill benefits · policy conditions</li>
+          </ul>
+          <div class="sc-shots">
+            <div class="sc-shot"><div class="sc-frame" data-screen="kyp"></div><p class="sc-cap"><b>Rating scale</b>Four levels + condition counts</p></div>
+          </div>
+          <p class="sc-notice">A room-rent cap is the clause nobody reads. <strong>The counts make it
+            findable.</strong></p>
+          <p style="margin:22px 0 0">
+            <button class="sc-more" type="button" data-open="v4-ov-7"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+          </p>
+        </div>
+      </section>
+
+      <!-- ══ 08 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">08<b>Behavioural UX</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">Share Policy is triggered by context, not promotion.</h2>
+          <p class="v4-take">Surfaced on Life and Group policies — the reason for sharing arrives before the ask.</p>
+          <p class="sc-flow">
+            <b>Important policy</b><i>→</i><b>Nominee context</b><i>→</i><b>Reason</b><i>→</i><b>Share</b>
+          </p>
+          <div class="sc-shots">
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="life"></div><p class="sc-cap"><b>Policy details</b>Emergency shortcut · nominee · share card</p></div>
+          </div>
+          <p class="v4-rule">Reason first. Action second.</p>
+          <button class="sc-more" type="button" data-open="v4-ov-8"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+        </div>
+      </section>
+
+      <!-- ══ 09 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">09<b>Restraint</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">Advisor guidance appears after the user has something to discuss.</h2>
+          <p class="v4-take">Connected instead to the moment the user has just understood their protection
+            situation.</p>
+          <p class="sc-flow">
+            <b>Complete CoverRisk</b><i>→</i><b>See protection report</b><i>→</i><b>Get expert guidance</b>
+          </p>
+          <div class="sc-shots">
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="home"></div><p class="sc-cap"><b>Homepage</b>The advisor route that already exists</p></div>
+          </div>
+          <p class="sc-notice">The Homepage already provides a route — <strong>access was never the missing
+            part</strong>.</p>
+          <p style="margin:22px 0 0">
+            <button class="sc-more" type="button" data-open="v4-ov-9"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+          </p>
+        </div>
+      </section>
+
+      <!-- ══ 10 ══ -->
+      <section class="v4-sec">
+        <p class="v4-tag">10<b>The loop</b></p>
+        <div class="v4-body">
+          <h2 class="v4-title">Portfolio becomes more useful as the user adds information.</h2>
+          <p class="v4-take">Each action returns information to what made the recommendation — a system, not a
+            banner schedule.</p>
+          <figure class="v4-fig">
+            <div class="v4-scroll">
+              <svg viewBox="0 0 860 200" role="img"
+                   aria-label="A loop: user context leads to a relevant action, the user acts, that produces new information, which yields a better next action and returns to user context.">
+                <rect class="svg-box-key" x="20" y="70" width="136" height="44" rx="8" />
+                <text class="svg-name-key" x="34" y="97">USER CONTEXT</text>
+                <path class="svg-line-key" d="M160 92 L200 92" marker-end="url(#v4k)" />
+                <rect class="svg-box-key" x="210" y="70" width="146" height="44" rx="8" />
+                <text class="svg-name-key" x="224" y="97">RELEVANT ACTION</text>
+                <path class="svg-line-key" d="M360 92 L400 92" marker-end="url(#v4k)" />
+                <rect class="svg-box-key" x="410" y="70" width="156" height="44" rx="8" />
+                <text class="svg-name-key" x="424" y="97">NEW INFORMATION</text>
+                <path class="svg-line-key" d="M570 92 L610 92" marker-end="url(#v4k)" />
+                <rect class="svg-box-key" x="620" y="70" width="170" height="44" rx="8" />
+                <text class="svg-name-key" x="634" y="97">BETTER NEXT ACTION</text>
+                <path class="svg-line-key" d="M705 118 L705 164 L88 164 L88 118" marker-end="url(#v4k)" />
+                <text class="svg-edge" x="330" y="182">the next recommendation is better than the last</text>
+              </svg>
+            </div>
+          </figure>
+          <ul class="v4-points">
+            <li><b>Add a policy</b> — the gap being measured shrinks</li>
+            <li><b>Finish CoverRisk</b> — categories turn into amounts</li>
+            <li><b>Add family</b> — the prompt stops appearing, its condition is no longer true</li>
+            <li><b>Open KYP</b> — policy understanding changes what is worth recommending next</li>
+          </ul>
+          <button class="sc-more" type="button" data-open="v4-ov-10"><span class="sc-plus" aria-hidden="true">+</span> Know more</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ────────── outcomes + role ────────── -->
+  <footer class="sc-close">
+    <div class="sc-wrap">
+      <div class="v4-out">
+        <div class="v4-oc">
+          <h4>User</h4>
+          <p>Less noise, a clearer next step, and coverage gaps that are easier to see.</p>
+        </div>
+        <div class="v4-oc">
+          <h4>Business</h4>
+          <p>Capabilities became discoverable through relevant moments.</p>
+          <p>Add Policy · CoverRisk · Buy Policy · Family Management · KYP · Advisor.</p>
+        </div>
+        <div class="v4-oc">
+          <h4>Product</h4>
+          <p>Portfolio became part of the journey, not a storage destination.</p>
+          <p>Onboarding → Homepage → Portfolio → Policy Details.</p>
+        </div>
+      </div>
+
+      <p class="sc-close-line">From policy storage to the next useful decision.</p>
+      <p class="sc-close-sub">I owned the Portfolio strategy and interaction decisions: recommendation hierarchy,
+        CoverRisk integration, progressive disclosure, contextual actions, Share Policy reasoning, information
+        hierarchy and UX writing. <b>Family Overview, the CoverRisk entry point and KYP integration were shaped
+        with Product and Team leadership</b>, who originated them.</p>
+
+      <div class="sc-skills">
+        <span>UX Strategy</span><span>Recommendation Logic</span><span>Interaction Design</span>
+        <span>Information Hierarchy</span><span>Progressive Disclosure</span><span>KYP Integration</span><span>UX Writing</span>
+      </div>
+
+      <p class="sc-foot">
+        <span>CoverSure · Policy Portfolio</span>
+        <span>V4 · scan-first</span>
+      </p>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════ V4 OVERLAYS ═══════════
+     Rationale · alternatives considered · edge cases · collaboration
+     ════════════════════════════════════ -->
+
+<div class="sc-ov" id="v4-ov-1" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-1-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">The problem</span>
+      <h3 class="sc-ov-title" id="v4-ov-1-t">Portfolio had a relevance problem.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>Where the problem came from</h4>
+        <p class="sc-lede">The <strong>product head</strong> brought the problem set: people could not navigate to
+          policy details properly, promotional banners were confusing them, and nobody was adding family members
+          because no family overview existed.</p>
+        <p>Worth being precise about this, because it changes the story: banner confusion arrived as a
+          <em>problem to solve</em>, not as a business preference anyone had to be argued out of.</p></div>
+      <div class="sc-sec"><h4>The existing experience</h4>
+        <p>Portfolio already did its primary job — showing premiums, renewal dates and what had lapsed. It was a
+          mature product, post-MVP. Five capabilities needed to become discoverable here: Add Policy, CoverRisk,
+          Buy Policy, Family Management and KYP.</p>
+        <p>The constraint that mattered: <strong>people arrive mid-task.</strong> They are checking a premium date
+          or hunting a policy number. An offer placed in that path interrupts a job the user came to finish.</p></div>
+      <div class="sc-sec"><h4>Evidential status</h4>
+        <p class="sc-quiet">That a permanent promotional slot competes with the screen's primary job is
+          <strong>informed judgement, not a formal study</strong>. It follows from an existing CoverSure principle
+          rather than from research I ran, and it is stated here as a hypothesis the measurement plan can test.</p></div>
+      <div class="sc-sec"><h4>What I didn't control</h4>
+        <p class="sc-quiet">The dark-purple PRO subscription banner on this screen carries over from the previous
+          design and sits outside this scope. It is already being repositioned. The conditions described here govern
+          the entry points I owned, not every pixel on the screen.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v4-ov-2" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-2-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">The strategy</span>
+      <h3 class="sc-ov-title" id="v4-ov-2-t">A contextual decision layer.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>The four stages</h4>
+        <p><strong>Understand</strong> — policies held, family members added, CoverRisk report status, each policy's
+          KYP rating, onboarding answers.<br>
+          <strong>Prioritise</strong> — not every gap is equally urgent, and not every product is equally
+          foundational.<br>
+          <strong>Guide</strong> — one or two useful next actions. Never ten.<br>
+          <strong>Adapt</strong> — the user acts, context changes, Portfolio changes.</p></div>
+      <div class="sc-sec"><h4>Why Adapt is drawn on the return edge</h4>
+        <p>Adapt is not a fourth stage at the end — it is the edge that closes the loop. Drawing it as a terminal
+          box would misrepresent the mechanism the diagram exists to explain. <strong>The user acting is what
+          produces new information</strong>, and that information re-enters at Understand.</p></div>
+      <div class="sc-sec"><h4>The information was already there</h4>
+        <p>Nothing in this layer required new data collection. Onboarding, CoverRisk, policy records, family records
+          and KYP all existed. What did not exist was a screen reading them together at the moment they change a
+          decision.</p>
+        <p class="sc-quiet">Which is also why this was achievable post-MVP without engineering a new system: the
+          work was connecting finished features, not building one.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v4-ov-3" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-3-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">Contextual actions</span>
+      <h3 class="sc-ov-title" id="v4-ov-3-t">Conditions, not slots.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>The full condition set</h4>
+        <div class="sc-tablewrap"><table class="sc-table">
+          <thead><tr><th scope="col">Capability</th><th scope="col">Surfaces when</th><th scope="col">Where</th></tr></thead>
+          <tbody>
+            <tr><td class="sc-cap-name">Add Policy</td><td class="sc-when">Always — the screen's primary job</td><td class="sc-where">Header</td></tr>
+            <tr><td class="sc-cap-name">Family Management</td><td class="sc-when">A member or their policy is missing</td><td class="sc-where">Family overview</td></tr>
+            <tr><td class="sc-cap-name">CoverRisk</td><td class="sc-when">No risk report exists yet</td><td class="sc-where">Below the policies</td></tr>
+            <tr><td class="sc-cap-name">Buy Policy</td><td class="sc-when">A report exists and a gap is open</td><td class="sc-where">Below the policies</td></tr>
+            <tr><td class="sc-cap-name">KYP</td><td class="sc-when">Always — on every policy owned</td><td class="sc-where">Policy card</td></tr>
+            <tr class="sc-flag"><td class="sc-cap-name">Advisor Portfolio</td><td class="sc-when">The report has just been generated</td><td class="sc-where">After the report</td></tr>
+            <tr><td class="sc-cap-name">Share Policy</td><td class="sc-when">Policy is Life or Group</td><td class="sc-where">Policy details</td></tr>
+          </tbody></table></div></div>
+      <div class="sc-sec"><h4>The ceiling, and why I defended it</h4>
+        <p>Every capability owner wants their entry point visible, and each individual request is reasonable. The
+          two-action ceiling is what stops seven reasonable requests from adding up to an unusable screen.</p>
+        <p>It also fixes the information hierarchy: <strong>the pitch always sits below the policies.</strong> A user
+          scanning what they own reaches their own policies before they reach anything being suggested.</p></div>
+      <div class="sc-sec"><h4>Edge cases the states had to handle</h4>
+        <p><strong>Employer cover only.</strong> One group health policy at ₹5 L insured — and Premium Yearly reads
+          "—" because the user doesn't pay it. Showing a number there would have been a lie of convenience.</p>
+        <p><strong>A lapsed policy.</strong> Surfacing it is a service that happens to also be a re-engagement
+          trigger — the rare case where user and business interest genuinely coincide.</p>
+        <p><strong>Sparse but not empty.</strong> With one policy, the member card carries what exists and the family
+          prompt fills space a banner would otherwise claim.</p>
+        <div class="sc-shots">
+          <div class="sc-shot"><div class="sc-frame" data-screen="one"></div><p class="sc-cap"><b>One policy</b>Sparse, not empty</p></div>
+          <div class="sc-shot"><div class="sc-frame" data-screen="inactive"></div><p class="sc-cap"><b>Inactive found</b>Lapse surfaced</p></div>
+        </div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v4-ov-4" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-4-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">Personalisation</span>
+      <h3 class="sc-ov-title" id="v4-ov-4-t">CoverRisk into the buying journey.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>What CoverRisk already did</h4>
+        <p class="sc-lede">It collects age, location, family size, dependants, health, lifestyle, fitness, income,
+          investments, property and expenses — then generates a risk report and recommends an appropriate coverage
+          amount. In the product it surfaces as more than one number: a score with a risk band, alongside
+          per-category coverage percentages.</p>
+        <p>Previously that intelligence largely stayed inside CoverRisk. The report was the end of the road, while
+          the buying screen still showed a category name.</p></div>
+      <div class="sc-sec"><h4>Why not optimise for the cheapest premium</h4>
+        <p>Most people don't know what cover they need. Left alone they optimise the one number they understand —
+          the premium — and buy the cheapest policy available. Then treatment takes away their income and the cover
+          was never built for their life. That is what critical illness cover exists for, and it is invisible to
+          anyone shopping on price.</p>
+        <p>So the recommendation names a coverage level and the average premium for it at that age and health
+          profile. <strong>Not a specific insurer. Not a cheap policy.</strong></p></div>
+      <div class="sc-sec"><h4>Where it shows up, beyond the card</h4>
+        <p>Each category header carries its own <em>"Is your Coverage Enough?"</em> beside a meter showing how much
+          of that need is met. Where a policy is due, the choice offered is <strong>Review report</strong> or
+          <strong>Pay without Review</strong> — so renewing blind becomes a decision made knowingly.</p>
+        <p>And the buy suggestions sit at the very bottom, each with its reason attached: <em>"Hospital treatments
+          in metro cities can cross ₹8–12L in one admission."</em></p></div>
+      <div class="sc-sec"><h4>Still open</h4>
+        <p class="sc-quiet">The cover, premium and existing-cover values in the before/after card are illustrative
+          placeholders. They are the last invented numbers on the page.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v4-ov-5" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-5-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">Prioritisation</span>
+      <h3 class="sc-ov-title" id="v4-ov-5-t">Protection priority.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>The principle it rests on</h4>
+        <p class="sc-lede">CoverSure already had a brand principle: <strong>never sell a policy without proper
+          information and the right coverage amount, and never push a low-premium policy just because it
+          converts</strong> — a low cover amount fails people at the moment it matters. This work applied that
+          existing principle to the screen where the temptation to break it was strongest.</p></div>
+      <div class="sc-sec"><h4>Who decided the order</h4>
+        <p>I decided the tiering; the product team supplied the domain judgement behind it. They carry years of
+          knowledge of this product, its users and the insurance industry, so the sequence was worked through with
+          them rather than designed in isolation.</p>
+        <p>An important separation: <strong>CoverRisk does not decide this order.</strong> It supplies the coverage
+          amount and premium estimate. The sequence is a separate decision that holds regardless of what the report
+          returns — which is what stops the ranking drifting toward whatever converts best this quarter.</p></div>
+      <div class="sc-sec"><h4>The worked example</h4>
+        <p>If someone has no life cover, home insurance is not pitched. Pushing a lower-priority product because it
+          is easier or cheaper to sell creates the wrong outcome — and that damage lands on the brand, not on the
+          campaign.</p>
+        <p class="sc-quiet">This is also the decision most likely to be quietly reversed later under revenue
+          pressure, which is why it is written down as an explicit ordering rather than left to whoever configures
+          the next campaign.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v4-ov-6" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-6-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">Family coverage</span>
+      <h3 class="sc-ov-title" id="v4-ov-6-t">Gaps as the call to action.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>Collaboration</h4>
+        <p class="sc-quiet">The Family Overview came from the <strong>product head and team lead</strong>, answering
+          an adoption problem they had identified: nobody was adding family members because no family-level view
+          existed. What follows is how I designed it to ask.</p></div>
+      <div class="sc-sec"><h4>The problem underneath</h4>
+        <p>One person usually manages insurance for a whole family. When family policies are scattered, or a
+          member's policy is missing, premiums, renewals and emergencies all get harder.</p></div>
+      <div class="sc-sec"><h4>The design decision</h4>
+        <p>The overview answers three questions at a glance: <strong>who is covered</strong> (each member, their
+          policy count, their yearly premium), <strong>who is missing</strong>, and <strong>whose policies still
+          need adding</strong>.</p>
+        <p>Member cards carry name and relationship, with a collapsible premium row expanding into a category
+          breakdown. A member with nothing added shows an amber <em>Policy not added → + Add Policy</em> row.</p>
+        <p><strong>An incomplete overview reads as incomplete.</strong> That is the whole thesis applied to an
+          adoption problem — let the structure carry the request instead of a banner asking for it.</p></div>
+      <div class="sc-sec"><h4>The end state</h4>
+        <p>In the fuller family view the prompts are simply gone, because their conditions are no longer true.
+          Nothing was switched off; the condition stopped matching.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v4-ov-7" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-7-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">Policy understanding</span>
+      <h3 class="sc-ov-title" id="v4-ov-7-t">KYP in policy context.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>Collaboration</h4>
+        <p class="sc-quiet">Bringing the KYP rating onto the policy card came from the <strong>product lead</strong>.
+          What follows is how it was designed to be actionable.</p></div>
+      <div class="sc-sec"><h4>Why a verdict and counts, not a score</h4>
+        <p>KYP already helped users understand whether a policy was good or carried important limitations, but it
+          lived separately from the policies users were actually looking at.</p>
+        <p>The rating is a plain verdict — <strong>GREAT / GOOD / AVERAGE / POOR</strong>, each a colour-coded
+          four-segment meter — and it arrives with a count of how many conditions work in the user's favour and how
+          many don't. A number would have been another badge; <strong>the ✔ / ! split is what makes it
+          actionable</strong>.</p></div>
+      <div class="sc-sec"><h4>It lands in two places</h4>
+        <p>The rating sits on the policy card in the listing, visible while the user scans what they own. And on the
+          policy itself, Know Your Policy became a <strong>tab beside Details</strong> — the same depth as the
+          policy's own information, rather than a section elsewhere in the app.</p>
+        <p>This turns KYP from a separate feature into part of policy understanding.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v4-ov-8" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-8-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">Behavioural UX</span>
+      <h3 class="sc-ov-title" id="v4-ov-8-t">Reason before action.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>The question I actually asked</h4>
+        <p class="sc-lede">Not <em>where should Share Policy go?</em> but <em>when does sharing become useful enough
+          to act on?</em></p>
+        <p>Sharing an insurance policy isn't a convenience. It is a responsibility, and the moment it pays off is
+          the worst moment of someone's life — a nominee hunting for a policy number while grieving.
+          <strong>You can't design for that moment. You design ahead of it.</strong></p></div>
+      <div class="sc-sec"><h4>Eligibility and placement</h4>
+        <p>Surfaced on <strong>Life and Group policies only</strong>. The structure around it: an Emergency shortcut
+          in the policy header, a collapsible Nominee section, and the share card placed after the policy details
+          rather than competing with Edit Details.</p></div>
+      <div class="sc-sec"><h4>Copy exploration, stated honestly</h4>
+        <p>The refined entry line reads: <em>"Your nominee may not be able to access this policy easily during an
+          emergency."</em></p>
+        <p class="sc-quiet">The card that shipped makes the argument more loosely — <em>"While any emergency, share
+          policy with family members will be helpful."</em> Tightening that into a line naming the nominee and the
+          moment is the UX-writing half of this decision, and it is still working its way through. Quoting the
+          shipped version rather than implying the polished one is live matters: it is the one claim on this page a
+          reviewer could disprove by opening the app.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v4-ov-9" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-9-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">Restraint</span>
+      <h3 class="sc-ov-title" id="v4-ov-9-t">The entry point I declined.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>The tension</h4>
+        <p class="sc-lede">Advisor Portfolio is a monetisable feature with adoption pressure behind it, and Portfolio
+          is the busiest screen in the product. Every incentive pointed at putting a banner there.</p></div>
+      <div class="sc-sec"><h4>The alternative considered, and rejected</h4>
+        <p>Adding an Advisor banner to Portfolio. Rejected because users already have a direct route from the
+          Homepage — repeating it would add noise without adding access. <strong>The access was never the missing
+          part.</strong></p>
+        <p>There was also a second entry point competing for the same space. The PRO tier's relationship manager
+          handles claims, legal questions and general support; Advisor Portfolio is specifically guidance on cover.
+          Two genuinely different needs — stacking them on one screen would have blurred both.</p></div>
+      <div class="sc-sec"><h4>Where it went instead</h4>
+        <p>After CoverRisk generates the report, when the user has context and probably questions that justify
+          expert help. The same action reads as useful rather than promotional, because by then there is something
+          specific to ask about.</p>
+        <p><strong>Declining to place a feature is harder to argue for than placing one — and it is the decision I
+          would defend first.</strong></p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v4-ov-10" hidden role="dialog" aria-modal="true" aria-labelledby="v4-ov-10-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">The loop</span>
+      <h3 class="sc-ov-title" id="v4-ov-10-t">State evolution, end to end.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>Why this is a loop and not a funnel</h4>
+        <p class="sc-lede">Portfolio isn't a collection of independent CTAs. Each action returns information to the
+          thing that made the recommendation, which is why the next recommendation is better than the last.</p></div>
+      <div class="sc-sec"><h4>How a portfolio actually evolves</h4>
+        <p>A user arrives with nothing: one prompt to add a policy, one to add family. They add a policy — the
+          measured gap shrinks and the screen has something to rate. They complete CoverRisk — the category name
+          becomes an amount with a premium beside it. They add family members — the family prompt stops appearing,
+          because its condition is no longer true. They open KYP — and policy understanding changes what is worth
+          recommending next.</p>
+        <p>Each of those is a real exported state, not a layout variant. <strong>The screen composes itself
+          differently because something about that portfolio became true.</strong></p></div>
+      <div class="sc-sec"><h4>The end state</h4>
+        <p>Several members, each with counts and premiums, and the prompts gone. Nothing was switched off — the
+          conditions simply stopped matching, which is what a system does and a banner schedule cannot.</p>
+        <div class="sc-shots">
+          <div class="sc-shot"><div class="sc-frame" data-screen="fullfam"></div><p class="sc-cap"><b>End state</b>Prompts gone</p></div>
+        </div></div>
+    </div>
+  </div>
+</div>
+
 <script>
   (function () {
     'use strict';
 
-    var DEFAULT_VIEW = 'scan';
-    var VIEWS = ['scan', 'compact', 'full'];
+    var DEFAULT_VIEW = 'v4';
+    var VIEWS = ['v4', 'scan', 'compact', 'full'];
     var tabs = {}, panels = {};
 
     VIEWS.forEach(function (v) {
@@ -3586,11 +4398,11 @@
     });
 
     /* ── before / after flip (scoped to this panel) ── */
-    function wireFlip() {
-      var b = document.getElementById('sc-btn-before');
-      var a = document.getElementById('sc-btn-after');
-      var bp = document.getElementById('sc-pane-before');
-      var ap = document.getElementById('sc-pane-after');
+    function wireFlip(prefix) {
+      var b = document.getElementById(prefix + '-btn-before');
+      var a = document.getElementById(prefix + '-btn-after');
+      var bp = document.getElementById(prefix + '-pane-before');
+      var ap = document.getElementById(prefix + '-pane-after');
       if (!b || !a || !bp || !ap) { return; }
       function flip(isBefore) {
         b.setAttribute('aria-pressed', String(isBefore));
@@ -3603,7 +4415,8 @@
     }
 
     mountScreens();
-    wireFlip();
+    wireFlip('sc');
+    wireFlip('v4');
   })();
 
 </script>

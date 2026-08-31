@@ -28,7 +28,15 @@ style = style.replace('</style>',
 
 # ── the scan panel and its overlays ────────────────────────────
 start = h.index('<div role="tabpanel" id="panel-scan"')
-panel = h[start: h.index('\n<script>', start)]
+# the scan panel and its overlays end where the next panel begins; cut at the
+# HTML comment that introduces it so the slice stays clean
+_next = h.find('<div role="tabpanel" id="panel-v4"', start)
+if _next == -1:
+    end = h.index('\n<script>', start)
+else:
+    _c = h.rfind('<!--', start, _next)
+    end = _c if _c != -1 else _next
+panel = h[start:end]
 
 # ── inline the screens: each key is used exactly once ──────────
 lib, seen = {}, set()

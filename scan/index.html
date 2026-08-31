@@ -1826,6 +1826,100 @@
   .sc-flow i { color: var(--accent); font-style: normal; }
 
 
+  /* ══════════════════════════════════════════════════════════════
+     V4 — scan-first, depth on demand
+     Pattern per section: title → one-line takeaway → visual → know more.
+     Text is deliberately thin; the diagrams and screens carry the
+     explanation. Reuses the .sc- overlay system.
+     ══════════════════════════════════════════════════════════════ */
+
+  .v4-mast { padding: clamp(42px, 7vw, 84px) 0 clamp(24px, 3vw, 34px); }
+  .v4-h1 {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(30px, 5vw, 62px); line-height: 1.04; margin: 0 0 20px; max-width: 21ch;
+  }
+  .v4-h1 .thin { color: var(--ink-3); font-weight: 500; }
+  .v4-meta {
+    display: flex; flex-wrap: wrap; gap: 7px 9px; align-items: baseline;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-3); margin: 0 0 26px;
+  }
+  .v4-meta b { color: var(--ink-2); font-weight: 500; }
+  .v4-meta .on { color: var(--accent-ink); background: var(--accent-soft); border-radius: 3px; padding: 3px 8px; font-weight: 600; }
+
+  .v4-integrity {
+    display: grid; gap: 10px; border-top: 1px solid var(--rule); padding-top: 20px;
+    font-size: 14.5px; line-height: 1.5; color: var(--ink-3); max-width: 74ch;
+  }
+  .v4-integrity a { color: var(--accent-ink); text-underline-offset: 3px; }
+  .v4-integrity b { color: var(--ink-2); font-weight: 700; }
+
+  /* ── section ── */
+  .v4-sections { display: flex; flex-direction: column; gap: clamp(46px, 6vw, 74px); padding-bottom: clamp(46px, 6vw, 74px); }
+  .v4-sec { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: clamp(18px, 3vw, 42px); }
+  .v4-tag {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3); padding-top: 7px; line-height: 1.5;
+  }
+  .v4-tag b { display: block; color: var(--accent-ink); font-weight: 600; }
+
+  .v4-body { min-width: 0; }
+  .v4-title {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.015em;
+    font-size: clamp(22px, 2.9vw, 34px); line-height: 1.12; margin: 0 0 12px; max-width: 24ch;
+  }
+  .v4-take {
+    font-size: clamp(15.5px, 1.6vw, 18px); line-height: 1.55; color: var(--ink-2);
+    max-width: 62ch; margin: 0 0 22px;
+  }
+  .v4-take b { color: var(--ink); font-weight: 700; }
+  .v4-take em { color: var(--ink); font-style: italic; }
+
+  /* compact point list — max four, one line each */
+  .v4-points { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 7px; max-width: 66ch; }
+  .v4-points li {
+    position: relative; padding-left: 24px;
+    font-size: 15px; line-height: 1.5; color: var(--ink-2);
+  }
+  .v4-points li::before { content: "—"; position: absolute; left: 0; top: 0; color: var(--accent); }
+  .v4-points b { color: var(--ink); font-weight: 700; }
+
+  /* the one-line decision rule */
+  .v4-rule {
+    display: flex; gap: 11px; align-items: baseline; flex-wrap: wrap;
+    border-left: 2px solid var(--accent); padding: 10px 0 10px 16px;
+    margin: 0 0 22px; max-width: 62ch;
+    font-size: 15px; line-height: 1.5; color: var(--ink);
+  }
+  .v4-rule::before {
+    content: "RULE"; font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em;
+    color: var(--accent-ink); flex: 0 0 auto;
+  }
+
+  .v4-fig { margin: 0 0 22px; }
+  .v4-fig .v4-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .v4-fig svg { display: block; width: 100%; min-width: 660px; height: auto; }
+  .v4-cap {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-3); margin: 9px 0 0;
+  }
+
+  /* ── outcomes ── */
+  .v4-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: clamp(20px, 3vw, 38px); margin: 0 0 clamp(30px, 4vw, 44px); }
+  .v4-oc h4 {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #7c8dcb; font-weight: 400; margin: 0 0 11px; padding-bottom: 9px; border-bottom: 1px solid var(--stage-rule);
+  }
+  .v4-oc p { margin: 0; font-size: 15.5px; line-height: 1.5; color: #ffffff; }
+  .v4-oc p + p { margin-top: 8px; font-size: 13.5px; color: var(--stage-ink); opacity: 0.74; }
+
+  @media (max-width: 720px) {
+    .v4-sec { grid-template-columns: 1fr; gap: 12px; }
+    .v4-tag { padding-top: 0; display: flex; flex-wrap: wrap; gap: 5px 11px; }
+    .v4-tag b { display: inline; }
+  }
+
+
   /* explicit dark choice, where the host stamps one */
   :root[data-theme="dark"] {
       --ground:      #080d1c;
@@ -2487,6 +2581,7 @@
     </div>
   </div>
 </div>
+
 
 <script>
   (function () {
