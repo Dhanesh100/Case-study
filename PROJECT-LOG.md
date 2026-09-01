@@ -189,7 +189,8 @@ Framed in the case study as a stated design hypothesis, not a research finding.
 **Answer.** Team effort on a mature product, post-MVP.
 
 - The **product head** brought the problem set: users couldn't navigate to policy details properly, promotional banners confused them, and nobody was adding family members because no family overview existed.
-- **Product head and team lead** originated the Family Overview and the CoverRisk entry point on Portfolio.
+- **Product head and team lead** originated the CoverRisk entry point on Portfolio.
+- The **Family Overview was the designer's proposal**, answering the adoption problem the product head raised. *(Corrected 1 Sep 2026 — an earlier revision of this log credited it to product leadership.)*
 - The **product lead** originated bringing KYP ratings onto the policy card.
 - Product and team leadership carry years of knowledge of the product, its users and the insurance industry; every significant decision was discussed with them.
 

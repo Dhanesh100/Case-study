@@ -1904,6 +1904,36 @@
     color: var(--ink-3); margin: 9px 0 0;
   }
 
+
+  /* ── before / after pairs, and slots awaiting the old export ── */
+  .v4-ba .sc-cap b { color: var(--accent-ink); }
+  .v4-ba .before .sc-cap b { color: var(--ink-3); }
+  .sc-frame.v4-pending {
+    border: 1px dashed var(--rule); background: var(--ground-2);
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    box-shadow: none;
+  }
+  .sc-frame.v4-pending span {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.11em;
+    text-transform: uppercase; color: var(--ink-3); line-height: 1.7; padding: 0 18px;
+  }
+
+  /* ── evidence strip ── */
+  .v4-evid {
+    display: grid; gap: 12px; margin: 0 0 22px;
+    grid-template-columns: repeat(auto-fit, minmax(228px, 1fr)); max-width: 76ch;
+  }
+  .v4-ev {
+    border: 1px solid var(--rule); border-left: 2px solid var(--accent);
+    border-radius: 0 8px 8px 0; background: var(--surface); padding: 14px 16px;
+  }
+  .v4-ev dt {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--accent-ink); margin-bottom: 7px;
+  }
+  .v4-ev dd { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
+  .v4-ev dd b { color: var(--ink); font-weight: 700; }
+
   /* ── outcomes ── */
   .v4-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: clamp(20px, 3vw, 38px); margin: 0 0 clamp(30px, 4vw, 44px); }
   .v4-oc h4 {
@@ -1976,9 +2006,9 @@
           </div>
           <div>
             <dt>My remit</dt>
-            <dd>The condition system, the recommendation order, the CoverRisk connection, declining the Advisor
-              banner. <b>Family Overview and KYP-on-card came from product leadership</b> — I designed how they
-              work.</dd>
+            <dd>The condition system, the recommendation order, the Family Overview, the CoverRisk connection,
+              declining the Advisor banner. <b>The CoverRisk entry point and KYP-on-card came from product
+              leadership</b> — I designed how they work.</dd>
           </div>
         </dl>
       </section>
