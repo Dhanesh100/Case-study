@@ -509,6 +509,20 @@
             <td>Users see it and never resolve it</td>
             <td>Resolution is probably blocked downstream, not unwanted</td>
           </tr>
+          <tr>
+            <td>Chips, not disclosure</td>
+            <td>Moving between members by a persistent control beats routing people through expand/collapse</td>
+            <td>Policy-detail reach rate and median taps to reach, cut by member count; dead-click rate against the pre-release measurement</td>
+            <td>Reach rate is flat among multi-member users, or dead clicks do not fall</td>
+            <td>The chips are not the fix. Look at whether the policy row itself reads as tappable</td>
+          </tr>
+          <tr>
+            <td>Entry-point distribution</td>
+            <td>Given several routes to a policy, users converge on the one that is clearest — not merely the one highest on screen</td>
+            <td>Share of successful reaches by source, and reach rate <em>per source</em></td>
+            <td>The most-used route has the worst completion rate</td>
+            <td>Volume is following prominence, not clarity. Fix the affordance before removing routes</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -625,6 +639,87 @@
       </ol>
     </div>
     <p class="pull">If a claim in §03 cannot be tested a year from now, it was a preference, not a strategy.</p>
+  </section>
+
+  <section>
+    <span class="snum">09 — Measuring the navigation fix</span>
+    <h2>Reach, not clicks.</h2>
+    <p>The navigation change has something no other decision in this release has: <strong>a genuine before</strong>. Dead clicks were measured on this screen prior to the redesign, and support contacts were being logged the whole time. That makes it the cleanest causal claim available — provided the measurement is repeated identically.</p>
+    <p class="kicker blue">Counting entry-point clicks answers which door was used. It cannot answer whether anyone got through it.</p>
+
+    <div class="box warn">
+      <h3>Export the baseline before analysing it</h3>
+      <p>Session-replay and dead-click tooling commonly retains raw data for 30–90 days. If the pre-release measurement is approaching that window, the only true before/after in this project is expiring. <strong>Pull and store it now, even if the analysis waits.</strong></p>
+    </div>
+
+    <div class="scroll">
+      <table class="t-mid">
+        <thead><tr><th>Metric</th><th>Definition</th><th>Direction</th></tr></thead>
+        <tbody>
+          <tr><td>Policy-detail reach rate</td><td>Sessions reaching a policy detail page ÷ sessions viewing Portfolio</td><td>Up</td></tr>
+          <tr><td>Effort to reach</td><td>Median taps, and median seconds, from portfolio view to policy detail</td><td>Down</td></tr>
+          <tr><td><strong>Give-up rate</strong></td><td>Opened a member card, left without reaching a policy ÷ opened a member card</td><td>Down</td></tr>
+          <tr><td>Dead-click rate</td><td>Dead clicks ÷ portfolio views, same tool and definition as the pre-release measurement</td><td>Down</td></tr>
+          <tr><td>Member-switch success</td><td>Member switches followed by a policy view in the same session ÷ member switches</td><td>Up</td></tr>
+          <tr><td>Navigation support contacts</td><td>Navigation-tagged contacts per 1,000 active users</td><td>Down</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Give-up rate is the one to watch hardest. It is the closest quantitative proxy for the confusion that was observed directly in onboarding sessions, and it is the one nobody thinks to instrument.</p>
+
+    <div class="box risk">
+      <h3>Three cuts, without which the result is meaningless</h3>
+      <p><strong>By member count.</strong> Member chips can only help someone with more than one member. Aggregating across single-member users dilutes the effect toward zero and invites the wrong conclusion.</p>
+      <p><strong>By new versus returning.</strong> Returning users learned the previous pattern and may perform worse at first through habit. New users are the cleaner read on whether the design is discoverable.</p>
+      <p><strong>By portfolio state</strong>, per §02. A user with no policies cannot reach a policy detail page, and including them silently suppresses the rate.</p>
+    </div>
+
+    <div class="box">
+      <h3>Events this section needs</h3>
+      <p class="events">
+        <b>policy_detail_viewed</b> — source (member_chip, card_row, check_portfolio, homepage_bento, bottom_nav), taps_from_portfolio, ms_from_portfolio, member_count, state id<br>
+        <b>member_switched</b> — method (chip, card, dropdown), member count<br>
+        <b>dead_click</b> — surface, element, state id<br>
+        <b>portfolio_abandoned</b> — reached_member_card, reached_policy
+      </p>
+    </div>
+    <p>Log the condition set on each of these, as §06 requires. Share Policy placement belongs to its own row in §03 and should be read through <em>share completion</em> by placement, never through clicks by placement — otherwise the louder position always appears to win.</p>
+  </section>
+
+  <section>
+    <span class="snum">10 — What to ask the analytics team</span>
+    <h2>Ask what exists before asking for a number.</h2>
+    <p>A request for metrics returns a dashboard. A request for <em>what is logged, how it is defined, and what is missing</em> returns something you can build on. These are in the order they should be asked.</p>
+
+    <div class="box risk">
+      <h3>Ask this week — these answers expire</h3>
+      <ol style="margin-bottom:0">
+        <li><strong>What is the retention window on raw events and session-replay data?</strong> The dead-click baseline may be aging out now.</li>
+        <li><strong>Do we log which conditions were true at each portfolio view?</strong> Per §06 this cannot be backfilled, and without it precision is permanently unmeasurable.</li>
+        <li><strong>Do we snapshot each user's portfolio state daily, or only fire events?</strong> Without snapshots, transitions cannot be computed retrospectively — only counted from today forward.</li>
+      </ol>
+    </div>
+
+    <h3>Before requesting any number</h3>
+    <ul class="ladder">
+      <li><dfn>Confounds</dfn><div><b>What else shipped touching Portfolio in this window?</b><span>The most commonly skipped question, and the one most likely to invalidate a before/after comparison.</span></div></li>
+      <li><dfn>Natural experiment</dfn><div><b>Was this a staged rollout, and is any cohort still on the old version?</b><span>If so, that comparison is worth more than any before/after. Ask before the rollout completes.</span></div></li>
+      <li><dfn>Comparability</dfn><div><b>Which pre-period is genuinely comparable to this post-period?</b><span>Insurance engagement moves with renewal cycles and the tax-saving window. Let the people who know the traffic shape choose the window.</span></div></li>
+      <li><dfn>Detectability</dfn><div><b>At our traffic, what is the smallest change we could detect in four weeks?</b><span>If the answer is larger than the change you expect, the question is unanswerable as posed and needs a different method — not a longer wait.</span></div></li>
+    </ul>
+
+    <h3>Definitions to get in writing, once</h3>
+    <p>How a session is defined and whether backgrounding ends it · whether numbers are user, session or device level · whether cross-device users are deduplicated · sampling rate · what is excluded (internal accounts, test users, bots) · which timezone days are bucketed in. Each of these silently changes every rate above.</p>
+
+    <div class="box good">
+      <h3>The four questions that actually find something</h3>
+      <p><strong>"If you had to prove this redesign failed, which number would you pull?"</strong> The best question on this page. Whatever they name is the real risk — track it deliberately rather than meet it in a review.</p>
+      <p><strong>"What is the most surprising thing you have seen in Portfolio data?"</strong> Analysts hold observations nobody asks them for.</p>
+      <p><strong>"What do we collect that nobody looks at?"</strong> Usually where the unexploited signal is.</p>
+      <p><strong>"What do users who never reach a policy do instead?"</strong> Path analysis answers §07's non-actor question without recruiting anyone.</p>
+    </div>
+
+    <p class="pull">Ask for distributions, not averages — every time. An average is a claim that everyone is alike, and this design was built on the premise that they are not.</p>
   </section>
 
   <footer class="end">
