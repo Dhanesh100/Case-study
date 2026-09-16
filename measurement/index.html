@@ -221,6 +221,31 @@
   td strong { color: var(--ink); }
   td code, .mono { font-family: var(--mono); font-size: 12.5px; color: var(--accent-ink); }
 
+
+  /* ── send-ready request list ── */
+  .reqsec { counter-reset: q; }
+  .req { list-style: none; margin: 0 0 18px; padding: 0; }
+  .req > li {
+    counter-increment: q; position: relative;
+    padding: 0 0 15px 40px; margin-bottom: 15px;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .req > li:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+  .req > li::before {
+    content: "Q" counter(q); position: absolute; left: 0; top: 2px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: var(--accent);
+  }
+  .req b { display: block; color: var(--ink); font-weight: 700; margin-bottom: 6px; line-height: 1.45; }
+  .req .meta {
+    display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.09em;
+    text-transform: uppercase; color: var(--ink-3); margin-top: 7px; line-height: 1.7;
+  }
+  .req .meta i { font-style: normal; color: var(--ink-2); }
+  .reqh {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin: 30px 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  }
+
   .t-hyp { min-width: 940px; }
   .t-mid { min-width: 720px; }
 
@@ -720,6 +745,89 @@
     </div>
 
     <p class="pull">Ask for distributions, not averages — every time. An average is a claim that everyone is alike, and this design was built on the premise that they are not.</p>
+  </section>
+
+  <section class="reqsec">
+    <span class="snum">11 — The request, ready to send</span>
+    <h2>Paste this to the analytics team.</h2>
+    <p>Questions 1–9 are answered in words and should come back before any number is pulled — several of them determine whether the rest is possible at all. Questions 10 onward are the numbers themselves, each with the cut and the period it needs.</p>
+    <p class="kicker blue">If any of these cannot be answered with current logging, say which and why. That answer is worth as much as the number.</p>
+
+    <p class="reqh">First — what exists, answered in words</p>
+    <ol class="req">
+      <li><b>What is currently logged on the Portfolio screen, and since when?</b>
+        <span class="meta">Needed to know whether a pre-release baseline exists at all</span></li>
+      <li><b>What is the retention window on raw events and on session-replay / dead-click data — and can you export the pre-release dead-click data now, before it ages out?</b>
+        <span class="meta">Urgent · this is the only true before/after in the project</span></li>
+      <li><b>Do we log which conditions were true at the time of each portfolio view?</b>
+        <span class="meta">Cannot be backfilled · without it, recommendation precision is permanently unmeasurable</span></li>
+      <li><b>Do we snapshot each user's portfolio state daily, or do we only fire events?</b>
+        <span class="meta">Determines whether state transitions can be computed retrospectively</span></li>
+      <li><b>What else shipped that touches Portfolio between the pre and post periods?</b>
+        <span class="meta">Confound check · pricing changes, campaigns, app-store features</span></li>
+      <li><b>Was this a staged rollout, and is any cohort still on the previous version?</b>
+        <span class="meta">If yes, that comparison is worth more than any before/after</span></li>
+      <li><b>Which pre-period is genuinely comparable to the post-period, given renewal cycles and the tax-saving window?</b>
+        <span class="meta">You choose the window, not me</span></li>
+      <li><b>At our traffic, what is the smallest change we could reliably detect over four weeks?</b>
+        <span class="meta">If it is larger than the change we expect, we need a different method, not a longer wait</span></li>
+      <li><b>Standing definitions, once: how is a session defined and does backgrounding end it; are numbers user, session or device level; are cross-device users deduplicated; is data sampled and at what rate; what is excluded (internal, test, bots); which timezone are days bucketed in?</b>
+        <span class="meta">Each of these silently changes every rate below</span></li>
+    </ol>
+
+    <p class="reqh">Navigation — the section with a real baseline</p>
+    <ol class="req" start="10">
+      <li><b>What share of Portfolio sessions reach a policy detail page?</b>
+        <span class="meta">Cut · <i>member count (1 / 2 / 3+)</i> · <i>new vs returning</i> · <i>portfolio state</i><br>Period · weekly, 8 weeks before release and 8 weeks after</span></li>
+      <li><b>Median number of taps, and median seconds, from viewing Portfolio to reaching a policy detail page.</b>
+        <span class="meta">Cut · same three · Period · same</span></li>
+      <li><b>Of sessions that open a member card, what share leave without reaching a policy?</b>
+        <span class="meta">The give-up signal · cut by member count · weekly, pre and post</span></li>
+      <li><b>Dead-click rate on Portfolio, before versus after — using the same tool and the same definition as the original measurement.</b>
+        <span class="meta">If the definition changed, tell me · a redefined metric is not a comparison</span></li>
+      <li><b>Successful reaches to a policy by source — member chip, member card row, Check portfolio, homepage card, bottom navigation. I need both the share of total <em>and</em> the reach rate per source.</b>
+        <span class="meta">Volume alone cannot tell clarity from prominence</span></li>
+      <li><b>Navigation-tagged support contacts per 1,000 active users.</b>
+        <span class="meta">Monthly, 6 months spanning the release</span></li>
+    </ol>
+
+    <p class="reqh">The condition system — does relevance actually move people</p>
+    <ol class="req" start="16">
+      <li><b>What share of users move to a better portfolio state within 30 days, measured per starting state?</b>
+        <span class="meta">The headline metric · never aggregated across states</span></li>
+      <li><b>Of conditions that became true, what share were resolved within 30 and 60 days, by condition type?</b>
+        <span class="meta">Plus median days to resolution</span></li>
+      <li><b>How many conditions have been true for more than 60 days, and is that number rising?</b>
+        <span class="meta">Stale conditions rise quietly · this is the early warning</span></li>
+      <li><b>For users who saw a recommendation and did not act — where did they go next?</b>
+        <span class="meta">Path analysis, no recruitment needed</span></li>
+    </ol>
+
+    <p class="reqh">Recommendation quality — the business question</p>
+    <ol class="req" start="20">
+      <li><b>Cover purchased divided by cover recommended, as a distribution — including the share of purchases below 0.5. Not an average.</b>
+        <span class="meta">A mean hides the population this strategy exists to protect</span></li>
+      <li><b>Of purchases made where a foundational gap existed, what share were foundational cover?</b>
+        <span class="meta">Tests whether the recommendation order holds in practice</span></li>
+      <li><b>Revenue per user, pre and post.</b>
+        <span class="meta">Paired with Q20 and Q21 · conversion alone cannot separate adequate cover from cheap cover</span></li>
+    </ol>
+
+    <p class="reqh">Per feature</p>
+    <ol class="req" start="23">
+      <li><b>Member-add rate among users seeing an incomplete family overview, and median time to first add.</b></li>
+      <li><b>Among users holding an AVERAGE or POOR rated policy, what share took any remediating action within 60 days?</b>
+        <span class="meta">Rating opens alone are not the measure</span></li>
+      <li><b>Share <em>completion</em> rate by placement — header button versus the card below the policy details.</b>
+        <span class="meta">Completion, not clicks · clicks will always favour the louder position</span></li>
+      <li><b>Advisor bookings per impression by surface (post-report versus homepage), plus attendance rate.</b></li>
+    </ol>
+
+    <div class="box good">
+      <h3>Two lines to include at the end of the request</h3>
+      <p>"For every number above, please give me the <strong>distribution or the per-segment breakdown</strong>, not a single average."</p>
+      <p>"And if you had to prove this redesign <strong>failed</strong>, which number would you pull? I would rather track it deliberately than meet it in a review."</p>
+    </div>
   </section>
 
   <footer class="end">
