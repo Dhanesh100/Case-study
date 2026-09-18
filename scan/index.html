@@ -1962,6 +1962,98 @@
     .v4-tag b { display: inline; }
   }
 
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+  /* ══════════════════════════════════════════════════════════════
+     V5 — THE ENGINE
+     The matrix is the case study. Everything else supports it.
+     Row-level reasoning expands in place; section-level reasoning
+     goes to an overlay. Reuses .sc- overlay and screen components.
+     ══════════════════════════════════════════════════════════════ */
+
+  .v5-mast { padding: clamp(42px, 7vw, 82px) 0 clamp(22px, 3vw, 32px); }
+  .v5-h1 {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.022em;
+    font-size: clamp(31px, 5.2vw, 64px); line-height: 1.03; margin: 0 0 20px; max-width: 20ch;
+  }
+  .v5-h1 .thin { color: var(--ink-3); font-weight: 500; }
+  .v5-dek { font-size: clamp(16px, 1.75vw, 19.5px); line-height: 1.52; color: var(--ink-2); max-width: 58ch; margin: 0 0 30px; }
+  .v5-dek b { color: var(--ink); font-weight: 700; }
+
+  .v5-stats { display: flex; flex-wrap: wrap; gap: clamp(24px, 5vw, 58px); padding: 22px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 22px; }
+  .v5-stat { display: flex; flex-direction: column; gap: 6px; }
+  .v5-stat b { font-family: var(--display); font-weight: 600; font-size: clamp(28px, 3.6vw, 44px); line-height: 1; letter-spacing: -0.02em; }
+  .v5-stat b em { font-style: normal; color: var(--accent); }
+  .v5-stat span { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); line-height: 1.5; max-width: 17ch; }
+
+  /* ── sections ── */
+  .v5-secs { display: flex; flex-direction: column; gap: clamp(44px, 6vw, 72px); padding-bottom: clamp(44px, 6vw, 72px); }
+  .v5-sec { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: clamp(16px, 3vw, 40px); }
+  .v5-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); padding-top: 7px; line-height: 1.5; }
+  .v5-tag b { display: block; color: var(--accent-ink); font-weight: 600; }
+  .v5-body { min-width: 0; }
+  .v5-title { font-family: var(--display); font-weight: 600; letter-spacing: -0.015em; font-size: clamp(21px, 2.8vw, 33px); line-height: 1.12; margin: 0 0 11px; max-width: 25ch; }
+  .v5-take { font-size: clamp(15.5px, 1.6vw, 17.5px); line-height: 1.55; color: var(--ink-2); max-width: 60ch; margin: 0 0 20px; }
+  .v5-take b { color: var(--ink); font-weight: 700; }
+
+  /* ── the engine matrix ── */
+  .v5-mx { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 14.5px; }
+  .v5-mx th {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--ink-3); font-weight: 400; text-align: left;
+    padding: 0 14px 10px 0; border-bottom: 1px solid var(--rule);
+  }
+  .v5-mx td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.45; }
+  .v5-mx .know { color: var(--ink); font-family: var(--mono); font-size: 11.5px; line-height: 1.55; }
+  .v5-mx .know b { display: block; font-family: var(--display); font-size: 14.5px; font-weight: 600; color: var(--ink); margin-bottom: 3px; letter-spacing: 0.01em; }
+  .v5-mx .act { color: var(--ink); font-weight: 700; }
+  .v5-mx .sec { color: var(--ink-3); font-family: var(--mono); font-size: 11px; }
+  .v5-mx tr.pri td { background: var(--accent-soft); }
+  .v5-mx tr.pri .act { color: var(--accent-ink); }
+
+  .v5-why {
+    border: 1px solid var(--rule); background: var(--surface); color: var(--ink-3);
+    width: 22px; height: 22px; border-radius: 50%; cursor: pointer; padding: 0;
+    font-family: var(--mono); font-size: 11px; line-height: 1; transition: all .16s ease;
+  }
+  .v5-why:hover, .v5-why[aria-expanded="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .v5-mx tr.why-row td { padding-top: 0; border-bottom: 1px solid var(--rule-soft); }
+  .v5-mx tr.why-row[hidden] { display: none; }
+  .v5-whybox {
+    background: var(--ground-2); border-left: 2px solid var(--accent); border-radius: 0 7px 7px 0;
+    padding: 12px 16px; margin: 0 0 4px; font-size: 14px; line-height: 1.55; color: var(--ink-2); max-width: 70ch;
+  }
+  .v5-whybox b { color: var(--ink); font-weight: 700; }
+  .v5-hint { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 10px 0 0; }
+
+  /* ── source cards ── */
+  .v5-src { display: grid; gap: 12px; margin: 0 0 20px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .v5-srcbox { border: 1px solid var(--rule); border-top: 2px solid var(--accent); border-radius: 0 0 9px 9px; background: var(--surface); padding: 15px 17px; }
+  .v5-srcbox dt { font-family: var(--display); font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .v5-srcbox dd { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+  .v5-srcbox .was { display: block; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--rule-soft); font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--signal); }
+
+  /* ── branch rule ── */
+  .v5-branch { display: grid; gap: 12px; margin: 0 0 20px; }
+  @media (min-width: 640px) { .v5-branch { grid-template-columns: 1fr 1fr; } }
+  .v5-br { border: 1px solid var(--rule); border-radius: 9px; padding: 16px 18px; background: var(--surface); }
+  .v5-br.key { border-color: var(--accent); background: var(--accent-soft); }
+  .v5-br dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 9px; }
+  .v5-br.key dt { color: var(--accent-ink); }
+  .v5-br dd { margin: 0; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  .v5-br dd b { display: block; font-family: var(--display); font-size: 17px; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+
+  .v5-fig { margin: 0 0 20px; }
+  .v5-fig .v5-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .v5-fig svg { display: block; width: 100%; min-width: 680px; height: auto; }
+  .v5-cap { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 8px 0 0; }
+
+  @media (max-width: 720px) {
+    .v5-sec { grid-template-columns: 1fr; gap: 12px; }
+    .v5-tag { padding-top: 0; display: flex; flex-wrap: wrap; gap: 5px 10px; }
+    .v5-tag b { display: inline; }
+  }
+
 
   /* explicit dark choice, where the host stamps one */
   :root[data-theme="dark"] {
