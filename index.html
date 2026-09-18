@@ -1933,6 +1933,19 @@
   .v4-ev dd { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); }
   .v4-ev dd b { color: var(--ink); font-weight: 700; }
 
+  /* ── shipped vs refined copy, side by side ── */
+  .v4-copy2 { display: grid; gap: 12px; margin: 0 0 4px; }
+  @media (min-width: 620px) { .v4-copy2 { grid-template-columns: 1fr 1fr; } }
+  .v4-cc { border: 1px solid var(--rule); border-radius: 9px; padding: 15px 17px; background: var(--ground-2); }
+  .v4-cc.live { border-left: 2px solid var(--ink-3); }
+  .v4-cc.draft { border-left: 2px solid var(--accent); background: var(--accent-soft); }
+  .v4-cc dt {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3); margin-bottom: 9px;
+  }
+  .v4-cc.draft dt { color: var(--accent-ink); }
+  .v4-cc dd { margin: 0; font-size: 15.5px; line-height: 1.48; color: var(--ink); font-style: italic; }
+
   /* ── outcomes ── */
   .v4-out { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: clamp(20px, 3vw, 38px); margin: 0 0 clamp(30px, 4vw, 44px); }
   .v4-oc h4 {
@@ -3907,6 +3920,12 @@
         <p class="sc-quiet">The dark-purple PRO subscription banner on this screen carries over from the previous
           design and sits outside this scope. It is already being repositioned. The conditions described here govern
           the entry points I owned, not every pixel on the screen.</p></div>
+      <div class="sc-sec"><h4>Each problem, and where it is answered</h4>
+        <div class="sc-tablewrap"><table class="sc-table">
+          <thead><tr><th scope="col">Problem raised</th><th scope="col">Answered by</th><th scope="col">Section</th></tr></thead>
+          <tbody><tr><td class="sc-cap-name">Policy details hard to reach</td><td class="sc-when">Member chips; disclosure relieved of navigation</td><td class="sc-when">02</td></tr><tr><td class="sc-cap-name">Banners interrupting the task</td><td class="sc-when">A condition per capability, not a permanent slot</td><td class="sc-when">03 – 04</td></tr><tr><td class="sc-cap-name">Nobody adding family members</td><td class="sc-when">Family Overview — incompleteness is the prompt</td><td class="sc-when">07</td></tr><tr><td class="sc-cap-name">Features in separate contexts</td><td class="sc-when">One screen reading CoverRisk, KYP and family data</td><td class="sc-when">03</td></tr></tbody></table></div>
+        <p class="sc-quiet">Four problems, four answers. Nothing here was left as an observation.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -3991,7 +4010,11 @@
           and KYP all existed. What did not exist was a screen reading them together at the moment they change a
           decision.</p>
         <p class="sc-quiet">Which is also why this was achievable post-MVP without engineering a new system: the
-          work was connecting finished features, not building one.</p></div>
+          work was connecting finished features, not building one.</p>
+        <div class="sc-tablewrap"><table class="sc-table">
+          <thead><tr><th scope="col">Signal</th><th scope="col">What it tells Portfolio</th></tr></thead>
+          <tbody><tr><td class="sc-cap-name">Onboarding</td><td class="sc-when">What the user said they already own</td></tr><tr><td class="sc-cap-name">CoverRisk</td><td class="sc-when">Protection need — a score, a risk band, per-category coverage</td></tr><tr><td class="sc-cap-name">Policy data</td><td class="sc-when">Cover actually held, and what has lapsed</td></tr><tr><td class="sc-cap-name">Family data</td><td class="sc-when">Which members exist, and who has nothing added</td></tr><tr><td class="sc-cap-name">KYP</td><td class="sc-when">How good each policy is, and where its limits are</td></tr></tbody></table></div>
+      </div>
     </div>
   </div>
 </div>
@@ -4065,6 +4088,16 @@
       <div class="sc-sec"><h4>Still open</h4>
         <p class="sc-quiet">The cover, premium and existing-cover values in the before/after card are illustrative
           placeholders. They are the last invented numbers on the page.</p></div>
+      <div class="sc-sec"><h4>Three places it surfaces, not one banner</h4>
+        <div class="sc-tablewrap"><table class="sc-table">
+          <thead><tr><th scope="col">Where</th><th scope="col">What it does</th></tr></thead>
+          <tbody><tr><td class="sc-cap-name">Category header</td><td class="sc-when">&ldquo;Is your Coverage Enough?&rdquo; beside a meter of how much is met</td></tr><tr><td class="sc-cap-name">Policy due for renewal</td><td class="sc-when"><b>Review report</b> or <b>Pay without Review</b> — renewing blind becomes a choice</td></tr><tr><td class="sc-cap-name">Foot of the screen</td><td class="sc-when">Buy suggestions, each with its reason attached</td></tr></tbody></table></div>
+        <div class="sc-shots">
+          <div class="sc-shot wide"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>In place</b>Meters, then suggestions below</p></div>
+        </div>
+        <p class="sc-notice">The suggestions sit <strong>below the policies</strong> — a user scanning what they own
+          reaches their own cover before anything being recommended.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -4094,7 +4127,12 @@
           campaign.</p>
         <p class="sc-quiet">This is also the decision most likely to be quietly reversed later under revenue
           pressure, which is why it is written down as an explicit ordering rather than left to whoever configures
-          the next campaign.</p></div>
+          the next campaign.</p>
+        <div class="sc-tablewrap"><table class="sc-table">
+          <thead><tr><th scope="col">Tier</th><th scope="col">Products</th><th scope="col">Rule</th></tr></thead>
+          <tbody><tr><td class="sc-cap-name">01 · Foundational</td><td class="sc-when">Health, Life</td><td class="sc-when">Nothing outranks it</td></tr><tr><td class="sc-cap-name">02 · Additional</td><td class="sc-when">Super Top-Up, Critical Illness, Accident</td><td class="sc-when">Only once the foundation exists</td></tr><tr><td class="sc-cap-name">03 · Situational</td><td class="sc-when">Hospicash, Home, other</td><td class="sc-when">Only on a signal</td></tr></tbody></table></div>
+        <p class="sc-rejected"><b>Never</b> No foundational cover → pitch home insurance</p>
+      </div>
     </div>
   </div>
 </div>
@@ -4187,6 +4225,15 @@
           in the policy header, a collapsible Nominee section, and the share card placed after the policy details
           rather than competing with Edit Details.</p></div>
       <div class="sc-sec"><h4>Copy exploration, stated honestly</h4>
+        <dl class="v4-copy2">
+          <div class="v4-cc live"><dt>Shipped today</dt>
+            <dd>&ldquo;While any emergency, share policy with family members will be helpful.&rdquo;</dd></div>
+          <div class="v4-cc draft"><dt>Refined — not yet live</dt>
+            <dd>&ldquo;Your nominee may not be able to access this policy easily during an emergency.&rdquo;</dd></div>
+        </dl>
+        <div class="sc-shots">
+          <div class="sc-shot wide"><div class="sc-frame" data-screen="life"></div><p class="sc-cap"><b>Policy details</b>Emergency · nominee · share card</p></div>
+        </div>
         <p>The refined entry line reads: <em>"Your nominee may not be able to access this policy easily during an
           emergency."</em></p>
         <p class="sc-quiet">The card that shipped makes the argument more loosely — <em>"While any emergency, share
@@ -4221,6 +4268,14 @@
           specific to ask about.</p>
         <p><strong>Declining to place a feature is harder to argue for than placing one — and it is the decision I
           would defend first.</strong></p></div>
+      <div class="sc-sec"><h4>Two advisors, and why stacking them would blur both</h4>
+        <div class="sc-tablewrap"><table class="sc-table">
+          <thead><tr><th scope="col"></th><th scope="col">PRO relationship manager</th><th scope="col">Advisor Portfolio</th></tr></thead>
+          <tbody><tr><td class="sc-cap-name">Covers</td><td class="sc-when">Claims, legal questions, whatever goes wrong</td><td class="sc-when">How much cover you need</td></tr><tr><td class="sc-cap-name">Reached from</td><td class="sc-when">The PRO tier, already on this screen</td><td class="sc-when">After a CoverRisk report</td></tr><tr><td class="sc-cap-name">Triggered by</td><td class="sc-when">A problem</td><td class="sc-when">A question</td></tr></tbody></table></div>
+        <div class="sc-shots">
+          <div class="sc-shot wide"><div class="sc-frame" data-screen="home"></div><p class="sc-cap"><b>Homepage</b>The advisor route that already exists</p></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
