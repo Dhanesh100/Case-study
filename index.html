@@ -5006,7 +5006,7 @@
         <div class="v5-stat"><b>0</b><span>new features or new data</span></div>
       </dl>
       <p class="sc-honest">No usage data yet — shipped recently. <b>The navigation problem was evidenced before
-        the redesign</b> (§06); the rest is reasoned. The <a href="measurement/">measurement plan</a> states what
+        the redesign</b> (§01); the rest is reasoned. The <a href="measurement/">measurement plan</a> states what
         would disprove each claim. Screen figures are illustrative placeholders.</p>
       <p class="sc-howto"><span>Eight sections · ~4 min</span><span aria-hidden="true">·</span>
         <span>Open <b>?</b> on any row for the reasoning, <b>Know more</b> for the decision behind a section</span></p>
@@ -5017,11 +5017,48 @@
     <div class="v5-secs">
 
       <!-- 01 -->
+<section class="v5-sec">
+        <p class="v5-tag">01<b>The trigger</b></p>
+        <div class="v4-body">
+          <h2 class="v5-title">The work started as a navigation fix.</h2>
+          <p class="v5-take">People could not reliably get from the portfolio into a policy. Expand-and-collapse was
+            carrying navigation, and nothing about it said a policy lived through there.</p>
+
+          <dl class="v4-evid">
+            <div class="v4-ev"><dt>Dead clicks</dt>
+              <dd>Users <b>clicking the overview repeatedly</b>, trying to get inside. New users often gave up
+                rather than work out where to click.</dd></div>
+            <div class="v4-ev"><dt>Support calls</dt>
+              <dd>Users <b>took time to get inside, or needed assistance</b> — support had to talk them through
+                it on the call.</dd></div>
+            <div class="v4-ev"><dt>B2B onboarding</dt>
+              <dd>The same confusion observed <b>with real users</b>, in person, during onboarding sessions.</dd></div>
+          </dl>
+
+          <p class="sc-flow">
+            <b>Member chips</b><i>→</i><b>That member&rsquo;s portfolio</b><i>→</i><b>Policy card</b><i>→</i><b>Policy details</b>
+          </p>
+
+          <div class="sc-shots">
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="family"></div><p class="sc-cap"><b>Step 1</b>Family, and a chip per member</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Step 2</b>That member&rsquo;s policies</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="life"></div><p class="sc-cap"><b>Step 3</b>The policy itself</p></div>
+          </div>
+
+          <p class="sc-notice">Member chips sit beside <strong>Family</strong> — moving between profiles is one tap.</p>
+
+          <p style="margin:22px 0 0">
+            <button class="sc-more sub" type="button" data-open="v6-ov-nav"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">Know more</span><span class="sc-more-t">How we knew where the confusion was, and what actually changed</span></span></button>
+          </p>
+        </div>
+      </section>
       <section class="v5-sec">
-        <p class="v5-tag">01<b>The disconnect</b></p>
+        <p class="v5-tag">02<b>The opportunity</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Three goldmines, none of them reaching the screen that needed them.</h2>
-          <p class="v5-take">Each was built, shipped, and collecting real signal. Each stopped at its own boundary.</p>
+          <h2 class="v5-title">Fixing it opened a bigger opportunity, and I took it.</h2>
+          <p class="v5-take">The same screen already sat on data three other parts of the product had collected and
+            never used here. Each was built, shipped and stopping at its own boundary — so I proposed connecting
+            them, and letting Portfolio <b>advocate the rest of CoverSure</b>.</p>
           <dl class="v5-src">
             <div class="v5-srcbox"><dt>Onboarding</dt>
               <dd>Whether they hold insurance, and which types they bought.
@@ -5065,7 +5102,7 @@
 
       <!-- 02 -->
       <section class="v5-sec">
-        <p class="v5-tag">02<b>The engine</b></p>
+        <p class="v5-tag">03<b>The engine</b></p>
         <div class="v5-body">
           <h2 class="v5-title">What we already know, and what Portfolio does about it.</h2>
           <p class="v5-take">Ten scenarios, one rule set. Every row is a condition the product could already evaluate —
@@ -5159,7 +5196,7 @@
 
       <!-- 03 -->
       <section class="v5-sec">
-        <p class="v5-tag">03<b>Priority</b></p>
+        <p class="v5-tag">04<b>Priority</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Which cover comes first, as a person — not as a catalogue.</h2>
           <p class="v5-take">Two axes at once: <b>what this user holds</b>, and <b>what any person should hold first</b>.</p>
@@ -5196,7 +5233,7 @@
 
       <!-- 04 -->
       <section class="v5-sec">
-        <p class="v5-tag">04<b>The unblocker</b></p>
+        <p class="v5-tag">05<b>The unblocker</b></p>
         <div class="v5-body">
           <h2 class="v5-title">People stall because they don&rsquo;t know what number to ask for.</h2>
           <p class="v5-take">CoverRisk had already calculated the amount and could predict the premium. Surfacing both
@@ -5229,7 +5266,7 @@
 
       <!-- 05 -->
       <section class="v5-sec">
-        <p class="v5-tag">05<b>The restraint rule</b></p>
+        <p class="v5-tag">06<b>The restraint rule</b></p>
         <div class="v5-body">
           <h2 class="v5-title">A feature earns the primary slot only when there is nothing to review.</h2>
           <p class="v5-take"><b>Portfolio exists to review saved cover.</b> Everything else is an offer, and offers wait —
@@ -5253,39 +5290,7 @@
         </div>
       </section>
 
-      <section class="v5-sec">
-        <p class="v5-tag">06<b>Navigation</b></p>
-        <div class="v4-body">
-          <h2 class="v5-title">Reaching a policy stopped depending on a hidden interaction.</h2>
-          <p class="v5-take">Expand-and-collapse was carrying navigation. People could not tell it led to a policy —
-            so they stopped, or called support.</p>
-
-          <dl class="v4-evid">
-            <div class="v4-ev"><dt>Dead clicks</dt>
-              <dd>Taps landing on <b>elements that did not respond</b>, from users trying to reach a policy.</dd></div>
-            <div class="v4-ev"><dt>Support calls</dt>
-              <dd>Support had to <b>talk users through the expand/collapse step</b> on the call.</dd></div>
-            <div class="v4-ev"><dt>B2B onboarding</dt>
-              <dd>The same confusion observed <b>with real users</b>, in person, during onboarding sessions.</dd></div>
-          </dl>
-
-          <p class="sc-flow">
-            <b>Member chips</b><i>→</i><b>That member&rsquo;s portfolio</b><i>→</i><b>Policy card</b><i>→</i><b>Policy details</b>
-          </p>
-
-          <div class="sc-shots">
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="family"></div><p class="sc-cap"><b>Step 1</b>Family, and a chip per member</p></div>
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Step 2</b>That member&rsquo;s policies</p></div>
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="life"></div><p class="sc-cap"><b>Step 3</b>The policy itself</p></div>
-          </div>
-
-          <p class="sc-notice">Member chips sit beside <strong>Family</strong> — moving between profiles is one tap.</p>
-
-          <p style="margin:22px 0 0">
-            <button class="sc-more sub" type="button" data-open="v6-ov-nav"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">Know more</span><span class="sc-more-t">How we knew where the confusion was, and what actually changed</span></span></button>
-          </p>
-        </div>
-      </section>
+      
 
       <!-- 06 -->
       <section class="v5-sec">
@@ -5400,7 +5405,8 @@
       <p class="sc-close-line">The work was deciding who should see each capability, when, why, and what
         happens next — not where to put the button.</p>
       <p class="sc-close-sub" style="margin-bottom:22px">A personalisation engine built entirely from data we
-        already had.</p>
+        already had — turning Portfolio from storage into an <b>advocate for the rest of the product</b>, and
+        joining every section of the app into one continuous experience.</p>
       <p class="sc-close-sub">Mine: the engine and its rule set, the recommendation order, the CoverRisk connection,
         the primary-versus-secondary rule, the Family Overview, the navigation fix, information hierarchy and UX
         writing. <b>The CoverRisk entry point and KYP-on-card came from Product and Team leadership.</b></p>
@@ -5639,7 +5645,7 @@
         <span aria-hidden="true">·</span><span>UX strategy · Interaction design · Progressive disclosure</span>
         <span class="on">Shipped</span></p>
       <p class="sc-honest">Recently launched, so there is <b>no usage data yet</b> — §11 states what changed, not
-        what it achieved. The navigation decision in §03 is the one with pre-release evidence. All figures in the
+        what it achieved. The navigation fix in §01 is the one with pre-release evidence. All figures in the
         screens are illustrative placeholders from the design files.</p>
       <p class="sc-howto"><span>Twelve sections · ~4 min</span><span aria-hidden="true">·</span>
         <span>Tap <b>?</b> on any rule for its reasoning · <b>Know more</b> names the question it answers</span></p>
@@ -5647,11 +5653,48 @@
   </header>
   <div class="sc-wrap">
     <div class="v5-secs">
+<section class="v5-sec">
+        <p class="v5-tag">01<b>The trigger</b></p>
+        <div class="v4-body">
+          <h2 class="v5-title">The work started as a navigation fix.</h2>
+          <p class="v5-take">People could not reliably get from the portfolio into a policy. Expand-and-collapse was
+            carrying navigation, and nothing about it said a policy lived through there.</p>
+
+          <dl class="v4-evid">
+            <div class="v4-ev"><dt>Dead clicks</dt>
+              <dd>Users <b>clicking the overview repeatedly</b>, trying to get inside. New users often gave up
+                rather than work out where to click.</dd></div>
+            <div class="v4-ev"><dt>Support calls</dt>
+              <dd>Users <b>took time to get inside, or needed assistance</b> — support had to talk them through
+                it on the call.</dd></div>
+            <div class="v4-ev"><dt>B2B onboarding</dt>
+              <dd>The same confusion observed <b>with real users</b>, in person, during onboarding sessions.</dd></div>
+          </dl>
+
+          <p class="sc-flow">
+            <b>Member chips</b><i>→</i><b>That member&rsquo;s portfolio</b><i>→</i><b>Policy card</b><i>→</i><b>Policy details</b>
+          </p>
+
+          <div class="sc-shots">
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="family"></div><p class="sc-cap"><b>Step 1</b>Family, and a chip per member</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Step 2</b>That member&rsquo;s policies</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="life"></div><p class="sc-cap"><b>Step 3</b>The policy itself</p></div>
+          </div>
+
+          <p class="sc-notice">Member chips sit beside <strong>Family</strong> — moving between profiles is one tap.</p>
+
+          <p style="margin:22px 0 0">
+            <button class="sc-more sub" type="button" data-open="v7-ov-nav"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">Know more</span><span class="sc-more-t">How we knew where the confusion was, and what actually changed</span></span></button>
+          </p>
+        </div>
+      </section>
       <section class="v5-sec">
-        <p class="v5-tag">01<b>The problem</b></p>
+        <p class="v5-tag">02<b>The opportunity</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Portfolio had to support management without becoming a promotional surface.</h2>
-          <p class="v5-take">Its job was helping people manage policies they already hold. Product needed existing capabilities to be found on the same screen.</p>
+          <h2 class="v5-title">Fixing it opened a bigger opportunity, and I took it.</h2>
+          <p class="v5-take">The same screen already sat on data the rest of the product had collected and never used
+            here. I proposed connecting it — so Portfolio would stop being storage and start <b>advocating the rest
+            of CoverSure</b> at the moment each part became useful.</p>
           <p class="sc-flow"><b>Add Policy</b><i>·</i><b>CoverRisk</b><i>·</i><b>Buy Policy</b><i>·</i><b>Family Management</b><i>·</i><b>KYP</b></p>
           <p class="v5-take" style="margin-top:18px">Five were named in the brief. The rule set ended up covering
             <b>seven</b> — Advisor Portfolio and Share Policy earned conditions too.</p>
@@ -5661,7 +5704,7 @@
       </section>
 
       <section class="v5-sec">
-        <p class="v5-tag">02<b>The strategy</b></p>
+        <p class="v5-tag">03<b>The strategy</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Each capability earned a condition, not a banner.</h2>
           <p class="v5-take">Portfolio does not decide what to promote. It decides what is relevant, from data the product already held.</p>
@@ -5751,39 +5794,7 @@
         </div>
       </section>
 
-<section class="v5-sec">
-        <p class="v5-tag">03<b>Navigation</b></p>
-        <div class="v4-body">
-          <h2 class="v5-title">Reaching a policy stopped depending on a hidden interaction.</h2>
-          <p class="v5-take">Expand-and-collapse was carrying navigation. People could not tell it led to a policy —
-            so they stopped, or called support.</p>
 
-          <dl class="v4-evid">
-            <div class="v4-ev"><dt>Dead clicks</dt>
-              <dd>Taps landing on <b>elements that did not respond</b>, from users trying to reach a policy.</dd></div>
-            <div class="v4-ev"><dt>Support calls</dt>
-              <dd>Support had to <b>talk users through the expand/collapse step</b> on the call.</dd></div>
-            <div class="v4-ev"><dt>B2B onboarding</dt>
-              <dd>The same confusion observed <b>with real users</b>, in person, during onboarding sessions.</dd></div>
-          </dl>
-
-          <p class="sc-flow">
-            <b>Member chips</b><i>→</i><b>That member&rsquo;s portfolio</b><i>→</i><b>Policy card</b><i>→</i><b>Policy details</b>
-          </p>
-
-          <div class="sc-shots">
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="family"></div><p class="sc-cap"><b>Step 1</b>Family, and a chip per member</p></div>
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Step 2</b>That member&rsquo;s policies</p></div>
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="life"></div><p class="sc-cap"><b>Step 3</b>The policy itself</p></div>
-          </div>
-
-          <p class="sc-notice">Member chips sit beside <strong>Family</strong> — moving between profiles is one tap.</p>
-
-          <p style="margin:22px 0 0">
-            <button class="sc-more sub" type="button" data-open="v7-ov-nav"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">Know more</span><span class="sc-more-t">How we knew where the confusion was, and what actually changed</span></span></button>
-          </p>
-        </div>
-      </section>
       <section class="v5-sec">
         <p class="v5-tag">04<b>The experience</b></p>
         <div class="v5-body">
@@ -6023,8 +6034,9 @@
       </div>
       <p class="sc-close-line">The work was deciding who should see each capability, when, why, and what happens
         next — not where to put the button.</p>
-      <p class="sc-close-sub">Portfolio became a contextual layer across the insurance journey: Onboarding →
-        Homepage → Portfolio → Policy Details now read from the same user state.</p>
+      <p class="sc-close-sub">Portfolio became an <b>advocate for the rest of the product</b> rather than a
+        store of policies: Onboarding → Homepage → Portfolio → Policy Details now read from the same user state,
+        so each part of the app makes the next one more useful.</p>
       <p class="sc-foot"><span>CoverSure · Policy Portfolio</span><span>V7 · 21 Sep 2026</span></p>
     </div>
   </footer>
