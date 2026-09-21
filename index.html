@@ -2099,6 +2099,28 @@
   .sc-more:hover .sc-more-k { color: var(--accent-ink); }
   .sc-more .sc-more-t { display: block; max-width: 34ch; line-height: 1.3; }
 
+  /* the sentence a reader should leave with */
+  .v7-claim {
+    border-left: 3px solid var(--accent); padding: 4px 0 4px 20px;
+    margin: 0 0 26px; max-width: 54ch;
+  }
+  .v7-claim p {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.012em;
+    font-size: clamp(18px, 2.2vw, 25px); line-height: 1.22; color: var(--ink); margin: 0;
+  }
+  .v7-claim span {
+    display: block; margin-top: 9px; font-size: 15px; line-height: 1.5;
+    color: var(--ink-2); font-family: var(--body); font-weight: 400; letter-spacing: 0;
+  }
+  .v7-recall { display: grid; gap: 14px; margin: 0 0 clamp(26px, 4vw, 38px); }
+  @media (min-width: 720px) { .v7-recall { grid-template-columns: repeat(4, 1fr); } }
+  .v7-rc { border-top: 1px solid var(--stage-rule); padding-top: 13px; }
+  .v7-rc b {
+    display: block; font-family: var(--display); font-weight: 600; font-size: clamp(19px, 2.2vw, 25px);
+    line-height: 1.1; color: #ffffff; margin-bottom: 6px;
+  }
+  .v7-rc span { font-size: 13.5px; line-height: 1.45; color: var(--stage-ink); opacity: 0.8; }
+
   /* ── lightbox ── */
   .v6-lb { position: fixed; inset: 0; z-index: 95; display: flex; align-items: center; justify-content: center; padding: clamp(12px, 3vw, 34px); }
   .v6-lb[hidden] { display: none; }
@@ -4970,6 +4992,14 @@
       <p class="v5-dek">Onboarding, CoverRisk and Know Your Policy already knew what each person needed. None of it
         reached the screen where they manage cover. <b>No new feature was built and no new data collected</b> — the
         work was connecting what already existed.</p>
+
+      <div class="v7-claim">
+        <p>I turn &ldquo;where do we put this feature?&rdquo; into &ldquo;when does it become useful?&rdquo; — and
+          build the rule set that answers it.
+          <span>Not an insurance problem. It is any screen where the business wants promotion and the user
+            wants to finish a task.</span></p>
+      </div>
+
       <dl class="v5-stats">
         <div class="v5-stat"><b>3</b><span>data sources connected</span></div>
         <div class="v5-stat"><b><em>10</em></b><span>scenarios resolved</span></div>
@@ -5361,7 +5391,16 @@
         <div class="v4-oc"><h4>Product</h4>
           <p>One connected journey: Onboarding → Homepage → Portfolio → Policy Details, reading the same state.</p></div>
       </div>
-      <p class="sc-close-line">A personalisation engine built entirely from data we already had.</p>
+      <div class="v7-recall">
+        <div class="v7-rc"><b>10</b><span>scenarios the engine resolves</span></div>
+        <div class="v7-rc"><b>1</b><span>entry point declined outright</span></div>
+        <div class="v7-rc"><b>3</b><span>signals of evidence behind the navigation fix</span></div>
+        <div class="v7-rc"><b>0</b><span>new features, and no new data collected</span></div>
+      </div>
+      <p class="sc-close-line">The work was deciding who should see each capability, when, why, and what
+        happens next — not where to put the button.</p>
+      <p class="sc-close-sub" style="margin-bottom:22px">A personalisation engine built entirely from data we
+        already had.</p>
       <p class="sc-close-sub">Mine: the engine and its rule set, the recommendation order, the CoverRisk connection,
         the primary-versus-secondary rule, the Family Overview, the navigation fix, information hierarchy and UX
         writing. <b>The CoverRisk entry point and KYP-on-card came from Product and Team leadership.</b></p>
@@ -5588,6 +5627,13 @@
         <span class="thin">— not just display their policies.</span></h1>
       <p class="v5-dek">Existing capabilities, made discoverable through relevance instead of banners.
         Portfolio decides what is <b>relevant</b>, not what to promote.</p>
+
+      <div class="v7-claim">
+        <p>I turn &ldquo;where do we put this feature?&rdquo; into &ldquo;when does it become useful?&rdquo; — and
+          build the rule set that answers it.
+          <span>Not an insurance problem. It is any screen where the business wants promotion and the user
+            wants to finish a task.</span></p>
+      </div>
       <p class="v4-meta" style="margin-bottom:26px">
         <b>Product Designer</b><span aria-hidden="true">·</span><span>Post-MVP</span>
         <span aria-hidden="true">·</span><span>UX strategy · Interaction design · Progressive disclosure</span>
@@ -5969,8 +6015,16 @@
   </div>
   <footer class="sc-close">
     <div class="sc-wrap">
-      <p class="sc-close-line">Portfolio became a contextual layer across the insurance journey.</p>
-      <p class="sc-close-sub">Onboarding → Homepage → Portfolio → Policy Details now read from the same user state.</p>
+      <div class="v7-recall">
+        <div class="v7-rc"><b>7</b><span>capabilities, each given a condition instead of a slot</span></div>
+        <div class="v7-rc"><b>1</b><span>entry point declined outright</span></div>
+        <div class="v7-rc"><b>3</b><span>signals of evidence behind the navigation fix</span></div>
+        <div class="v7-rc"><b>0</b><span>new features, and no new data collected</span></div>
+      </div>
+      <p class="sc-close-line">The work was deciding who should see each capability, when, why, and what happens
+        next — not where to put the button.</p>
+      <p class="sc-close-sub">Portfolio became a contextual layer across the insurance journey: Onboarding →
+        Homepage → Portfolio → Policy Details now read from the same user state.</p>
       <p class="sc-foot"><span>CoverSure · Policy Portfolio</span><span>V7 · 21 Sep 2026</span></p>
     </div>
   </footer>

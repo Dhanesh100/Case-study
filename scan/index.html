@@ -2100,6 +2100,28 @@
   .sc-more:hover .sc-more-k { color: var(--accent-ink); }
   .sc-more .sc-more-t { display: block; max-width: 34ch; line-height: 1.3; }
 
+  /* the sentence a reader should leave with */
+  .v7-claim {
+    border-left: 3px solid var(--accent); padding: 4px 0 4px 20px;
+    margin: 0 0 26px; max-width: 54ch;
+  }
+  .v7-claim p {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.012em;
+    font-size: clamp(18px, 2.2vw, 25px); line-height: 1.22; color: var(--ink); margin: 0;
+  }
+  .v7-claim span {
+    display: block; margin-top: 9px; font-size: 15px; line-height: 1.5;
+    color: var(--ink-2); font-family: var(--body); font-weight: 400; letter-spacing: 0;
+  }
+  .v7-recall { display: grid; gap: 14px; margin: 0 0 clamp(26px, 4vw, 38px); }
+  @media (min-width: 720px) { .v7-recall { grid-template-columns: repeat(4, 1fr); } }
+  .v7-rc { border-top: 1px solid var(--stage-rule); padding-top: 13px; }
+  .v7-rc b {
+    display: block; font-family: var(--display); font-weight: 600; font-size: clamp(19px, 2.2vw, 25px);
+    line-height: 1.1; color: #ffffff; margin-bottom: 6px;
+  }
+  .v7-rc span { font-size: 13.5px; line-height: 1.45; color: var(--stage-ink); opacity: 0.8; }
+
   /* ── lightbox ── */
   .v6-lb { position: fixed; inset: 0; z-index: 95; display: flex; align-items: center; justify-content: center; padding: clamp(12px, 3vw, 34px); }
   .v6-lb[hidden] { display: none; }
