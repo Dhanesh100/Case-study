@@ -5016,12 +5016,11 @@
         <p class="v5-tag">01<b>The trigger</b></p>
         <div class="v4-body">
           <h2 class="v5-title">The work started as a navigation fix.</h2>
-          <p class="v5-take">People open an insurance app a handful of times a year — a renewal, a document, a claim. When they do, this is where they land: <b>one of the highest-footfall sections in the app</b>. And from it, they could not reach a policy's details. The route ran through an expand-and-collapse that nothing marked as a way through.</p>
+          <p class="v5-take">Few visits a year, and almost all of them land here. The way into a policy <b>looked exactly like the expand-and-collapse beside it</b> — so people tapped the wrong one, repeatedly, before finding the right one.</p>
 
           <dl class="v4-evid">
             <div class="v4-ev"><dt>Dead clicks</dt>
-              <dd>Users <b>clicking the overview repeatedly</b>, because nothing marked the way in. New users
-                often gave up rather than work out where to click.</dd></div>
+              <dd>Taps landing on the <b>expand-and-collapse instead of the entry point</b>, over and over. New users often gave up before finding the difference.</dd></div>
             <div class="v4-ev"><dt>Support calls</dt>
               <dd>Users <b>needed assistance to reach policy details</b> — support had to talk them through it
                 on the call.</dd></div>
@@ -5029,9 +5028,47 @@
               <dd>The same confusion observed <b>with real users</b>, in person, during onboarding sessions.</dd></div>
           </dl>
 
-          <p class="sc-flow">
-            <b>Member chips</b><i>→</i><b>That member&rsquo;s portfolio</b><i>→</i><b>Policy card</b><i>→</i><b>Policy details</b>
-          </p>
+          <figure class="sc-fig">
+            <div class="sc-scroll">
+              <svg viewBox="0 0 840 252" role="img" aria-label="Before: from Portfolio, the overview row and the entry point into the policy listing looked identical, so taps landed repeatedly on the one that only expanded detail in place. After: a member chip gives profile switching its own affordance, so Portfolio leads to a member's policies and then the policy in one tap.">
+                <defs>
+                  <marker id="v6a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-3)" /></marker>
+                  <marker id="v6a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--signal)" /></marker>
+                  <marker id="v6a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)" /></marker>
+                </defs>
+                <text class="svg-name" x="14" y="20" fill="var(--signal)">BEFORE</text>
+                <rect class="svg-box" x="14" y="32" width="132" height="70" rx="8" />
+                <text class="svg-name" x="80" y="72" text-anchor="middle">PORTFOLIO</text>
+                <path class="svg-line" d="M150 67 L182 67" marker-end="url(#v6a1)" />
+                <rect class="svg-box" x="188" y="32" width="176" height="30" rx="7" />
+                <text class="svg-name" x="200" y="52">Overview row</text>
+                <rect class="svg-box" x="188" y="72" width="176" height="30" rx="7" />
+                <text class="svg-name" x="200" y="92">Entry point</text>
+                <text class="svg-edge" x="276" y="122" text-anchor="middle">identical styling — two different jobs</text>
+                <path class="svg-line-dead" d="M368 47 L446 47" marker-end="url(#v6a2)" />
+                <text class="svg-name" x="454" y="43" fill="var(--signal)">EXPANDS IN PLACE</text>
+                <text class="svg-sub" x="454" y="60" fill="var(--signal)">taps landed here, repeatedly</text>
+                <path class="svg-line" d="M368 87 L446 87" marker-end="url(#v6a1)" />
+                <rect class="svg-box" x="454" y="72" width="168" height="30" rx="7" />
+                <text class="svg-name" x="466" y="92">Policy listing</text>
+                <text class="svg-sub" x="632" y="92">the one they wanted</text>
+                <text class="svg-name-key" x="14" y="162">AFTER</text>
+                <rect class="svg-box-key" x="14" y="174" width="132" height="34" rx="8" />
+                <text class="svg-name-key" x="80" y="196" text-anchor="middle">PORTFOLIO</text>
+                <path class="svg-line-key" d="M150 191 L182 191" marker-end="url(#v6a3)" />
+                <rect class="svg-box-key" x="188" y="174" width="140" height="34" rx="8" />
+                <text class="svg-name-key" x="258" y="196" text-anchor="middle">MEMBER CHIP</text>
+                <path class="svg-line-key" d="M332 191 L364 191" marker-end="url(#v6a3)" />
+                <rect class="svg-box" x="370" y="174" width="156" height="34" rx="8" />
+                <text class="svg-name" x="448" y="196" text-anchor="middle">THEIR POLICIES</text>
+                <path class="svg-line-key" d="M530 191 L562 191" marker-end="url(#v6a3)" />
+                <rect class="svg-box" x="568" y="174" width="156" height="34" rx="8" />
+                <text class="svg-name" x="646" y="196" text-anchor="middle">POLICY DETAILS</text>
+                <text class="svg-edge" x="14" y="234">Switching profiles gets its own affordance, so disclosure keeps only the job it suits.</text>
+              </svg>
+            </div>
+          </figure>
+
 
           <div class="sc-shots">
             <div class="sc-shot wide"><div class="sc-frame" data-screen="family"></div><p class="sc-cap"><b>Step 1</b>Family, and a chip per member</p></div>
@@ -5645,12 +5682,11 @@
         <p class="v5-tag">01<b>The trigger</b></p>
         <div class="v4-body">
           <h2 class="v5-title">The work started as a navigation fix.</h2>
-          <p class="v5-take">People open an insurance app a handful of times a year — a renewal, a document, a claim. When they do, this is where they land: <b>one of the highest-footfall sections in the app</b>. And from it, they could not reach a policy's details. The route ran through an expand-and-collapse that nothing marked as a way through.</p>
+          <p class="v5-take">Few visits a year, and almost all of them land here. The way into a policy <b>looked exactly like the expand-and-collapse beside it</b> — so people tapped the wrong one, repeatedly, before finding the right one.</p>
 
           <dl class="v4-evid">
             <div class="v4-ev"><dt>Dead clicks</dt>
-              <dd>Users <b>clicking the overview repeatedly</b>, because nothing marked the way in. New users
-                often gave up rather than work out where to click.</dd></div>
+              <dd>Taps landing on the <b>expand-and-collapse instead of the entry point</b>, over and over. New users often gave up before finding the difference.</dd></div>
             <div class="v4-ev"><dt>Support calls</dt>
               <dd>Users <b>needed assistance to reach policy details</b> — support had to talk them through it
                 on the call.</dd></div>
@@ -5658,9 +5694,47 @@
               <dd>The same confusion observed <b>with real users</b>, in person, during onboarding sessions.</dd></div>
           </dl>
 
-          <p class="sc-flow">
-            <b>Member chips</b><i>→</i><b>That member&rsquo;s portfolio</b><i>→</i><b>Policy card</b><i>→</i><b>Policy details</b>
-          </p>
+          <figure class="sc-fig">
+            <div class="sc-scroll">
+              <svg viewBox="0 0 840 252" role="img" aria-label="Before: from Portfolio, the overview row and the entry point into the policy listing looked identical, so taps landed repeatedly on the one that only expanded detail in place. After: a member chip gives profile switching its own affordance, so Portfolio leads to a member's policies and then the policy in one tap.">
+                <defs>
+                  <marker id="v7a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-3)" /></marker>
+                  <marker id="v7a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--signal)" /></marker>
+                  <marker id="v7a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)" /></marker>
+                </defs>
+                <text class="svg-name" x="14" y="20" fill="var(--signal)">BEFORE</text>
+                <rect class="svg-box" x="14" y="32" width="132" height="70" rx="8" />
+                <text class="svg-name" x="80" y="72" text-anchor="middle">PORTFOLIO</text>
+                <path class="svg-line" d="M150 67 L182 67" marker-end="url(#v7a1)" />
+                <rect class="svg-box" x="188" y="32" width="176" height="30" rx="7" />
+                <text class="svg-name" x="200" y="52">Overview row</text>
+                <rect class="svg-box" x="188" y="72" width="176" height="30" rx="7" />
+                <text class="svg-name" x="200" y="92">Entry point</text>
+                <text class="svg-edge" x="276" y="122" text-anchor="middle">identical styling — two different jobs</text>
+                <path class="svg-line-dead" d="M368 47 L446 47" marker-end="url(#v7a2)" />
+                <text class="svg-name" x="454" y="43" fill="var(--signal)">EXPANDS IN PLACE</text>
+                <text class="svg-sub" x="454" y="60" fill="var(--signal)">taps landed here, repeatedly</text>
+                <path class="svg-line" d="M368 87 L446 87" marker-end="url(#v7a1)" />
+                <rect class="svg-box" x="454" y="72" width="168" height="30" rx="7" />
+                <text class="svg-name" x="466" y="92">Policy listing</text>
+                <text class="svg-sub" x="632" y="92">the one they wanted</text>
+                <text class="svg-name-key" x="14" y="162">AFTER</text>
+                <rect class="svg-box-key" x="14" y="174" width="132" height="34" rx="8" />
+                <text class="svg-name-key" x="80" y="196" text-anchor="middle">PORTFOLIO</text>
+                <path class="svg-line-key" d="M150 191 L182 191" marker-end="url(#v7a3)" />
+                <rect class="svg-box-key" x="188" y="174" width="140" height="34" rx="8" />
+                <text class="svg-name-key" x="258" y="196" text-anchor="middle">MEMBER CHIP</text>
+                <path class="svg-line-key" d="M332 191 L364 191" marker-end="url(#v7a3)" />
+                <rect class="svg-box" x="370" y="174" width="156" height="34" rx="8" />
+                <text class="svg-name" x="448" y="196" text-anchor="middle">THEIR POLICIES</text>
+                <path class="svg-line-key" d="M530 191 L562 191" marker-end="url(#v7a3)" />
+                <rect class="svg-box" x="568" y="174" width="156" height="34" rx="8" />
+                <text class="svg-name" x="646" y="196" text-anchor="middle">POLICY DETAILS</text>
+                <text class="svg-edge" x="14" y="234">Switching profiles gets its own affordance, so disclosure keeps only the job it suits.</text>
+              </svg>
+            </div>
+          </figure>
+
 
           <div class="sc-shots">
             <div class="sc-shot wide"><div class="sc-frame" data-screen="family"></div><p class="sc-cap"><b>Step 1</b>Family, and a chip per member</p></div>
@@ -5680,7 +5754,35 @@
         <div class="v5-body">
           <h2 class="v5-title">Fixing it opened a bigger opportunity, and I took it.</h2>
           <p class="v5-take">Fixing the route was the brief. <b>I proposed going further.</b> What I noticed while fixing it was the traffic — a user visits few times a year, and most of those visits arrive here. Three other parts of the product had collected data that never reached this screen, so connecting it would let Portfolio <b>advocate the rest of CoverSure</b> instead of only storing policies.</p>
-          <p class="sc-flow"><b>Add Policy</b><i>·</i><b>CoverRisk</b><i>·</i><b>Buy Policy</b><i>·</i><b>Family Management</b><i>·</i><b>KYP</b></p>
+          <figure class="sc-fig">
+            <div class="sc-scroll">
+              <svg viewBox="0 0 840 208" role="img" aria-label="Onboarding, CoverRisk and Know Your Policy had each collected data that stopped at its own boundary. Connected into Policy Portfolio, they produce one next step that fits the user. Nothing new was built.">
+                <defs>
+                  <marker id="v7b1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)" /></marker>
+                </defs>
+                <rect class="svg-box" x="14" y="14" width="212" height="42" rx="8" />
+                <text class="svg-name" x="28" y="34">ONBOARDING</text>
+                <text class="svg-sub" x="28" y="49">what they said they hold</text>
+                <rect class="svg-box" x="14" y="70" width="212" height="42" rx="8" />
+                <text class="svg-name" x="28" y="90">COVERRISK</text>
+                <text class="svg-sub" x="28" y="105">cover amount + premium</text>
+                <rect class="svg-box" x="14" y="126" width="212" height="42" rx="8" />
+                <text class="svg-name" x="28" y="146">KNOW YOUR POLICY</text>
+                <text class="svg-sub" x="28" y="161">a rating per policy</text>
+                <text class="svg-edge" x="120" y="192" text-anchor="middle" fill="var(--signal)">each stopped at its own boundary</text>
+                <path class="svg-line-key" d="M230 35 C 300 35, 330 80, 396 88" marker-end="url(#v7b1)" />
+                <path class="svg-line-key" d="M230 91 L396 91" marker-end="url(#v7b1)" />
+                <path class="svg-line-key" d="M230 147 C 300 147, 330 102, 396 94" marker-end="url(#v7b1)" />
+                <rect class="svg-box-key" x="404" y="62" width="186" height="58" rx="9" />
+                <text class="svg-name-key" x="497" y="86" text-anchor="middle">POLICY PORTFOLIO</text>
+                <text class="svg-sub" x="497" y="104" text-anchor="middle">where the visit lands</text>
+                <path class="svg-line-key" d="M594 91 L644 91" marker-end="url(#v7b1)" />
+                <text class="svg-name-key" x="652" y="87">THE NEXT STEP THAT FITS</text>
+                <text class="svg-sub" x="652" y="104">one primary, at most one secondary</text>
+              </svg>
+            </div>
+          </figure>
+<p class="sc-flow"><b>Add Policy</b><i>·</i><b>CoverRisk</b><i>·</i><b>Buy Policy</b><i>·</i><b>Family Management</b><i>·</i><b>KYP</b></p>
           <p class="v5-take" style="margin-top:18px">Five were named in the brief. The rule set ended up covering
             <b>seven</b> — Advisor Portfolio and Share Policy earned conditions too.</p>
           <p class="sc-rejected"><b>Rejected</b> A capability needs adoption → give it a banner on the busiest screen</p>
