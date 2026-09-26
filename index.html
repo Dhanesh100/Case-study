@@ -795,6 +795,108 @@
 
   .comp img { display: block; width: 100%; height: auto; }
 
+  
+  /* ══════════ V8 — five slides ══════════ */
+  .v8-deck { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+  .v8-slide {
+    min-height: 82vh;
+    display: flex;
+    align-items: center;
+    padding: 56px 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+
+  .v8-slide:first-child { border-top: none; padding-top: 30px; }
+  .v8-in { width: 100%; display: flex; flex-direction: column; gap: 18px; }
+
+  .v8-kicker {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0;
+    display: flex;
+    gap: 10px;
+  }
+
+  .v8-kicker b { color: var(--accent); font-weight: 500; }
+
+  .v8-claim {
+    font-family: var(--display);
+    font-size: clamp(30px, 4.6vw, 54px);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    margin: 0;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .v8-line {
+    font-size: clamp(16.5px, 1.8vw, 19px);
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 58ch;
+  }
+
+  .v8-vis { margin: 6px 0 0; }
+  .v8-vis .v8-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .v8-vis svg { display: block; width: 100%; min-width: 700px; height: auto; }
+
+  .v8-shots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 900px) { .v8-shots { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .v8-shots { grid-template-columns: minmax(0, 1fr); } }
+
+  .v8-shot { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+
+  .v8-shot .sc-frame {
+    width: 100%;
+    height: 340px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--ground-2);
+  }
+
+  .v8-shot .sc-frame img { display: block; width: 100%; height: auto; }
+  .v8-shot figcaption { font-size: 13px; line-height: 1.45; color: var(--ink-3); }
+  .v8-shot figcaption b { display: block; color: var(--ink); font-size: 14px; margin-bottom: 2px; }
+
+  .v8-chips { display: flex; flex-wrap: wrap; gap: 0; margin: 4px 0 0; border-top: 1px solid var(--rule); }
+  .v8-chips > div { flex: 1 1 210px; padding: 15px 20px 16px 0; display: flex; flex-direction: column; gap: 4px; }
+  .v8-chips dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+  .v8-chips dd { margin: 0; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+  .v8-chips.stat dt { font-family: var(--display); font-size: 40px; letter-spacing: -0.02em; color: var(--ink); text-transform: none; line-height: 1; }
+  .v8-chips.stat dd { font-size: 13.5px; color: var(--ink-3); }
+
+  .v8-tbl { overflow-x: auto; }
+  .v8-tbl table { border-collapse: collapse; width: 100%; min-width: 660px; font-size: 14.5px; }
+  .v8-tbl th {
+    text-align: left; font-family: var(--mono); font-size: 9px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 500;
+    padding: 0 14px 9px 0; border-bottom: 1px solid var(--rule);
+  }
+  .v8-tbl td { padding: 13px 14px 13px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.42; color: var(--ink-2); }
+  .v8-tbl td:first-child { color: var(--ink); }
+  .v8-tbl td b { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); display: block; margin-bottom: 3px; font-weight: 500; }
+  .v8-tbl tr.quiet td { background: var(--accent-soft); }
+
+  .v8-tiers { display: flex; flex-direction: column; gap: 10px; }
+  .v8-tier { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 20px; align-items: center; }
+  @media (max-width: 640px) { .v8-tier { grid-template-columns: minmax(0, 1fr); gap: 7px; } }
+  .v8-tier p { margin: 0; font-size: 13.5px; color: var(--ink-3); line-height: 1.35; }
+  .v8-tier p b { display: block; font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--ink); }
+  .v8-bar { display: flex; flex-wrap: wrap; gap: 7px; padding: 11px 13px; border-radius: 9px; }
+  .v8-bar span { font-family: var(--mono); font-size: 11.5px; color: var(--ink); }
+  .v8-b1 { background: var(--accent-soft); border: 1px solid var(--accent); }
+  .v8-b2 { background: var(--ground-2); border: 1px solid var(--rule); }
+  .v8-b3 { background: transparent; border: 1px dashed var(--rule); }
+
+  .v8-note { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 0; }
+
   /* ══════════ CHAINS / RULES ══════════ */
   .rule-line {
     display: flex;
@@ -2158,9 +2260,12 @@
 <div class="versions">
   <div class="versions-in" role="tablist" aria-label="Case study version">
     <span class="versions-label">Version</span>
-    <button class="vtab" role="tab" id="tab-v7" aria-controls="panel-v7" aria-selected="true">
-      <b>V7</b><i>reviewed · 21 Sep</i>
-    </button>
+    <button class="vtab" role="tab" id="tab-v8" aria-controls="panel-v8" aria-selected="true">
+        <b>V8</b><i>5 slides · 90 sec</i>
+      </button>
+      <button class="vtab" role="tab" id="tab-v7" aria-controls="panel-v7" aria-selected="false">
+        <b>V7</b><i>reviewed · 21 Sep</i>
+      </button>
     <button class="vtab" role="tab" id="tab-v6" aria-controls="panel-v6" aria-selected="false">
       <b>V6</b><i>engine + craft · 21 Sep</i>
     </button>
@@ -5650,6 +5755,270 @@
      claims only where they can be defended, the screens doing the
      proving. Ownership stated per decision rather than implied.
      ═══════════════════════════════════════════════════════════ -->
+<div role="tabpanel" id="panel-v8" aria-labelledby="tab-v8" tabindex="0">
+  <header class="v5-mast">
+    <div class="sc-wrap">
+      <div class="sc-kicker"><b>CoverSure</b><i>/</i><span>Policy Portfolio</span><i>/</i><span>Five slides</span></div>
+      <h1 class="v5-h1">Making Portfolio respond to the user <span class="thin">— not just display their policies.</span></h1>
+      <p class="v5-dek">People open an insurance app a handful of times a year — and almost all of those visits land here. <b>A banner spends every one of them on the same bet.</b></p>
+      <div class="v7-claim">
+        <p>I turn &ldquo;where do we put this feature?&rdquo; into &ldquo;when does it become useful?&rdquo; — and build the rule set that answers it. <span>Not an insurance problem. It is any screen where the business wants promotion and the user wants to finish a task.</span></p>
+      </div>
+      <p class="sc-honest">Five slides, each one claim and one visual. <b>See more</b> on any slide opens the reasoning behind it. Recently launched, so there is no usage data yet — slide 05 says what would prove it worked. Figures in the screens are illustrative placeholders.</p>
+    </div>
+  </header>
+
+  <div class="v8-deck">
+
+    <section class="v8-slide">
+      <div class="v8-in">
+        <p class="v8-kicker"><b>01</b>The defect</p>
+        <h2 class="v8-claim">Two controls looked identical. Only one was a way through.</h2>
+        <p class="v8-line">And it was on the screen that receives almost every visit this product gets.</p>
+        <div class="v8-vis"><div class="v8-scroll">
+          <svg viewBox="0 0 840 250" role="img" aria-label="Before: the overview row and the entry point into the policy listing were styled identically, so taps landed repeatedly on the one that only expanded detail in place. After: a member chip gives profile switching its own affordance, reaching the policy in one tap.">
+            <defs>
+              <marker id="v8a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-3)"/></marker>
+              <marker id="v8b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--signal)"/></marker>
+              <marker id="v8c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)"/></marker>
+            </defs>
+            <text class="svg-name" x="12" y="18" fill="var(--signal)">BEFORE</text>
+            <rect class="svg-box" x="12" y="30" width="128" height="70" rx="8"/>
+            <text class="svg-name" x="76" y="70" text-anchor="middle">PORTFOLIO</text>
+            <path class="svg-line" d="M144 65 L176 65" marker-end="url(#v8a)"/>
+            <rect class="svg-box" x="182" y="30" width="172" height="30" rx="7"/>
+            <text class="svg-name" x="194" y="50">Overview row</text>
+            <rect class="svg-box" x="182" y="70" width="172" height="30" rx="7"/>
+            <text class="svg-name" x="194" y="90">Entry point</text>
+            <text class="svg-edge" x="268" y="120" text-anchor="middle">identical styling — two different jobs</text>
+            <path class="svg-line-dead" d="M358 45 L436 45" marker-end="url(#v8b)"/>
+            <text class="svg-name" x="444" y="41" fill="var(--signal)">EXPANDS IN PLACE</text>
+            <text class="svg-sub" x="444" y="58" fill="var(--signal)">taps landed here, repeatedly</text>
+            <path class="svg-line" d="M358 85 L436 85" marker-end="url(#v8a)"/>
+            <rect class="svg-box" x="444" y="70" width="166" height="30" rx="7"/>
+            <text class="svg-name" x="456" y="90">Policy listing</text>
+            <text class="svg-sub" x="620" y="90">the one they wanted</text>
+            <text class="svg-name-key" x="12" y="160">AFTER</text>
+            <rect class="svg-box-key" x="12" y="172" width="128" height="34" rx="8"/>
+            <text class="svg-name-key" x="76" y="194" text-anchor="middle">PORTFOLIO</text>
+            <path class="svg-line-key" d="M144 189 L176 189" marker-end="url(#v8c)"/>
+            <rect class="svg-box-key" x="182" y="172" width="138" height="34" rx="8"/>
+            <text class="svg-name-key" x="251" y="194" text-anchor="middle">MEMBER CHIP</text>
+            <path class="svg-line-key" d="M324 189 L356 189" marker-end="url(#v8c)"/>
+            <rect class="svg-box" x="362" y="172" width="152" height="34" rx="8"/>
+            <text class="svg-name" x="438" y="194" text-anchor="middle">THEIR POLICIES</text>
+            <path class="svg-line-key" d="M518 189 L550 189" marker-end="url(#v8c)"/>
+            <rect class="svg-box" x="556" y="172" width="152" height="34" rx="8"/>
+            <text class="svg-name" x="632" y="194" text-anchor="middle">POLICY DETAILS</text>
+            <text class="svg-edge" x="12" y="234">Switching profiles gets its own affordance, so disclosure keeps only the job it suits.</text>
+          </svg>
+        </div></div>
+        <dl class="v8-chips">
+          <div><dt>Dead clicks</dt><dd>Taps landing on the expand-and-collapse instead of the entry point, over and over.</dd></div>
+          <div><dt>Support calls</dt><dd>Users needed help reaching policy details — support talked them through it on the call.</dd></div>
+          <div><dt>B2B onboarding</dt><dd>The same confusion, watched in person with real users.</dd></div>
+        </dl>
+        <p><button class="sc-more sub" type="button" data-open="v8-ov-1"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">What we found, and what actually changed</span></span></button></p>
+      </div>
+    </section>
+
+    <section class="v8-slide">
+      <div class="v8-in">
+        <p class="v8-kicker"><b>02</b>The opportunity</p>
+        <h2 class="v8-claim">The product already knew. This screen never asked.</h2>
+        <p class="v8-line">Onboarding, CoverRisk and Know Your Policy had each collected what was needed — and each stopped at its own boundary.</p>
+        <div class="v8-vis"><div class="v8-scroll">
+          <svg viewBox="0 0 840 206" role="img" aria-label="Onboarding, CoverRisk and Know Your Policy each collected data that stopped at its own boundary. Connected into Policy Portfolio they produce one next step that fits. Nothing new was built.">
+            <defs><marker id="v8d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)"/></marker></defs>
+            <rect class="svg-box" x="12" y="12" width="210" height="42" rx="8"/>
+            <text class="svg-name" x="26" y="32">ONBOARDING</text><text class="svg-sub" x="26" y="47">what they said they hold</text>
+            <rect class="svg-box" x="12" y="68" width="210" height="42" rx="8"/>
+            <text class="svg-name" x="26" y="88">COVERRISK</text><text class="svg-sub" x="26" y="103">cover amount + premium</text>
+            <rect class="svg-box" x="12" y="124" width="210" height="42" rx="8"/>
+            <text class="svg-name" x="26" y="144">KNOW YOUR POLICY</text><text class="svg-sub" x="26" y="159">a rating per policy</text>
+            <text class="svg-edge" x="117" y="190" text-anchor="middle" fill="var(--signal)">each stopped at its own boundary</text>
+            <path class="svg-line-key" d="M226 33 C 296 33, 326 78, 392 86" marker-end="url(#v8d)"/>
+            <path class="svg-line-key" d="M226 89 L392 89" marker-end="url(#v8d)"/>
+            <path class="svg-line-key" d="M226 145 C 296 145, 326 100, 392 92" marker-end="url(#v8d)"/>
+            <rect class="svg-box-key" x="400" y="60" width="184" height="58" rx="9"/>
+            <text class="svg-name-key" x="492" y="84" text-anchor="middle">POLICY PORTFOLIO</text>
+            <text class="svg-sub" x="492" y="102" text-anchor="middle">where the visit lands</text>
+            <path class="svg-line-key" d="M588 89 L638 89" marker-end="url(#v8d)"/>
+            <text class="svg-name-key" x="646" y="85">THE NEXT STEP THAT FITS</text>
+            <text class="svg-sub" x="646" y="102">one primary, at most one secondary</text>
+          </svg>
+        </div></div>
+        <dl class="v8-chips stat">
+          <div><dt>0</dt><dd>new features built</dd></div>
+          <div><dt>0</dt><dd>new data collected</dd></div>
+          <div><dt>3</dt><dd>existing systems connected</dd></div>
+        </dl>
+        <p><button class="sc-more sub" type="button" data-open="v8-ov-2"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">Why this screen, and why it was mine to propose</span></span></button></p>
+      </div>
+    </section>
+
+    <section class="v8-slide">
+      <div class="v8-in">
+        <p class="v8-kicker"><b>03</b>The rule set</p>
+        <h2 class="v8-claim">Each capability earned a condition, not a slot.</h2>
+        <p class="v8-line">Portfolio does not decide what to promote. It decides what fits.</p>
+        <div class="v8-vis v8-tbl">
+          <table>
+            <thead><tr><th>What we already know</th><th>Primary action</th><th>Secondary</th></tr></thead>
+            <tbody>
+              <tr><td><b>Onboarding</b>no policies · no CoverRisk</td><td>Take CoverRisk</td><td>Add a policy</td></tr>
+              <tr><td><b>Onboarding</b>they said they hold policies</td><td>Add your policies</td><td>—</td></tr>
+              <tr><td><b>Portfolio</b>has policies · no CoverRisk</td><td>Review saved policies</td><td>CoverRisk, as secondary</td></tr>
+              <tr><td><b>CoverRisk</b>report done · a gap is open</td><td>The gap, as an amount and a premium</td><td>KYP on each card</td></tr>
+              <tr><td><b>Policy data</b>endowment or employer cover only</td><td>Health and term life first</td><td>Add the policies we found</td></tr>
+              <tr class="quiet"><td><b>Nothing outstanding</b>covered · report done · family complete</td><td>The portfolio, and nothing else</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="v8-note">Six of ten scenarios — the last row is the one that proves the rule</p>
+        <p><button class="sc-more sub" type="button" data-open="v8-ov-3"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">The full rule set, and what happens when several fire at once</span></span></button></p>
+      </div>
+    </section>
+
+    <section class="v8-slide">
+      <div class="v8-in">
+        <p class="v8-kicker"><b>04</b>In practice</p>
+        <h2 class="v8-claim">Same layout, same features. Different conditions true.</h2>
+        <p class="v8-line">Nothing here is a promotional slot changing its creative.</p>
+        <div class="v8-vis v8-shots"><figure class="v8-shot"><div class="sc-frame" data-screen="none"></div><figcaption><b>Nothing yet</b>Understand the risk before asking them to buy</figcaption></figure><figure class="v8-shot"><div class="sc-frame" data-screen="group"></div><figcaption><b>Employer cover only</b>Premium reads &ldquo;&mdash;&rdquo; because they do not pay it</figcaption></figure><figure class="v8-shot"><div class="sc-frame" data-screen="pending"></div><figcaption><b>Needs attention</b>Renewals and inactive policies, named per member</figcaption></figure><figure class="v8-shot"><div class="sc-frame" data-screen="member"></div><figcaption><b>Established</b>Review leads; suggestions sit below, each with its reason</figcaption></figure></div>
+        <p><button class="sc-more sub" type="button" data-open="v8-ov-4"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">How the screen composes itself, state by state</span></span></button></p>
+      </div>
+    </section>
+
+    <section class="v8-slide">
+      <div class="v8-in">
+        <p class="v8-kicker"><b>05</b>The discipline</p>
+        <h2 class="v8-claim">A capability earns the primary slot only when there is nothing to review.</h2>
+        <p class="v8-line">Portfolio exists to review saved cover. Everything else is an offer, and offers wait.</p>
+        <div class="v8-vis">
+          <div class="v8-tiers">
+            <div class="v8-tier"><p><b>01 · Foundational</b>Always first</p><div class="v8-bar v8-b1"><span>Health</span><span>Term life</span></div></div>
+            <div class="v8-tier"><p><b>02 · Extends what exists</b>Once the base is there</p><div class="v8-bar v8-b2"><span>Super Top-Up</span><span>Critical Illness</span><span>Accident</span></div></div>
+            <div class="v8-tier"><p><b>03 · Situational</b>Only on a signal</p><div class="v8-bar v8-b3"><span>Hospicash</span><span>Home</span><span>Device</span></div></div>
+          </div>
+        </div>
+        <p class="v8-note">Relative priority in the recommendation order — not measured data</p>
+        <dl class="v8-chips">
+          <div><dt>User</dt><dd>Less noise, and a clearer next step.</dd></div>
+          <div><dt>Business</dt><dd>Capabilities discoverable through relevance, not repetition.</dd></div>
+          <div><dt>Product</dt><dd>One journey — Onboarding → Homepage → Portfolio → Policy Details.</dd></div>
+        </dl>
+        <p><button class="sc-more sub" type="button" data-open="v8-ov-5"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">The priority order, what I owned, and how this gets tested</span></span></button></p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="sc-close">
+    <div class="sc-wrap">
+      <p class="sc-close-line">The work was deciding who should see each capability, when, why, and what happens next — not where to put the button.</p>
+      <p class="sc-close-sub">Portfolio became an <b>advocate for the rest of the product</b> rather than a store of policies — and the screen <b>stays quiet when it has nothing useful to say.</b></p>
+      <p class="sc-foot"><span>CoverSure · Policy Portfolio</span><span>V8 · five slides</span></p>
+    </div>
+  </footer>
+</div>
+
+<div class="sc-ov" id="v8-ov-1" hidden role="dialog" aria-modal="true" aria-labelledby="v8-ov-1-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">The defect</span>
+      <h3 class="sc-ov-title" id="v8-ov-1-t">What we found, and what actually changed.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>The route existed. It just did not look like one.</h4>
+        <p class="sc-lede">Expand-and-collapse reveals detail in place. The entry point navigates. Rendered the same way, people triggered the wrong one and kept trying.</p>
+        <p>That is why the dead clicks are not taps on nothing — they are taps on <b>the wrong thing that looked like the right thing</b>.</p></div>
+      <div class="sc-sec"><h4>Three independent signals</h4>
+        <p>Dead clicks in the analytics, a recurring support script, and the same behaviour watched directly in B2B onboarding sessions. Three sources pointing at one step is what made it worth fixing rather than debating.</p></div>
+      <div class="sc-sec"><h4>The fix was an affordance, not a shortcut</h4>
+        <p>Member chips sit beside <b>Family</b> and give profile-switching its own control, so progressive disclosure keeps only the job it is good at — revealing detail in place.</p>
+        <p>This is the one decision in the project with evidence from before the redesign. Everything else is reasoned.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v8-ov-2" hidden role="dialog" aria-modal="true" aria-labelledby="v8-ov-2-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">The opportunity</span>
+      <h3 class="sc-ov-title" id="v8-ov-2-t">Why this screen, and why it was mine to propose.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>Brief, and initiative</h4>
+        <p class="sc-lede">Fixing the route was the brief. Connecting the rest was not.</p>
+        <p>What I noticed while fixing it was the traffic. People open an insurance app a handful of times a year — a renewal, a document, a claim — and almost all of those visits land here.</p></div>
+      <div class="sc-sec"><h4>Why a banner was the wrong instrument</h4>
+        <p>The business gets very few chances with each user, and nearly all of them arrive on one screen. <b>A banner is a fixed bet</b>: it spends every one of those scarce visits on the same pitch, whether or not it fits the person looking at it.</p>
+        <p>The alternative was already on the table — a capability needs adoption, so give it a banner on the busiest screen. That is what this replaced.</p></div>
+      <div class="sc-sec"><h4>Five named, seven covered</h4>
+        <p>The brief named five capabilities: Add Policy, CoverRisk, Buy Policy, Family Management and KYP. The rule set ended up covering seven, because Advisor Portfolio and Share Policy earned conditions too.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v8-ov-3" hidden role="dialog" aria-modal="true" aria-labelledby="v8-ov-3-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">The rule set</span>
+      <h3 class="sc-ov-title" id="v8-ov-3-t">The full rule set, and what happens when several fire.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>Ten scenarios, one rule set</h4>
+        <p class="sc-lede">Every row is a condition the product could already evaluate — a reading of existing data, not a new system.</p></div>
+      <div class="sc-sec"><h4>Why fit, and not reach</h4>
+        <p>We carry more products than any one person needs, and not every user is a right fit for each. Someone who told us in onboarding that they hold health cover should be asked to <b>add</b> that policy — not to buy what they already own.</p>
+        <p>A visit spent pitching something they have is a visit spent proving we were not listening.</p></div>
+      <div class="sc-sec"><h4>When several conditions are true</h4>
+        <p>Protection priority breaks the tie: foundational gaps outrank everything, and review outranks every offer once a policy exists. At most one primary and one secondary ever show.</p></div>
+      <div class="sc-sec"><h4>When none are true</h4>
+        <p>Nothing shows. Showing something anyway would undo the whole rule — and <b>not showing an irrelevant pitch is how the screen tells the user it understood them.</b></p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v8-ov-4" hidden role="dialog" aria-modal="true" aria-labelledby="v8-ov-4-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">In practice</span>
+      <h3 class="sc-ov-title" id="v8-ov-4-t">How the screen composes itself, state by state.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>Employer cover is not personal cover</h4>
+        <p class="sc-lede">A group health policy shows no yearly premium, because the user does not pay it — and the foundation still counts as missing. Showing a premium there would have been a lie of convenience.</p></div>
+      <div class="sc-sec"><h4>A lapsed policy is news, not noise</h4>
+        <p>Surfacing an inactive policy is a service that happens to also be a re-engagement trigger — the rare case where user and business interest genuinely coincide.</p></div>
+      <div class="sc-sec"><h4>An incomplete family overview is its own prompt</h4>
+        <p>When sync finds a member with nothing added, their empty card asks without a banner having to. One person usually manages insurance for a household, and a missing policy is a real gap in an emergency.</p></div>
+      <div class="sc-sec"><h4>Suggestions sit at the foot of the screen</h4>
+        <p>Not at the top, and each carries its reason — <i>hospital treatment in metro cities can cross &#8377;8&ndash;12L in one admission</i>. The screen&rsquo;s own job comes first.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v8-ov-5" hidden role="dialog" aria-modal="true" aria-labelledby="v8-ov-5-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">The discipline</span>
+      <h3 class="sc-ov-title" id="v8-ov-5-t">The priority order, what I owned, and how this gets tested.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>Why this order</h4>
+        <p class="sc-lede">For a working person, health and term life are the two that matter first — everything else extends or supplements them.</p>
+        <p>The order is a design decision held separately from CoverRisk: CoverRisk supplies the amount, it does not decide the sequence. It also stops the obvious failure — pushing a cheaper, easier product to someone whose foundation is still missing. <b>If there is no life cover, we do not pitch home insurance.</b></p></div>
+      <div class="sc-sec"><h4>What I owned</h4>
+        <p>The rule set and its priority order, connecting CoverRisk&rsquo;s numbers into the buying moment, the primary-versus-secondary rule, the Family Overview, the navigation fix, information hierarchy and UX writing.</p>
+        <p>The CoverRisk entry point and KYP-on-card came from Product and Team leadership.</p></div>
+      <div class="sc-sec"><h4>How we will know</h4>
+        <p>Recently launched, so there is no usage data yet. The measurement plan sets out what would disprove each claim — state transition rate as the headline, cover adequacy ratio as the business metric, and a named list of metrics that would mislead. Recommendation click-through is first on that list, because optimising it would revert the product to the banner strategy this replaced.</p></div>
+    </div>
+  </div>
+</div>
+
 <div role="tabpanel" id="panel-v7" aria-labelledby="tab-v7" tabindex="0">
   <header class="v5-mast">
     <div class="sc-wrap">
@@ -6377,8 +6746,8 @@
   (function () {
     'use strict';
 
-    var DEFAULT_VIEW = 'v7';
-    var VIEWS = ['v7', 'v6', 'v5', 'v4', 'scan', 'compact', 'full'];
+    var DEFAULT_VIEW = 'v8';
+    var VIEWS = ['v8', 'v7', 'v6', 'v5', 'v4', 'scan', 'compact', 'full'];
     var tabs = {}, panels = {};
 
     VIEWS.forEach(function (v) {
