@@ -5844,10 +5844,10 @@
       <section class="v5-sec">
         <p class="v5-tag">01<b>The trigger</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">A navigation issue exposed a bigger opportunity.</h2>
-          <p class="v5-take">The work started with a blind-click navigation issue. I fixed that route — but it exposed something larger: <b>Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery more relevant.</b></p>
+          <h2 class="v5-title">A dead-click issue exposed a bigger opportunity.</h2>
+          <p class="v5-take">The work started with a dead-click issue — taps that did nothing, leaving users stuck in a loop. I fixed that route. <b>But it exposed something larger: Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery far more relevant.</b></p>
           <dl class="v4-evid">
-            <div class="v4-ev"><dt>Blind clicks</dt><dd>Users tapping the wrong interaction to reach Policy Details.</dd></div>
+            <div class="v4-ev"><dt>Dead clicks</dt><dd>Taps that produced no result — users trying to reach Policy Details, stuck repeating the same one.</dd></div>
             <div class="v4-ev"><dt>Support</dt><dd>The route sometimes had to be explained on the call.</dd></div>
             <div class="v4-ev"><dt>B2B onboarding</dt><dd>The same confusion observed directly, with real users.</dd></div>
           </dl>
@@ -5859,7 +5859,7 @@
         <p class="v5-tag">02<b>The opportunity</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Portfolio already had the traffic. The rest of the product already had the context.</h2>
-          <p class="v5-take">CoverSure held information about policies, family, risk and user intent across different features. Portfolio was where users managed their policies — and <b>that context was not being used there.</b></p>
+          <p class="v5-take">CoverSure held information about policies, family, risk and user intent across different features. Portfolio was where users managed their policies — and <b>none of that context was being used there. I proposed connecting it.</b></p>
           <dl class="v4-evid">
             <div class="v4-ev"><dt>Existing data</dt><dd>User and policy context already existed.</dd></div>
             <div class="v4-ev"><dt>Existing capabilities</dt><dd>CoverRisk, KYP, family management and the buying journeys already existed.</dd></div>
@@ -5933,11 +5933,11 @@
         <p class="v5-tag">06<b>Prioritisation</b></p>
         <div class="v5-body">
           <h2 class="v5-title">The engine needed a product priority, not just personalisation.</h2>
-          <p class="v5-take">Knowing what a user needs is only half the problem. When several products could be relevant, the engine also needs to know <b>which protection category should come first</b>. This is the CoverSure recommendation hierarchy — a product principle, not a universal claim about insurance.</p>
+          <p class="v5-take">Knowing what a user needs is only half the problem. <b>I sorted every product by how much it matters in a person&rsquo;s life</b>, and the engine walks that ladder in order — it never skips a rung because the next product is easier to sell.</p>
           <div class="v8-tiers">
-            <div class="v8-tier"><p><b>01 · Foundational</b>Recommended first</p><div class="v8-bar v8-b1"><span>Health</span><span>Life</span></div></div>
-            <div class="v8-tier"><p><b>02 · Additional</b>Extends what exists</p><div class="v8-bar v8-b2"><span>Super Top-Up</span><span>Critical Illness</span><span>Accident</span></div></div>
-            <div class="v8-tier"><p><b>03 · Situational</b>Only on a signal</p><div class="v8-bar v8-b3"><span>Hospicash</span><span>Home</span><span>Device</span></div></div>
+            <div class="v8-tier"><p><b>01 · Must have</b>Both, before anything else</p><div class="v8-bar v8-b1"><span>Health</span><span>Term life</span></div></div>
+            <div class="v8-tier"><p><b>02 · Extends cover</b>Only once both of the above exist</p><div class="v8-bar v8-b2"><span>Super Top-Up</span><span>Critical Illness</span></div></div>
+            <div class="v8-tier"><p><b>03 · Situational</b>Only on a signal</p><div class="v8-bar v8-b3"><span>Personal Accident</span><span>Hospicash</span><span>Home</span><span>Device</span></div></div>
           </div>
           <p class="v8-note">Relative priority in the recommendation order — not measured data</p>
           <p class="sc-notice"><strong>CoverRisk answers how much cover may be needed. The recommendation engine decides what should come next.</strong></p>
@@ -5949,7 +5949,7 @@
         <p class="v5-tag">07<b>Family</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Family gaps became recommendation signals.</h2>
-          <p class="v5-take">Family data is not just a display layer. <b>It changes what the engine knows about the household</b> — and household completeness affects every recommendation that follows.</p>
+          <p class="v5-take">Family data was a display layer. <b>I made it a signal</b> — household completeness changes what the engine knows, and therefore every recommendation that follows.</p>
           <p class="sc-flow"><b>Who is covered</b><i>→</i><b>Who is missing</b><i>→</i><b>Add their policy</b><i>→</i><b>Better context next time</b></p>
           <dl class="v5-branch">
             <div class="v5-br key"><dt>Member found, no policy</dt><dd><b>Primary: Add their policy</b>Secondary: Add member. The missing policy is already visible in context.</dd></div>
@@ -5977,7 +5977,7 @@
         <p class="v5-tag">09<b>Restraint</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Contextual does not mean everything, everywhere.</h2>
-          <p class="v5-take">A recommendation engine can easily become a targeted banner system. <b>The primary job of Portfolio remains policy management, so recommendations stay subordinate to it.</b></p>
+          <p class="v5-take">A recommendation engine easily becomes a targeted banner system. <b>I made recommendations subordinate to the screen&rsquo;s own job</b> — Portfolio is for managing policies, and an offer never outranks that.</p>
           <dl class="v4-evid">
             <div class="v4-ev"><dt>Advisor Portfolio</dt><dd>Not a permanent Portfolio entry point. Homepage already provides the route; it appears after a CoverRisk report, when the user has a specific protection context to discuss.</dd></div>
             <div class="v4-ev"><dt>Share Policy</dt><dd>Not a generic Portfolio CTA. It appears in Life and Group policy context, where nominee information makes the action relevant.</dd></div>
@@ -5992,7 +5992,7 @@
         <p class="v5-tag">10<b>Components</b></p>
         <div class="v5-body">
           <h2 class="v5-title">The engine only works if every state has a clear UI response.</h2>
-          <p class="v5-take">Recommendation logic is only useful when its output can be understood at a glance. <b>The quality of a recommendation system is often decided by the states that are not the happy path.</b></p>
+          <p class="v5-take">Logic is only useful if its output reads at a glance. <b>I designed a response for every state the engine can produce</b>, including the ones nobody screenshots — which is where the quality of a recommendation system is actually decided.</p>
           <div class="v8-tbl">
             <table>
               <thead><tr><th>State</th><th>How it resolves</th></tr></thead>
@@ -6113,7 +6113,8 @@
         <p>Users arrive with different combinations of policies, CoverRisk status, family data and onboarding answers. The Portfolio state is composed from whatever is true at that moment.</p>
         <p>When multiple conditions fire, recommendation priority breaks the tie. The engine surfaces a primary action and, where useful, one secondary action.</p></div>
       <div class="sc-sec"><h4>The two remaining rules</h4>
-        <p><b>Health only</b> &rarr; Super Top-Up, to extend existing health protection. <b>Life only</b> &rarr; Critical Illness, which addresses a different protection gap rather than duplicating one.</p></div>
+        <p><b>Health only</b> &rarr; term life. The foundation is not complete until both exist, so the engine finishes it before extending anything. <b>Term life only</b> &rarr; health, for the same reason.</p>
+        <p>Super Top-Up and Critical Illness only become the next step <b>once health and term are both in place</b>. The ladder does not skip a rung because the next product is easier to sell.</p></div>
       <div class="sc-sec"><h4>The constraint that matters most</h4>
         <p>When nothing is relevant, nothing new is promoted. Portfolio stays focused on policy management.</p>
         <p>Without this constraint, a contextual engine becomes a better-targeted banner stack. <b>The recommendation layer only adds value if it protects the primary job of the screen.</b></p>
@@ -6168,7 +6169,7 @@
       <div class="sc-sec"><h4>Separation of concerns</h4>
         <p class="sc-lede">CoverRisk provides the risk assessment, recommended coverage amount and estimated premium. <b>It does not decide the product sequence.</b></p></div>
       <div class="sc-sec"><h4>Who set it</h4>
-        <p>I defined the recommendation tiering with the product team, using our product and insurance-domain principles. Foundational protection comes before products that extend or supplement it; situational products appear only when the user&rsquo;s context creates a reason.</p>
+        <p>I defined the recommendation tiering with the product team, using our product and insurance-domain principles. <b>Health and term life are the must-haves</b>; until a user holds both, the engine recommends the missing one rather than anything that extends cover. Super Top-Up and Critical Illness come next. Personal Accident, Hospicash and the situational products appear only when the user&rsquo;s context creates a reason.</p>
         <p><b>This prevents the engine from ranking a product higher simply because it is easier to promote or cheaper to buy.</b></p></div>
       <div class="sc-sec"><h4>Employer and endowment cover</h4>
         <p>Both can exist in a user&rsquo;s portfolio without providing the same role as personal foundational protection. The engine therefore treats the underlying <b>protection state</b> separately from the presence of any <b>policy record</b>.</p></div>

@@ -31,11 +31,11 @@ The work was not adding more features to Portfolio. It was building the system t
 
 ## 01 · The trigger
 
-**Title** — A navigation issue exposed a bigger opportunity.
+**Title** — A dead-click issue exposed a bigger opportunity.
 
-**Lead** — The work started with a blind-click navigation issue. I fixed that route — but it exposed something larger: Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery more relevant.
+**Lead** — The work started with a dead-click issue — taps that did nothing, leaving users stuck in a loop. I fixed that route. But it exposed something larger: Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery far more relevant.
 
-- **Blind clicks** — Users tapping the wrong interaction to reach Policy Details.
+- **Dead clicks** — Taps that produced no result — users trying to reach Policy Details, stuck repeating the same one.
 - **Support** — The route sometimes had to be explained on the call.
 - **B2B onboarding** — The same confusion observed directly, with real users.
 
@@ -63,7 +63,7 @@ I fixed the navigation defect. The contextual recommendation work was the larger
 
 **Title** — Portfolio already had the traffic. The rest of the product already had the context.
 
-**Lead** — CoverSure held information about policies, family, risk and user intent across different features. Portfolio was where users managed their policies — and that context was not being used there.
+**Lead** — CoverSure held information about policies, family, risk and user intent across different features. Portfolio was where users managed their policies — and none of that context was being used there. I proposed connecting it.
 
 - **Existing data** — User and policy context already existed.
 - **Existing capabilities** — CoverRisk, KYP, family management and the buying journeys already existed.
@@ -126,7 +126,9 @@ When multiple conditions fire, recommendation priority breaks the tie. The engin
 
 **The two remaining rules**
 
-Health only → Super Top-Up, to extend existing health protection. Life only → Critical Illness, which addresses a different protection gap rather than duplicating one.
+Health only → term life. The foundation is not complete until both exist, so the engine finishes it before extending anything. Term life only → health, for the same reason.
+
+Super Top-Up and Critical Illness only become the next step once health and term are both in place. The ladder does not skip a rung because the next product is easier to sell.
 
 **The constraint that matters most**
 
@@ -199,7 +201,11 @@ I did not add another assessment. I carried existing intelligence into the next 
 
 **Title** — The engine needed a product priority, not just personalisation.
 
-**Lead** — Knowing what a user needs is only half the problem. When several products could be relevant, the engine also needs to know which protection category should come first. This is the CoverSure recommendation hierarchy — a product principle, not a universal claim about insurance.
+**Lead** — Knowing what a user needs is only half the problem. I sorted every product by how much it matters in a person’s life, and the engine walks that ladder in order — it never skips a rung because the next product is easier to sell.
+
+- **01 · Must have** (Both, before anything else) — Health, Term life
+- **02 · Extends cover** (Only once both of the above exist) — Super Top-Up, Critical Illness
+- **03 · Situational** (Only on a signal) — Personal Accident, Hospicash, Home, Device
 
 **Note** — CoverRisk answers how much cover may be needed. The recommendation engine decides what should come next.
 
@@ -213,7 +219,7 @@ CoverRisk provides the risk assessment, recommended coverage amount and estimate
 
 **Who set it**
 
-I defined the recommendation tiering with the product team, using our product and insurance-domain principles. Foundational protection comes before products that extend or supplement it; situational products appear only when the user’s context creates a reason.
+I defined the recommendation tiering with the product team, using our product and insurance-domain principles. Health and term life are the must-haves; until a user holds both, the engine recommends the missing one rather than anything that extends cover. Super Top-Up and Critical Illness come next. Personal Accident, Hospicash and the situational products appear only when the user’s context creates a reason.
 
 This prevents the engine from ranking a product higher simply because it is easier to promote or cheaper to buy.
 
@@ -231,7 +237,7 @@ The recommendation engine needed both context and a stable product hierarchy. Co
 
 **Title** — Family gaps became recommendation signals.
 
-**Lead** — Family data is not just a display layer. It changes what the engine knows about the household — and household completeness affects every recommendation that follows.
+**Lead** — Family data was a display layer. I made it a signal — household completeness changes what the engine knows, and therefore every recommendation that follows.
 
 **Flow** — Who is covered→Who is missing→Add their policy→Better context next time
 
@@ -289,7 +295,7 @@ The rating is not a new recommendation. It is existing policy intelligence conne
 
 **Title** — Contextual does not mean everything, everywhere.
 
-**Lead** — A recommendation engine can easily become a targeted banner system. The primary job of Portfolio remains policy management, so recommendations stay subordinate to it.
+**Lead** — A recommendation engine easily becomes a targeted banner system. I made recommendations subordinate to the screen’s own job — Portfolio is for managing policies, and an offer never outranks that.
 
 - **Advisor Portfolio** — Not a permanent Portfolio entry point. Homepage already provides the route; it appears after a CoverRisk report, when the user has a specific protection context to discuss.
 - **Share Policy** — Not a generic Portfolio CTA. It appears in Life and Group policy context, where nominee information makes the action relevant.
@@ -323,7 +329,7 @@ The PRO subscription banner on this screen carries over from the previous design
 
 **Title** — The engine only works if every state has a clear UI response.
 
-**Lead** — Recommendation logic is only useful when its output can be understood at a glance. The quality of a recommendation system is often decided by the states that are not the happy path.
+**Lead** — Logic is only useful if its output reads at a glance. I designed a response for every state the engine can produce, including the ones nobody screenshots — which is where the quality of a recommendation system is actually decided.
 
 | State | How it resolves |
 |---|---|
