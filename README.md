@@ -10,7 +10,8 @@ HTML file: no build step, no dependencies, no external requests.
 | # | Document | Read it | Source |
 |---|---|---|---|
 | 1 | **CoverSure Policy Portfolio** — case study, three versions | [Scan](https://dhanesh100.github.io/Case-study/#scan) · [Compact](https://dhanesh100.github.io/Case-study/#compact) · [Full study](https://dhanesh100.github.io/Case-study/#full) | [`index.html`](index.html) |
-| 1a | **Scan version, standalone** — the same thing as one sendable file | [Read](https://dhanesh100.github.io/Case-study/scan/) | [`scan/`](scan/) |
+| 1a | **Copy document (V9)** — every word on the page, surface and See more | — | [`COPY-V9.md`](COPY-V9.md) |
+| 1b | **Scan version, standalone** — the same thing as one sendable file | [Read](https://dhanesh100.github.io/Case-study/scan/) | [`scan/`](scan/) |
 | 2 | **Portfolio Measurement Plan** — how to test whether the strategy works | [Read](https://dhanesh100.github.io/Case-study/measurement/) | [`measurement/`](measurement/) |
 | 3 | **Tiimo teardown** — competitive product design analysis | [Read](https://dhanesh100.github.io/Case-study/tiimo-teardown/) | [`tiimo-teardown/`](tiimo-teardown/) |
 | 4 | **Teardown analysis brief** — the reusable prompt behind #3 | — | [`ANALYSIS-BRIEF.md`](tiimo-teardown/ANALYSIS-BRIEF.md) |
