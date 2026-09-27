@@ -796,6 +796,41 @@
   .comp img { display: block; width: 100%; height: auto; }
 
   
+
+  /* ══════════ V9 — one-screen summary ══════════ */
+  .v9-sum {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 24px 26px;
+    margin: 0 0 26px;
+  }
+
+  .v9-sum-k {
+    font-family: var(--display);
+    font-size: clamp(19px, 2.2vw, 25px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+
+  .v9-sum-l { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 0; border-top: 1px solid var(--rule-soft); }
+  .v9-sum-l > div { padding: 15px 20px 16px 0; border-right: 1px solid var(--rule-soft); display: flex; flex-direction: column; gap: 5px; }
+  .v9-sum-l > div:last-child { border-right: none; padding-right: 0; }
+  .v9-sum-l dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--accent); }
+  .v9-sum-l dd { margin: 0; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+
+  @media (max-width: 760px) {
+    .v9-sum-l { grid-template-columns: minmax(0, 1fr); }
+    .v9-sum-l > div { border-right: none; border-bottom: 1px solid var(--rule-soft); padding-right: 0; }
+    .v9-sum-l > div:last-child { border-bottom: none; }
+  }
+
+  .v9-sum-f { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--rule-soft); font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
+  .v9-sum-f b { color: var(--ink); }
+
   /* ══════════ V8 — five slides ══════════ */
   .v8-deck { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
 
@@ -5757,23 +5792,49 @@
      claims only where they can be defended, the screens doing the
      proving. Ownership stated per decision rather than implied.
      ═══════════════════════════════════════════════════════════ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div role="tabpanel" id="panel-v9" aria-labelledby="tab-v9" tabindex="0">
   <header class="v5-mast">
     <div class="sc-wrap">
       <div class="sc-kicker"><b>CoverSure</b><span aria-hidden="true">/</span><span>Policy Portfolio</span>
-        <span aria-hidden="true">/</span><span>Product design</span></div>
-      <h1 class="v5-h1">I built a contextual recommendation engine <span class="thin">inside the screen people actually visit.</span></h1>
-      <p class="v5-dek">Portfolio receives almost every visit an insurance app gets. The rest of the product — CoverRisk, Know Your Policy, family management, seven products — was invisible from it. <b>The engine connects them, using data we already had.</b></p>
-      <div class="v7-claim">
-        <p>I turn &ldquo;where do we put this feature?&rdquo; into &ldquo;when does it become useful?&rdquo; — and build the rule set that answers it. <span>Not an insurance problem. It is any screen where the business wants promotion and the user wants to finish a task.</span></p>
-      </div>
+        <span aria-hidden="true">/</span><span>Contextual recommendation engine</span></div>
+      <h1 class="v5-h1">Making Portfolio respond to the user <span class="thin">— not just display their policies.</span></h1>
+      <p class="v5-dek">I built a contextual recommendation engine that uses information CoverSure already has about a user to surface <b>the most relevant feature, product or next action</b> inside Portfolio. The Portfolio&rsquo;s core job stayed the same; the new layer made it connected to the rest of the product.</p>
       <p class="v4-meta" style="margin-bottom:26px">
         <b>Product Designer</b><span aria-hidden="true">·</span><span>Post-MVP</span>
-        <span aria-hidden="true">·</span><span>UX strategy · Recommendation logic · Interaction design</span>
+        <span aria-hidden="true">·</span><span>Policy Portfolio</span>
         <span class="on">Shipped</span></p>
-      <p class="sc-honest">Recently launched, so there is <b>no usage data yet</b> — §08 states what changed, not what it achieved. Figures in the screens are illustrative placeholders from the design files.</p>
-      <p class="sc-howto"><span>Eight sections · ~3 min</span><span aria-hidden="true">·</span>
-        <span>Titles carry the argument · <b>See more</b> opens the reasoning behind any one</span></p>
+
+      <div class="v9-sum">
+        <p class="v9-sum-k">One Portfolio. Many user states. One contextual recommendation layer.</p>
+        <dl class="v9-sum-l">
+          <div><dt>01 — Existing product context</dt><dd>Onboarding, policies, family data, CoverRisk, sync and KYP already contain useful signals.</dd></div>
+          <div><dt>02 — Recommendation engine</dt><dd>Conditions and priority rules turn those signals into the next relevant action.</dd></div>
+          <div><dt>03 — Connected experience</dt><dd>Portfolio becomes a gateway back into the right CoverSure feature or product — without changing its primary job.</dd></div>
+        </dl>
+        <p class="v9-sum-f">The work was not adding more features to Portfolio. <b>It was building the system that makes the features we already had work together.</b></p>
+      </div>
+
+      <p class="sc-honest">Recently launched, so <b>quantitative results are not yet available</b> — §11 states what changed, not what it achieved. Coverage figures and priority bars in the screens are <b>illustrative design placeholders</b>, not customer data or measured values.</p>
+      <p class="sc-howto"><span>Twelve sections · ~4 min</span><span aria-hidden="true">·</span>
+        <span>Titles carry the argument · each <b>See</b> link opens the reasoning behind one</span></p>
     </div>
   </header>
 
@@ -5781,184 +5842,211 @@
     <div class="v5-secs">
 
       <section class="v5-sec">
-        <p class="v5-tag">01<b>What I built</b></p>
+        <p class="v5-tag">01<b>The trigger</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">A recommendation engine, built from scratch, inside an existing screen.</h2>
-          <p class="v5-take">It reads what the product already knows about a person and surfaces the one capability that applies to them. <b>No features were built for it and no new data was collected</b> — the intelligence existed, scattered across the app.</p>
-          <dl class="v8-chips stat">
-            <div><dt>0</dt><dd>features built for this</dd></div>
-            <div><dt>0</dt><dd>new data collected</dd></div>
-            <div><dt>7</dt><dd>capabilities routed through it</dd></div>
+          <h2 class="v5-title">A navigation issue exposed a bigger opportunity.</h2>
+          <p class="v5-take">The work started with a blind-click navigation issue. I fixed that route — but it exposed something larger: <b>Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery more relevant.</b></p>
+          <dl class="v4-evid">
+            <div class="v4-ev"><dt>Blind clicks</dt><dd>Users tapping the wrong interaction to reach Policy Details.</dd></div>
+            <div class="v4-ev"><dt>Support</dt><dd>The route sometimes had to be explained on the call.</dd></div>
+            <div class="v4-ev"><dt>B2B onboarding</dt><dd>The same confusion observed directly, with real users.</dd></div>
           </dl>
-          <p class="sc-notice"><strong>What was left alone:</strong> the architecture. Family overview &rarr; policy listing &rarr; policy details is the same as it always was, and so is the job — store your cover, see the household, open any one of it.</p>
-          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-1"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">What was built from scratch, and what was only fixed</span></span></button></p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-1"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the evidence</span></span></button></p>
         </div>
       </section>
 
       <section class="v5-sec">
-        <p class="v5-tag">02<b>Why this screen</b></p>
+        <p class="v5-tag">02<b>The opportunity</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Portfolio gets almost every visit. The rest of the product was invisible from it.</h2>
-          <p class="v5-take">People open an insurance app a handful of times a year — a renewal, a document, a claim. <b>Nearly all of those visits land here, and each one is a single chance.</b> Meanwhile three other parts of the product held everything needed to make that visit useful, and none of it reached this screen.</p>
-          <figure class="sc-fig">
-            <div class="sc-scroll">
-              <svg viewBox="0 0 840 206" role="img" aria-label="Onboarding, CoverRisk and Know Your Policy each collected data that stopped at its own boundary. Connected into Policy Portfolio they produce one next step that fits.">
-                <defs><marker id="v9a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)"/></marker></defs>
-                <rect class="svg-box" x="12" y="12" width="210" height="42" rx="8"/>
-                <text class="svg-name" x="26" y="32">ONBOARDING</text><text class="svg-sub" x="26" y="47">what they said they hold</text>
-                <rect class="svg-box" x="12" y="68" width="210" height="42" rx="8"/>
-                <text class="svg-name" x="26" y="88">COVERRISK</text><text class="svg-sub" x="26" y="103">cover amount + premium</text>
-                <rect class="svg-box" x="12" y="124" width="210" height="42" rx="8"/>
-                <text class="svg-name" x="26" y="144">KNOW YOUR POLICY</text><text class="svg-sub" x="26" y="159">a rating per policy</text>
-                <text class="svg-edge" x="117" y="190" text-anchor="middle" fill="var(--signal)">each stopped at its own boundary</text>
-                <path class="svg-line-key" d="M226 33 C 296 33, 326 78, 392 86" marker-end="url(#v9a)"/>
-                <path class="svg-line-key" d="M226 89 L392 89" marker-end="url(#v9a)"/>
-                <path class="svg-line-key" d="M226 145 C 296 145, 326 100, 392 92" marker-end="url(#v9a)"/>
-                <rect class="svg-box-key" x="400" y="60" width="184" height="58" rx="9"/>
-                <text class="svg-name-key" x="492" y="84" text-anchor="middle">THE ENGINE</text>
-                <text class="svg-sub" x="492" y="102" text-anchor="middle">inside Policy Portfolio</text>
-                <path class="svg-line-key" d="M588 89 L638 89" marker-end="url(#v9a)"/>
-                <text class="svg-name-key" x="646" y="85">ONE THING THAT FITS</text>
-                <text class="svg-sub" x="646" y="102">one primary, at most one secondary</text>
-              </svg>
-            </div>
-          </figure>
-          <p class="sc-rejected"><b>Rejected</b> A capability needs adoption &rarr; give it a banner on the busiest screen</p>
-          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-2"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">Why a banner was the wrong instrument, not the wrong idea</span></span></button></p>
+          <h2 class="v5-title">Portfolio already had the traffic. The rest of the product already had the context.</h2>
+          <p class="v5-take">CoverSure held information about policies, family, risk and user intent across different features. Portfolio was where users managed their policies — and <b>that context was not being used there.</b></p>
+          <dl class="v4-evid">
+            <div class="v4-ev"><dt>Existing data</dt><dd>User and policy context already existed.</dd></div>
+            <div class="v4-ev"><dt>Existing capabilities</dt><dd>CoverRisk, KYP, family management and the buying journeys already existed.</dd></div>
+            <div class="v4-ev"><dt>Missing layer</dt><dd>No contextual system decided what should appear for this user, at this moment.</dd></div>
+          </dl>
+          <p class="sc-notice">The opportunity was not to build another feature. <strong>It was to build the layer that connects what already existed.</strong></p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-2"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See why Portfolio</span></span></button></p>
         </div>
       </section>
 
       <section class="v5-sec">
-        <p class="v5-tag">03<b>What it reads</b></p>
+        <p class="v5-tag">03<b>The engine</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Five signals the product had already collected.</h2>
-          <p class="v5-take">None of them new. Each one stopped at the boundary of the feature that gathered it.</p>
+          <h2 class="v5-title">I built a contextual recommendation engine, not a banner system.</h2>
+          <p class="v5-take">The engine maps existing user context to the most relevant feature or product action. <b>The recommendation engine is new; the intelligence it uses already existed.</b></p>
+          <p class="sc-flow"><b>User context</b><i>→</i><b>Conditions</b><i>→</i><b>Priority</b><i>→</i><b>Action</b><i>→</i><b>New context</b></p>
           <div class="v8-tbl">
             <table>
-              <thead><tr><th>Signal</th><th>What it knows</th><th>Where it used to stop</th></tr></thead>
+              <thead><tr><th>Context</th><th>Primary</th><th>Secondary</th><th>Reason</th></tr></thead>
               <tbody>
-                <tr><td><b>Onboarding</b></td><td>Whether they hold cover, and which types</td><td>Signup</td></tr>
-                <tr><td><b>CoverRisk</b></td><td>Recommended amount, estimated premium, risk band</td><td>Its own report</td></tr>
-                <tr><td><b>Policy data</b></td><td>What they actually hold — and what is missing</td><td>A list, with no reading of it</td></tr>
-                <tr><td><b>Family data</b></td><td>Who is covered, who is not, what sync found</td><td>A separate section</td></tr>
-                <tr><td><b>Know Your Policy</b></td><td>How good each policy they own actually is</td><td>Its own tab</td></tr>
+                <tr><td><b>Onboarding</b>holds policies</td><td>Add existing policies</td><td>—</td><td>Complete the record before recommending something already owned.</td></tr>
+                <tr><td><b>No policies</b>no CoverRisk</td><td>Start CoverRisk</td><td>Add a policy</td><td>Understand protection position before buying.</td></tr>
+                <tr><td><b>No policies</b>CoverRisk complete</td><td>Recommended Health / Life cover</td><td>—</td><td>Use the quantified CoverRisk output.</td></tr>
+                <tr><td><b>Policies</b>no CoverRisk</td><td>Review saved policies</td><td>CoverRisk</td><td>Management stays primary once something exists to manage.</td></tr>
+                <tr><td><b>CoverRisk complete</b>gap open</td><td>Recommended gap, amount and premium</td><td>KYP</td><td>Turn existing risk intelligence into an actionable decision.</td></tr>
+                <tr><td><b>Employer or endowment only</b></td><td>Foundational Health + Life</td><td>Add detected policies</td><td>Separate policy presence from foundational protection state.</td></tr>
+                <tr><td><b>Family member found</b>no policy</td><td>Add their policy</td><td>Add member</td><td>The missing policy is already visible in context.</td></tr>
+                <tr class="quiet"><td><b>Nothing relevant</b></td><td>Nothing is promoted</td><td>—</td><td>Portfolio stays focused on policy management.</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="sc-notice">Every section of the app knew something and shared none of it. <strong>Connected, they read the same user state</strong> — which is what makes the app behave like one product rather than a set of separate tools.</p>
-          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-3"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">What each signal makes possible that was not possible before</span></span></button></p>
+          <p class="sc-notice">Eight of ten rules shown. <strong>The last one is the constraint that keeps the engine from becoming a better-targeted banner stack.</strong></p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-3"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the rule set</span></span></button></p>
         </div>
       </section>
 
       <section class="v5-sec">
-        <p class="v5-tag">04<b>How it decides</b></p>
+        <p class="v5-tag">04<b>Experience</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Ten conditions. One primary action, at most one secondary.</h2>
-          <p class="v5-take">The screen decides what <b>fits</b>, not what to promote. We carry more products than any one person needs — and a visit spent pitching something they already own is a visit spent proving we were not listening.</p>
-          <div class="v8-tbl">
-            <table>
-              <thead><tr><th>What we already know</th><th>Primary action</th><th>Secondary</th></tr></thead>
-              <tbody>
-                <tr><td><b>Onboarding</b>no policies · no CoverRisk</td><td>Take CoverRisk</td><td>Add a policy</td></tr>
-                <tr><td><b>Onboarding</b>they said they hold policies</td><td>Add your policies</td><td>—</td></tr>
-                <tr><td><b>Portfolio</b>has policies · no CoverRisk</td><td>Review saved policies</td><td>CoverRisk, as secondary</td></tr>
-                <tr><td><b>CoverRisk</b>report done · a gap is open</td><td>The gap, as an amount and a premium</td><td>KYP on each card</td></tr>
-                <tr><td><b>Policy data</b>employer or endowment cover only</td><td>Health and term life first</td><td>Add the policies we found</td></tr>
-                <tr><td><b>Family sync</b>found a member with nothing added</td><td>Add their policy, on their own card</td><td>Add member</td></tr>
-                <tr class="quiet"><td><b>Nothing outstanding</b>covered · report done · family complete</td><td>The portfolio, and nothing else</td><td>—</td></tr>
-              </tbody>
-            </table>
+          <h2 class="v5-title">Same Portfolio. Different next step.</h2>
+          <p class="v5-take">The layout stays consistent. <b>The recommendation state changes based on what the engine knows.</b></p>
+          <div class="sc-shots">
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="none"></div><p class="sc-cap"><b>No policies</b>CoverRisk leads — nothing to review yet</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="group"></div><p class="sc-cap"><b>Employer cover only</b>Foundational protection is still missing</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="pending"></div><p class="sc-cap"><b>Pending attention</b>Renewals and inactive policies surface first</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Policies added</b>Review leads; recommendations move below</p></div>
           </div>
-          <p class="sc-notice">Seven of ten scenarios. <strong>The last row is the one that proves the rule.</strong></p>
-          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-4"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">The full rule set, and what happens when several conditions fire at once</span></span></button></p>
+          <p class="sc-notice">Personalisation happens <strong>through state</strong>, not through a different screen for every user.</p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-4"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the states</span></span></button></p>
         </div>
       </section>
 
       <section class="v5-sec">
-        <p class="v5-tag">05<b>What comes first</b></p>
+        <p class="v5-tag">05<b>Personalisation</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Health and term life come first. Always.</h2>
-          <p class="v5-take">For a working person those are the two that matter; everything else extends or supplements them. <b>CoverRisk supplies the amount — it does not decide the order.</b> That is a separate design decision, and it holds whatever the report returns.</p>
+          <h2 class="v5-title">CoverRisk intelligence moved into the buying moment.</h2>
+          <p class="v5-take">CoverRisk already calculated a recommended coverage amount and estimated premium. <b>I connected that intelligence to the Portfolio buying moment</b> — I did not add another assessment.</p>
+          <div class="ba">
+            <div class="ba-col"><span class="ba-tag">Before</span>
+              <div class="ba-card dead"><b>Buy Life Insurance</b><p>Secure your family&rsquo;s future today.</p><p style="color:var(--signal)">No amount, no cost, nothing specific to the person reading it.</p></div></div>
+            <div class="ba-col"><span class="ba-tag">After</span>
+              <div class="ba-card live"><b>You may need &#8377;80,00,000 additional life cover</b><p>From your CoverRisk report — based on dependants, income, expenses, lifestyle and existing cover.</p>
+                <div class="ba-figs"><div><em>Recommended cover</em><i>&#8377;80L</i></div><div><em>Est. premium / yr</em><i>&#8377;11,800</i></div></div></div></div>
+          </div>
+          <p class="v8-note">Figures shown are illustrative design placeholders, not customer data</p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-5"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the connection</span></span></button></p>
+        </div>
+      </section>
+
+      <section class="v5-sec">
+        <p class="v5-tag">06<b>Prioritisation</b></p>
+        <div class="v5-body">
+          <h2 class="v5-title">The engine needed a product priority, not just personalisation.</h2>
+          <p class="v5-take">Knowing what a user needs is only half the problem. When several products could be relevant, the engine also needs to know <b>which protection category should come first</b>. This is the CoverSure recommendation hierarchy — a product principle, not a universal claim about insurance.</p>
           <div class="v8-tiers">
-            <div class="v8-tier"><p><b>01 · Foundational</b>Always first</p><div class="v8-bar v8-b1"><span>Health</span><span>Term life</span></div></div>
-            <div class="v8-tier"><p><b>02 · Extends what exists</b>Once the base is there</p><div class="v8-bar v8-b2"><span>Super Top-Up</span><span>Critical Illness</span><span>Accident</span></div></div>
+            <div class="v8-tier"><p><b>01 · Foundational</b>Recommended first</p><div class="v8-bar v8-b1"><span>Health</span><span>Life</span></div></div>
+            <div class="v8-tier"><p><b>02 · Additional</b>Extends what exists</p><div class="v8-bar v8-b2"><span>Super Top-Up</span><span>Critical Illness</span><span>Accident</span></div></div>
             <div class="v8-tier"><p><b>03 · Situational</b>Only on a signal</p><div class="v8-bar v8-b3"><span>Hospicash</span><span>Home</span><span>Device</span></div></div>
           </div>
           <p class="v8-note">Relative priority in the recommendation order — not measured data</p>
-          <p class="sc-rejected"><b>Never</b> No foundational cover &rarr; pitch home insurance</p>
-          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-5"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">Who set this order, and why employer cover does not count toward it</span></span></button></p>
+          <p class="sc-notice"><strong>CoverRisk answers how much cover may be needed. The recommendation engine decides what should come next.</strong></p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-6"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the ranking logic</span></span></button></p>
         </div>
       </section>
 
       <section class="v5-sec">
-        <p class="v5-tag">06<b>When it says nothing</b></p>
+        <p class="v5-tag">07<b>Family</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">When nothing fits, the screen shows nothing.</h2>
-          <p class="v5-take">Portfolio exists to review saved cover. Everything else is an offer, and offers wait — which is what stops an exploration layer eating the screen it lives on.</p>
+          <h2 class="v5-title">Family gaps became recommendation signals.</h2>
+          <p class="v5-take">Family data is not just a display layer. <b>It changes what the engine knows about the household</b> — and household completeness affects every recommendation that follows.</p>
+          <p class="sc-flow"><b>Who is covered</b><i>→</i><b>Who is missing</b><i>→</i><b>Add their policy</b><i>→</i><b>Better context next time</b></p>
           <dl class="v5-branch">
-            <div class="v5-br key"><dt>Nothing saved yet</dt>
-              <dd><b>The engine leads</b>There is no cover to review, so understanding the risk is the most useful thing the screen can do.</dd></div>
-            <div class="v5-br"><dt>Policies already saved</dt>
-              <dd><b>Review leads, offers sit below</b>The user came to check what they hold. The offer stays available and stops competing.</dd></div>
+            <div class="v5-br key"><dt>Member found, no policy</dt><dd><b>Primary: Add their policy</b>Secondary: Add member. The missing policy is already visible in context.</dd></div>
+            <div class="v5-br"><dt>No member found</dt><dd><b>Primary: Add family member</b>Household context is what later recommendations depend on.</dd></div>
           </dl>
-          <p class="sc-notice"><strong>Not showing an irrelevant pitch is how the screen tells the user it understood them.</strong> That is the part a banner can never do, however well targeted.</p>
-          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-6"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">The failure mode this prevents, and the hierarchy rule behind it</span></span></button></p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-7"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the family states</span></span></button></p>
         </div>
       </section>
 
       <section class="v5-sec">
-        <p class="v5-tag">07<b>What it connected</b></p>
+        <p class="v5-tag">08<b>Policy understanding</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Seven capabilities now reach the user through one screen.</h2>
-          <p class="v5-take">Same layout, same feature set. What differs is which conditions are true — and two capabilities were deliberately given no Portfolio entry point at all.</p>
+          <h2 class="v5-title">KYP became part of the policy context.</h2>
+          <p class="v5-take">Know Your Policy already assessed policy quality and conditions. <b>I connected that existing intelligence to the place where users scan their policies</b> — so the route into the feature becomes owning a policy, not finding a separate section.</p>
           <div class="sc-shots">
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="none"></div><p class="sc-cap"><b>Nothing yet</b>Understand the risk before asking them to buy</p></div>
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="group"></div><p class="sc-cap"><b>Employer cover only</b>Premium reads &ldquo;&mdash;&rdquo; because they do not pay it</p></div>
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="pending"></div><p class="sc-cap"><b>Needs attention</b>Renewals and lapses, named per member</p></div>
-            <div class="sc-shot wide"><div class="sc-frame" data-screen="member"></div><p class="sc-cap"><b>Established</b>Review leads; suggestions sit below with their reasons</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="kyp"></div><p class="sc-cap"><b>The scale</b>GREAT / GOOD / AVERAGE / POOR, with condition counts</p></div>
+            <div class="sc-shot wide"><div class="sc-frame" data-screen="life"></div><p class="sc-cap"><b>On the policy</b>Know Your Policy, a tab beside Details</p></div>
           </div>
-          <div class="v8-tbl" style="margin-top:22px">
-            <table>
-              <thead><tr><th>Capability</th><th>Reaches the user when</th></tr></thead>
-              <tbody>
-                <tr><td><b>Add Policy</b></td><td>Always — it is the screen's own job</td></tr>
-                <tr><td><b>Family Management</b></td><td>A member or their policy is missing</td></tr>
-                <tr><td><b>CoverRisk</b></td><td>No risk report exists yet</td></tr>
-                <tr><td><b>Buy Policy</b></td><td>A report exists and a protection gap is open</td></tr>
-                <tr><td><b>Know Your Policy</b></td><td>Always — on every policy owned</td></tr>
-                <tr class="quiet"><td><b>Share Policy</b></td><td>Life or Group, where a nominee relationship already exists</td></tr>
-                <tr class="quiet"><td><b>Advisor Portfolio</b></td><td>After the CoverRisk report — no Portfolio entry point of its own</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="sc-notice">The last two rows are the restraint. <strong>Declining to place a feature is harder to argue for than placing one.</strong></p>
-          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-7"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">The two entry points I declined, and what they competed with</span></span></button></p>
+          <p class="sc-notice">The rating is not a new recommendation. <strong>It is existing policy intelligence connected to the policy itself.</strong></p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-8"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the component logic</span></span></button></p>
         </div>
       </section>
 
       <section class="v5-sec">
-        <p class="v5-tag">08<b>What changed, and what was mine</b></p>
+        <p class="v5-tag">09<b>Restraint</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">The engine was mine. The problem set was the product head's.</h2>
-          <p class="v5-take">Recently launched, so this is what changed — <b>not what it achieved.</b></p>
+          <h2 class="v5-title">Contextual does not mean everything, everywhere.</h2>
+          <p class="v5-take">A recommendation engine can easily become a targeted banner system. <b>The primary job of Portfolio remains policy management, so recommendations stay subordinate to it.</b></p>
+          <dl class="v4-evid">
+            <div class="v4-ev"><dt>Advisor Portfolio</dt><dd>Not a permanent Portfolio entry point. Homepage already provides the route; it appears after a CoverRisk report, when the user has a specific protection context to discuss.</dd></div>
+            <div class="v4-ev"><dt>Share Policy</dt><dd>Not a generic Portfolio CTA. It appears in Life and Group policy context, where nominee information makes the action relevant.</dd></div>
+            <div class="v4-ev"><dt>Buy suggestions</dt><dd>Below policy content, so users see their own cover before recommendations.</dd></div>
+          </dl>
+          <p class="sc-notice"><strong>Good recommendation design is partly knowing what not to show.</strong></p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-9"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See what was excluded</span></span></button></p>
+        </div>
+      </section>
+
+      <section class="v5-sec">
+        <p class="v5-tag">10<b>Components</b></p>
+        <div class="v5-body">
+          <h2 class="v5-title">The engine only works if every state has a clear UI response.</h2>
+          <p class="v5-take">Recommendation logic is only useful when its output can be understood at a glance. <b>The quality of a recommendation system is often decided by the states that are not the happy path.</b></p>
           <div class="v8-tbl">
             <table>
-              <thead><tr><th>Decision</th><th>Originated by</th></tr></thead>
+              <thead><tr><th>State</th><th>How it resolves</th></tr></thead>
               <tbody>
-                <tr><td>The recommendation engine and its rule set</td><td>Me</td></tr>
-                <tr><td>Recommendation order and protection tiering</td><td>Me, with the product team for domain judgement</td></tr>
-                <tr><td>Connecting CoverRisk's numbers into Portfolio</td><td>Me</td></tr>
-                <tr><td>The rule that offers sit below the policies</td><td>Me</td></tr>
-                <tr><td>Declining the Advisor entry point</td><td>Me</td></tr>
-                <tr><td>Family Overview as a prompt rather than a CTA</td><td>Me</td></tr>
-                <tr><td>Navigation fix, and the design-system rebuild</td><td>Me</td></tr>
-                <tr><td>The problem set that started the work</td><td>Product head</td></tr>
-                <tr><td>CoverRisk entry point, and KYP on the policy card</td><td>Product and Team leadership</td></tr>
+                <tr><td><b>Employer cover only</b></td><td>No yearly premium shown — the user does not pay it</td></tr>
+                <tr><td><b>Rating unavailable</b></td><td>Coming-soon band, so missing KYP data never looks like a poor rating</td></tr>
+                <tr><td><b>Member without policy</b></td><td>Prompt sits on that member's own card, so the action has context</td></tr>
+                <tr><td><b>Lapsed policy</b></td><td>Surfaced as something needing attention rather than hidden</td></tr>
+                <tr><td><b>Renewal due</b></td><td>Review report, or pay without review — the user makes an informed choice</td></tr>
               </tbody>
             </table>
           </div>
-          <p class="sc-notice">The <a href="measurement/">measurement plan</a> sets out what would disprove each claim on this page, and what gets measured once data matures.</p>
-          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-8"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See more</span><span class="sc-more-t">What changed in the product, and how this gets tested</span></span></button></p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-10"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the edge cases</span></span></button></p>
+        </div>
+      </section>
+
+      <section class="v5-sec">
+        <p class="v5-tag">11<b>What changed</b></p>
+        <div class="v5-body">
+          <h2 class="v5-title">What changed in the product.</h2>
+          <p class="v5-take">The recommendation engine changed how existing capabilities connect to Portfolio. <b>Quantitative impact should be added only once enough usage data is available.</b></p>
+          <div class="v8-tbl">
+            <table>
+              <thead><tr><th></th><th>What changed</th></tr></thead>
+              <tbody>
+                <tr><td><b>User experience</b></td><td>Contextual actions replaced competing promotional entry points</td></tr>
+                <tr><td><b>Product</b></td><td>Portfolio can now read relevant onboarding, policy, family and CoverRisk context</td></tr>
+                <tr><td><b>Business</b></td><td>Existing capabilities gained contextual entry points instead of relying on blanket promotion. More exploration of those capabilities is the <i>intended</i> effect, not a measured one.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="sc-notice">Recently launched. <strong>Quantitative results are not yet available</strong> — the <a href="measurement/">measurement plan</a> sets out what would prove, or disprove, each claim above.</p>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-11"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the measurement plan</span></span></button></p>
+        </div>
+      </section>
+
+      <section class="v5-sec">
+        <p class="v5-tag">12<b>My role</b></p>
+        <div class="v5-body">
+          <h2 class="v5-title">I built the system behind what appears, when and why.</h2>
+          <p class="v5-take">The core contribution was not placing more CTAs. <b>It was designing the contextual recommendation system that decides which capability should appear for which user state.</b></p>
+          <div class="v8-tbl">
+            <table>
+              <thead><tr><th>I built</th><th>I connected</th><th>I worked with Product on</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td>The recommendation engine · condition and rule-set design · recommendation priority and protection tiering · primary versus secondary action logic · Family Overview proposal and interaction · information hierarchy · progressive disclosure · interaction design · UX writing · the navigation fix</td>
+                  <td>Existing CoverRisk intelligence into the Portfolio buying moment · KYP assessment onto the policy card · onboarding, policy, family and sync data into one readable state</td>
+                  <td>Product and insurance-domain judgement · final recommendation priorities · the existing CoverRisk and KYP capabilities themselves</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-12"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See what I owned</span></span></button></p>
         </div>
       </section>
 
@@ -5967,9 +6055,9 @@
 
   <footer class="sc-close">
     <div class="sc-wrap">
-      <p class="sc-close-line">The work was deciding who should see each capability, when, why, and what happens next — not where to put the button.</p>
-      <p class="sc-close-sub">Portfolio became an <b>advocate for the rest of the product</b> rather than a store of policies — and the screen <b>stays quiet when it has nothing useful to say.</b></p>
-      <p class="sc-foot"><span>CoverSure · Policy Portfolio</span><span>V9 · the engine</span></p>
+      <p class="sc-close-line">Portfolio became the connection layer for the rest of CoverSure.</p>
+      <p class="sc-close-sub">The core Portfolio job stayed the same: manage the policies you already have. <b>I did not rebuild Portfolio — I built the system that makes the rest of CoverSure more relevant inside it.</b> From policy management to the next useful action.</p>
+      <p class="sc-foot"><span>CoverSure · Policy Portfolio</span><span>V9 · contextual recommendation engine</span></p>
     </div>
   </footer>
 </div>
@@ -5977,20 +6065,18 @@
 <div class="sc-ov" id="v9-ov-1" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-1-t">
   <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
   <div class="sc-ov-panel">
-    <div class="sc-ov-head"><div><span class="sc-skill">What I built</span>
-      <h3 class="sc-ov-title" id="v9-ov-1-t">What was built from scratch, and what was only fixed.</h3></div>
+    <div class="sc-ov-head"><div><span class="sc-skill">The trigger</span>
+      <h3 class="sc-ov-title" id="v9-ov-1-t">Where the confusion actually was.</h3></div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
-      <div class="sc-sec"><h4>Built from scratch</h4>
-        <p class="sc-lede">The contextual recommendation engine. Its signals, its conditions, its priority order, and the rule that decides what takes the primary slot.</p>
-        <p>That is the substance of this project. Ten conditions, evaluated against data the product already held, resolving to one primary action and at most one secondary.</p></div>
-      <div class="sc-sec"><h4>Left alone</h4>
-        <p>The architecture. Family overview &rarr; policy listing &rarr; policy details, and the job of storing cover and checking it. That structure worked; changing it was never the point.</p></div>
-      <div class="sc-sec"><h4>Rebuilt, but not redesigned</h4>
-        <p>The section was rebuilt against a new design system, so the surface changed while the structure did not.</p>
-        <p>One navigation defect was fixed along the way: the entry point into a policy and the expand-and-collapse beside it were styled identically, so taps landed repeatedly on the control that only revealed detail in place. Member chips gave profile-switching its own affordance. <b>That was a fix, not the work</b> — it is here because it is the only part of the project with evidence from before the change.</p></div>
-      <div class="sc-sec"><h4>Not built</h4>
-        <p>No features were created for this. CoverRisk, Know Your Policy, family management and the products themselves all existed. The engine is a reading of them.</p></div>
+      <div class="sc-sec"><h4>The route existed. It did not look like one.</h4>
+        <p class="sc-lede">The route to Policy Details was there, but the interaction beside it looked like the route. Expand/collapse revealed information in place; it did not communicate navigation.</p></div>
+      <div class="sc-sec"><h4>Three signals pointed at the same step</h4>
+        <p>Dead clicks, support calls, and B2B onboarding observations. Three independent sources naming one interaction is what made it worth fixing rather than debating.</p></div>
+      <div class="sc-sec"><h4>The fix was deliberately narrow</h4>
+        <p>Separate the navigation job from the expand/collapse job. <b>The Portfolio architecture did not change.</b> Member-level navigation became explicit, while expand/collapse stayed responsible for revealing information in place.</p></div>
+      <div class="sc-sec"><h4>Why it is here at all</h4>
+        <p>I fixed the navigation defect. <b>The contextual recommendation work was the larger product opportunity that came next</b> — and it is the rest of this case study.</p></div>
     </div>
   </div>
 </div>
@@ -5998,18 +6084,18 @@
 <div class="sc-ov" id="v9-ov-2" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-2-t">
   <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
   <div class="sc-ov-panel">
-    <div class="sc-ov-head"><div><span class="sc-skill">Why this screen</span>
-      <h3 class="sc-ov-title" id="v9-ov-2-t">Why a banner was the wrong instrument, not the wrong idea.</h3></div>
+    <div class="sc-ov-head"><div><span class="sc-skill">The opportunity</span>
+      <h3 class="sc-ov-title" id="v9-ov-2-t">Why Portfolio became the connection point.</h3></div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
-      <div class="sc-sec"><h4>The disagreement was never about whether to promote</h4>
-        <p class="sc-lede">The goal was more exploration of the connected features, not less. The only question was method: show everything to everyone, or map what we already know about each person and surface the one thing that applies.</p></div>
-      <div class="sc-sec"><h4>Why blanket promotion is the expensive option</h4>
-        <p>A banner is a fixed bet. It spends every one of a user's few annual visits on the same pitch, whether or not it fits.</p>
-        <p>We carry more products than any one person needs, and most of them do not relate to any given user. So the wrong pitch loses twice: <b>it wastes a scarce visit, and it costs the screen its own job at the same time.</b></p></div>
-      <div class="sc-sec"><h4>What made this screen worth it</h4>
-        <p>For active users Portfolio is one of the highest-footfall sections in the app. Combined with how rarely an insurance app is opened at all, that makes it the one place where a recommendation reliably reaches someone.</p>
-        <p>It is the best place in the product to surface anything else — and therefore the worst place to waste.</p></div>
+      <div class="sc-sec"><h4>Where it sits</h4>
+        <p class="sc-lede">Portfolio sits between several parts of the product: Onboarding &rarr; Homepage &rarr; Portfolio &rarr; Policy Details.</p>
+        <p><b>Onboarding</b> knows what the user says they already have. <b>Policy data</b> shows what is actually stored. <b>CoverRisk</b> describes protection needs. <b>Family data</b> shows household completeness. <b>KYP</b> explains policy quality.</p></div>
+      <div class="sc-sec"><h4>What I proposed</h4>
+        <p>Keep Portfolio&rsquo;s existing architecture and primary job, then add a contextual recommendation layer on top.</p>
+        <p>The layer reads existing context, evaluates conditions, prioritises competing opportunities, surfaces the most useful action, then reads the new state after the user acts.</p></div>
+      <div class="sc-sec"><h4>Why this surface</h4>
+        <p>Portfolio became the connection point <b>not because it needed more content, but because it already had the right context and the user&rsquo;s attention.</b></p></div>
     </div>
   </div>
 </div>
@@ -6017,22 +6103,21 @@
 <div class="sc-ov" id="v9-ov-3" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-3-t">
   <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
   <div class="sc-ov-panel">
-    <div class="sc-ov-head"><div><span class="sc-skill">What it reads</span>
-      <h3 class="sc-ov-title" id="v9-ov-3-t">What each signal makes possible.</h3></div>
+    <div class="sc-ov-head"><div><span class="sc-skill">The engine</span>
+      <h3 class="sc-ov-title" id="v9-ov-3-t">How the recommendation engine decides what appears.</h3></div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
-      <div class="sc-sec"><h4>Onboarding</h4>
-        <p class="sc-lede">Someone who told us at signup that they hold health cover should be asked to <b>add</b> that policy — not to buy what they already own.</p>
-        <p>Without this signal, the screen greets an existing customer as a stranger.</p></div>
-      <div class="sc-sec"><h4>CoverRisk</h4>
-        <p>It already collected age, dependants, income, expenses, health, lifestyle, assets and liabilities, and produced a recommended cover amount, an estimated premium and a risk band. All of it stayed inside its own report.</p>
-        <p>Moving the number to where the decision happens is the difference between <i>Buy Life Insurance</i> and <i>you may need ₹80,00,000 more cover, at roughly ₹11,800 a year.</i></p></div>
-      <div class="sc-sec"><h4>Policy data</h4>
-        <p>Not just a list — a reading of it. Health but no life is a foundational gap. Employer cover only is no personal cover at all. An endowment is a savings product, not protection.</p></div>
-      <div class="sc-sec"><h4>Family data</h4>
-        <p>One person usually manages insurance for a household. Sync sometimes finds a member before the user mentions them, and an empty card for that member is a more honest prompt than any banner.</p></div>
-      <div class="sc-sec"><h4>Know Your Policy</h4>
-        <p>Quality, not just quantity. A policy with a room-rent cap is worth less than its sum insured suggests, and the engine can weigh what someone holds rather than only counting it.</p></div>
+      <div class="sc-sec"><h4>Every rule has three parts</h4>
+        <p class="sc-lede"><b>Condition</b> — something the product already knows. <b>Priority</b> — what should win if several conditions are true. <b>Action</b> — the single most useful next step for that state.</p></div>
+      <div class="sc-sec"><h4>State is composed, not picked</h4>
+        <p>Users arrive with different combinations of policies, CoverRisk status, family data and onboarding answers. The Portfolio state is composed from whatever is true at that moment.</p>
+        <p>When multiple conditions fire, recommendation priority breaks the tie. The engine surfaces a primary action and, where useful, one secondary action.</p></div>
+      <div class="sc-sec"><h4>The two remaining rules</h4>
+        <p><b>Health only</b> &rarr; Super Top-Up, to extend existing health protection. <b>Life only</b> &rarr; Critical Illness, which addresses a different protection gap rather than duplicating one.</p></div>
+      <div class="sc-sec"><h4>The constraint that matters most</h4>
+        <p>When nothing is relevant, nothing new is promoted. Portfolio stays focused on policy management.</p>
+        <p>Without this constraint, a contextual engine becomes a better-targeted banner stack. <b>The recommendation layer only adds value if it protects the primary job of the screen.</b></p>
+        <p>The engine is not deciding what CoverSure can sell. It is deciding what is relevant to this user now.</p></div>
     </div>
   </div>
 </div>
@@ -6040,21 +6125,16 @@
 <div class="sc-ov" id="v9-ov-4" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-4-t">
   <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
   <div class="sc-ov-panel">
-    <div class="sc-ov-head"><div><span class="sc-skill">How it decides</span>
-      <h3 class="sc-ov-title" id="v9-ov-4-t">The full rule set, and what happens when several fire.</h3></div>
+    <div class="sc-ov-head"><div><span class="sc-skill">Experience</span>
+      <h3 class="sc-ov-title" id="v9-ov-4-t">Why the same layout changes without becoming a different screen.</h3></div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
-      <div class="sc-sec"><h4>How a rule gets written</h4>
-        <p class="sc-lede">Each rule names a condition the product could already evaluate, the action that follows, and the reason. No rule is allowed without the third part.</p></div>
-      <div class="sc-sec"><h4>The three remaining scenarios</h4>
-        <p><b>No policies, CoverRisk done</b> &rarr; buy health, then term life, with the amount and premium attached. The report already names it; showing it here removes the reason people abandon the journey.</p>
-        <p><b>Holds health only</b> &rarr; the foundation is still incomplete, so term life comes before anything that extends health.</p>
-        <p><b>No member added, none found</b> &rarr; add a family member, as a primary card after the user's own overview. Family completeness improves every recommendation that follows.</p></div>
-      <div class="sc-sec"><h4>When several are true at once</h4>
-        <p>Two rules break the tie. <b>Protection priority</b> — a foundational gap outranks everything below it. <b>Review outranks offers</b> — once a policy exists, reviewing it is the screen's job and the offer drops to secondary.</p>
-        <p>At most one primary and one secondary ever show. There is no third slot to fill.</p></div>
-      <div class="sc-sec"><h4>When none are true</h4>
-        <p>Nothing shows. Showing something anyway would undo the whole rule.</p></div>
+      <div class="sc-sec"><h4>The engine changes the state, not the architecture</h4>
+        <p class="sc-lede">The user still sees family context, their policies, policy details and relevant actions. What changes is which condition is true — and therefore which action is worth surfacing.</p></div>
+      <div class="sc-sec"><h4>Worked examples</h4>
+        <p><b>No policies</b> &rarr; CoverRisk leads. <b>Policies saved</b> &rarr; review leads and recommendations move below. <b>Inactive policy</b> &rarr; review becomes relevant. <b>Family member missing a policy</b> &rarr; that member&rsquo;s card becomes the prompt. <b>CoverRisk complete with a gap open</b> &rarr; the gap becomes actionable.</p></div>
+      <div class="sc-sec"><h4>The principle</h4>
+        <p><b>Personalisation happens through state, not through a different screen for every user.</b> One layout, many conditions — which is also what makes it maintainable.</p></div>
     </div>
   </div>
 </div>
@@ -6062,19 +6142,18 @@
 <div class="sc-ov" id="v9-ov-5" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-5-t">
   <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
   <div class="sc-ov-panel">
-    <div class="sc-ov-head"><div><span class="sc-skill">What comes first</span>
-      <h3 class="sc-ov-title" id="v9-ov-5-t">Who set this order, and why employer cover does not count.</h3></div>
+    <div class="sc-ov-head"><div><span class="sc-skill">Personalisation</span>
+      <h3 class="sc-ov-title" id="v9-ov-5-t">What the engine reuses from CoverRisk.</h3></div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
-      <div class="sc-sec"><h4>The principle underneath it</h4>
-        <p class="sc-lede">Protection before accumulation, and breadth before depth. Health and term life cover the two events that would actually break a household's finances.</p></div>
-      <div class="sc-sec"><h4>Who decided</h4>
-        <p>I set the order, working through it with the product team for domain judgement. It is deliberately held separate from CoverRisk: <b>CoverRisk supplies the amount, the order decides the sequence.</b> Keeping them apart means the sequence holds whatever the report returns.</p></div>
-      <div class="sc-sec"><h4>Employer and endowment cover, specifically</h4>
-        <p>Group health from an employer ends when the job does, and the user does not pay the premium — which is why Premium Yearly reads an em dash on that state rather than a number. An endowment is a savings product wearing an insurance label.</p>
-        <p>Neither counts toward the foundation, so for a user holding only those, the order restarts at the bottom.</p></div>
-      <div class="sc-sec"><h4>The rule I would not break</h4>
-        <p>No foundational cover, no pitch for anything situational. Selling home or device cover to someone with no health or life protection is an easier sale and the wrong outcome.</p></div>
+      <div class="sc-sec"><h4>What CoverRisk already held</h4>
+        <p class="sc-lede">Age, location, family, dependants, health, lifestyle, income, investments, property and expenses — everything needed to make the recommendation specific.</p>
+        <p><b>The recommendation layer did not ask the user for any of it again.</b></p></div>
+      <div class="sc-sec"><h4>The chain</h4>
+        <p>CoverRisk report &rarr; recommended coverage &rarr; estimated premium &rarr; relevant buying action.</p></div>
+      <div class="sc-sec"><h4>The product decision underneath</h4>
+        <p>The key decision was <b>where the intelligence should continue</b>. The report should not become the end of the journey when the next decision still depends on it.</p>
+        <p>I did not add another assessment. I carried existing intelligence into the next decision.</p></div>
     </div>
   </div>
 </div>
@@ -6082,19 +6161,19 @@
 <div class="sc-ov" id="v9-ov-6" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-6-t">
   <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
   <div class="sc-ov-panel">
-    <div class="sc-ov-head"><div><span class="sc-skill">When it says nothing</span>
-      <h3 class="sc-ov-title" id="v9-ov-6-t">The failure mode this prevents.</h3></div>
+    <div class="sc-ov-head"><div><span class="sc-skill">Prioritisation</span>
+      <h3 class="sc-ov-title" id="v9-ov-6-t">Who decided the order, and why it sits outside CoverRisk.</h3></div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
-      <div class="sc-sec"><h4>What happens without a governing constraint</h4>
-        <p class="sc-lede">An exploration layer with nothing holding it back becomes a banner stack with better targeting. Every rule that fires is individually justified, and collectively they bury the thing the user came for.</p></div>
-      <div class="sc-sec"><h4>The constraint above every rule</h4>
-        <p><b>Portfolio exists to review saved cover.</b> A capability can take the primary slot only when there is nothing to review. The moment a policy exists, review leads and the offer drops beneath it.</p></div>
-      <div class="sc-sec"><h4>The hierarchy that goes with it</h4>
-        <p>Offers sit below the policies, never above them. A user who scrolls past their own cover to reach a suggestion has already had their question answered — which is the only honest moment to make one.</p></div>
-      <div class="sc-sec"><h4>Why silence is the point</h4>
-        <p>When a user has everything relevant, the screen shows the portfolio and nothing else. That is not a gap in the design.</p>
-        <p><b>Not showing an irrelevant pitch is how the screen tells the user it understood them</b> — and it is the one thing a banner can never do, however well it is targeted.</p></div>
+      <div class="sc-sec"><h4>Separation of concerns</h4>
+        <p class="sc-lede">CoverRisk provides the risk assessment, recommended coverage amount and estimated premium. <b>It does not decide the product sequence.</b></p></div>
+      <div class="sc-sec"><h4>Who set it</h4>
+        <p>I defined the recommendation tiering with the product team, using our product and insurance-domain principles. Foundational protection comes before products that extend or supplement it; situational products appear only when the user&rsquo;s context creates a reason.</p>
+        <p><b>This prevents the engine from ranking a product higher simply because it is easier to promote or cheaper to buy.</b></p></div>
+      <div class="sc-sec"><h4>Employer and endowment cover</h4>
+        <p>Both can exist in a user&rsquo;s portfolio without providing the same role as personal foundational protection. The engine therefore treats the underlying <b>protection state</b> separately from the presence of any <b>policy record</b>.</p></div>
+      <div class="sc-sec"><h4>Why both halves are needed</h4>
+        <p>The recommendation engine needed both context and a stable product hierarchy. Context alone tells you what a person has; the hierarchy tells you what should come next.</p></div>
     </div>
   </div>
 </div>
@@ -6102,18 +6181,17 @@
 <div class="sc-ov" id="v9-ov-7" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-7-t">
   <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
   <div class="sc-ov-panel">
-    <div class="sc-ov-head"><div><span class="sc-skill">What it connected</span>
-      <h3 class="sc-ov-title" id="v9-ov-7-t">The two entry points I declined.</h3></div>
+    <div class="sc-ov-head"><div><span class="sc-skill">Family</span>
+      <h3 class="sc-ov-title" id="v9-ov-7-t">Why family completeness matters to every later recommendation.</h3></div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
-      <div class="sc-sec"><h4>Advisor Portfolio</h4>
-        <p class="sc-lede">It needed adoption like everything else, and the obvious move was a banner here. I pushed back.</p>
-        <p>The Homepage already carries a direct route, so repeating it on Portfolio would add noise without adding access. Instead the advisor appears immediately after a CoverRisk report is generated — the one moment a user has just read something about their own risk and has questions they cannot answer alone.</p>
-        <p>It is a different job from general support: the PRO tier's relationship manager handles claims and legal questions, while Advisor Portfolio is guidance on cover. Stacking both here would have blurred them.</p></div>
-      <div class="sc-sec"><h4>Share Policy</h4>
-        <p>Life and Group policies already carry a nominee relationship, so sharing sits alongside that rather than becoming another Portfolio CTA. The reason comes before the action — sharing matters because a nominee may need access at the worst possible moment.</p></div>
-      <div class="sc-sec"><h4>What I did not control</h4>
-        <p>The PRO subscription banner on this screen carries over from the previous design and sits outside this scope. It is already being repositioned. The conditions described here govern the entry points I owned, not every pixel on the screen.</p></div>
+      <div class="sc-sec"><h4>The dependency</h4>
+        <p class="sc-lede">The engine can only make a useful household-level recommendation if it has a reliable view of the household.</p></div>
+      <div class="sc-sec"><h4>Two states, two prompts</h4>
+        <p>When sync identifies a family member without a policy, <b>that member&rsquo;s empty state becomes the prompt.</b> When no family member is available, Add Family becomes the next useful action.</p>
+        <p>Once the family context is complete, those prompts disappear — because their conditions are no longer true.</p></div>
+      <div class="sc-sec"><h4>The design position</h4>
+        <p><b>The family section does not need a promotional banner. Its state already tells the user what is missing.</b></p></div>
     </div>
   </div>
 </div>
@@ -6121,20 +6199,96 @@
 <div class="sc-ov" id="v9-ov-8" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-8-t">
   <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
   <div class="sc-ov-panel">
-    <div class="sc-ov-head"><div><span class="sc-skill">What changed</span>
-      <h3 class="sc-ov-title" id="v9-ov-8-t">What changed in the product, and how this gets tested.</h3></div>
+    <div class="sc-ov-head"><div><span class="sc-skill">Policy understanding</span>
+      <h3 class="sc-ov-title" id="v9-ov-8-t">Why a verdict and counts are more useful than another score.</h3></div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
-      <div class="sc-sec"><h4>What changed</h4>
-        <p class="sc-lede">Recently launched, so these are the changes — not the results.</p>
-        <p><b>For the user.</b> Contextual actions replaced competing promotional entry points, and the screen stays quiet when it has nothing useful to say.</p>
-        <p><b>For the product.</b> Portfolio reads onboarding, CoverRisk, policy data, family state and KYP. Every section now reads the same user state, so the app behaves like one product.</p>
-        <p><b>For the business.</b> More exploration of the connected features, by narrowing rather than widening — each arrives for the people it fits.</p></div>
-      <div class="sc-sec"><h4>How it gets tested</h4>
-        <p>The measurement plan converts each claim above into a hypothesis with a threshold that would disprove it. <b>State transition rate</b> is the headline — the share of users who move to a better portfolio state within thirty days, because the design's own definition of progress is that a condition stops being true.</p>
-        <p><b>Cover adequacy ratio</b> — cover purchased over cover recommended — is the business metric, because conversion alone cannot tell more people buying adequate cover from more people buying cheap cover faster.</p></div>
-      <div class="sc-sec"><h4>The metric that would mislead</h4>
-        <p>Recommendation click-through. Optimising it means making the pitch louder and higher, which is the banner strategy this replaced. Low click-through on a deliberately subordinate element is the expected result, not a defect.</p></div>
+      <div class="sc-sec"><h4>What was already there</h4>
+        <p class="sc-lede">KYP already produced the underlying assessment. The Portfolio work was about making that assessment discoverable where the policy is already being managed.</p></div>
+      <div class="sc-sec"><h4>What the component shows</h4>
+        <p>A plain-language verdict, a four-segment meter, favourable and unfavourable condition counts, and a coming-soon state where a rating is not yet available.</p>
+        <p>A number invites comparison on price, which is the wrong axis. A verdict alone is a badge. <b>The counts are what make the assessment inspectable.</b></p></div>
+      <div class="sc-sec"><h4>Ownership</h4>
+        <p>The rating is not a new recommendation. <b>It is existing policy intelligence connected to the policy itself.</b> The route into KYP becomes ownership of a policy, not discovery of a separate feature.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v9-ov-9" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-9-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">Restraint</span>
+      <h3 class="sc-ov-title" id="v9-ov-9-t">The entry points the engine deliberately leaves out.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>Advisor Portfolio</h4>
+        <p class="sc-lede">Not given a permanent Portfolio banner, because the user already has a direct route from Homepage. It becomes relevant after CoverRisk, when the user has a specific protection question.</p></div>
+      <div class="sc-sec"><h4>Share Policy</h4>
+        <p>Not treated as a generic promotion. It appears where nominee context makes the action meaningful.</p></div>
+      <div class="sc-sec"><h4>The broader rule</h4>
+        <p><b>If another part of the product already owns the entry point, Portfolio does not repeat it</b> — unless the user&rsquo;s current state creates a new reason to act.</p>
+        <p>Good recommendation design is partly knowing what not to show.</p></div>
+      <div class="sc-sec"><h4>What I did not control</h4>
+        <p>The PRO subscription banner on this screen carries over from the previous design and sits outside this scope. It is already being repositioned.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v9-ov-10" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-10-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">Components</span>
+      <h3 class="sc-ov-title" id="v9-ov-10-t">Why these components were designed this way.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>The states users never screenshot</h4>
+        <p class="sc-lede">The engine has to handle states that will not appear in any showcase, but that users will encounter.</p></div>
+      <div class="sc-sec"><h4>Each one, and the rule behind it</h4>
+        <p><b>Employer cover only</b> — do not show a yearly premium when the user does not pay it.</p>
+        <p><b>Rating unavailable</b> — do not let missing KYP data look like a poor rating.</p>
+        <p><b>Family member without policy</b> — keep the prompt on that member&rsquo;s own card, so the action has context.</p>
+        <p><b>Lapsed policy</b> — surface it as something that needs attention rather than hiding it.</p>
+        <p><b>Renewal due</b> — offer Review Report or Pay Without Review, so the user makes an informed choice.</p></div>
+      <div class="sc-sec"><h4>Why this is the real work</h4>
+        <p><b>The quality of a recommendation system is often decided by the states that are not the happy path.</b> Each one is a condition that had to resolve to something honest.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v9-ov-11" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-11-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">What changed</span>
+      <h3 class="sc-ov-title" id="v9-ov-11-t">How I would measure whether the engine is actually working.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>The trap</h4>
+        <p class="sc-lede">The engine should not be judged only by recommendation clicks. <b>A high click-through rate can recreate the same behaviour the system was designed to avoid.</b></p></div>
+      <div class="sc-sec"><h4>What to measure instead</h4>
+        <p>State transition rate. Completion of the recommended action. Coverage adequacy, or relevant protection progress. Policy-management task success. Recommendation relevance by state. Frequency of irrelevant or conflicting recommendations. Primary-task disruption.</p></div>
+      <div class="sc-sec"><h4>The guardrail</h4>
+        <p><b>Recommendation engagement is not the goal by itself.</b> The system should help users complete a useful next step without weakening Portfolio&rsquo;s primary job.</p>
+        <p>The full <a href="measurement/">measurement plan</a> turns each claim in this case study into a hypothesis with a threshold that would disprove it.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="sc-ov" id="v9-ov-12" hidden role="dialog" aria-modal="true" aria-labelledby="v9-ov-12-t">
+  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
+  <div class="sc-ov-panel">
+    <div class="sc-ov-head"><div><span class="sc-skill">My role</span>
+      <h3 class="sc-ov-title" id="v9-ov-12-t">What I owned, and what I did not.</h3></div>
+      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
+    <div class="sc-ov-body">
+      <div class="sc-sec"><h4>I built</h4>
+        <p class="sc-lede">The contextual recommendation model and engine. Condition and rule-set design. Recommendation priority and protection tiering. Primary versus secondary action logic. The Family Overview proposal and its interaction. Information hierarchy, progressive disclosure, interaction design and UX writing. The navigation fix.</p></div>
+      <div class="sc-sec"><h4>I connected</h4>
+        <p>Existing CoverRisk intelligence into the Portfolio buying moment. The KYP assessment onto the policy card. Onboarding, policy, family and sync data into one state the screen could read.</p>
+        <p><b>I did not create CoverRisk or KYP.</b> Both existed; the work was making their intelligence reach the place where it changes a decision.</p></div>
+      <div class="sc-sec"><h4>I worked with Product and Design leadership on</h4>
+        <p>Product and insurance-domain judgement. Final recommendation priorities. The existing CoverRisk and KYP product capabilities themselves.</p></div>
+      <div class="sc-sec"><h4>The shape of the contribution</h4>
+        <p>The work was deciding <b>who should see each capability, when, why, and what should happen next</b> — not where to place a CTA.</p></div>
     </div>
   </div>
 </div>
