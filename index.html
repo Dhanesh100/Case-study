@@ -797,6 +797,20 @@
 
   
 
+
+  .v5-context {
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0 0 16px;
+    padding: 13px 16px;
+    background: var(--ground-2);
+    border-radius: 9px;
+    max-width: 62ch;
+  }
+
+  .v5-context b { color: var(--ink); }
+
   /* ══════════ V9 — one-screen summary ══════════ */
   .v9-sum {
     border: 1px solid var(--rule);
@@ -5816,6 +5830,7 @@
       <div class="sc-kicker"><b>CoverSure</b><span aria-hidden="true">/</span><span>Policy Portfolio</span>
         <span aria-hidden="true">/</span><span>Contextual recommendation engine</span></div>
       <h1 class="v5-h1">Making Portfolio respond to the user <span class="thin">— not just display their policies.</span></h1>
+      <p class="v5-context"><b>CoverSure is an insurance aggregator</b> — but it starts before the marketplace, by helping people understand the cover they already hold and what they actually need. Policy Portfolio is where they store and manage it.</p>
       <p class="v5-dek">I built a contextual recommendation engine that uses information CoverSure already has about a user to surface <b>the most relevant feature, product or next action</b> inside Portfolio. The Portfolio&rsquo;s core job stayed the same; the new layer made it connected to the rest of the product.</p>
       <p class="v4-meta" style="margin-bottom:26px">
         <b>Product Designer</b><span aria-hidden="true">·</span><span>Post-MVP</span>
@@ -5859,7 +5874,7 @@
         <p class="v5-tag">02<b>The opportunity</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Portfolio already had the traffic. The rest of the product already had the context.</h2>
-          <p class="v5-take">CoverSure held information about policies, family, risk and user intent across different features. Portfolio was where users managed their policies — and <b>none of that context was being used there. I proposed connecting it.</b></p>
+          <p class="v5-take">People do not browse an insurance app. They open it for a renewal, a document, a claim — and <b>Portfolio is where most of those visits land</b>, which makes each one a rare chance to be useful. CoverSure held information about policies, family, risk and user intent across other features, and <b>none of it was being used here. I proposed connecting it.</b></p>
           <dl class="v4-evid">
             <div class="v4-ev"><dt>Existing data</dt><dd>User and policy context already existed.</dd></div>
             <div class="v4-ev"><dt>Existing capabilities</dt><dd>CoverRisk, KYP, family management and the buying journeys already existed.</dd></div>
@@ -5892,6 +5907,7 @@
             </table>
           </div>
           <p class="sc-notice">Eight of ten rules shown. <strong>The last one is the constraint that keeps the engine from becoming a better-targeted banner stack.</strong></p>
+          <p class="sc-notice">No rule fires on a single fact. Each weighs <strong>what we know about the user, how much that product matters in a life, and whether they already hold it</strong> — which is what stops the engine recommending something they own, or something that does not apply to them.</p>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-3"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the rule set</span></span></button></p>
         </div>
       </section>
@@ -5977,7 +5993,7 @@
         <p class="v5-tag">09<b>Restraint</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Contextual does not mean everything, everywhere.</h2>
-          <p class="v5-take">A recommendation engine easily becomes a targeted banner system. <b>I made recommendations subordinate to the screen&rsquo;s own job</b> — Portfolio is for managing policies, and an offer never outranks that.</p>
+          <p class="v5-take">A recommendation engine easily becomes a targeted banner system. <b>I made the layer secondary by default</b> — Portfolio is for managing policies, and an offer never outranks that. It promotes to primary only when the screen has no primary task to offer: nothing stored yet, or policies the user told us about in onboarding but has not added.</p>
           <dl class="v4-evid">
             <div class="v4-ev"><dt>Advisor Portfolio</dt><dd>Not a permanent Portfolio entry point. Homepage already provides the route; it appears after a CoverRisk report, when the user has a specific protection context to discuss.</dd></div>
             <div class="v4-ev"><dt>Share Policy</dt><dd>Not a generic Portfolio CTA. It appears in Life and Group policy context, where nominee information makes the action relevant.</dd></div>
@@ -6175,6 +6191,9 @@
         <p>Both can exist in a user&rsquo;s portfolio without providing the same role as personal foundational protection. The engine therefore treats the underlying <b>protection state</b> separately from the presence of any <b>policy record</b>.</p></div>
       <div class="sc-sec"><h4>Why both halves are needed</h4>
         <p>The recommendation engine needed both context and a stable product hierarchy. Context alone tells you what a person has; the hierarchy tells you what should come next.</p></div>
+      <div class="sc-sec"><h4>Who runs it once it ships</h4>
+        <p><b>Product owns where each policy sits in the ladder</b> — that is insurance-domain expertise, and it belongs with the people who have it. When a new product launches, they place it.</p>
+        <p>What I built is the logic that reads the ladder: it never recommends at random, and it weighs the user&rsquo;s data, how much a product matters in a life, and whether they already hold it. <b>The placement is theirs to maintain; the decision procedure is generic and does not change when the catalogue does.</b></p></div>
     </div>
   </div>
 </div>
@@ -6226,6 +6245,8 @@
         <p class="sc-lede">Not given a permanent Portfolio banner, because the user already has a direct route from Homepage. It becomes relevant after CoverRisk, when the user has a specific protection question.</p></div>
       <div class="sc-sec"><h4>Share Policy</h4>
         <p>Not treated as a generic promotion. It appears where nominee context makes the action meaningful.</p></div>
+      <div class="sc-sec"><h4>Secondary by default, primary only when nothing competes</h4>
+        <p>The layer does not interrupt the primary job — it sits beneath it. It takes the primary slot only when Portfolio has no primary task to offer: <b>nothing stored yet</b>, or <b>policies the user told us about during onboarding but has not added</b>. In those states adding a policy or a family member <i>is</i> the useful thing, so the recommendation becomes the main action rather than competing with one.</p></div>
       <div class="sc-sec"><h4>The broader rule</h4>
         <p><b>If another part of the product already owns the entry point, Portfolio does not repeat it</b> — unless the user&rsquo;s current state creates a new reason to act.</p>
         <p>Good recommendation design is partly knowing what not to show.</p></div>

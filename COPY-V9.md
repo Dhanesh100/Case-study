@@ -9,6 +9,8 @@ Generated from the live markup, so this cannot drift from what is published.
 
 ## Hero
 
+**Product context** — CoverSure is an insurance aggregator — but it starts before the marketplace, by helping people understand the cover they already hold and what they actually need. Policy Portfolio is where they store and manage it.
+
 **Headline** — Making Portfolio respond to the user — not just display their policies.
 
 **Standfirst** — I built a contextual recommendation engine that uses information CoverSure already has about a user to surface the most relevant feature, product or next action inside Portfolio. The Portfolio’s core job stayed the same; the new layer made it connected to the rest of the product.
@@ -63,7 +65,7 @@ I fixed the navigation defect. The contextual recommendation work was the larger
 
 **Title** — Portfolio already had the traffic. The rest of the product already had the context.
 
-**Lead** — CoverSure held information about policies, family, risk and user intent across different features. Portfolio was where users managed their policies — and none of that context was being used there. I proposed connecting it.
+**Lead** — People do not browse an insurance app. They open it for a renewal, a document, a claim — and Portfolio is where most of those visits land, which makes each one a rare chance to be useful. CoverSure held information about policies, family, risk and user intent across other features, and none of it was being used here. I proposed connecting it.
 
 - **Existing data** — User and policy context already existed.
 - **Existing capabilities** — CoverRisk, KYP, family management and the buying journeys already existed.
@@ -111,6 +113,8 @@ Portfolio became the connection point not because it needed more content, but be
 | Nothing relevant | Nothing is promoted | — | Portfolio stays focused on policy management. |
 
 **Note** — Eight of ten rules shown. The last one is the constraint that keeps the engine from becoming a better-targeted banner stack.
+
+**Note** — No rule fires on a single fact. Each weighs what we know about the user, how much that product matters in a life, and whether they already hold it — which is what stops the engine recommending something they own, or something that does not apply to them.
 
 ### See the rule set — “How the recommendation engine decides what appears.”
 
@@ -231,6 +235,12 @@ Both can exist in a user’s portfolio without providing the same role as person
 
 The recommendation engine needed both context and a stable product hierarchy. Context alone tells you what a person has; the hierarchy tells you what should come next.
 
+**Who runs it once it ships**
+
+Product owns where each policy sits in the ladder — that is insurance-domain expertise, and it belongs with the people who have it. When a new product launches, they place it.
+
+What I built is the logic that reads the ladder: it never recommends at random, and it weighs the user’s data, how much a product matters in a life, and whether they already hold it. The placement is theirs to maintain; the decision procedure is generic and does not change when the catalogue does.
+
 ---
 
 ## 07 · Family
@@ -295,7 +305,7 @@ The rating is not a new recommendation. It is existing policy intelligence conne
 
 **Title** — Contextual does not mean everything, everywhere.
 
-**Lead** — A recommendation engine easily becomes a targeted banner system. I made recommendations subordinate to the screen’s own job — Portfolio is for managing policies, and an offer never outranks that.
+**Lead** — A recommendation engine easily becomes a targeted banner system. I made the layer secondary by default — Portfolio is for managing policies, and an offer never outranks that. It promotes to primary only when the screen has no primary task to offer: nothing stored yet, or policies the user told us about in onboarding but has not added.
 
 - **Advisor Portfolio** — Not a permanent Portfolio entry point. Homepage already provides the route; it appears after a CoverRisk report, when the user has a specific protection context to discuss.
 - **Share Policy** — Not a generic Portfolio CTA. It appears in Life and Group policy context, where nominee information makes the action relevant.
@@ -312,6 +322,10 @@ Not given a permanent Portfolio banner, because the user already has a direct ro
 **Share Policy**
 
 Not treated as a generic promotion. It appears where nominee context makes the action meaningful.
+
+**Secondary by default, primary only when nothing competes**
+
+The layer does not interrupt the primary job — it sits beneath it. It takes the primary slot only when Portfolio has no primary task to offer: nothing stored yet, or policies the user told us about during onboarding but has not added. In those states adding a policy or a family member is the useful thing, so the recommendation becomes the main action rather than competing with one.
 
 **The broader rule**
 
