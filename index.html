@@ -5889,7 +5889,7 @@
         <p class="v5-tag">03<b>The engine</b></p>
         <div class="v5-body">
           <h2 class="v5-title">I built a contextual recommendation engine, not a banner system.</h2>
-          <p class="v5-take">The engine maps existing user context to the most relevant feature or product action. <b>The recommendation engine is new; the intelligence it uses already existed.</b></p>
+          <p class="v5-take">The engine maps existing user context to the most relevant feature or product action. <b>The recommendation engine is new; the intelligence it uses already existed.</b> Nothing like it existed anywhere else in the app — this is CoverSure&rsquo;s first contextual layer.</p>
           <p class="sc-flow"><b>User context</b><i>→</i><b>Conditions</b><i>→</i><b>Priority</b><i>→</i><b>Action</b><i>→</i><b>New context</b></p>
           <div class="v8-tbl">
             <table>
@@ -6123,6 +6123,8 @@
       <h3 class="sc-ov-title" id="v9-ov-3-t">How the recommendation engine decides what appears.</h3></div>
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
+      <div class="sc-sec"><h4>The first of its kind in the product</h4>
+        <p class="sc-lede">No part of the app had a contextual layer before this. That shaped how it was built: the rule set had to be legible to the people who would maintain it, and generic enough to survive a catalogue that keeps growing.</p></div>
       <div class="sc-sec"><h4>Every rule has three parts</h4>
         <p class="sc-lede"><b>Condition</b> — something the product already knows. <b>Priority</b> — what should win if several conditions are true. <b>Action</b> — the single most useful next step for that state.</p></div>
       <div class="sc-sec"><h4>State is composed, not picked</h4>
@@ -6250,6 +6252,9 @@
       <div class="sc-sec"><h4>The broader rule</h4>
         <p><b>If another part of the product already owns the entry point, Portfolio does not repeat it</b> — unless the user&rsquo;s current state creates a new reason to act.</p>
         <p>Good recommendation design is partly knowing what not to show.</p></div>
+      <div class="sc-sec"><h4>The pressure this is already under</h4>
+        <p>Since launch, entry points have started arriving into the layer. The position I hold is that <b>it stays a recommendation engine</b> — its value is surfacing one relevant thing, and that value disappears the moment the layer becomes a place to put anything that needs a home.</p>
+        <p>So the open question is not what else could go in. It is <b>what genuinely belongs, and what should come out</b> before the user is choosing between options again.</p></div>
       <div class="sc-sec"><h4>What I did not control</h4>
         <p>The PRO subscription banner on this screen carries over from the previous design and sits outside this scope. It is already being repositioned.</p></div>
     </div>
@@ -6288,6 +6293,9 @@
         <p class="sc-lede">The engine should not be judged only by recommendation clicks. <b>A high click-through rate can recreate the same behaviour the system was designed to avoid.</b></p></div>
       <div class="sc-sec"><h4>What to measure instead</h4>
         <p>State transition rate. Completion of the recommended action. Coverage adequacy, or relevant protection progress. Policy-management task success. Recommendation relevance by state. Frequency of irrelevant or conflicting recommendations. Primary-task disruption.</p></div>
+      <div class="sc-sec"><h4>This is the first version, deliberately</h4>
+        <p>The engine shipped basic. <b>Some policy states were not covered at launch</b> and were added after — a policy has more states than the first rule set accounted for, and that only became clear once it was live.</p>
+        <p>The next round is precision rather than expansion: narrowing what belongs in the layer, tightening the content and language each recommendation uses, and making every one easier to act on. <b>That work waits on user feedback and the first numbers</b> — which is the right order, not a delay.</p></div>
       <div class="sc-sec"><h4>The guardrail</h4>
         <p><b>Recommendation engagement is not the goal by itself.</b> The system should help users complete a useful next step without weakening Portfolio&rsquo;s primary job.</p>
         <p>The full <a href="measurement/">measurement plan</a> turns each claim in this case study into a hypothesis with a threshold that would disprove it.</p></div>
