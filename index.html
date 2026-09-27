@@ -811,6 +811,40 @@
 
   .v5-context b { color: var(--ink); }
 
+
+  /* ══════════ V9 — richer visuals ══════════ */
+  .v9-fig { margin: 22px 0; }
+  .v9-fig .v9-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .v9-fig svg { display: block; width: 100%; min-width: 700px; height: auto; }
+  .v9-cap { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); margin: 12px 0 0; max-width: 66ch; }
+  .v9-cap b { color: var(--ink-2); }
+
+  /* signal-source rail on the rule table */
+  .v9-rules table { border-collapse: separate; border-spacing: 0; }
+  .v9-rules td:first-child { position: relative; padding-left: 15px; }
+  .v9-rules tr td:first-child::before {
+    content: ''; position: absolute; left: 0; top: 11px; bottom: 11px;
+    width: 3px; border-radius: 2px; background: var(--rule);
+  }
+  .v9-rules tr.s-onb td:first-child::before  { background: #1f43ff; }
+  .v9-rules tr.s-pol td:first-child::before  { background: #17724f; }
+  .v9-rules tr.s-cr  td:first-child::before  { background: #a4501e; }
+  .v9-rules tr.s-fam td:first-child::before  { background: #7a3fb8; }
+  .v9-rules tr.s-non td:first-child::before  { background: var(--ink-3); }
+  .v9-rules tr.quiet td { background: var(--accent-soft); }
+
+  .v9-key { display: flex; flex-wrap: wrap; gap: 16px; margin: 14px 0 0; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  .v9-key span { display: flex; align-items: center; gap: 7px; }
+  .v9-key i { width: 14px; height: 3px; border-radius: 2px; display: block; }
+
+  /* what-changed cards */
+  .v9-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 22px 0; }
+  @media (max-width: 760px) { .v9-cards { grid-template-columns: minmax(0, 1fr); } }
+  .v9-card { border: 1px solid var(--rule); border-radius: 11px; padding: 18px 20px; background: var(--surface); display: flex; flex-direction: column; gap: 9px; }
+  .v9-card dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  .v9-card dd { margin: 0; font-size: 15px; line-height: 1.48; color: var(--ink-2); }
+  .v9-card dd b { color: var(--ink); }
+
   /* ══════════ V9 — one-screen summary ══════════ */
   .v9-sum {
     border: 1px solid var(--rule);
@@ -5861,6 +5895,47 @@
         <div class="v5-body">
           <h2 class="v5-title">A dead-click issue exposed a bigger opportunity.</h2>
           <p class="v5-take">The work started with a dead-click issue — taps that did nothing, leaving users stuck in a loop. I fixed that route. <b>But it exposed something larger: Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery far more relevant.</b></p>
+          <figure class="v9-fig">
+            <div class="v9-scroll">
+              <svg viewBox="0 0 840 248" role="img" aria-label="Before: the entry point into the policy listing and the expand-and-collapse beside it were styled identically, so taps landed repeatedly on the control that only revealed detail in place. After: a member chip gives profile switching its own affordance, reaching the policy in one tap.">
+                <defs>
+                  <marker id="w1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-3)"/></marker>
+                  <marker id="w2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--signal)"/></marker>
+                  <marker id="w3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)"/></marker>
+                </defs>
+                <text class="svg-name" x="12" y="18" fill="var(--signal)">BEFORE</text>
+                <rect class="svg-box" x="12" y="30" width="126" height="70" rx="8"/>
+                <text class="svg-name" x="75" y="70" text-anchor="middle">PORTFOLIO</text>
+                <path class="svg-line" d="M142 65 L172 65" marker-end="url(#w1)"/>
+                <rect class="svg-box" x="178" y="30" width="170" height="30" rx="7"/>
+                <text class="svg-name" x="190" y="50">Overview row</text>
+                <rect class="svg-box" x="178" y="70" width="170" height="30" rx="7"/>
+                <text class="svg-name" x="190" y="90">Entry point</text>
+                <text class="svg-edge" x="263" y="120" text-anchor="middle">identical styling — two different jobs</text>
+                <path class="svg-line-dead" d="M352 45 L428 45" marker-end="url(#w2)"/>
+                <text class="svg-name" x="436" y="41" fill="var(--signal)">NOTHING HAPPENS</text>
+                <text class="svg-sub" x="436" y="58" fill="var(--signal)">taps landed here, repeatedly</text>
+                <path class="svg-line" d="M352 85 L428 85" marker-end="url(#w1)"/>
+                <rect class="svg-box" x="436" y="70" width="164" height="30" rx="7"/>
+                <text class="svg-name" x="448" y="90">Policy listing</text>
+                <text class="svg-sub" x="610" y="90">the one they wanted</text>
+                <text class="svg-name-key" x="12" y="158">AFTER</text>
+                <rect class="svg-box-key" x="12" y="170" width="126" height="34" rx="8"/>
+                <text class="svg-name-key" x="75" y="192" text-anchor="middle">PORTFOLIO</text>
+                <path class="svg-line-key" d="M142 187 L172 187" marker-end="url(#w3)"/>
+                <rect class="svg-box-key" x="178" y="170" width="136" height="34" rx="8"/>
+                <text class="svg-name-key" x="246" y="192" text-anchor="middle">MEMBER CHIP</text>
+                <path class="svg-line-key" d="M318 187 L348 187" marker-end="url(#w3)"/>
+                <rect class="svg-box" x="354" y="170" width="150" height="34" rx="8"/>
+                <text class="svg-name" x="429" y="192" text-anchor="middle">THEIR POLICIES</text>
+                <path class="svg-line-key" d="M508 187 L538 187" marker-end="url(#w3)"/>
+                <rect class="svg-box" x="544" y="170" width="150" height="34" rx="8"/>
+                <text class="svg-name" x="619" y="192" text-anchor="middle">POLICY DETAILS</text>
+                <text class="svg-edge" x="12" y="232">Switching profiles gets its own affordance, so disclosure keeps only the job it suits.</text>
+              </svg>
+            </div>
+            <p class="v9-cap">Two controls, styled the same, doing different jobs. <b>One revealed detail in place; the other was the way through.</b> Taps landed on the first and produced nothing.</p>
+          </figure>
           <dl class="v4-evid">
             <div class="v4-ev"><dt>Dead clicks</dt><dd>Taps that produced no result — users trying to reach Policy Details, stuck repeating the same one.</dd></div>
             <div class="v4-ev"><dt>Support</dt><dd>The route sometimes had to be explained on the call.</dd></div>
@@ -5890,22 +5965,68 @@
         <div class="v5-body">
           <h2 class="v5-title">I built a contextual recommendation engine, not a banner system.</h2>
           <p class="v5-take">The engine maps existing user context to the most relevant feature or product action. <b>The recommendation engine is new; the intelligence it uses already existed.</b> Nothing like it existed anywhere else in the app — this is CoverSure&rsquo;s first contextual layer.</p>
-          <p class="sc-flow"><b>User context</b><i>→</i><b>Conditions</b><i>→</i><b>Priority</b><i>→</i><b>Action</b><i>→</i><b>New context</b></p>
-          <div class="v8-tbl">
+          <figure class="v9-fig">
+            <div class="v9-scroll">
+              <svg viewBox="0 0 840 296" role="img" aria-label="Five existing signals — onboarding, policy data, CoverRisk, family data and Know Your Policy — feed conditions, which pass through priority to produce one action. Acting changes the user state, which feeds back into the signals and closes the loop.">
+                <defs>
+                  <marker id="c1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-3)"/></marker>
+                  <marker id="c2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)"/></marker>
+                </defs>
+                <text class="svg-sub" x="12" y="16">WHAT WE ALREADY KNOW</text>
+                <rect class="svg-box" x="12" y="26" width="150" height="26" rx="6"/><text class="svg-name" x="24" y="44">ONBOARDING</text>
+                <rect class="svg-box" x="12" y="60" width="150" height="26" rx="6"/><text class="svg-name" x="24" y="78">POLICY DATA</text>
+                <rect class="svg-box" x="12" y="94" width="150" height="26" rx="6"/><text class="svg-name" x="24" y="112">COVERRISK</text>
+                <rect class="svg-box" x="12" y="128" width="150" height="26" rx="6"/><text class="svg-name" x="24" y="146">FAMILY DATA</text>
+                <rect class="svg-box" x="12" y="162" width="150" height="26" rx="6"/><text class="svg-name" x="24" y="180">KNOW YOUR POLICY</text>
+                <path class="svg-line" d="M166 39 C 210 39, 216 95, 252 103" marker-end="url(#c1)"/>
+                <path class="svg-line" d="M166 73 C 208 73, 216 98, 252 105" marker-end="url(#c1)"/>
+                <path class="svg-line" d="M166 107 L252 107" marker-end="url(#c1)"/>
+                <path class="svg-line" d="M166 141 C 208 141, 216 116, 252 109" marker-end="url(#c1)"/>
+                <path class="svg-line" d="M166 175 C 210 175, 216 119, 252 111" marker-end="url(#c1)"/>
+                <rect class="svg-box-key" x="260" y="84" width="140" height="46" rx="9"/>
+                <text class="svg-name-key" x="330" y="104" text-anchor="middle">CONDITIONS</text>
+                <text class="svg-sub" x="330" y="120" text-anchor="middle">what is true right now</text>
+                <path class="svg-line-key" d="M404 107 L436 107" marker-end="url(#c2)"/>
+                <rect class="svg-box-key" x="444" y="84" width="140" height="46" rx="9"/>
+                <text class="svg-name-key" x="514" y="104" text-anchor="middle">PRIORITY</text>
+                <text class="svg-sub" x="514" y="120" text-anchor="middle">which one wins</text>
+                <path class="svg-line-key" d="M588 107 L620 107" marker-end="url(#c2)"/>
+                <rect class="svg-box-key" x="628" y="72" width="198" height="70" rx="9"/>
+                <text class="svg-name-key" x="727" y="98" text-anchor="middle">ONE ACTION</text>
+                <text class="svg-sub" x="727" y="116" text-anchor="middle">one primary, at most</text>
+                <text class="svg-sub" x="727" y="130" text-anchor="middle">one secondary</text>
+                <path class="svg-line-key" d="M727 146 L727 214 L87 214 L87 196" marker-end="url(#c2)"/>
+                <text class="svg-edge" x="410" y="206" text-anchor="middle">the user acts — and the new state feeds straight back in</text>
+                <rect x="260" y="238" width="324" height="40" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.25"/>
+                <text class="svg-name-key" x="422" y="255" text-anchor="middle">NOTHING TRUE &#8594; NOTHING SHOWN</text>
+                <text class="svg-sub" x="422" y="270" text-anchor="middle">the constraint that keeps it a recommendation engine</text>
+              </svg>
+            </div>
+            <p class="v9-cap">No rule fires on a single fact. <b>Each weighs what is known about the user, how much a product matters in a life, and whether they already hold it</b> — then priority breaks the tie, and acting rewrites the input.</p>
+          </figure>
+          
+          <div class="v8-tbl v9-rules">
             <table>
               <thead><tr><th>Context</th><th>Primary</th><th>Secondary</th><th>Reason</th></tr></thead>
               <tbody>
-                <tr><td><b>Onboarding</b>holds policies</td><td>Add existing policies</td><td>—</td><td>Complete the record before recommending something already owned.</td></tr>
-                <tr><td><b>No policies</b>no CoverRisk</td><td>Start CoverRisk</td><td>Add a policy</td><td>Understand protection position before buying.</td></tr>
-                <tr><td><b>No policies</b>CoverRisk complete</td><td>Recommended Health / Life cover</td><td>—</td><td>Use the quantified CoverRisk output.</td></tr>
-                <tr><td><b>Policies</b>no CoverRisk</td><td>Review saved policies</td><td>CoverRisk</td><td>Management stays primary once something exists to manage.</td></tr>
-                <tr><td><b>CoverRisk complete</b>gap open</td><td>Recommended gap, amount and premium</td><td>KYP</td><td>Turn existing risk intelligence into an actionable decision.</td></tr>
-                <tr><td><b>Employer or endowment only</b></td><td>Foundational Health + Life</td><td>Add detected policies</td><td>Separate policy presence from foundational protection state.</td></tr>
-                <tr><td><b>Family member found</b>no policy</td><td>Add their policy</td><td>Add member</td><td>The missing policy is already visible in context.</td></tr>
-                <tr class="quiet"><td><b>Nothing relevant</b></td><td>Nothing is promoted</td><td>—</td><td>Portfolio stays focused on policy management.</td></tr>
+                <tr class="s-onb"><td><b>Onboarding</b>holds policies</td><td>Add existing policies</td><td>—</td><td>Complete the record before recommending something already owned.</td></tr>
+                <tr class="s-onb"><td><b>No policies</b>no CoverRisk</td><td>Start CoverRisk</td><td>Add a policy</td><td>Understand protection position before buying.</td></tr>
+                <tr class="s-onb"><td><b>No policies</b>CoverRisk complete</td><td>Recommended Health / Life cover</td><td>—</td><td>Use the quantified CoverRisk output.</td></tr>
+                <tr class="s-pol"><td><b>Policies</b>no CoverRisk</td><td>Review saved policies</td><td>CoverRisk</td><td>Management stays primary once something exists to manage.</td></tr>
+                <tr class="s-cr"><td><b>CoverRisk complete</b>gap open</td><td>Recommended gap, amount and premium</td><td>KYP</td><td>Turn existing risk intelligence into an actionable decision.</td></tr>
+                <tr class="s-pol"><td><b>Employer or endowment only</b></td><td>Foundational Health + Life</td><td>Add detected policies</td><td>Separate policy presence from foundational protection state.</td></tr>
+                <tr class="s-fam"><td><b>Family member found</b>no policy</td><td>Add their policy</td><td>Add member</td><td>The missing policy is already visible in context.</td></tr>
+                <tr class="quiet s-non"><td><b>Nothing relevant</b></td><td>Nothing is promoted</td><td>—</td><td>Portfolio stays focused on policy management.</td></tr>
               </tbody>
             </table>
           </div>
+          <p class="v9-key">
+            <span><i style="background:#1f43ff"></i>Onboarding</span>
+            <span><i style="background:#17724f"></i>Policy data</span>
+            <span><i style="background:#a4501e"></i>CoverRisk</span>
+            <span><i style="background:#7a3fb8"></i>Family</span>
+            <span><i style="background:var(--ink-3)"></i>No signal</span>
+          </p>
           <p class="sc-notice">Eight of ten rules shown. <strong>The last one is the constraint that keeps the engine from becoming a better-targeted banner stack.</strong></p>
           <p class="sc-notice">No rule fires on a single fact. Each weighs <strong>what we know about the user, how much that product matters in a life, and whether they already hold it</strong> — which is what stops the engine recommending something they own, or something that does not apply to them.</p>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-3"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the rule set</span></span></button></p>
@@ -5950,11 +6071,33 @@
         <div class="v5-body">
           <h2 class="v5-title">The engine needed a product priority, not just personalisation.</h2>
           <p class="v5-take">Knowing what a user needs is only half the problem. <b>I sorted every product by how much it matters in a person&rsquo;s life</b>, and the engine walks that ladder in order — it never skips a rung because the next product is easier to sell.</p>
-          <div class="v8-tiers">
-            <div class="v8-tier"><p><b>01 · Must have</b>Both, before anything else</p><div class="v8-bar v8-b1"><span>Health</span><span>Term life</span></div></div>
-            <div class="v8-tier"><p><b>02 · Extends cover</b>Only once both of the above exist</p><div class="v8-bar v8-b2"><span>Super Top-Up</span><span>Critical Illness</span></div></div>
-            <div class="v8-tier"><p><b>03 · Situational</b>Only on a signal</p><div class="v8-bar v8-b3"><span>Personal Accident</span><span>Hospicash</span><span>Home</span><span>Device</span></div></div>
-          </div>
+          <figure class="v9-fig">
+            <div class="v9-scroll">
+              <svg viewBox="0 0 840 268" role="img" aria-label="A three-step ladder. Health and term life sit on the first step and both must exist before the engine moves up. Super Top-Up and Critical Illness are the second step. Personal Accident, Hospicash, Home and Device sit on the third, reached only when the user's context creates a reason.">
+                <defs>
+                  <marker id="L1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)"/></marker>
+                </defs>
+                <rect x="12" y="176" width="330" height="72" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+                <text class="svg-name-key" x="30" y="202">01 · MUST HAVE</text>
+                <text class="svg-sub" x="30" y="219">Health &#183; Term life</text>
+                <text class="svg-sub" x="30" y="236" fill="var(--accent-ink)">both, before anything else</text>
+                <rect x="256" y="102" width="330" height="66" rx="10" fill="var(--surface)" stroke="var(--rule)" stroke-width="1.5"/>
+                <text class="svg-name" x="274" y="126">02 · EXTENDS COVER</text>
+                <text class="svg-sub" x="274" y="143">Super Top-Up &#183; Critical Illness</text>
+                <text class="svg-sub" x="274" y="159">only once both of the above exist</text>
+                <rect x="500" y="28" width="330" height="66" rx="10" fill="var(--surface)" stroke="var(--rule)" stroke-width="1.5" stroke-dasharray="5 3"/>
+                <text class="svg-name" x="518" y="52">03 · SITUATIONAL</text>
+                <text class="svg-sub" x="518" y="69">Personal Accident &#183; Hospicash &#183; Home &#183; Device</text>
+                <text class="svg-sub" x="518" y="85">only on a signal</text>
+                <path class="svg-line-key" d="M300 172 L300 150" marker-end="url(#L1)"/>
+                <text class="svg-edge" x="312" y="164">gate: both held?</text>
+                <path class="svg-line-key" d="M544 98 L544 76" marker-end="url(#L1)"/>
+                <text class="svg-edge" x="556" y="90">gate: a reason exists?</text>
+                <text class="svg-edge" x="12" y="20" fill="var(--signal)">The engine never skips a rung because the next product is easier to sell.</text>
+              </svg>
+            </div>
+            <p class="v9-cap">A ladder, not a menu. <b>A user holding health only is still on step one</b> — the engine recommends term life, not something that extends cover they have not finished building.</p>
+          </figure>
           <p class="v8-note">Relative priority in the recommendation order — not measured data</p>
           <p class="sc-notice"><strong>CoverRisk answers how much cover may be needed. The recommendation engine decides what should come next.</strong></p>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-6"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the ranking logic</span></span></button></p>
@@ -6030,16 +6173,11 @@
         <div class="v5-body">
           <h2 class="v5-title">What changed in the product.</h2>
           <p class="v5-take">The recommendation engine changed how existing capabilities connect to Portfolio. <b>Quantitative impact should be added only once enough usage data is available.</b></p>
-          <div class="v8-tbl">
-            <table>
-              <thead><tr><th></th><th>What changed</th></tr></thead>
-              <tbody>
-                <tr><td><b>User experience</b></td><td>Contextual actions replaced competing promotional entry points</td></tr>
-                <tr><td><b>Product</b></td><td>Portfolio can now read relevant onboarding, policy, family and CoverRisk context</td></tr>
-                <tr><td><b>Business</b></td><td>Existing capabilities gained contextual entry points instead of relying on blanket promotion. More exploration of those capabilities is the <i>intended</i> effect, not a measured one.</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <dl class="v9-cards">
+            <div class="v9-card"><dt>User</dt><dd>Contextual actions replaced competing promotional entry points. <b>A person finds out they are underinsured before it matters</b> — that employer cover is not personal cover, that a household member has nothing.</dd></div>
+            <div class="v9-card"><dt>Product</dt><dd>Portfolio can now read onboarding, policy, family and CoverRisk context. <b>Every section reads the same user state</b>, so the app behaves like one product rather than separate tools.</dd></div>
+            <div class="v9-card"><dt>Business</dt><dd>Existing capabilities gained contextual entry points instead of blanket promotion. <b>More exploration of those capabilities is the intended effect</b>, not a measured one.</dd></div>
+          </dl>
           <p class="sc-notice">Recently launched. <strong>Quantitative results are not yet available</strong> — the <a href="measurement/">measurement plan</a> sets out what would prove, or disprove, each claim above.</p>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-11"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the measurement plan</span></span></button></p>
         </div>
