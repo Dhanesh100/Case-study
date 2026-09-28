@@ -67,9 +67,17 @@ I fixed the navigation defect. The contextual recommendation work was the larger
 
 **Lead** — People do not browse an insurance app. They open it for a renewal, a document, a claim — and Portfolio is where most of those visits land, which makes each one a rare chance to be useful. CoverSure held information about policies, family, risk and user intent across other features, and none of it was being used here. I proposed connecting it.
 
-- **Existing data** — User and policy context already existed.
-- **Existing capabilities** — CoverRisk, KYP, family management and the buying journeys already existed.
-- **Missing layer** — No contextual system decided what should appear for this user, at this moment.
+**Diagram — the gap**
+
+| Why people open the app | Where it lands | | What the product already knew |
+|---|---|---|---|
+| Renewal · Document · Claim | **Portfolio** — where the visits land | ‖ NO CONNECTION | Onboarding — declared intent |
+| | | ‖ | CoverRisk — cover gap, premium |
+| | | ‖ | Family data — who is missing |
+| | | ‖ | Know Your Policy — policy quality |
+| | | ‖ | Buying journeys — what can be bought |
+
+*Caption* — Both sides already existed. Every line from the right stops short — no system decided what should appear for this user, at this moment. The gap is the opportunity.
 
 **Note** — The opportunity was not to build another feature. It was to build the layer that connects what already existed.
 
@@ -307,9 +315,22 @@ The rating is not a new recommendation. It is existing policy intelligence conne
 
 **Lead** — A recommendation engine easily becomes a targeted banner system. I made the layer secondary by default — Portfolio is for managing policies, and an offer never outranks that. It promotes to primary only when the screen has no primary task to offer: nothing stored yet, or policies the user told us about in onboarding but has not added.
 
-- **Advisor Portfolio** — Not a permanent Portfolio entry point. Homepage already provides the route; it appears after a CoverRisk report, when the user has a specific protection context to discuss.
-- **Share Policy** — Not a generic Portfolio CTA. It appears in Life and Group policy context, where nominee information makes the action relevant.
-- **Buy suggestions** — Below policy content, so users see their own cover before recommendations.
+**Diagram — where the layer sits**
+
+| Zone | Default — policies exist | Promoted — no primary task |
+|---|---|---|
+| Primary zone | **Policy content** — the reason they opened | **Recommendation** — nothing to manage yet |
+| Below | Recommendation — secondary, below | No policies stored, or declared but not added |
+
+**Kept out of Portfolio**
+
+- **Advisor Portfolio** — not a permanent Portfolio entry point → homepage, and after a CoverRisk report.
+- **Share Policy** — not a generic Portfolio CTA → Life and Group policy context, where nominees matter.
+
+Kept in the product. Placed where the context makes them relevant.
+An offer never outranks the reason the user opened the screen.
+
+*Caption* — The layer is secondary by default and promotes only when the screen has no primary task to offer. Two placements were kept out of Portfolio entirely and given a home where the context earns them.
 
 **Note** — Good recommendation design is partly knowing what not to show.
 

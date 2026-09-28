@@ -6069,11 +6069,39 @@
         <div class="v5-body">
           <h2 class="v5-title">Portfolio already had the traffic. The rest of the product already had the context.</h2>
           <p class="v5-take">People do not browse an insurance app. They open it for a renewal, a document, a claim — and <b>Portfolio is where most of those visits land</b>, which makes each one a rare chance to be useful. CoverSure held information about policies, family, risk and user intent across other features, and <b>none of it was being used here. I proposed connecting it.</b></p>
-          <dl class="v4-evid">
-            <div class="v4-ev"><dt>Existing data</dt><dd>User and policy context already existed.</dd></div>
-            <div class="v4-ev"><dt>Existing capabilities</dt><dd>CoverRisk, KYP, family management and the buying journeys already existed.</dd></div>
-            <div class="v4-ev"><dt>Missing layer</dt><dd>No contextual system decided what should appear for this user, at this moment.</dd></div>
-          </dl>
+          <figure class="v9-fig">
+            <div class="v9-scroll">
+              <svg viewBox="0 0 840 214" role="img" aria-label="On the left, three reasons people open the app — a renewal, a document, a claim — all land on Portfolio. On the right, five existing sources of context: onboarding, CoverRisk, family data, Know Your Policy and the buying journeys. A dashed line runs between the two sides and every connection from the right stops short of it. No system carried context across to the surface where the visits landed.">
+                <defs>
+                  <marker id="g1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-3)"/></marker>
+                </defs>
+                <text class="svg-sub" x="12" y="16">WHY PEOPLE OPEN THE APP</text>
+                <rect class="svg-box" x="12" y="26" width="132" height="28" rx="6"/><text class="svg-name" x="24" y="45">RENEWAL</text>
+                <rect class="svg-box" x="12" y="62" width="132" height="28" rx="6"/><text class="svg-name" x="24" y="81">DOCUMENT</text>
+                <rect class="svg-box" x="12" y="98" width="132" height="28" rx="6"/><text class="svg-name" x="24" y="117">CLAIM</text>
+                <path class="svg-line" d="M148 40 C 168 40, 172 90, 186 100" marker-end="url(#g1)"/>
+                <path class="svg-line" d="M148 76 C 168 76, 174 94, 186 102" marker-end="url(#g1)"/>
+                <path class="svg-line" d="M148 112 C 168 112, 174 108, 186 104" marker-end="url(#g1)"/>
+                <rect class="svg-box-key" x="194" y="68" width="160" height="72" rx="10"/>
+                <text class="svg-name-key" x="274" y="100" text-anchor="middle">PORTFOLIO</text>
+                <text class="svg-sub" x="274" y="120" text-anchor="middle">where the visits land</text>
+                <path class="svg-line-dead" d="M430 14 L430 202"/>
+                <text class="svg-name" fill="var(--signal)" transform="rotate(-90 394 118)" x="394" y="118" text-anchor="middle">NO CONNECTION</text>
+                <text class="svg-sub" x="520" y="16">WHAT THE PRODUCT ALREADY KNEW</text>
+                <rect class="svg-box" x="520" y="26" width="200" height="28" rx="6"/><text class="svg-name" x="532" y="45">ONBOARDING</text><text class="svg-sub" x="730" y="45">declared intent</text>
+                <rect class="svg-box" x="520" y="62" width="200" height="28" rx="6"/><text class="svg-name" x="532" y="81">COVERRISK</text><text class="svg-sub" x="730" y="81">cover gap, premium</text>
+                <rect class="svg-box" x="520" y="98" width="200" height="28" rx="6"/><text class="svg-name" x="532" y="117">FAMILY DATA</text><text class="svg-sub" x="730" y="117">who is missing</text>
+                <rect class="svg-box" x="520" y="134" width="200" height="28" rx="6"/><text class="svg-name" x="532" y="153">KNOW YOUR POLICY</text><text class="svg-sub" x="730" y="153">policy quality</text>
+                <rect class="svg-box" x="520" y="170" width="200" height="28" rx="6"/><text class="svg-name" x="532" y="189">BUYING JOURNEYS</text><text class="svg-sub" x="730" y="189">what can be bought</text>
+                <path class="svg-line-dead" d="M514 40 L446 40"/>
+                <path class="svg-line-dead" d="M514 76 L446 76"/>
+                <path class="svg-line-dead" d="M514 112 L446 112"/>
+                <path class="svg-line-dead" d="M514 148 L446 148"/>
+                <path class="svg-line-dead" d="M514 184 L446 184"/>
+              </svg>
+            </div>
+            <p class="v9-cap">Both sides already existed. <b>Every line from the right stops short</b> &#8212; no system decided what should appear for this user, at this moment. The gap is the opportunity.</p>
+          </figure>
           <p class="sc-notice">The opportunity was not to build another feature. <strong>It was to build the layer that connects what already existed.</strong></p>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-2"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See why Portfolio</span></span></button></p>
         </div>
@@ -6256,11 +6284,46 @@
         <div class="v5-body">
           <h2 class="v5-title">Contextual does not mean everything, everywhere.</h2>
           <p class="v5-take">A recommendation engine easily becomes a targeted banner system. <b>I made the layer secondary by default</b> — Portfolio is for managing policies, and an offer never outranks that. It promotes to primary only when the screen has no primary task to offer: nothing stored yet, or policies the user told us about in onboarding but has not added.</p>
-          <dl class="v4-evid">
-            <div class="v4-ev"><dt>Advisor Portfolio</dt><dd>Not a permanent Portfolio entry point. Homepage already provides the route; it appears after a CoverRisk report, when the user has a specific protection context to discuss.</dd></div>
-            <div class="v4-ev"><dt>Share Policy</dt><dd>Not a generic Portfolio CTA. It appears in Life and Group policy context, where nominee information makes the action relevant.</dd></div>
-            <div class="v4-ev"><dt>Buy suggestions</dt><dd>Below policy content, so users see their own cover before recommendations.</dd></div>
-          </dl>
+          <figure class="v9-fig">
+            <div class="v9-scroll">
+              <svg viewBox="0 0 840 292" role="img" aria-label="Three blocks. In the default state, policy content holds the primary zone of the screen and the recommendation sits below it as secondary. In the promoted state, where there is no policy to manage, the recommendation takes the primary zone. The third block lists what was kept out of Portfolio: Advisor Portfolio and Share Policy, each placed in the context where it is relevant instead.">
+                <text class="svg-sub" x="12" y="20">DEFAULT &#8212; POLICIES EXIST</text>
+                <rect class="svg-box" x="12" y="30" width="196" height="230" rx="14"/>
+                <rect x="28" y="48" width="164" height="24" rx="6" fill="var(--ground-2)" stroke="var(--rule-soft)" stroke-width="1.25"/>
+                <text class="svg-name" x="40" y="65">PORTFOLIO</text>
+                <rect class="svg-box-key" x="28" y="82" width="164" height="100" rx="9"/>
+                <text class="svg-sub" x="110" y="104" text-anchor="middle" fill="var(--accent-ink)">PRIMARY ZONE</text>
+                <text class="svg-name-key" x="110" y="128" text-anchor="middle">POLICY CONTENT</text>
+                <text class="svg-sub" x="110" y="148" text-anchor="middle">the reason they opened</text>
+                <rect x="28" y="194" width="164" height="54" rx="9" fill="var(--ground-2)" stroke="var(--rule-soft)" stroke-width="1.25"/>
+                <text class="svg-name" x="110" y="216" text-anchor="middle">RECOMMENDATION</text>
+                <text class="svg-sub" x="110" y="234" text-anchor="middle">secondary, below</text>
+                <text class="svg-sub" x="248" y="20">PROMOTED &#8212; NO PRIMARY TASK</text>
+                <rect class="svg-box" x="248" y="30" width="196" height="230" rx="14"/>
+                <rect x="264" y="48" width="164" height="24" rx="6" fill="var(--ground-2)" stroke="var(--rule-soft)" stroke-width="1.25"/>
+                <text class="svg-name" x="276" y="65">PORTFOLIO</text>
+                <rect class="svg-box-key" x="264" y="82" width="164" height="100" rx="9"/>
+                <text class="svg-sub" x="346" y="104" text-anchor="middle" fill="var(--accent-ink)">PRIMARY ZONE</text>
+                <text class="svg-name-key" x="346" y="128" text-anchor="middle">RECOMMENDATION</text>
+                <text class="svg-sub" x="346" y="148" text-anchor="middle">nothing to manage yet</text>
+                <rect x="264" y="194" width="164" height="54" rx="9" fill="var(--surface)" stroke="var(--rule)" stroke-width="1.25" stroke-dasharray="5 3"/>
+                <text class="svg-sub" x="346" y="217" text-anchor="middle">no policies stored, or</text>
+                <text class="svg-sub" x="346" y="234" text-anchor="middle">declared but not added</text>
+                <text class="svg-sub" x="488" y="20">KEPT OUT OF PORTFOLIO</text>
+                <rect x="488" y="30" width="340" height="88" rx="10" fill="var(--surface)" stroke="var(--rule)" stroke-width="1.25" stroke-dasharray="5 3"/>
+                <text class="svg-name" x="508" y="58">ADVISOR PORTFOLIO</text>
+                <text class="svg-sub" x="508" y="79">not a permanent Portfolio entry point</text>
+                <text class="svg-sub" x="508" y="97" fill="var(--accent-ink)">&#8594; homepage, and after a CoverRisk report</text>
+                <rect x="488" y="132" width="340" height="88" rx="10" fill="var(--surface)" stroke="var(--rule)" stroke-width="1.25" stroke-dasharray="5 3"/>
+                <text class="svg-name" x="508" y="160">SHARE POLICY</text>
+                <text class="svg-sub" x="508" y="181">not a generic Portfolio CTA</text>
+                <text class="svg-sub" x="508" y="199" fill="var(--accent-ink)">&#8594; Life and Group policy context, where nominees matter</text>
+                <text class="svg-edge" x="488" y="243">Kept in the product. Placed where the context makes them relevant.</text>
+                <text class="svg-edge" x="12" y="284" fill="var(--signal)">An offer never outranks the reason the user opened the screen.</text>
+              </svg>
+            </div>
+            <p class="v9-cap">The layer is secondary by default and promotes only when the screen has no primary task to offer. <b>Two placements were kept out of Portfolio entirely</b> and given a home where the context earns them.</p>
+          </figure>
           <p class="sc-notice"><strong>Good recommendation design is partly knowing what not to show.</strong></p>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v9-ov-9"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See what was excluded</span></span></button></p>
         </div>

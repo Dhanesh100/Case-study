@@ -796,6 +796,310 @@
 
   .comp img { display: block; width: 100%; height: auto; }
 
+  
+
+
+  .v5-context {
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0 0 16px;
+    padding: 13px 16px;
+    background: var(--ground-2);
+    border-radius: 9px;
+    max-width: 62ch;
+  }
+
+  .v5-context b { color: var(--ink); }
+
+
+
+  /* ══════════════════════════════════════════════════════════════
+     V9 — quieter surface
+     Separation by space and tone rather than hairlines. Scoped to
+     the V9 panel and its overlays so no other version is affected.
+     ══════════════════════════════════════════════════════════════ */
+
+  /* 1 · more air between sections, and no divider between them */
+  #panel-v9 .v5-secs { gap: clamp(72px, 9vw, 128px); }
+  #panel-v9 .v5-sec { border: none; }
+
+  /* 2 · sharper type contrast — bigger headline, calmer body */
+  #panel-v9 .v5-h1 { font-size: clamp(34px, 6vw, 76px); letter-spacing: -0.03em; line-height: 0.98; }
+  #panel-v9 .v5-title { font-size: clamp(23px, 3.2vw, 40px); letter-spacing: -0.022em; line-height: 1.06; }
+  #panel-v9 .v5-take { font-size: clamp(15.5px, 1.55vw, 17px); line-height: 1.62; color: var(--ink-2); }
+  #panel-v9 .v5-dek { font-size: clamp(17px, 1.9vw, 21px); line-height: 1.5; }
+
+  /* 3 · tables become grouped cards — no outer frame, no row rules */
+  #panel-v9 .v8-tbl {
+    background: var(--ground-2);
+    border-radius: 16px;
+    padding: 6px 20px;
+    margin: 24px 0;
+  }
+
+  #panel-v9 .v8-tbl table { border-collapse: collapse; }
+  #panel-v9 .v8-tbl th {
+    border-bottom: none;
+    padding: 16px 18px 10px 0;
+    color: var(--ink-3);
+    font-size: 8.5px;
+    letter-spacing: 0.16em;
+  }
+  #panel-v9 .v8-tbl td {
+    border-bottom: none;
+    box-shadow: inset 0 -1px 0 var(--rule-soft);
+    padding: 15px 18px 15px 0;
+  }
+  #panel-v9 .v8-tbl tr:last-child td { box-shadow: none; }
+  #panel-v9 .v9-rules tr.quiet td { background: transparent; }
+  #panel-v9 .v9-rules tr.quiet td:first-child { color: var(--accent-ink); }
+
+  /* 4 · evidence and branch lists — tone, not rules */
+  #panel-v9 .v4-evid { border: none; gap: 10px; display: grid; }
+  #panel-v9 .v4-ev {
+    border: none;
+    background: var(--ground-2);
+    border-radius: 13px;
+    padding: 16px 18px;
+  }
+  #panel-v9 .v4-ev dt { margin-bottom: 5px; }
+
+  #panel-v9 .v5-branch { border: none; gap: 10px; display: grid; }
+  #panel-v9 .v5-br {
+    border: none;
+    background: var(--ground-2);
+    border-radius: 13px;
+    padding: 16px 18px;
+  }
+  #panel-v9 .v5-br.key { background: var(--accent-soft); }
+
+  /* 5 · cards lose their outline, gain a ground */
+  #panel-v9 .v9-card {
+    border: none;
+    background: var(--ground-2);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+
+  #panel-v9 .v9-sum {
+    border: none;
+    background: var(--ground-2);
+    border-radius: 18px;
+    padding: 28px 30px;
+  }
+  #panel-v9 .v9-sum-l { border-top: none; gap: 4px; }
+  #panel-v9 .v9-sum-l > div { border-right: none; padding-top: 4px; }
+  #panel-v9 .v9-sum-f { border-top: none; padding-top: 4px; }
+  #panel-v9 .v5-context { background: transparent; padding: 0; }
+
+  /* 6 · notices read as asides, not boxes */
+  #panel-v9 .sc-notice {
+    border: none;
+    background: transparent;
+    padding: 0 0 0 16px;
+    box-shadow: inset 2px 0 0 var(--accent);
+    color: var(--ink-2);
+  }
+
+  /* 7 · the See link stops looking like a button */
+  #panel-v9 .sc-more {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: var(--accent);
+  }
+  #panel-v9 .sc-more .sc-plus {
+    background: var(--accent-soft);
+    border: none;
+    color: var(--accent-ink);
+  }
+  #panel-v9 .sc-more:hover .sc-more-k { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* 8 · diagrams and screens sit on a ground rather than in a frame */
+  #panel-v9 .v9-fig {
+    background: var(--ground-2);
+    border-radius: 18px;
+    padding: 26px 24px 20px;
+    margin: 26px 0;
+  }
+  #panel-v9 .v9-cap { margin-top: 16px; }
+  #panel-v9 .sc-shot .sc-frame { border: none; box-shadow: 0 10px 30px -12px rgba(8, 18, 54, 0.28); }
+
+  /* 9 · overlays — same treatment, addressed by id since they sit outside the panel */
+  [id^="v9-ov-"] .sc-ov-panel { border-radius: 20px; }
+  [id^="v9-ov-"] .sc-ov-head { border-bottom: none; padding-bottom: 6px; }
+  [id^="v9-ov-"] .sc-sec { border: none; padding: 0 0 26px; }
+  [id^="v9-ov-"] .sc-sec h4 { margin-bottom: 10px; }
+
+  /* ══════════ V9 — richer visuals ══════════ */
+  .v9-fig { margin: 22px 0; }
+  .v9-fig .v9-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .v9-fig svg { display: block; width: 100%; min-width: 700px; height: auto; }
+  .v9-cap { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); margin: 12px 0 0; max-width: 66ch; }
+  .v9-cap b { color: var(--ink-2); }
+
+  /* signal-source rail on the rule table */
+  .v9-rules table { border-collapse: separate; border-spacing: 0; }
+  .v9-rules td:first-child { position: relative; padding-left: 15px; }
+  .v9-rules tr td:first-child::before {
+    content: ''; position: absolute; left: 0; top: 11px; bottom: 11px;
+    width: 3px; border-radius: 2px; background: var(--rule);
+  }
+  .v9-rules tr.s-onb td:first-child::before  { background: #1f43ff; }
+  .v9-rules tr.s-pol td:first-child::before  { background: #17724f; }
+  .v9-rules tr.s-cr  td:first-child::before  { background: #a4501e; }
+  .v9-rules tr.s-fam td:first-child::before  { background: #7a3fb8; }
+  .v9-rules tr.s-non td:first-child::before  { background: var(--ink-3); }
+  .v9-rules tr.quiet td { background: var(--accent-soft); }
+
+  .v9-key { display: flex; flex-wrap: wrap; gap: 16px; margin: 14px 0 0; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  .v9-key span { display: flex; align-items: center; gap: 7px; }
+  .v9-key i { width: 14px; height: 3px; border-radius: 2px; display: block; }
+
+  /* what-changed cards */
+  .v9-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 22px 0; }
+  @media (max-width: 760px) { .v9-cards { grid-template-columns: minmax(0, 1fr); } }
+  .v9-card { border: 1px solid var(--rule); border-radius: 11px; padding: 18px 20px; background: var(--surface); display: flex; flex-direction: column; gap: 9px; }
+  .v9-card dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  .v9-card dd { margin: 0; font-size: 15px; line-height: 1.48; color: var(--ink-2); }
+  .v9-card dd b { color: var(--ink); }
+
+  /* ══════════ V9 — one-screen summary ══════════ */
+  .v9-sum {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 24px 26px;
+    margin: 0 0 26px;
+  }
+
+  .v9-sum-k {
+    font-family: var(--display);
+    font-size: clamp(19px, 2.2vw, 25px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin: 0 0 18px;
+    text-wrap: balance;
+  }
+
+  .v9-sum-l { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 0; border-top: 1px solid var(--rule-soft); }
+  .v9-sum-l > div { padding: 15px 20px 16px 0; border-right: 1px solid var(--rule-soft); display: flex; flex-direction: column; gap: 5px; }
+  .v9-sum-l > div:last-child { border-right: none; padding-right: 0; }
+  .v9-sum-l dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--accent); }
+  .v9-sum-l dd { margin: 0; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+
+  @media (max-width: 760px) {
+    .v9-sum-l { grid-template-columns: minmax(0, 1fr); }
+    .v9-sum-l > div { border-right: none; border-bottom: 1px solid var(--rule-soft); padding-right: 0; }
+    .v9-sum-l > div:last-child { border-bottom: none; }
+  }
+
+  .v9-sum-f { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--rule-soft); font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
+  .v9-sum-f b { color: var(--ink); }
+
+  /* ══════════ V8 — five slides ══════════ */
+  .v8-deck { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+  .v8-slide {
+    min-height: 82vh;
+    display: flex;
+    align-items: center;
+    padding: 56px 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+
+  .v8-slide:first-child { border-top: none; padding-top: 30px; }
+  .v8-in { width: 100%; display: flex; flex-direction: column; gap: 18px; }
+
+  .v8-kicker {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 0;
+    display: flex;
+    gap: 10px;
+  }
+
+  .v8-kicker b { color: var(--accent); font-weight: 500; }
+
+  .v8-claim {
+    font-family: var(--display);
+    font-size: clamp(30px, 4.6vw, 54px);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+    margin: 0;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .v8-line {
+    font-size: clamp(16.5px, 1.8vw, 19px);
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 58ch;
+  }
+
+  .v8-vis { margin: 6px 0 0; }
+  .v8-vis .v8-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .v8-vis svg { display: block; width: 100%; min-width: 700px; height: auto; }
+
+  .v8-shots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 900px) { .v8-shots { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .v8-shots { grid-template-columns: minmax(0, 1fr); } }
+
+  .v8-shot { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+
+  .v8-shot .sc-frame {
+    width: 100%;
+    height: 340px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--ground-2);
+  }
+
+  .v8-shot .sc-frame img { display: block; width: 100%; height: auto; }
+  .v8-shot figcaption { font-size: 13px; line-height: 1.45; color: var(--ink-3); }
+  .v8-shot figcaption b { display: block; color: var(--ink); font-size: 14px; margin-bottom: 2px; }
+
+  .v8-chips { display: flex; flex-wrap: wrap; gap: 0; margin: 4px 0 0; border-top: 1px solid var(--rule); }
+  .v8-chips > div { flex: 1 1 210px; padding: 15px 20px 16px 0; display: flex; flex-direction: column; gap: 4px; }
+  .v8-chips dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+  .v8-chips dd { margin: 0; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+  .v8-chips.stat dt { font-family: var(--display); font-size: 40px; letter-spacing: -0.02em; color: var(--ink); text-transform: none; line-height: 1; }
+  .v8-chips.stat dd { font-size: 13.5px; color: var(--ink-3); }
+
+  .v8-tbl { overflow-x: auto; }
+  .v8-tbl table { border-collapse: collapse; width: 100%; min-width: 660px; font-size: 14.5px; }
+  .v8-tbl th {
+    text-align: left; font-family: var(--mono); font-size: 9px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3); font-weight: 500;
+    padding: 0 14px 9px 0; border-bottom: 1px solid var(--rule);
+  }
+  .v8-tbl td { padding: 13px 14px 13px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.42; color: var(--ink-2); }
+  .v8-tbl td:first-child { color: var(--ink); }
+  .v8-tbl td b { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); display: block; margin-bottom: 3px; font-weight: 500; }
+  .v8-tbl tr.quiet td { background: var(--accent-soft); }
+
+  .v8-tiers { display: flex; flex-direction: column; gap: 10px; }
+  .v8-tier { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 20px; align-items: center; }
+  @media (max-width: 640px) { .v8-tier { grid-template-columns: minmax(0, 1fr); gap: 7px; } }
+  .v8-tier p { margin: 0; font-size: 13.5px; color: var(--ink-3); line-height: 1.35; }
+  .v8-tier p b { display: block; font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--ink); }
+  .v8-bar { display: flex; flex-wrap: wrap; gap: 7px; padding: 11px 13px; border-radius: 9px; }
+  .v8-bar span { font-family: var(--mono); font-size: 11.5px; color: var(--ink); }
+  .v8-b1 { background: var(--accent-soft); border: 1px solid var(--accent); }
+  .v8-b2 { background: var(--ground-2); border: 1px solid var(--rule); }
+  .v8-b3 { background: transparent; border: 1px dashed var(--rule); }
+
+  .v8-note { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 0; }
+
   /* ══════════ CHAINS / RULES ══════════ */
   .rule-line {
     display: flex;
