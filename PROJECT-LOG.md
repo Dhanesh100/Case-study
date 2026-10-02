@@ -490,3 +490,82 @@ Single self-contained file. No build step, no dependencies, no external requests
 | 20 Aug 2026 | Real screens exported from Figma and embedded, replacing 10 of 12 CSS mockups. Rating scale, KYP tab, contextual coverage checks and reasoned buy suggestions all corrected against the shipped UI. |
 | 20 Aug 2026 | Screen questions answered. PRO confirmed out of scope and distinct from Advisor Portfolio; all figures confirmed placeholders. KYP rebuilt as the real rating band; invented `Avg. KYP` stat removed. |
 | 20 Aug 2026 | Reference screens reviewed. Three narrative claims found unsupported and logged; KYP rating format, member-card structure and category taxonomy corrections identified. Screens pending as files. |
+
+---
+
+## 16. V10 — the rule set and the sequence (2 Oct 2026)
+
+### What triggered it
+
+Dhanesh shared two annotation sheets of worked user states and a Figma link to the
+**"pitch logic - bottom section"** node
+(`x1YQ5nU9BirfL1IW8CHd20`, node `3526:22821`), with the instruction to build a V10
+carrying real examples, to look through that node for other use cases worth showing,
+and to **remove content that now repeats.**
+
+### What the Figma node actually contained
+
+Read via `get_metadata` (text layers are named after their content) plus screenshots of
+`4919:28398` and `3659:21849`. Everything below is quoted or paraphrased from that file —
+none of it was inferred.
+
+**Individual portfolio — the conditions**
+
+| Condition | Rule as written in Figma |
+|---|---|
+| No policy, coverage score not done | Pitch health and life, the basic essential policies. Insurance on Card stays at the top until a card is added. Inactive policy card at the bottom. |
+| No policy, coverage score done | Pitch plans based on the score results. Display the exact coverage required and the approximate premium. |
+| Has basic policies (health, motor) | Advise life, super top-up and personal accident. Hide the inactive section when there are none. |
+| Declared health/life/motor, added one | Nudge the remaining policy types. Once any policy is added, the download section becomes active. |
+| Declared health/life, added one | Same, with separate copy for "single policy remaining" and "multiple policies remaining". |
+| Declared health and motor, all added | Pitch life and super top-up. If only health was added, nudge to add motor. |
+| Card added | Insurance on Card is hidden once a card is added. If all declared policies are added, the Add Policy pitch stays hidden. |
+
+**The sequence rules** — four text layers beside node `4919:28398`:
+
+- "Policy on card is always on top"
+- "buy and add policy is in the middle part"
+- "Download is second last if there is inactive policy otherwise it will be last"
+- "if there is Inactive policy then it is always at the bottom"
+
+**Family overview — five states** (nodes `3659:21048`–`3659:21056`): Add Family Member is
+the primary action whenever no family member exists, and a secondary card once one does;
+Download activates on the first policy; the inactive-policy card sits at the bottom or is
+hidden.
+
+**Pitch card copy, as shipped** — Insurance on Card, Buy Health (₹200/mo), Buy Life
+(₹80/mo), Buy Super Top-up (₹299/mo), Buy HospiCash (₹35 one time), Buy Personal Accident
+(₹100/mo), Buy Home cover (₹140/mo), Download portfolio, Found 2 inactive policies.
+
+### What V10 added
+
+| Section | Why it is new, not a restatement |
+|---|---|
+| **04 · The rule set** | Six real states as worked-example cards, each with primary action, pitch and reasoning. Replaces assertion with the thing itself. |
+| **05 · The sequence** | The fixed four-slot order, as a diagram plus the real card copy. Answers the strongest objection to a recommendation layer — that it makes a screen unpredictable. Nothing in V9 covered this. |
+| **07 · Family** | Upgraded from two branches to the real 2×2: policy added × family member added. |
+
+### What V10 removed as repetition
+
+Three V9 sections were all saying *state → response* at different grains:
+
+- **V9 §04 Experience** — four screens with one-line captions, no rule stated
+- **V9 §05 Personalisation** — the CoverRisk before/after, now a callout inside §04
+- **V9 §10 Components** — the edge-case table, now inside the §04 *See more*
+
+Twelve sections became eleven, with roughly double the evidence per section.
+
+### Claims deliberately not made
+
+- Nobody is credited with *requesting* the kept-out placements — the log records the
+  Advisor banner being **declined**, not asked for.
+- The pitch card copy is quoted as what the cards say. It is **not** presented as
+  Dhanesh's copywriting.
+- No engagement, conversion or usage figure appears anywhere in V10.
+
+### Still open
+
+- Body font — Charter serif vs a system sans. Unresolved; the serif is deliberate.
+- The five-colour signal rail — helps scanning, works against a calm surface.
+- Real visit-frequency numbers, dead-click counts, and the dead-click baseline export.
+  Session-replay retention is 30–90 days, so this one is time-sensitive.

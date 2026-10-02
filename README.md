@@ -9,8 +9,8 @@ HTML file: no build step, no dependencies, no external requests.
 
 | # | Document | Read it | Source |
 |---|---|---|---|
-| 1 | **CoverSure Policy Portfolio** — case study, three versions | [Scan](https://dhanesh100.github.io/Case-study/#scan) · [Compact](https://dhanesh100.github.io/Case-study/#compact) · [Full study](https://dhanesh100.github.io/Case-study/#full) | [`index.html`](index.html) |
-| 1a | **Copy document (V9)** — every word on the page, surface and See more | — | [`COPY-V9.md`](COPY-V9.md) |
+| 1 | **CoverSure Policy Portfolio** — case study, ten versions in one file | [V10, current](https://dhanesh100.github.io/Case-study/#v10) · [Scan](https://dhanesh100.github.io/Case-study/#scan) · [Compact](https://dhanesh100.github.io/Case-study/#compact) · [Full study](https://dhanesh100.github.io/Case-study/#full) | [`index.html`](index.html) |
+| 1a | **Copy document (V10)** — every word on the page, generated from the markup | — | [`COPY-V10.md`](COPY-V10.md) · [`COPY-V9.md`](COPY-V9.md) · [`build-copy.py`](build-copy.py) |
 | 1b | **Scan version, standalone** — the same thing as one sendable file | [Read](https://dhanesh100.github.io/Case-study/scan/) | [`scan/`](scan/) |
 | 2 | **Portfolio Measurement Plan** — how to test whether the strategy works | [Read](https://dhanesh100.github.io/Case-study/measurement/) | [`measurement/`](measurement/) |
 | 3 | **Tiimo teardown** — competitive product design analysis | [Read](https://dhanesh100.github.io/Case-study/tiimo-teardown/) | [`tiimo-teardown/`](tiimo-teardown/) |
@@ -33,14 +33,19 @@ So the question changed from *"how do we promote these features?"* to *"when doe
 feature become useful to this user?"* — which turns promotional slots into **conditions**
 that can be evaluated against a person's actual portfolio.
 
-Published as three tellings of the same argument, switchable by tabs and individually
-shareable:
+Published as several tellings of the same argument, switchable by tabs and individually
+shareable by URL fragment:
 
 | Version | Reading time | Approach |
 |---|---|---|
-| **Scan** — `#scan` | ~3 minutes | Six decisions, each a transferable principle with a screen as evidence. The reasoning behind any one opens in an overlay, so depth is opt-in and the scan stays short. |
+| **V10** — `#v10` | ~4 minutes | **Current.** Eleven sections. Leads with the engine's actual rule set — six real user states, each with its primary action, its pitch and the reasoning — then the fixed four-slot order the bottom section always follows. |
+| **V9** — `#v9` | ~4 minutes | Twelve sections. The engine argued from first principles, before the rule set was documented. |
+| **V8** — `#v8` | ~90 seconds | Five slides, minimal on the surface, everything else behind *See more*. |
+| **Scan** — `#scan` | ~3 minutes | Six decisions, each a transferable principle with a screen as evidence. |
 | **Compact** — `#compact` | ~4 minutes | Visual-led. Five skill points, each carried by a diagram. |
 | **Full study** — `#full` | ~13 minutes | Narrative. Six proofs, the full reasoning. |
+
+V4–V7 remain in the file as an archive of how the argument developed.
 
 The Scan version is also published on its own at [`scan/`](scan/) — a single self-contained
 file, for sending to someone directly rather than as a tab among three.
