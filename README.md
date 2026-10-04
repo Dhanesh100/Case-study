@@ -15,7 +15,8 @@ HTML file: no build step, no dependencies, no external requests.
 | 2 | **Portfolio Measurement Plan** — how to test whether the strategy works | [Read](https://dhanesh100.github.io/Case-study/measurement/) | [`measurement/`](measurement/) |
 | 3 | **Tiimo teardown** — competitive product design analysis | [Read](https://dhanesh100.github.io/Case-study/tiimo-teardown/) | [`tiimo-teardown/`](tiimo-teardown/) |
 | 4 | **Teardown analysis brief** — the reusable prompt behind #3 | — | [`ANALYSIS-BRIEF.md`](tiimo-teardown/ANALYSIS-BRIEF.md) |
-| 5 | **Project log** — feedback, decisions, corrections, open items | — | [`PROJECT-LOG.md`](PROJECT-LOG.md) |
+| 5 | **Context brief** — read first: standing instructions, product facts, what may not be claimed | — | [`CONTEXT.md`](CONTEXT.md) |
+| 6 | **Project log** — chronological record: feedback, decisions, corrections, deployment | — | [`PROJECT-LOG.md`](PROJECT-LOG.md) |
 
 ---
 

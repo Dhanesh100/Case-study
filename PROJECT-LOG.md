@@ -396,15 +396,16 @@ Stated plainly so nothing here is mistaken for product data.
 
 ## 11. Open items
 
-Everything blocking earlier has been resolved. What remains:
+Current open items live in **[`CONTEXT.md` §9](CONTEXT.md)**, which is the file to read
+first. Kept here for the record, superseded:
 
-1. **Real CoverRisk figures.** The recommended cover, premium and existing-cover values in the before/after card are still illustrative. This is the last invented number on the page, and it sits in the largest element of the Compact version.
-2. **Is the refined share-policy line live anywhere?** The exported policy screen shows the looser shipped copy. Proof 03 currently carries a caveat saying the refined line is still in flight — removable if it has shipped on a surface that was not exported.
-3. **Compact cover: diagram or screenshot?** It opens on the reframe diagram with no UI. A deliberate call, and precisely the kind of thing the A/B test exists to settle.
-4. **Pick a version.** Once peer feedback is in, either consolidate on one telling or keep both with a clear default.
-5. **Public visibility of real product screens.** Decided and live, but revisitable — noted here so it stays a conscious choice rather than an accident.
-
----
+- *"Pick a version"* and *"the two versions"* date from the three-version era. There are
+  now ten versions in one file, V10 is the default, and V4–V7 are a deliberate archive of
+  how the argument developed.
+- *"Real CoverRisk figures"* — still open. All figures in the screens remain placeholders,
+  which is stated on the page itself.
+- *"Is the refined share-policy line live?"* — still open.
+- *"Public visibility of real product screens"* — decided and live, revisitable.
 
 ## 12. Companion documents
 
