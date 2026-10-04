@@ -16,6 +16,7 @@ HTML file: no build step, no dependencies, no external requests.
 | 3 | **Tiimo teardown** — competitive product design analysis | [Read](https://dhanesh100.github.io/Case-study/tiimo-teardown/) | [`tiimo-teardown/`](tiimo-teardown/) |
 | 4 | **Teardown analysis brief** — the reusable prompt behind #3 | — | [`ANALYSIS-BRIEF.md`](tiimo-teardown/ANALYSIS-BRIEF.md) |
 | 5 | **Context brief** — read first: standing instructions, product facts, what may not be claimed | — | [`CONTEXT.md`](CONTEXT.md) |
+| 5a | **Working agreement** — the session protocol, loaded automatically by Claude Code | — | [`CLAUDE.md`](CLAUDE.md) · [`sync.sh`](sync.sh) |
 | 6 | **Project log** — chronological record: feedback, decisions, corrections, deployment | — | [`PROJECT-LOG.md`](PROJECT-LOG.md) |
 
 ---

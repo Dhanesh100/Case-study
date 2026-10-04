@@ -4,7 +4,25 @@
 touching this repo, so Dhanesh does not have to explain it again. `PROJECT-LOG.md` is the
 chronological record of what happened. **This file is the standing brief.**
 
-Last updated: 4 October 2026 · current version: **V10**
+Last updated: 5 October 2026 · current version: **V10**
+
+---
+
+## 0 · The session protocol
+
+So that the project never has to be re-explained:
+
+| When | Do this |
+|---|---|
+| **Session starts** | `git pull --ff-only origin main`, then read this file. `./sync.sh` does both and prints what is open. |
+| **Any change is made** | Commit and push immediately, without being asked. Then verify against the live URL, not the Pages API. |
+| **Dhanesh states a durable fact, corrects a framing, or settles an open question** | Write it into this file **in the same turn**. If it only lives in the conversation, it is lost. |
+
+[`CLAUDE.md`](CLAUDE.md) carries the same protocol and is loaded automatically at the start
+of every session in this directory, so it applies whether or not anyone remembers to say so.
+
+**What this does not cover.** A session started outside this directory will not auto-load
+`CLAUDE.md`. If that happens, pointing at `CONTEXT.md` is the whole handoff.
 
 ---
 
