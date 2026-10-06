@@ -30,7 +30,7 @@ def panel(name):
 
 
 p = panel(VER)
-hero = p[:p.index('<section class="v5-sec">')]   # hero only — keeps the
+hero = p[:re.search(r'<section class="v5-sec"', p).start()]   # hero only — keeps the
                                                # summary regex from running on
                                                # into the sections below it
 out = []
@@ -73,7 +73,7 @@ overlays = {}
 for m in re.finditer(r'<div class="sc-ov" id="(%s-ov-\d+)"[\s\S]*?\n</div>\n' % VER, doc):
     overlays[m.group(1)] = m.group(0)
 
-for sec in re.finditer(r'<section class="v5-sec">([\s\S]*?)</section>', p):
+for sec in re.finditer(r'<section class="v5-sec"[^>]*>([\s\S]*?)</section>', p):
     s = sec.group(1)
     tag = re.search(r'<p class="v5-tag">(\d+)<b>([\s\S]*?)</b>', s)
     h2 = re.search(r'<h2 class="v5-title">([\s\S]*?)</h2>', s)

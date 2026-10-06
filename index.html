@@ -2535,6 +2535,48 @@
   #panel-v10 .sc-shot .sc-frame {
     border-radius: 16px; box-shadow: 0 4px 20px -6px rgba(0, 0, 0, 0.13);
   }
+
+  /* ══════════ V10 — wayfinding ══════════
+     Eleven sections is more than a reader holds in their head.  The tag
+     column sticks while its own section is in view, and a live index
+     floats in the right gutter on wide screens, so position in the
+     argument stays visible without scrolling back.
+     ═══════════════════════════════════════════════════════════════ */
+  #panel-v10 .v5-tag { position: sticky; top: 78px; align-self: start; }
+
+  .v10-idx { display: none; }
+  @media (min-width: 1280px) {
+    .v10-idx { display: block; position: fixed; z-index: 30;
+               top: 50%; right: 18px; transform: translateY(-50%); }
+  }
+  /* at rest the rail is only numbers wide, so it never reaches the text
+     column; the labels open on hover and are allowed to overlay, the way
+     a tooltip does.  The name of the current section is already carried
+     by the sticky tag in the left gutter. */
+  .v10-idx ol {
+    list-style: none; margin: 0; padding: 5px; display: grid; gap: 1px;
+    border-radius: 980px; background: transparent;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .v10-idx:hover ol {
+    background: var(--surface);
+    box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.16);
+  }
+  .v10-idx a {
+    display: flex; align-items: center; justify-content: flex-end; gap: 9px;
+    padding: 6px 11px; border-radius: 980px; text-decoration: none;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em;
+    color: var(--ink-3); white-space: nowrap;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .v10-idx a span { max-width: 0; overflow: hidden; opacity: 0; text-transform: uppercase;
+                    transition: max-width 0.3s ease, opacity 0.2s ease; }
+  .v10-idx a i { font-style: normal; opacity: 0.75; }
+  .v10-idx:hover a span { max-width: 190px; opacity: 1; }
+  .v10-idx a:hover { color: var(--ink); background: var(--ground-2); }
+  .v10-idx a[aria-current="step"] { color: var(--accent); background: var(--accent-soft); }
+  .v10-idx a[aria-current="step"] i { opacity: 1; font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) { .v10-idx a, .v10-idx a span { transition: none; } }
 </style>
 </head>
 <body>
@@ -6089,11 +6131,27 @@
     </div>
   </header>
 
+  <nav class="v10-idx" aria-label="Case study sections">
+    <ol>
+        <li><a href="#v10-s1"><i>01</i><span>The trigger</span></a></li>
+        <li><a href="#v10-s2"><i>02</i><span>The opportunity</span></a></li>
+        <li><a href="#v10-s3"><i>03</i><span>The engine</span></a></li>
+        <li><a href="#v10-s4"><i>04</i><span>The rule set</span></a></li>
+        <li><a href="#v10-s5"><i>05</i><span>The sequence</span></a></li>
+        <li><a href="#v10-s6"><i>06</i><span>Prioritisation</span></a></li>
+        <li><a href="#v10-s7"><i>07</i><span>Family</span></a></li>
+        <li><a href="#v10-s8"><i>08</i><span>Policy understanding</span></a></li>
+        <li><a href="#v10-s9"><i>09</i><span>Restraint</span></a></li>
+        <li><a href="#v10-s10"><i>10</i><span>What changed</span></a></li>
+        <li><a href="#v10-s11"><i>11</i><span>My role</span></a></li>
+    </ol>
+  </nav>
+
   <div class="sc-wrap">
     <div class="v5-secs">
 
       
-<section class="v5-sec">
+<section class="v5-sec" id="v10-s1">
         <p class="v5-tag">01<b>The trigger</b></p>
         <div class="v5-body">
           <h2 class="v5-title">A dead-click issue exposed a bigger opportunity.</h2>
@@ -6149,7 +6207,7 @@
       </section>
 
       
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s2">
         <p class="v5-tag">02<b>The opportunity</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Portfolio already had the traffic. The rest of the product already had the context.</h2>
@@ -6193,7 +6251,7 @@
       </section>
 
       
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s3">
         <p class="v5-tag">03<b>The engine</b></p>
         <div class="v5-body">
           <h2 class="v5-title">I built a contextual recommendation engine, not a banner system.</h2>
@@ -6267,7 +6325,7 @@
       </section>
 
       
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s4">
         <p class="v5-tag">04<b>The rule set</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Here is the actual rule set, not a description of one.</h2>
@@ -6361,7 +6419,7 @@
         </div>
       </section>
 
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s5">
         <p class="v5-tag">05<b>The sequence</b></p>
         <div class="v5-body">
           <h2 class="v5-title">The contents change. The slots do not.</h2>
@@ -6426,7 +6484,7 @@
         </div>
       </section>
 
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s6">
         <p class="v5-tag">06<b>Prioritisation</b></p>
         <div class="v5-body">
           <h2 class="v5-title">The engine needed a product priority, not just personalisation.</h2>
@@ -6465,7 +6523,7 @@
       </section>
 
       
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s7">
         <p class="v5-tag">07<b>Family</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Family completeness is a signal, not a display.</h2>
@@ -6508,7 +6566,7 @@
         </div>
       </section>
 
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s8">
         <p class="v5-tag">08<b>Policy understanding</b></p>
         <div class="v5-body">
           <h2 class="v5-title">KYP became part of the policy context.</h2>
@@ -6523,7 +6581,7 @@
       </section>
 
       
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s9">
         <p class="v5-tag">09<b>Restraint</b></p>
         <div class="v5-body">
           <h2 class="v5-title">Contextual does not mean everything, everywhere.</h2>
@@ -6574,7 +6632,7 @@
       </section>
 
       
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s10">
         <p class="v5-tag">10<b>What changed</b></p>
         <div class="v5-body">
           <h2 class="v5-title">What changed in the product.</h2>
@@ -6590,7 +6648,7 @@
       </section>
 
       
-      <section class="v5-sec">
+      <section class="v5-sec" id="v10-s11">
         <p class="v5-tag">11<b>My role</b></p>
         <div class="v5-body">
           <h2 class="v5-title">I built the system behind what appears, when and why.</h2>
@@ -8879,6 +8937,50 @@
     wireZoom('panel-v7');
   })();
 
+</script>
+
+<script>
+  /* V10 section index — marks the section currently being read. */
+  (function () {
+    'use strict';
+    var nav = document.querySelector('.v10-idx');
+    if (!nav || !('IntersectionObserver' in window)) { return; }
+    var links = [].slice.call(nav.querySelectorAll('a'));
+    var secs = links.map(function (a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    });
+    if (secs.indexOf(null) !== -1) { return; }
+
+    function mark(i) {
+      links.forEach(function (a, n) {
+        if (n === i) { a.setAttribute('aria-current', 'step'); }
+        else { a.removeAttribute('aria-current'); }
+      });
+    }
+
+    var ratio = {};
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { ratio[e.target.id] = e.intersectionRatio; });
+      var best = -1, top = 0;
+      secs.forEach(function (s, i) {
+        var r = ratio[s.id] || 0;
+        if (r > top) { top = r; best = i; }
+      });
+      if (best >= 0) { mark(best); }
+    }, { threshold: [0, 0.15, 0.4, 0.75, 1], rootMargin: '-72px 0px -45% 0px' });
+
+    secs.forEach(function (s) { io.observe(s); });
+    mark(0);
+
+    links.forEach(function (a) {
+      a.addEventListener('click', function (ev) {
+        var t = document.getElementById(a.getAttribute('href').slice(1));
+        if (!t) { return; }
+        ev.preventDefault();
+        t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }());
 </script>
 </body>
 </html>

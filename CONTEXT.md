@@ -250,3 +250,19 @@ rather than outlined. Separation is by space and tone, not by hairline.
 hardcoded hex values outside the token blocks. They were left alone — those versions are an
 archive, and rewriting them risks breaking a look that was tuned by hand. The theme audit
 flags them as a known warning, not a regression.
+
+### Wayfinding — added 7 October 2026
+
+Eleven sections is more than a reader holds in their head, so V10 gained two devices:
+
+- **The section tag sticks** while its own section is in view, so the number and name stay
+  in the left gutter as you read.
+- **A live section index** floats in the right gutter above 1280px. At rest it is only
+  numerals wide, so it never reaches the text column; labels open on hover and are allowed
+  to overlay, the way a tooltip does. The active section is tracked with
+  `IntersectionObserver` and marked `aria-current="step"`. Below 1280px it is hidden
+  entirely rather than crowding a narrow screen.
+
+**Note for future edits:** V10 sections now carry `id="v10-s1"`…`id="v10-s11"`. Anything
+matching on the literal string `<section class="v5-sec">` will miss them — match
+`<section class="v5-sec"[^>]*>` instead. `build-copy.py` was fixed for exactly this.
