@@ -12,26 +12,26 @@
 <style>
   /* ══════════ TOKENS ══════════ */
   :root {
-    --ground:      #f2f5fa;
-    --ground-2:    #e8edf7;
+    --ground:      #ffffff;
+    --ground-2:    #f5f5f7;
     --surface:     #ffffff;
-    --ink:         #0c1633;
-    --ink-2:       #4a5878;
-    --ink-3:       #7c88a5;
-    --rule:        #d3dcec;
-    --rule-soft:   #e4eaf5;
-    --accent:      #1f43ff;
-    --accent-soft: #e6ebff;
-    --accent-ink:  #1631c4;
-    --signal:      #c9331f;
-    --signal-soft: #fbeae7;
-    --stage:       #0a1236;
-    --stage-ink:   #c9d4f2;
-    --stage-rule:  #22305e;
+    --ink:         #1d1d1f;
+    --ink-2:       #424245;
+    --ink-3:       #6e6e73;
+    --rule:        #d2d2d7;
+    --rule-soft:   #e8e8ed;
+    --accent:      #0071e3;
+    --accent-soft: #e9f1fc;
+    --accent-ink:  #0066cc;
+    --signal:      #bf4800;
+    --signal-soft: #fdf2ea;
+    --stage:       #000000;
+    --stage-ink:   #f5f5f7;
+    --stage-rule:  #424245;
 
-    --display: "Avenir Next Condensed", "Avenir Next", "Helvetica Neue", "Arial Narrow", Arial, sans-serif;
-    --body:    Charter, "Charter Roman", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    --mono:    "SF Mono", ui-monospace, Menlo, Consolas, "Roboto Mono", monospace;
+    --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --body:    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono:    ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
     --col: 60ch;
     --gutter: 138px;
@@ -39,42 +39,42 @@
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ground:      #080d1c;
-      --ground-2:    #0d1430;
-      --surface:     #121a35;
-      --ink:         #e9edfa;
-      --ink-2:       #a4b1ce;
-      --ink-3:       #6e7c9e;
-      --rule:        #222c4e;
-      --rule-soft:   #18203c;
-      --accent:      #8296ff;
-      --accent-soft: #182147;
-      --accent-ink:  #a6b4ff;
-      --signal:      #ff7f6d;
-      --signal-soft: #2c1512;
-      --stage:       #05091a;
-      --stage-ink:   #b8c5e8;
-      --stage-rule:  #1b2748;
+      --ground:      #000000;
+      --ground-2:    #1d1d1f;
+      --surface:     #1d1d1f;
+      --ink:         #f5f5f7;
+      --ink-2:       #a1a1a6;
+      --ink-3:       #86868b;
+      --rule:        #424245;
+      --rule-soft:   #2c2c2e;
+      --accent:      #2997ff;
+      --accent-soft: #10243d;
+      --accent-ink:  #2997ff;
+      --signal:      #ff9f0a;
+      --signal-soft: #2a1c0a;
+      --stage:       #000000;
+      --stage-ink:   #f5f5f7;
+      --stage-rule:  #424245;
     }
   }
 
   :root[data-theme="dark"] {
-    --ground:      #080d1c;
-    --ground-2:    #0d1430;
-    --surface:     #121a35;
-    --ink:         #e9edfa;
-    --ink-2:       #a4b1ce;
-    --ink-3:       #6e7c9e;
-    --rule:        #222c4e;
-    --rule-soft:   #18203c;
-    --accent:      #8296ff;
-    --accent-soft: #182147;
-    --accent-ink:  #a6b4ff;
-    --signal:      #ff7f6d;
-    --signal-soft: #2c1512;
-    --stage:       #05091a;
-    --stage-ink:   #b8c5e8;
-    --stage-rule:  #1b2748;
+    --ground:      #000000;
+    --ground-2:    #1d1d1f;
+    --surface:     #1d1d1f;
+    --ink:         #f5f5f7;
+    --ink-2:       #a1a1a6;
+    --ink-3:       #86868b;
+    --rule:        #424245;
+    --rule-soft:   #2c2c2e;
+    --accent:      #2997ff;
+    --accent-soft: #10243d;
+    --accent-ink:  #2997ff;
+    --signal:      #ff9f0a;
+    --signal-soft: #2a1c0a;
+    --stage:       #000000;
+    --stage-ink:   #f5f5f7;
+    --stage-rule:  #424245;
   }
 
   /* ══════════ BASE ══════════ */
@@ -85,9 +85,11 @@
     background: var(--ground);
     color: var(--ink);
     font-family: var(--body);
-    font-size: 17.5px;
-    line-height: 1.6;
+    font-size: 17px;
+    line-height: 1.47;
+    letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
@@ -128,8 +130,8 @@
     appearance: none;
     background: var(--surface);
     border: 1px solid var(--rule);
-    border-radius: 7px;
-    padding: 8px 15px;
+    border-radius: 980px;
+    padding: 8px 16px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -2484,6 +2486,54 @@
     caption-side: top; text-align: left; padding: 10px 0 14px;
     font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em;
     text-transform: uppercase; color: var(--ink-3);
+  }
+
+  /* ══════════ V10 — Apple design language ══════════
+     SF Pro, Apple's neutral greys and the wider type ramp are set on the
+     global tokens so every version stays coherent.  What follows is the
+     V10-only polish: a bigger optical headline, pill affordances, larger
+     corner radii, and separation by tone rather than by line.
+     ═══════════════════════════════════════════════════════════════ */
+  #panel-v10 .v5-h1 {
+    font-size: clamp(36px, 6.4vw, 80px); letter-spacing: -0.028em;
+    line-height: 1.04; font-weight: 600; max-width: 17ch;
+  }
+  #panel-v10 .v5-title {
+    font-size: clamp(24px, 3.4vw, 40px); letter-spacing: -0.022em;
+    line-height: 1.08; font-weight: 600; max-width: 22ch;
+  }
+  #panel-v10 .v5-take { line-height: 1.52; letter-spacing: -0.012em; }
+  /* context and dek read as one standfirst block, not small-then-large */
+  #panel-v10 .v5-context,
+  #panel-v10 .v5-dek {
+    font-size: clamp(17px, 1.75vw, 21px); line-height: 1.47;
+    letter-spacing: -0.014em; color: var(--ink-2); max-width: 58ch;
+  }
+  #panel-v10 .v5-context b,
+  #panel-v10 .v5-dek b { color: var(--ink); font-weight: 600; }
+  #panel-v10 .v5-dek {
+    font-size: clamp(18px, 2vw, 23px); line-height: 1.45;
+    letter-spacing: -0.014em; color: var(--ink-2);
+  }
+
+  /* cards and panels: Apple's larger corner radius, no outline */
+  #panel-v10 .v10-exi,
+  #panel-v10 .v9-fig,
+  #panel-v10 .v8-tbl,
+  #panel-v10 .v9-sum { border-radius: 18px; }
+  #panel-v10 .v4-ev,
+  #panel-v10 .ba-card { border-radius: 14px; }
+  #panel-v10 .ba-card { border: none; }
+  #panel-v10 .ba-card.dead { background: var(--signal-soft); }
+  #panel-v10 .ba-card.live { background: var(--accent-soft); }
+
+  /* the See-more affordance reads as an Apple text link, not a button */
+  #panel-v10 .sc-more { border-radius: 980px; color: var(--accent); font-size: 15px; }
+  #panel-v10 .sc-more .sc-more-k { text-transform: none; letter-spacing: -0.01em; }
+
+  /* screens sit on tone, lifted rather than outlined */
+  #panel-v10 .sc-shot .sc-frame {
+    border-radius: 16px; box-shadow: 0 4px 20px -6px rgba(0, 0, 0, 0.13);
   }
 </style>
 </head>

@@ -209,12 +209,44 @@ panel's marker breaks when that panel is hidden. Give every panel its own prefix
 1. **Annotation cards 03 and 04** read almost identically ("show health and life with
    recommended cover and premium as per risk report"). They were merged in V10. If they are
    genuinely different states, what separates them?
-2. **Body font** — Charter serif, or a system sans? The sans is closer to the Apple look
-   that was asked for; the serif was chosen deliberately to avoid the generic portfolio
-   look. Not changed unilaterally.
-3. **The five-colour signal rail** — helps scanning, works against a calm surface. Next
-   thing to cut if calm wins.
+2. ~~Body font~~ — **settled 6 Oct 2026.** Dhanesh asked for Apple design guidelines, so
+   Charter serif was replaced by the SF Pro system stack across the whole artifact. See §10.
+3. ~~The five-colour signal rail~~ — **moot.** It lives in V9's rules table; V10 never
+   carried it.
 4. **Real numbers** — visit frequency, dead-click counts, and the dead-click baseline
    export. **Time-sensitive:** session-replay retention is 30–90 days.
 5. **Older versions carry corrected copy.** "Engagement rises" still appears in V6 and V7;
    "nothing here was newly built" in Compact. Fix them, or keep them as an honest archive?
+
+---
+
+## 10 · Design language — Apple, applied 6 October 2026
+
+Dhanesh: *"use apple design guidlines and design styling and make design clean and easy to
+visual and stunning."* Applied to the **global tokens**, so every version stays coherent
+rather than V10 looking like a different product.
+
+**Typography** — SF Pro via the system stack (`-apple-system, BlinkMacSystemFont,
+"SF Pro Display"/"SF Pro Text"`), replacing Charter serif and Avenir Next Condensed. Body is
+Apple's 17px / 1.47 with −0.01em tracking. Headlines are weight 600 with negative tracking
+that grows with size — −0.022em at title scale, −0.028em on the V10 hero, which runs to 80px.
+
+**Palette** — Apple's neutral greys, replacing the blue-tinted custom set.
+
+| Token | Light | Dark |
+|---|---|---|
+| `--ground` | `#ffffff` | `#000000` |
+| `--ground-2` / `--surface` | `#f5f5f7` / `#ffffff` | `#1d1d1f` |
+| `--ink` / `--ink-2` / `--ink-3` | `#1d1d1f` / `#424245` / `#6e6e73` | `#f5f5f7` / `#a1a1a6` / `#86868b` |
+| `--rule` / `--rule-soft` | `#d2d2d7` / `#e8e8ed` | `#424245` / `#2c2c2e` |
+| `--accent` | `#0071e3` | `#2997ff` |
+| `--signal` | `#bf4800` | `#ff9f0a` |
+
+**Shape** — version tabs and the See-more affordance became 980px pills; cards, figures and
+tables went to an 18px radius, inner blocks to 14px; screens are lifted by a soft shadow
+rather than outlined. Separation is by space and tone, not by hairline.
+
+**Still carrying old colour literals:** the navy stage and the KYP greens in V4–V7 use
+hardcoded hex values outside the token blocks. They were left alone — those versions are an
+archive, and rewriting them risks breaking a look that was tuned by hand. The theme audit
+flags them as a known warning, not a regression.
