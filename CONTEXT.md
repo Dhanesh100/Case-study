@@ -266,3 +266,39 @@ Eleven sections is more than a reader holds in their head, so V10 gained two dev
 **Note for future edits:** V10 sections now carry `id="v10-s1"`…`id="v10-s11"`. Anything
 matching on the literal string `<section class="v5-sec">` will miss them — match
 `<section class="v5-sec"[^>]*>` instead. `build-copy.py` was fixed for exactly this.
+
+---
+
+## 11 · Copy direction — set 7 October 2026
+
+Dhanesh, on what the copy is for:
+
+> *"i want that founders and product lead understand my strtergy and skill set and my thinking
+> so content need to be follow this than fluffy text. copy need to be give understanding of
+> project"* … *"make content in human voice than robotic and too machanic"*
+
+Three rules follow from that, and they pull against each other on purpose:
+
+1. **Strategy over description.** A founder reads for the thinking, not the feature list.
+   Where a real call was made, it is shown as a **decision block** &#8212; what was chosen,
+   what was rejected, and why. Five of these sit in V10: §02, §05, §06, §08, §09. Reasoning
+   as structure survives scanning; reasoning as paragraph does not.
+2. **Human voice.** First person, plain words, the way a designer talks. Watch for the
+   mechanical tic this copy keeps falling into: *"X was only A. I made it B."* repeated
+   section after section. One or two of those reads deliberate; eleven reads like a
+   template.
+3. **Nothing decorative.** Every sentence carries a fact, a decision or a reason.
+
+**The honest trade.** Cutting prose and writing in a human voice work against each other
+&#8212; a natural sentence is longer than a clipped one. The V10 surface held 2,366 words
+before this pass and 2,350 after. What changed is the *shape*: prose fell 32% (987 to 673
+words) and structured content rose to 67% of the surface. Do not claim a word-count
+reduction that did not happen.
+
+**Where cut prose goes.** Into the *See-more* panel for that section, never deleted. The
+See-more layer grew from 2,356 to about 3,000 words in this pass. Depth is opt-in; the
+surface stays scannable.
+
+**The reading-time line is measured, not estimated.** It currently reads *"3 min to scan,
+10 to read in full"*, from an actual word count at 230 wpm. It previously claimed ~4 min
+for a 10-minute page. Re-measure it whenever the surface changes.

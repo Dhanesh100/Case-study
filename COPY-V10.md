@@ -29,7 +29,7 @@ The work was not adding more features to Portfolio. It was building the system t
 
 **Honesty note** — Recently launched, so quantitative results are not yet available — §10 states what changed, not what it achieved. Coverage figures and priority bars in the screens are illustrative design placeholders, not customer data or measured values.
 
-**How to read** — Eleven sections · ~4 min· Titles carry the argument · each See link opens the reasoning behind one
+**How to read** — Eleven sections · 3 min to scan, 10 to read in full· Titles carry the argument · each See link opens the reasoning behind one
 
 ---
 
@@ -37,7 +37,7 @@ The work was not adding more features to Portfolio. It was building the system t
 
 **Title** — A dead-click issue exposed a bigger opportunity.
 
-**Lead** — The work started with a dead-click issue — taps that did nothing, leaving users stuck in a loop. I fixed that route. But it exposed something larger: Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery far more relevant.
+**Lead** — I was handed a bug: taps that went nowhere. Fixing the route was the easy part. What it showed me was that Portfolio is the one screen almost everyone visits, and the rest of CoverSure had no way of being useful there.
 
 - **Dead clicks** — Taps that produced no result — users trying to reach Policy Details, stuck repeating the same one.
 - **Support** — The route sometimes had to be explained on the call.
@@ -45,7 +45,7 @@ The work was not adding more features to Portfolio. It was building the system t
 
 **Diagram** — Before: the entry point into the policy listing and the expand-and-collapse beside it were styled identically, so taps landed repeatedly on the control that only revealed detail in place. After: a member chip gives profile switching its own affordance, reaching the policy in one tap.
 
-*Caption* — Two controls, styled the same, doing different jobs. One revealed detail in place; the other was the way through. Taps landed on the first and produced nothing.
+*Caption* — Two controls, styled alike, doing different jobs. Taps landed on the one that only opened detail in place.
 
 
 ### See more — The trigger: “Where the confusion actually was.”
@@ -66,21 +66,24 @@ Separate the navigation job from the expand/collapse job. The Portfolio architec
 
 I fixed the navigation defect. The contextual recommendation work was the larger product opportunity that came next — and it is the rest of this case study.
 
+**How the problem was framed**
+
+The work started with a dead-click issue — taps that did nothing, leaving users stuck in a loop. I fixed that route. But it exposed something larger: Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery far more relevant.
+
+Two controls, styled the same, doing different jobs. One revealed detail in place; the other was the way through. Taps landed on the first and produced nothing.
+
 ---
 
 ## 02 · The opportunity
 
 **Title** — Portfolio already had the traffic. The rest of the product already had the context.
 
-**Lead** — People do not browse an insurance app. They open it for a renewal, a document, a claim — and Portfolio is where most of those visits land, which makes each one a rare chance to be useful. CoverSure held information about policies, family, risk and user intent across other features, and none of it was being used here. I proposed connecting it.
+**Lead** — Nobody browses an insurance app. People come for a renewal, a document, a claim — and Portfolio is where they land. Everything we knew about them was sitting in other corners of the product, doing nothing. I proposed wiring it together.
 
 
 **Diagram** — On the left, three reasons people open the app — a renewal, a document, a claim — all land on Portfolio. On the right, five existing sources of context: onboarding, CoverRisk, family data, Know Your Policy and the buying journeys. A dashed line runs between the two sides and every connection from the right stops short of it. No system carried context across to the surface where the visits landed.
 
-*Caption* — Both sides already existed. Every line from the right stops short — no system decided what should appear for this user, at this moment. The gap is the opportunity.
-
-
-**Note** — The opportunity was not to build another feature. It was to build the layer that connects what already existed.
+*Caption* — Both sides already existed. Every line from the right stops short.
 
 
 ### See more — The opportunity: “Why Portfolio became the connection point.”
@@ -101,13 +104,19 @@ The layer reads existing context, evaluates conditions, prioritises competing op
 
 Portfolio became the connection point not because it needed more content, but because it already had the right context and the user’s attention.
 
+**Why Portfolio, in full**
+
+People do not browse an insurance app. They open it for a renewal, a document, a claim — and Portfolio is where most of those visits land, which makes each one a rare chance to be useful. CoverSure held information about policies, family, risk and user intent across other features, and none of it was being used here. I proposed connecting it.
+
+The opportunity was not to build another feature. It was to build the layer that connects what already existed. Every line from the right of the diagram stops short — no system decided what should appear for this user, at this moment. The gap is the opportunity.
+
 ---
 
 ## 03 · The engine
 
 **Title** — I built a contextual recommendation engine, not a banner system.
 
-**Lead** — The engine maps existing user context to the most relevant feature or product action. The recommendation engine is new; the intelligence it uses already existed. Nothing like it existed anywhere else in the app — this is CoverSure’s first contextual layer.
+**Lead** — The engine is the new part. Everything it knows was already in the product. Nothing like it existed anywhere else in the app, which is why it had to be built from rules rather than guesses.
 
 | Context | Primary | Secondary | Reason |
 |---|---|---|---|
@@ -115,13 +124,10 @@ Portfolio became the connection point not because it needed more content, but be
 
 **Diagram** — Five existing signals — onboarding, policy data, CoverRisk, family data and Know Your Policy — feed conditions, which pass through priority to produce one action. Acting changes the user state, which feeds back into the signals and closes the loop.
 
-*Caption* — No rule fires on a single fact. Each weighs what is known about the user, how much a product matters in a life, and whether they already hold it — then priority breaks the tie, and acting rewrites the input.
+*Caption* — No rule fires on a single fact. Each weighs what is known, how much it matters, and what the user has already done.
 
 
 **Note** — Eight of ten rules shown. The last one is the constraint that keeps the engine from becoming a better-targeted banner stack.
-
-
-**Note** — No rule fires on a single fact. Each weighs what we know about the user, how much that product matters in a life, and whether they already hold it — which is what stops the engine recommending something they own, or something that does not apply to them.
 
 
 ### See more — The engine: “How the recommendation engine decides what appears.”
@@ -154,13 +160,19 @@ Without this constraint, a contextual engine becomes a better-targeted banner st
 
 The engine is not deciding what CoverSure can sell. It is deciding what is relevant to this user now.
 
+**What the engine is, in full**
+
+The engine maps existing user context to the most relevant feature or product action. The recommendation engine is new; the intelligence it uses already existed. Nothing like it existed anywhere else in the app — this is CoverSure’s first contextual layer.
+
+No rule fires on a single fact. Each weighs what we know about the user, how much that product matters in a life, and whether they already hold it — then the highest-priority true condition wins.
+
 ---
 
 ## 04 · The rule set
 
 **Title** — Here is the actual rule set, not a description of one.
 
-**Lead** — Three inputs decide every recommendation: what onboarding was told, what is actually stored in Portfolio, and whether CoverRisk has run. Those three produce the primary action and everything pitched below it. No rule needs data the product does not already hold.
+**Lead** — Every recommendation comes down to three things we already know: what someone told us at signup, what they have actually saved, and whether they have run CoverRisk. No rule needs data we were not already holding.
 
 **01 · Said health and super top-up. Added neither.**
 
@@ -204,7 +216,7 @@ The engine is not deciding what CoverSure can sell. It is deciding what is relev
 - *Screen · member* — State 04One of two stored — review leads, the gap is named below
 - *Screen · group* — Employer cover onlyFoundational protection still missing
 
-**Note** — Read down the Primary column and the whole strategy is visible: ask for what is missing before selling what is next. The engine sorts by what the user already holds and what is required after it — never by what is easiest to sell.
+**Note** — Read down the Primary column and the strategy is visible: ask for what is missing before selling what is next.
 
 
 **Note** — Same layout in all four. Personalisation happens through state, not through a different screen per user.
@@ -246,13 +258,19 @@ Renewal due — Review Report or Pay Without Review, so the choice is informed.
 
 The quality of a recommendation system is decided by the states that are not the happy path. Each one is a condition that had to resolve to something honest, and each one was a decision about what the product is allowed to claim when it does not know enough.
 
+**The inputs, in full**
+
+Three inputs decide every recommendation: what onboarding was told, what is actually stored in Portfolio, and whether CoverRisk has run. Those three produce the primary action and everything pitched below it. No rule needs data the product does not already hold.
+
+Read down the Primary column of the rule set and the whole strategy is visible: ask for what is missing before selling what is next. The engine sorts by what the user already holds and what is required after it — never by what is easiest to sell.
+
 ---
 
 ## 05 · The sequence
 
 **Title** — The contents change. The slots do not.
 
-**Lead** — A recommendation engine makes a screen unpredictable unless something holds still. I fixed the order of the bottom section and let only one band vary — so someone returning finds the same shape, carrying different contents. Predictability is what separates a recommendation layer from a feed of offers.
+**Lead** — Personalise everything and the screen changes shape on every visit. So I fixed the order and let only one band move. Come back in six months and it is still the screen you learned.
 
 
 **What each slot actually carries**
@@ -273,10 +291,10 @@ The quality of a recommendation system is decided by the states that are not the
 
 **Diagram** — The bottom section has four slots in a fixed order. Insurance on Card is always at the top and is removed permanently once the user adds a card. The buy-and-add band sits in the middle and is the only part the engine writes. Download portfolio is second last, or last when there is no inactive policy, and stays inactive until the first policy is added. Inactive policies are always last, and the slot is hidden when there are none.
 
-*Caption* — Four slots, one of which varies. Fixing the frame is what lets the contents be personal — the user learns the shape once, and after that only the middle band asks for attention.
+*Caption* — Four slots, one of which varies. Fixing the frame is what lets the contents be personal.
 
 
-**Note** — Every pitch card leads with a price, not a product. The decision a user is actually making is whether they can afford the gap, so the number goes first.
+**Note** — Every pitch card leads with a price, not a product — the decision is whether the gap is affordable.
 
 
 ### See more — The sequence: “Why the order is fixed when the contents are not.”
@@ -301,18 +319,24 @@ A user who returns in six months finds the same four positions. The learning cos
 
 It also constrains the team. A new product cannot be added by inventing a new position — it has to earn a place inside the engine band, under the priority rules.
 
+**Why predictability matters**
+
+A recommendation engine makes a screen unpredictable unless something holds still. Predictability is what separates a recommendation layer from a feed of offers.
+
+Every pitch card leads with a price, not a product. The decision a user is actually making is whether they can afford the gap, so the number goes first.
+
 ---
 
 ## 06 · Prioritisation
 
 **Title** — The engine needed a product priority, not just personalisation.
 
-**Lead** — Knowing what a user needs is only half the problem. I sorted every product by how much it matters in a person’s life, and the engine walks that ladder in order — it never skips a rung because the next product is easier to sell.
+**Lead** — Knowing what someone needs is only half of it. I ranked every product by how much it actually matters in a life, so the engine cannot jump to whichever one is easiest to sell.
 
 
 **Diagram** — A three-step ladder. Health and term life sit on the first step and both must exist before the engine moves up. Super Top-Up and Critical Illness are the second step. Personal Accident, Hospicash, Home and Device sit on the third, reached only when the user's context creates a reason.
 
-*Caption* — A ladder, not a menu. A user holding health only is still on step one — the engine recommends term life, not something that extends cover they have not finished building.
+*Caption* — A ladder, not a menu. A user holding health only is still on step one.
 
 
 **Note** — CoverRisk answers how much cover may be needed. The recommendation engine decides what should come next.
@@ -344,24 +368,28 @@ Product owns where each policy sits in the ladder — that is insurance-domain e
 
 What I built is the logic that reads the ladder: it never recommends at random, and it weighs the user’s data, how much a product matters in a life, and whether they already hold it. The placement is theirs to maintain; the decision procedure is generic and does not change when the catalogue does.
 
+**The ordering principle, in full**
+
+Knowing what a user needs is only half the problem. I sorted every product by how much it matters in a person’s life, and the engine walks that ladder in order — it never skips a rung because the next product is easier to sell.
+
 ---
 
 ## 07 · Family
 
 **Title** — Family completeness is a signal, not a display.
 
-**Lead** — Family data used to be something Portfolio showed. I made it something the engine reads — whether a household exists, and whether its policies are stored, decides the primary action and controls whether Download is even available. Two inputs, four combinations, four different screens.
+**Lead** — Family data used to just sit there on the screen. I turned it into something the engine reads — two plain facts about a household, and you get four genuinely different screens out of them.
 
 
 **Diagram** — A two by two matrix. Rows are whether a policy has been added; columns are whether a family member has been added. With no family member, Add Family Member is the primary action in both rows. With a family member added, it drops to a secondary card. Download is inactive in the no-policy row and active in the policy row. Inactive policies, when they exist, sit at the bottom of the section.
 
-*Caption* — The left column is the one that matters: with no household on file the engine asks for one before anything else, because every later recommendation depends on knowing who is being covered. Adding a policy does not change that — it only unlocks Download.
+*Caption* — With no household on file the engine asks for one first — every later recommendation depends on knowing who is covered.
 
 
 **Flow** — Who is covered→Who is missing→Add their policy→Better context next time
 
 
-**Note** — When a member exists but their policy does not, the prompt sits on that member’s own card rather than in the pitch band — the action belongs where the gap is visible.
+**Note** — Where a member exists but their policy does not, the prompt sits on that member’s own card.
 
 
 ### See more — Family: “Why family completeness matters to every later recommendation.”
@@ -380,13 +408,21 @@ Once the family context is complete, those prompts disappear — because their c
 
 The family section does not need a promotional banner. Its state already tells the user what is missing.
 
+**What family completeness controls**
+
+Family data used to be something Portfolio showed. I made it something the engine reads — whether a household exists, and whether its policies are stored, decides the primary action and controls whether Download is even available.
+
+The left column of the matrix is the one that matters: with no household on file the engine asks for one before anything else, because every later recommendation depends on knowing who is being covered. Adding a policy does not change that — it only unlocks Download.
+
+When a member exists but their policy does not, the prompt sits on that member’s own card rather than in the pitch band — the action belongs where the gap is visible.
+
 ---
 
 ## 08 · Policy understanding
 
 **Title** — KYP became part of the policy context.
 
-**Lead** — Know Your Policy already assessed policy quality and conditions. I connected that existing intelligence to the place where users scan their policies — so the route into the feature becomes owning a policy, not finding a separate section.
+**Lead** — We already had a feature that judged how good a policy was, sitting in a section of its own. I put its verdict straight onto the policy card, so you reach it by owning a policy rather than by going looking for it.
 
 - *Screen · kyp* — The scaleGREAT / GOOD / AVERAGE / POOR, with condition counts
 - *Screen · life* — On the policyKnow Your Policy, a tab beside Details
@@ -410,18 +446,22 @@ A number invites comparison on price, which is the wrong axis. A verdict alone i
 
 The rating is not a new recommendation. It is existing policy intelligence connected to the policy itself. The route into KYP becomes ownership of a policy, not discovery of a separate feature.
 
+**Why KYP was connected, not rebuilt**
+
+Know Your Policy already assessed policy quality and conditions. I connected that existing intelligence to the place where users scan their policies — so the route into the feature becomes owning a policy, not finding a separate section.
+
 ---
 
 ## 09 · Restraint
 
 **Title** — Contextual does not mean everything, everywhere.
 
-**Lead** — A recommendation engine easily becomes a targeted banner system. I made the layer secondary by default — Portfolio is for managing policies, and an offer never outranks that. It promotes to primary only when the screen has no primary task to offer: nothing stored yet, or policies the user told us about in onboarding but has not added.
+**Lead** — This is the kind of layer that quietly turns into a banner farm. So it sits below the user’s own policies by default, and only takes the top slot when there is genuinely nothing there to manage.
 
 
 **Diagram** — Three blocks. In the default state, policy content holds the primary zone of the screen and the recommendation sits below it as secondary. In the promoted state, where there is no policy to manage, the recommendation takes the primary zone. The third block lists what was kept out of Portfolio: Advisor Portfolio and Share Policy, each placed in the context where it is relevant instead.
 
-*Caption* — The layer is secondary by default and promotes only when the screen has no primary task to offer. Two placements were kept out of Portfolio entirely and given a home where the context earns them.
+*Caption* — Secondary by default. Two placements were kept out of Portfolio entirely.
 
 
 **Note** — Good recommendation design is partly knowing what not to show.
@@ -457,13 +497,19 @@ So the open question is not what else could go in. It is what genuinely belongs,
 
 The PRO subscription banner on this screen carries over from the previous design and sits outside this scope. It is already being repositioned.
 
+**Where the layer promotes**
+
+A recommendation engine easily becomes a targeted banner system. I made the layer secondary by default — Portfolio is for managing policies, and an offer never outranks that. It promotes only when the screen has no primary task to offer.
+
+Two placements were kept out of Portfolio entirely and given a home where the context earns them.
+
 ---
 
 ## 10 · What changed
 
 **Title** — What changed in the product.
 
-**Lead** — The recommendation engine changed how existing capabilities connect to Portfolio. Quantitative impact should be added only once enough usage data is available.
+**Lead** — What changed is how the pieces connect, not what the pieces are. It is too early for numbers, and I would rather say so than invent them.
 
 
 **Note** — Recently launched. Quantitative results are not yet available — the measurement plan sets out what would prove, or disprove, each claim above.
@@ -497,7 +543,7 @@ The full measurement plan turns each claim in this case study into a hypothesis 
 
 **Title** — I built the system behind what appears, when and why.
 
-**Lead** — The core contribution was not placing more CTAs. It was designing the contextual recommendation system that decides which capability should appear for which user state.
+**Lead** — My contribution was not adding more buttons. It was working out what should appear, for whom, and when — then making sure every one of those states resolves to something honest.
 
 | I built | I connected | I worked with Product on |
 |---|---|---|
