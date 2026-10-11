@@ -40,7 +40,8 @@ shareable by URL fragment:
 
 | Version | Reading time | Approach |
 |---|---|---|
-| **V10** — `#v10` | ~4 minutes | **Current.** Eleven sections. Leads with the engine's actual rule set — six real user states, each with its primary action, its pitch and the reasoning — then the fixed four-slot order the bottom section always follows. |
+| **V11** — `#v11` | ~4 minutes | **Current.** The same argument with the diagrams animated: an engine simulator that runs the rule set through six states, a climbing ladder, and a family matrix driven by its own two switches. Motion replaces copy rather than decorating it, and all of it stops under `prefers-reduced-motion`. |
+| **V10** — `#v10` | ~4 minutes | The static telling &#8212; better for PDF export or anywhere motion will not run. Eleven sections. Leads with the engine's actual rule set — six real user states, each with its primary action, its pitch and the reasoning — then the fixed four-slot order the bottom section always follows. |
 | **V9** — `#v9` | ~4 minutes | Twelve sections. The engine argued from first principles, before the rule set was documented. |
 | **V8** — `#v8` | ~90 seconds | Five slides, minimal on the surface, everything else behind *See more*. |
 | **Scan** — `#scan` | ~3 minutes | Six decisions, each a transferable principle with a screen as evidence. |

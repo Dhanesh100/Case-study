@@ -4,7 +4,7 @@
 touching this repo, so Dhanesh does not have to explain it again. `PROJECT-LOG.md` is the
 chronological record of what happened. **This file is the standing brief.**
 
-Last updated: 5 October 2026 · current version: **V10**
+Last updated: 11 October 2026 · current version: **V11**
 
 ---
 
@@ -302,3 +302,39 @@ surface stays scannable.
 **The reading-time line is measured, not estimated.** It currently reads *"3 min to scan,
 10 to read in full"*, from an actual word count at 230 wpm. It previously claimed ~4 min
 for a 10-minute page. Re-measure it whenever the surface changes.
+
+---
+
+## 12 · V11 — motion that explains, added 11 October 2026
+
+Dhanesh: *"can we add mosion and animation to present those graphs and tables and screens so
+user understnad in easy way without additional text and screens"*.
+
+**The rule this version is built on:** every animation replaces a sentence. Nothing moves
+for decoration. If a motion cannot be justified by the copy it lets you delete, it does not
+belong.
+
+**The engine simulator (§04)** is the centrepiece. One phone frame, six states from the real
+rule set, auto-advancing every 3.6s with clickable markers and a Pause control. Each state
+sets the primary action, both pitch slots, and which of the fixed slots exist &#8212; so you
+watch the Insurance-on-Card slot vanish once a card is added, and Download wake up the moment
+a policy lands. It replaced **four static screens and the six-card grid, 253 words**, and it
+proves the sequence rules from §05 at the same time.
+
+**The other four:** flowing connectors on the gap (§02), the pipeline (§03) and the sequence
+(§05); the ladder climbing its gates (§06); and the family matrix driven by its own two
+switches (§07), where toggling *policy added* and *family member added* moves the highlight
+and flips the Download chip.
+
+**Non-negotiables, all implemented:**
+
+- `prefers-reduced-motion: reduce` stops everything. The simulator does not auto-advance,
+  shows state 1, and its control reads **Play**.
+- Nothing animates off screen &#8212; `IntersectionObserver` gates every loop, so a reader
+  parked in §09 is not burning cycles on §02.
+- Every state is reachable without waiting: click any marker.
+- The phone frame is `aria-hidden`; the state label is a `role="status"` live region.
+
+**Result:** V11's surface is **2,120 words against V10's 2,347**, with no static screens in
+§04 at all. V11 is the default view; V10 remains as the static telling, which is the better
+choice for PDF export or anywhere motion will not run.

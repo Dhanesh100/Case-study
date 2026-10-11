@@ -2545,39 +2545,39 @@
      ═══════════════════════════════════════════════════════════════ */
   #panel-v10 .v5-tag { position: sticky; top: 78px; align-self: start; }
 
-  .v10-idx { display: none; }
+  .v10-idx, .v11-idx { display: none; }
   @media (min-width: 1280px) {
-    .v10-idx { display: block; position: fixed; z-index: 30;
+    .v10-idx, .v11-idx { display: block; position: fixed; z-index: 30;
                top: 50%; right: 18px; transform: translateY(-50%); }
   }
   /* at rest the rail is only numbers wide, so it never reaches the text
      column; the labels open on hover and are allowed to overlay, the way
      a tooltip does.  The name of the current section is already carried
      by the sticky tag in the left gutter. */
-  .v10-idx ol {
+  .v10-idx ol, .v11-idx ol {
     list-style: none; margin: 0; padding: 5px; display: grid; gap: 1px;
     border-radius: 980px; background: transparent;
     transition: background 0.2s ease, box-shadow 0.2s ease;
   }
-  .v10-idx:hover ol {
+  .v10-idx:hover, .v11-idx:hover ol {
     background: var(--surface);
     box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.16);
   }
-  .v10-idx a {
+  .v10-idx a, .v11-idx a {
     display: flex; align-items: center; justify-content: flex-end; gap: 9px;
     padding: 6px 11px; border-radius: 980px; text-decoration: none;
     font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em;
     color: var(--ink-3); white-space: nowrap;
     transition: color 0.2s ease, background 0.2s ease;
   }
-  .v10-idx a span { max-width: 0; overflow: hidden; opacity: 0; text-transform: uppercase;
+  .v10-idx a, .v11-idx a span { max-width: 0; overflow: hidden; opacity: 0; text-transform: uppercase;
                     transition: max-width 0.3s ease, opacity 0.2s ease; }
-  .v10-idx a i { font-style: normal; opacity: 0.75; }
-  .v10-idx:hover a span { max-width: 190px; opacity: 1; }
-  .v10-idx a:hover { color: var(--ink); background: var(--ground-2); }
-  .v10-idx a[aria-current="step"] { color: var(--accent); background: var(--accent-soft); }
-  .v10-idx a[aria-current="step"] i { opacity: 1; font-weight: 600; }
-  @media (prefers-reduced-motion: reduce) { .v10-idx a, .v10-idx a span { transition: none; } }
+  .v10-idx a, .v11-idx a i { font-style: normal; opacity: 0.75; }
+  .v10-idx:hover, .v11-idx:hover a span { max-width: 190px; opacity: 1; }
+  .v10-idx a, .v11-idx a:hover { color: var(--ink); background: var(--ground-2); }
+  .v10-idx a, .v11-idx a[aria-current="step"] { color: var(--accent); background: var(--accent-soft); }
+  .v10-idx a, .v11-idx a[aria-current="step"] i { opacity: 1; font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) { .v10-idx a, .v11-idx a, .v10-idx a, .v11-idx a span { transition: none; } }
 
   /* ══════════ V10 — decision blocks ══════════
      Strategy is the thing founders and product leads are reading for, and
@@ -2605,6 +2605,240 @@
   .v10-dec b { color: var(--ink); font-weight: 600; }
   @media (max-width: 640px) {
     .v10-dec > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  }
+
+  /* ══════════ V11 inherits every V10 surface rule ══════════ */
+  #panel-v9 .v5-secs, #panel-v11 .v5-secs { gap: clamp(72px, 9vw, 128px); }
+  #panel-v9 .v5-sec, #panel-v11 .v5-sec { border: none; }
+  #panel-v9 .v5-h1, #panel-v11 .v5-h1 { font-size: clamp(34px, 6vw, 76px); letter-spacing: -0.03em; line-height: 0.98; }
+  #panel-v9 .v5-title, #panel-v11 .v5-title { font-size: clamp(23px, 3.2vw, 40px); letter-spacing: -0.022em; line-height: 1.06; }
+  #panel-v9 .v5-take, #panel-v11 .v5-take { font-size: clamp(15.5px, 1.55vw, 17px); line-height: 1.62; color: var(--ink-2); }
+  #panel-v9 .v5-dek, #panel-v11 .v5-dek { font-size: clamp(17px, 1.9vw, 21px); line-height: 1.5; }
+  #panel-v9 .v8-tbl, #panel-v11 .v8-tbl {
+    background: var(--ground-2);
+    border-radius: 16px;
+    padding: 6px 20px;
+    margin: 24px 0;
+  }
+  #panel-v9 .v8-tbl table, #panel-v11 .v8-tbl table { border-collapse: collapse; }
+  #panel-v9 .v8-tbl th, #panel-v11 .v8-tbl th {
+    border-bottom: none;
+    padding: 16px 18px 10px 0;
+    color: var(--ink-3);
+    font-size: 8.5px;
+    letter-spacing: 0.16em;
+  }
+  #panel-v9 .v8-tbl td, #panel-v11 .v8-tbl td {
+    border-bottom: none;
+    box-shadow: inset 0 -1px 0 var(--rule-soft);
+    padding: 15px 18px 15px 0;
+  }
+  #panel-v9 .v8-tbl tr:last-child td, #panel-v11 .v8-tbl tr:last-child td { box-shadow: none; }
+  #panel-v9 .v9-rules tr.quiet td, #panel-v11 .v9-rules tr.quiet td { background: transparent; }
+  #panel-v9 .v9-rules tr.quiet td:first-child, #panel-v11 .v9-rules tr.quiet td:first-child { color: var(--accent-ink); }
+  #panel-v9 .v4-evid, #panel-v11 .v4-evid { border: none; gap: 10px; display: grid; }
+  #panel-v9 .v4-ev, #panel-v11 .v4-ev {
+    border: none;
+    background: var(--ground-2);
+    border-radius: 13px;
+    padding: 16px 18px;
+  }
+  #panel-v9 .v4-ev dt, #panel-v11 .v4-ev dt { margin-bottom: 5px; }
+  #panel-v9 .v5-branch, #panel-v11 .v5-branch { border: none; gap: 10px; display: grid; }
+  #panel-v9 .v5-br, #panel-v11 .v5-br {
+    border: none;
+    background: var(--ground-2);
+    border-radius: 13px;
+    padding: 16px 18px;
+  }
+  #panel-v9 .v5-br.key, #panel-v11 .v5-br.key { background: var(--accent-soft); }
+  #panel-v9 .v9-card, #panel-v11 .v9-card {
+    border: none;
+    background: var(--ground-2);
+    border-radius: 16px;
+    padding: 22px 24px;
+  }
+  #panel-v9 .v9-sum, #panel-v11 .v9-sum {
+    border: none;
+    background: var(--ground-2);
+    border-radius: 18px;
+    padding: 28px 30px;
+  }
+  #panel-v9 .v9-sum-l, #panel-v11 .v9-sum-l { border-top: none; gap: 4px; }
+  #panel-v9 .v9-sum-l > div, #panel-v11 .v9-sum-l > div { border-right: none; padding-top: 4px; }
+  #panel-v9 .v9-sum-f, #panel-v11 .v9-sum-f { border-top: none; padding-top: 4px; }
+  #panel-v9 .v5-context, #panel-v11 .v5-context { background: transparent; padding: 0; }
+  #panel-v9 .sc-notice, #panel-v11 .sc-notice {
+    border: none;
+    background: transparent;
+    padding: 0 0 0 16px;
+    box-shadow: inset 2px 0 0 var(--accent);
+    color: var(--ink-2);
+  }
+  #panel-v9 .sc-more, #panel-v11 .sc-more {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: var(--accent);
+  }
+  #panel-v9 .sc-more .sc-plus, #panel-v11 .sc-more .sc-plus {
+    background: var(--accent-soft);
+    border: none;
+    color: var(--accent-ink);
+  }
+  #panel-v9 .sc-more:hover .sc-more-k, #panel-v11 .sc-more:hover .sc-more-k { text-decoration: underline; text-underline-offset: 3px; }
+  #panel-v9 .v9-fig, #panel-v11 .v9-fig {
+    background: var(--ground-2);
+    border-radius: 18px;
+    padding: 26px 24px 20px;
+    margin: 26px 0;
+  }
+  #panel-v9 .v9-cap, #panel-v11 .v9-cap { margin-top: 16px; }
+  #panel-v9 .sc-shot .sc-frame, #panel-v11 .sc-shot .sc-frame { border: none; box-shadow: 0 10px 30px -12px rgba(8, 18, 54, 0.28); }
+  [id^="v9-ov-"] .sc-ov-panel, [id^="v11-ov-"] .sc-ov-panel { border-radius: 20px; }
+  [id^="v9-ov-"] .sc-ov-head, [id^="v11-ov-"] .sc-ov-head { border-bottom: none; padding-bottom: 6px; }
+  [id^="v9-ov-"] .sc-sec, [id^="v11-ov-"] .sc-sec { border: none; padding: 0 0 26px; }
+  [id^="v9-ov-"] .sc-sec h4, [id^="v11-ov-"] .sc-sec h4 { margin-bottom: 10px; }
+  #panel-v11 .ba { margin: 30px 0 0; }
+  #panel-v11 .v5-h1 {
+    font-size: clamp(36px, 6.4vw, 80px); letter-spacing: -0.028em;
+    line-height: 1.04; font-weight: 600; max-width: 17ch;
+  }
+  #panel-v11 .v5-title {
+    font-size: clamp(24px, 3.4vw, 40px); letter-spacing: -0.022em;
+    line-height: 1.08; font-weight: 600; max-width: 22ch;
+  }
+  #panel-v11 .v5-take { line-height: 1.52; letter-spacing: -0.012em; }
+  #panel-v11 .v5-context,
+  #panel-v11 .v5-dek {
+    font-size: clamp(17px, 1.75vw, 21px); line-height: 1.47;
+    letter-spacing: -0.014em; color: var(--ink-2); max-width: 58ch;
+  }
+  #panel-v11 .v5-context b,
+  #panel-v11 .v5-dek b { color: var(--ink); font-weight: 600; }
+  #panel-v11 .v5-dek {
+    font-size: clamp(18px, 2vw, 23px); line-height: 1.45;
+    letter-spacing: -0.014em; color: var(--ink-2);
+  }
+  #panel-v11 .v10-exi,
+  #panel-v11 .v9-fig,
+  #panel-v11 .v8-tbl,
+  #panel-v11 .v9-sum { border-radius: 18px; }
+  #panel-v11 .v4-ev,
+  #panel-v11 .ba-card { border-radius: 14px; }
+  #panel-v11 .ba-card { border: none; }
+  #panel-v11 .ba-card.dead { background: var(--signal-soft); }
+  #panel-v11 .ba-card.live { background: var(--accent-soft); }
+  #panel-v11 .sc-more { border-radius: 980px; color: var(--accent); font-size: 15px; }
+  #panel-v11 .sc-more .sc-more-k { text-transform: none; letter-spacing: -0.01em; }
+  #panel-v11 .sc-shot .sc-frame {
+    border-radius: 16px; box-shadow: 0 4px 20px -6px rgba(0, 0, 0, 0.13);
+  }
+  #panel-v11 .v5-tag { position: sticky; top: 78px; align-self: start; }
+
+  /* ══════════════ V11 — motion that explains ══════════════
+     Every animation here replaces a sentence.  Nothing moves for
+     decoration: the engine simulator shows the rule set running, the
+     ladder shows the gates, the matrix responds to its own two inputs.
+     All of it stops dead under prefers-reduced-motion, and each figure
+     keeps a readable static state.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* ---- the engine simulator -------------------------------------- */
+  #panel-v11 .sim { display: grid; grid-template-columns: 300px minmax(0, 1fr);
+                    gap: clamp(20px, 4vw, 44px); align-items: start; }
+  @media (max-width: 720px) { #panel-v11 .sim { grid-template-columns: minmax(0, 1fr); } }
+
+  #panel-v11 .sim-phone {
+    background: var(--surface); border-radius: 22px; padding: 14px;
+    box-shadow: 0 6px 30px -10px rgba(0, 0, 0, 0.22); display: grid; gap: 8px;
+    align-content: start; min-height: 408px;
+  }
+  #panel-v11 .sim-top {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-3);
+    padding: 4px 4px 10px; box-shadow: inset 0 -1px 0 var(--rule-soft);
+  }
+  #panel-v11 .sim-slot {
+    border-radius: 11px; padding: 11px 13px; background: var(--ground-2);
+    font-size: 13px; line-height: 1.35; color: var(--ink-2);
+    transition: opacity 0.45s ease, transform 0.45s ease, background 0.45s ease;
+  }
+  #panel-v11 .sim-slot b { display: block; color: var(--ink); font-weight: 600; font-size: 13.5px; }
+  #panel-v11 .sim-slot i { font-style: normal; display: block; color: var(--ink-3); font-size: 11.5px; margin-top: 2px; }
+  #panel-v11 .sim-slot[data-off="1"] { opacity: 0; transform: translateY(-6px); height: 0; padding: 0; overflow: hidden; }
+  #panel-v11 .sim-slot[data-dim="1"] { opacity: 0.4; }
+  #panel-v11 .sim-primary { background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
+  #panel-v11 .sim-primary b { color: var(--accent-ink); }
+  #panel-v11 .sim-tag {
+    font-family: var(--mono); font-size: 8px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent-ink); display: block; margin-bottom: 3px;
+  }
+  #panel-v11 .sim-swap { animation: simIn 0.5s ease both; }
+  @keyframes simIn { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+
+  /* ---- the side panel: which state is running -------------------- */
+  #panel-v11 .sim-side { display: grid; gap: 14px; align-content: start; padding-top: 4px; }
+  #panel-v11 .sim-when {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  #panel-v11 .sim-state { margin: 0; font-family: var(--display); font-weight: 600;
+                          font-size: clamp(19px, 2.4vw, 26px); line-height: 1.14;
+                          letter-spacing: -0.018em; color: var(--ink); max-width: 20ch; }
+  #panel-v11 .sim-why { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-2); max-width: 44ch; }
+  #panel-v11 .sim-dots { display: flex; gap: 6px; list-style: none; margin: 4px 0 0; padding: 0; }
+  #panel-v11 .sim-dots button {
+    appearance: none; border: none; cursor: pointer; padding: 0;
+    width: 26px; height: 4px; border-radius: 980px; background: var(--rule);
+    transition: background 0.3s ease;
+  }
+  #panel-v11 .sim-dots button[aria-current="true"] { background: var(--accent); }
+  #panel-v11 .sim-ctl {
+    appearance: none; cursor: pointer; background: transparent; border: none;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--accent); padding: 0; text-align: left;
+  }
+
+  /* ---- flowing connectors on the pipeline and gap diagrams -------- */
+  #panel-v11 [data-flow] .svg-line,
+  #panel-v11 [data-flow] .svg-line-key { stroke-dasharray: 5 4; }
+  #panel-v11 [data-flow][data-play="on"] .svg-line,
+  #panel-v11 [data-flow][data-play="on"] .svg-line-key { animation: flow 1.1s linear infinite; }
+  #panel-v11 [data-flow][data-play="on"] .svg-line-dead { animation: stall 2.2s ease-in-out infinite; }
+  @keyframes flow  { to { stroke-dashoffset: -18; } }
+  @keyframes stall { 0%,100% { opacity: 0.35; } 45% { opacity: 1; } }
+
+  /* ---- the ladder climbs its gates -------------------------------- */
+  #panel-v11 [data-climb] .rung { opacity: 0.32; transition: opacity 0.5s ease; }
+  #panel-v11 [data-climb][data-play="on"] .rung-1 { animation: rung 6s ease-in-out infinite; }
+  #panel-v11 [data-climb][data-play="on"] .rung-2 { animation: rung 6s ease-in-out infinite 1.6s; }
+  #panel-v11 [data-climb][data-play="on"] .rung-3 { animation: rung 6s ease-in-out infinite 3.2s; }
+  @keyframes rung { 0%,6% { opacity: 0.32; } 14%,46% { opacity: 1; } 60%,100% { opacity: 0.32; } }
+
+  /* ---- the family matrix answers its own two switches ------------- */
+  #panel-v11 .mx-ctl { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 16px; }
+  #panel-v11 .mx-ctl button {
+    appearance: none; cursor: pointer; border-radius: 980px;
+    border: 1px solid var(--rule); background: var(--surface); color: var(--ink-2);
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 8px 15px; transition: all 0.25s ease;
+  }
+  #panel-v11 .mx-ctl button[aria-pressed="true"] {
+    background: var(--accent); border-color: var(--accent); color: #ffffff;
+  }
+  #panel-v11 .mx-cell { transition: opacity 0.35s ease; opacity: 0.44; }
+  #panel-v11 .mx-cell[data-on="1"] { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    #panel-v11 [data-flow][data-play="on"] .svg-line,
+    #panel-v11 [data-flow][data-play="on"] .svg-line-key,
+    #panel-v11 [data-flow][data-play="on"] .svg-line-dead,
+    #panel-v11 [data-climb][data-play="on"] .rung-1,
+    #panel-v11 [data-climb][data-play="on"] .rung-2,
+    #panel-v11 [data-climb][data-play="on"] .rung-3 { animation: none; }
+    #panel-v11 [data-climb] .rung { opacity: 1; }
+    #panel-v11 .sim-swap { animation: none; }
   }
 
   /* explicit dark choice, where the host stamps one */
