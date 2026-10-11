@@ -100,6 +100,32 @@ for sec in re.finditer(r'<section class="v5-sec"[^>]*>([\s\S]*?)</section>', p):
     # before / after
     for c in re.finditer(r'<span class="ba-tag">([\s\S]*?)</span>\s*<div class="ba-card[^"]*">([\s\S]*?)</div>', s):
         W('- **%s** — %s' % (strip(c.group(1)), strip(c.group(2))))
+    # decision blocks — the strategy, and the single easiest thing to miss
+    for d in re.finditer(r'<dl class="v10-dec">([\s\S]*?)</dl>', s):
+        W('')
+        for row in re.finditer(r'<dt>([\s\S]*?)</dt><dd>([\s\S]*?)</dd>', d.group(1)):
+            W('- **%s** — %s' % (strip(row.group(1)), strip(row.group(2))))
+        W('')
+
+    # the engine simulator: its copy lives in the script block, not the panel
+    if 'data-sim' in s:
+        js = re.search(r'var STATES = \[([\s\S]*?)\n    \];', doc)
+        if js:
+            blocks = re.findall(r'\{ when:([\s\S]*?)(?=\n      \{ when:|\s*$)', js.group(1))
+            W('\n**Engine simulator \u2014 the six states it cycles through**\n')
+            W('| State | Primary action | Pitch | Why |')
+            W('|---|---|---|---|')
+            for blk in blocks:
+                q = lambda f: (re.search(f + r":\s*'((?:[^'\\\\]|\\\\.)*)'", blk) or [None, ''])[1]
+                when = (re.match(r"\s*'((?:[^'\\\\]|\\\\.)*)'", blk) or [None, ''])[1]
+                arr = lambda pat: ((re.search(pat, blk) or [None, ''])[1].replace(chr(39), '').replace('[', '').replace(']', '').strip())
+                dec = lambda x: x.replace('\\\\u20B9', '\u20b9').replace("\\\\'", "'")
+                W('| %s | %s | %s | %s |' % (
+                    dec(when),
+                    dec(arr(r"primary:\s*\[([^\]]*)\]")),
+                    dec(arr(r"pitch:\s*\[\[([\s\S]*?)\]\],")),
+                    dec(q('why'))))
+            W('')
 
     # tables
     for tb in re.finditer(r'<table>([\s\S]*?)</table>', s):

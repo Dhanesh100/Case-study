@@ -81,6 +81,11 @@ Two controls, styled the same, doing different jobs. One revealed detail in plac
 **Lead** — Nobody browses an insurance app. People come for a renewal, a document, a claim — and Portfolio is where they land. Everything we knew about them was sitting in other corners of the product, doing nothing. I proposed wiring it together.
 
 
+- **Decision** — Connect the context the product already had
+- **Instead of** — Adding another feature to Portfolio
+- **Because** — People do not browse an insurance app — they open it for a renewal, a document or a claim, and Portfolio is where those visits land. The signals that could make each visit useful already sat in onboarding, CoverRisk, family data and KYP. Nothing new had to be collected.
+
+
 **Diagram** — On the left, three reasons people open the app — a renewal, a document, a claim — all land on Portfolio. On the right, five existing sources of context: onboarding, CoverRisk, family data, Know Your Policy and the buying journeys. A dashed line runs between the two sides and every connection from the right stops short of it. No system carried context across to the surface where the visits landed.
 
 *Caption* — Both sides already existed. Every line from the right stops short.
@@ -176,6 +181,18 @@ No rule fires on a single fact. Each weighs what we know about the user, how muc
 
 - **Generic pitch** — Buy Life policy A product name and a button. The user still has to work out how much cover they need, which is the part they are least sure about.
 - **Where CoverRisk has run** — Buy ₹1 Cr life cover From ₹80/month. The recommended cover and the approximate premium both come from the report the user already completed. I connected that intelligence — I did not add a second assessment.
+
+**Engine simulator — the six states it cycles through**
+
+| State | Primary action | Pitch | Why |
+|---|---|---|---|
+| Said health and super top-up. Added neither. | Add your policy, Your health and super top-up are pending | Buy Life policy, From ₹80/month, Buy Critical illness, When a diagnosis stops income | Nothing is stored, so there is nothing to rate or review. The engine asks for the policies it was already told about. |
+| Said no policies. CoverRisk has not run. | Check your risk score, Know what you actually need before buying | Buy Health policy, From ₹200/month, Buy Life policy, From ₹80/month | No stored cover and no number to personalise with, so the score comes first and the two foundational covers follow. |
+| Said no policies. CoverRisk has run. | Buy ₹10 L health cover, ₹200/month, as per your risk report | Buy ₹1 Cr life cover, From ₹80/month, Buy Super Top-up, When bills go beyond your cover | The score already answers how much. A starting number beats a generic offer, because the right amount matters more than the right product. |
+| Said health and term. Added health only. | Your Health policy, Rating GREAT · renews 2 Aug | Add Term policy, You told us you have one, Buy Critical illness, From ₹299/month | One named gap, so name it. The moment any policy lands, Download wakes up — the engine changes more than the pitch. |
+| Said health, life and motor. Added one. | Add your policies, Life and motor are still missing | Buy Super Top-up, From ₹299/month, Buy Personal Accident, From ₹100/month | Several gaps rather than one, so the prompt names types instead of a single policy. Naming one would hide the others. |
+| Said health and motor. Added all of them, and a card. | Your 3 policies, All tracked · next renewal 2 Aug | Buy Life policy, From ₹80/month, Buy Super Top-up, From ₹299/month | Nothing left to add, so the engine stops asking and moves up the ladder. The card slot is gone for good. |
+
 *Caption* — The layout never changes. The primary action, the pitch beneath it, and which slots exist at all are decided by the rule set — watch the card slot disappear once a card is added, and Download wake up the moment a policy lands.
 
 
@@ -231,6 +248,11 @@ Read down the Primary column of the rule set and the whole strategy is visible: 
 **Title** — The contents change. The slots do not.
 
 **Lead** — Personalise everything and the screen changes shape on every visit. So I fixed the order and let only one band move. Come back in six months and it is still the screen you learned.
+
+
+- **Decision** — Fix the slot order, let one band vary
+- **Instead of** — Letting the engine reorder the whole section
+- **Because** — A section where everything can move produces a different screen on every visit. Users stop scanning it and start ignoring it — which is how recommendation surfaces become banner space.
 
 
 **What each slot actually carries**
@@ -292,6 +314,11 @@ Every pitch card leads with a price, not a product. The decision a user is actua
 **Title** — The engine needed a product priority, not just personalisation.
 
 **Lead** — Knowing what someone needs is only half of it. I ranked every product by how much it actually matters in a life, so the engine cannot jump to whichever one is easiest to sell.
+
+
+- **Decision** — Rank products by how much they matter in a life
+- **Instead of** — Ranking by what converts, or what the business earns most on
+- **Because** — A low-premium policy that fails at the moment it matters is worse than no recommendation at all. Health and term life gate everything above them, and the engine never skips a rung because the next product is easier to sell.
 
 
 **Diagram** — A three-step ladder. Health and term life sit on the first step and both must exist before the engine moves up. Super Top-Up and Critical Illness are the second step. Personal Accident, Hospicash, Home and Device sit on the third, reached only when the user's context creates a reason.
@@ -384,6 +411,11 @@ When a member exists but their policy does not, the prompt sits on that member�
 
 **Lead** — We already had a feature that judged how good a policy was, sitting in a section of its own. I put its verdict straight onto the policy card, so you reach it by owning a policy rather than by going looking for it.
 
+
+- **Decision** — Surface the KYP verdict on the policy card
+- **Instead of** — Inventing a second score for Portfolio
+- **Because** — A new scoring system would compete with KYP and need its own explanation. Connecting the existing one makes owning a policy the route into the feature, rather than finding a separate section.
+
 - *Screen · kyp* — The scaleGREAT / GOOD / AVERAGE / POOR, with condition counts
 - *Screen · life* — On the policyKnow Your Policy, a tab beside Details
 
@@ -417,6 +449,11 @@ Know Your Policy already assessed policy quality and conditions. I connected tha
 **Title** — Contextual does not mean everything, everywhere.
 
 **Lead** — This is the kind of layer that quietly turns into a banner farm. So it sits below the user’s own policies by default, and only takes the top slot when there is genuinely nothing there to manage.
+
+
+- **Decision** — Keep the recommendation layer secondary by default
+- **Instead of** — A permanent promotional slot on a high-traffic screen
+- **Because** — Portfolio is for managing policies, and an offer never outranks the reason the user opened the screen. The layer promotes to primary only where there is no primary task — nothing stored yet, or policies declared in onboarding but never added.
 
 
 **Diagram** — Three blocks. In the default state, policy content holds the primary zone of the screen and the recommendation sits below it as secondary. In the promoted state, where there is no policy to manage, the recommendation takes the primary zone. The third block lists what was kept out of Portfolio: Advisor Portfolio and Share Policy, each placed in the context where it is relevant instead.

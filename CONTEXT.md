@@ -335,6 +335,20 @@ and flips the Download chip.
 - Every state is reachable without waiting: click any marker.
 - The phone frame is `aria-hidden`; the state label is a `role="status"` live region.
 
-**Result:** V11's surface is **2,120 words against V10's 2,347**, with no static screens in
-§04 at all. V11 is the default view; V10 remains as the static telling, which is the better
-choice for PDF export or anywhere motion will not run.
+**Result:** V11 has no static screens in §04 at all. V11 is the default view; V10 remains as
+the static telling, which is the better choice for PDF export or anywhere motion will not run.
+
+> **Correction, 12 October 2026.** This section originally claimed V11's surface was *"2,120
+> words against V10's 2,347"*. **That was wrong.** The measuring script stripped `<svg>` before
+> counting, so ~470 words of diagram labels were invisible, and the simulator's state copy lives
+> in the script block rather than the panel, so another ~270 were never seen at all. Counted
+> like for like, **V11 is roughly 40 words heavier than V10, not 227 lighter.**
+>
+> `build-copy.py` had the same blind spots plus a third: no handler for `dl.v10-dec`, so **all
+> five decision blocks were missing from `COPY-V11.md`** — a file whose own header claims it
+> "cannot drift from what is published". Fixed 12 Oct; the copy doc went from 5,273 to 5,949
+> words.
+>
+> **The lesson for any future measurement here:** the surface is not just `<p>` tags. It is SVG
+> `<text>`, table cells, `<dt>`/`<dd>` pairs, and copy that lives in JavaScript. Count all of it
+> or do not quote a number.
