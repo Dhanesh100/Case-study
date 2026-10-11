@@ -4,7 +4,7 @@
 touching this repo, so Dhanesh does not have to explain it again. `PROJECT-LOG.md` is the
 chronological record of what happened. **This file is the standing brief.**
 
-Last updated: 11 October 2026 · current version: **V11**
+Last updated: 12 October 2026 · current version: **V11**
 
 ---
 
@@ -352,3 +352,39 @@ the static telling, which is the better choice for PDF export or anywhere motion
 > **The lesson for any future measurement here:** the surface is not just `<p>` tags. It is SVG
 > `<text>`, table cells, `<dt>`/`<dd>` pairs, and copy that lives in JavaScript. Count all of it
 > or do not quote a number.
+
+---
+
+## 13 · Review of V11, and what was applied — 12 October 2026
+
+Full report: [`REVIEW-V11-2026-10-12.md`](REVIEW-V11-2026-10-12.md) ·
+<https://dhanesh100.github.io/Case-study/review-v11/>
+
+**The finding:** V11 was not too long, it was badly weighted. 35 bold runs of prose across 11
+sections meant the scan layer ran 511 words (2m13s) for an audience that gives 60 seconds. And
+the best thinking sat in *See more* panels a scanning founder never opens.
+
+**Applied:**
+
+- **One bold claim per section.** 35 prose bold runs &rarr; **11**. Scan layer **511 &rarr; 243
+  words = 63 seconds.** No copy left the page; it stopped competing.
+- **All eleven headings rewritten to argue rather than describe.** §10 was the only one that
+  announced a topic (*"What changed in the product."*); it now reads *"No numbers yet. Here is
+  what would disprove the claims."*
+- **Three accuracy fixes**, all unevidenced claims: §01's *"the one screen almost everyone
+  visits"* (frequency, no data), §05's *"Users stop scanning it and start ignoring it"* (asserts
+  user behaviour &mdash; fixed on the surface **and** in the §05 See-more panel), and §10's
+  *"More exploration&hellip; is the intended effect, not a measured one"* &mdash; **deleted, not
+  unbolded**, because the hedge does not retract the outcome it plants and §6 already forbids
+  that shape.
+- **Two duplicates removed:** §02 said *"Portfolio is where they land"* twice in one section, and
+  §09's decision block repeated what its new heading now says.
+
+**Not yet applied &mdash; the four show-don't-tell builds:** §05's table as a live deck, §03's
+signal toggle chips, §10's empty dashboard, §11's pipeline coloured by ownership voice.
+
+**Defended against the reviewers, and why:** §05's shipped card copy (the only shipped-product
+evidence on the page), §03's eight rule rows (the only place the non-pitch *Add your policy* card
+appears), the simulator's reasoning lines, and §07's *"rather than in the pitch band"* (the only
+named rejected placement). 30 verification agents challenged every proposed cut; most were
+rejected for costing design evidence. **That rejection list is part of the output.**

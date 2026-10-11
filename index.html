@@ -6419,8 +6419,8 @@
 <section class="v5-sec" id="v11-s1">
         <p class="v5-tag">01<b>The trigger</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">A dead-click issue exposed a bigger opportunity.</h2>
-          <p class="v5-take">I was handed a bug: taps that went nowhere. Fixing the route was the easy part. <b>What it showed me was that Portfolio is the one screen almost everyone visits, and the rest of CoverSure had no way of being useful there.</b></p>
+          <h2 class="v5-title">The dead click was the bug. <span class="thin">Portfolio was the opportunity.</span></h2>
+          <p class="v5-take">I was handed a bug: taps that went nowhere. Fixing the route was the easy part. What it showed me was the bigger gap: nothing else in CoverSure could reach the screen people actually land on.</p>
           <figure class="v9-fig">
             <div class="v9-scroll">
               <svg viewBox="0 0 840 248" role="img" aria-label="Before: the entry point into the policy listing and the expand-and-collapse beside it were styled identically, so taps landed repeatedly on the control that only revealed detail in place. After: a member chip gives profile switching its own affordance, reaching the policy in one tap.">
@@ -6475,7 +6475,7 @@
       <section class="v5-sec" id="v11-s2">
         <p class="v5-tag">02<b>The opportunity</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Portfolio already had the traffic. The rest of the product already had the context.</h2>
+          <h2 class="v5-title">CoverRisk knew the cover gap. <span class="thin">Portfolio never used it.</span></h2>
           <p class="v5-take">Nobody browses an insurance app. People come for a renewal, a document, a claim &#8212; and <b>Portfolio is where they land.</b> Everything we knew about them was sitting in other corners of the product, doing nothing. I proposed wiring it together.</p>
           <figure class="v9-fig" data-flow>
             <div class="v9-scroll">
@@ -6508,12 +6508,12 @@
                 <path class="svg-line-dead" d="M514 184 L446 184"/>
               </svg>
             </div>
-            <p class="v9-cap">Both sides already existed. <b>Every line from the right stops short.</b></p>
+            <p class="v9-cap">Both sides already existed. Every line from the right stops short.</p>
           </figure>
           <dl class="v10-dec">
             <div class="d-call"><dt>Decision</dt><dd>Connect the context the product already had</dd></div>
             <div class="d-alt"><dt>Instead of</dt><dd>Adding another feature to Portfolio</dd></div>
-            <div><dt>Because</dt><dd>People do not browse an insurance app &#8212; they open it for a renewal, a document or a claim, and <b>Portfolio is where those visits land.</b> The signals that could make each visit useful already sat in onboarding, CoverRisk, family data and KYP. Nothing new had to be collected.</dd></div>
+            <div><dt>Because</dt><dd>People do not browse an insurance app &#8212; they open it for a renewal, a document or a claim, and The signals that could make each visit useful already sat in onboarding, CoverRisk, family data and KYP. Nothing new had to be collected.</dd></div>
           </dl>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v11-ov-2"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See why Portfolio</span></span></button></p>
         </div>
@@ -6523,8 +6523,8 @@
       <section class="v5-sec" id="v11-s3">
         <p class="v5-tag">03<b>The engine</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">I built a contextual recommendation engine, not a banner system.</h2>
-          <p class="v5-take"><b>The engine is the new part. Everything it knows was already in the product.</b> Nothing like it existed anywhere else in the app, which is why it had to be built from rules rather than guesses.</p>
+          <h2 class="v5-title">Ten rules decide what Portfolio shows &#8212; and when it shows nothing.</h2>
+          <p class="v5-take">The engine is the new part. Everything it knows was already in the product. Nothing like it existed anywhere else in the app, which is why it had to be built from rules rather than guesses.</p>
           <figure class="v9-fig" data-flow>
             <div class="v9-scroll">
               <svg viewBox="0 0 840 296" role="img" aria-label="Five existing signals — onboarding, policy data, CoverRisk, family data and Know Your Policy — feed conditions, which pass through priority to produce one action. Acting changes the user state, which feeds back into the signals and closes the loop.">
@@ -6587,7 +6587,7 @@
             <span><i style="background:#7a3fb8"></i>Family</span>
             <span><i style="background:var(--ink-3)"></i>No signal</span>
           </p>
-          <p class="sc-notice">Eight of ten rules shown. <strong>The last one is the constraint that keeps the engine from becoming a better-targeted banner stack.</strong></p>
+          <p class="sc-notice">Eight of ten rules shown. The last one is the constraint that keeps the engine from becoming a better-targeted banner stack.</p>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v11-ov-3"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the rule set</span></span></button></p>
         </div>
       </section>
@@ -6596,10 +6596,10 @@
       <section class="v5-sec" id="v11-s4">
         <p class="v5-tag">04<b>The rule set</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Here is the actual rule set, not a description of one.</h2>
+          <h2 class="v5-title">Ask for what is missing before selling what is next.</h2>
           <p class="v5-take">Every recommendation comes down to three things we already know: <b>what someone told us at signup, what they have actually saved, and whether they have run CoverRisk.</b> No rule needs data we were not already holding.</p>
 
-          <p class="sc-notice">Six states, one layout. <strong>Watch the Primary slot and the strategy is visible: ask for what is missing before selling what is next.</strong></p>
+          <p class="sc-notice">Six states, one layout &#8212; watch the Primary slot change.</p>
 
           <div class="ba">
             <div class="ba-col">
@@ -6637,7 +6637,7 @@
                 <button class="sim-ctl" type="button" data-sim-toggle>Pause</button>
               </div>
             </div>
-            <p class="v9-cap">The layout never changes. <b>The primary action, the pitch beneath it, and which slots exist at all are decided by the rule set</b> &#8212; watch the card slot disappear once a card is added, and Download wake up the moment a policy lands.</p>
+            <p class="v9-cap">The layout never changes. The primary action, the pitch beneath it, and which slots exist at all are decided by the rule set &#8212; watch the card slot disappear once a card is added, and Download wake up the moment a policy lands.</p>
           </figure>
 
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v11-ov-4"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See every state resolved</span></span></button></p>
@@ -6647,8 +6647,8 @@
       <section class="v5-sec" id="v11-s5">
         <p class="v5-tag">05<b>The sequence</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">The contents change. The slots do not.</h2>
-          <p class="v5-take">Personalise everything and the screen changes shape on every visit. <b>So I fixed the order and let only one band move.</b> Come back in six months and it is still the screen you learned.</p>
+          <h2 class="v5-title">Personalisation needs a frame that refuses to move.</h2>
+          <p class="v5-take">Personalise everything and the screen changes shape on every visit. So I fixed the order and let only one band move. Come back in six months and it is still the screen you learned.</p>
 
           <figure class="v9-fig" data-flow>
             <div class="v9-scroll">
@@ -6682,7 +6682,7 @@
                 <text class="svg-sub" x="302" y="327">Hidden when there are none. Never competes with a live policy.</text>
               </svg>
             </div>
-            <p class="v9-cap">Four slots, one of which varies. <b>Fixing the frame is what lets the contents be personal.</b></p>
+            <p class="v9-cap">Four slots, one of which varies. Fixing the frame is what lets the contents be personal.</p>
           </figure>
 
           <div class="v8-tbl">
@@ -6707,7 +6707,7 @@
           <dl class="v10-dec">
             <div class="d-call"><dt>Decision</dt><dd>Fix the slot order, let one band vary</dd></div>
             <div class="d-alt"><dt>Instead of</dt><dd>Letting the engine reorder the whole section</dd></div>
-            <div><dt>Because</dt><dd>A section where everything can move produces a different screen on every visit. <b>Users stop scanning it and start ignoring it</b> &#8212; which is how recommendation surfaces become banner space.</dd></div>
+            <div><dt>Because</dt><dd>A section where everything can move produces a different screen on every visit. which is how a recommendation surface turns into banner space.</dd></div>
           </dl>
 
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v11-ov-5"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See why the order is fixed</span></span></button></p>
@@ -6717,7 +6717,7 @@
       <section class="v5-sec" id="v11-s6">
         <p class="v5-tag">06<b>Prioritisation</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">The engine needed a product priority, not just personalisation.</h2>
+          <h2 class="v5-title">Health only is still step one. <span class="thin">Term life next.</span></h2>
           <p class="v5-take">Knowing what someone needs is only half of it. <b>I ranked every product by how much it actually matters in a life</b>, so the engine cannot jump to whichever one is easiest to sell.</p>
           <figure class="v9-fig" data-climb>
             <div class="v9-scroll">
@@ -6744,14 +6744,14 @@
                 <text class="svg-sub" x="30" y="293" fill="var(--accent-ink)">both, before anything else</text></g>
               </svg>
             </div>
-            <p class="v9-cap">A ladder, not a menu. <b>A user holding health only is still on step one.</b></p>
+            <p class="v9-cap">A ladder, not a menu. A user holding health only is still on step one.</p>
           </figure>
           <p class="v8-note">Relative priority in the recommendation order — not measured data</p>
-          <p class="sc-notice"><strong>CoverRisk answers how much cover may be needed. The recommendation engine decides what should come next.</strong></p>
+          <p class="sc-notice">CoverRisk answers how much cover may be needed. The recommendation engine decides what should come next.</p>
           <dl class="v10-dec">
             <div class="d-call"><dt>Decision</dt><dd>Rank products by how much they matter in a life</dd></div>
             <div class="d-alt"><dt>Instead of</dt><dd>Ranking by what converts, or what the business earns most on</dd></div>
-            <div><dt>Because</dt><dd>A low-premium policy that fails at the moment it matters is worse than no recommendation at all. <b>Health and term life gate everything above them</b>, and the engine never skips a rung because the next product is easier to sell.</dd></div>
+            <div><dt>Because</dt><dd>A low-premium policy that fails at the moment it matters is worse than no recommendation at all. Health and term life gate everything above them, and the engine never skips a rung because the next product is easier to sell.</dd></div>
           </dl>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v11-ov-6"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the ranking logic</span></span></button></p>
         </div>
@@ -6761,8 +6761,8 @@
       <section class="v5-sec" id="v11-s7">
         <p class="v5-tag">07<b>Family</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Family completeness is a signal, not a display.</h2>
-          <p class="v5-take">Family data used to just sit there on the screen. <b>I turned it into something the engine reads</b> &#8212; two plain facts about a household, and you get four genuinely different screens out of them.</p>
+          <h2 class="v5-title">Without the household, every later recommendation is a guess.</h2>
+          <p class="v5-take">Family data used to just sit there on the screen. I turned it into something the engine reads &#8212; two plain facts about a household, and you get four genuinely different screens out of them.</p>
 
           <figure class="v9-fig" data-matrix>
             <div class="mx-ctl"><button type="button" aria-pressed="false">Policy added</button><button type="button" aria-pressed="false">Family member added</button><span class="sim-when" data-mx-dl>Download: inactive</span></div>
@@ -6792,7 +6792,7 @@
                 <text class="svg-edge" x="12" y="304">Inactive policies, where they exist, sit at the bottom of the section. Where there are none, the slot is hidden.</text>
               </svg>
             </div>
-            <p class="v9-cap"><b>With no household on file the engine asks for one first</b> &#8212; every later recommendation depends on knowing who is covered.</p>
+            <p class="v9-cap">With no household on file the engine asks for one first &#8212; every later recommendation depends on knowing who is covered.</p>
           </figure>
 
           <p class="sc-flow"><b>Who is covered</b><i>&rarr;</i><b>Who is missing</b><i>&rarr;</i><b>Add their policy</b><i>&rarr;</i><b>Better context next time</b></p>
@@ -6805,8 +6805,8 @@
       <section class="v5-sec" id="v11-s8">
         <p class="v5-tag">08<b>Policy understanding</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">KYP became part of the policy context.</h2>
-          <p class="v5-take">We already had a feature that judged how good a policy was, sitting in a section of its own. <b>I put its verdict straight onto the policy card</b>, so you reach it by owning a policy rather than by going looking for it.</p>
+          <h2 class="v5-title">Owning a policy should be the route into its rating.</h2>
+          <p class="v5-take">We already had a feature that judged how good a policy was, sitting in a section of its own. I put its verdict straight onto the policy card, so you reach it by owning a policy rather than by going looking for it.</p>
           <div class="sc-shots">
             <div class="sc-shot wide"><div class="sc-frame" data-screen="kyp"></div><p class="sc-cap"><b>The scale</b>GREAT / GOOD / AVERAGE / POOR, with condition counts</p></div>
             <div class="sc-shot wide"><div class="sc-frame" data-screen="life"></div><p class="sc-cap"><b>On the policy</b>Know Your Policy, a tab beside Details</p></div>
@@ -6815,7 +6815,7 @@
           <dl class="v10-dec">
             <div class="d-call"><dt>Decision</dt><dd>Surface the KYP verdict on the policy card</dd></div>
             <div class="d-alt"><dt>Instead of</dt><dd>Inventing a second score for Portfolio</dd></div>
-            <div><dt>Because</dt><dd>A new scoring system would compete with KYP and need its own explanation. <b>Connecting the existing one makes owning a policy the route into the feature</b>, rather than finding a separate section.</dd></div>
+            <div><dt>Because</dt><dd>A new scoring system would compete with KYP and need its own explanation. Connecting the existing one makes owning a policy the route into the feature, rather than finding a separate section.</dd></div>
           </dl>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v11-ov-8"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the component logic</span></span></button></p>
         </div>
@@ -6825,7 +6825,7 @@
       <section class="v5-sec" id="v11-s9">
         <p class="v5-tag">09<b>Restraint</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">Contextual does not mean everything, everywhere.</h2>
+          <h2 class="v5-title">An offer never outranks the reason you opened the screen.</h2>
           <p class="v5-take">This is the kind of layer that quietly turns into a banner farm. <b>So it sits below the user&rsquo;s own policies by default</b>, and only takes the top slot when there is genuinely nothing there to manage.</p>
           <figure class="v9-fig">
             <div class="v9-scroll">
@@ -6865,13 +6865,13 @@
                 <text class="svg-edge" x="12" y="284" fill="var(--signal)">An offer never outranks the reason the user opened the screen.</text>
               </svg>
             </div>
-            <p class="v9-cap">Secondary by default. <b>Two placements were kept out of Portfolio entirely.</b></p>
+            <p class="v9-cap">Secondary by default. Two placements were kept out of Portfolio entirely.</p>
           </figure>
-          <p class="sc-notice"><strong>Good recommendation design is partly knowing what not to show.</strong></p>
+          <p class="sc-notice">Good recommendation design is partly knowing what not to show.</p>
           <dl class="v10-dec">
             <div class="d-call"><dt>Decision</dt><dd>Keep the recommendation layer secondary by default</dd></div>
             <div class="d-alt"><dt>Instead of</dt><dd>A permanent promotional slot on a high-traffic screen</dd></div>
-            <div><dt>Because</dt><dd>Portfolio is for managing policies, and <b>an offer never outranks the reason the user opened the screen.</b> The layer promotes to primary only where there is no primary task &#8212; nothing stored yet, or policies declared in onboarding but never added.</dd></div>
+            <div><dt>Because</dt><dd>The layer promotes to primary only where there is no primary task &#8212; nothing stored yet, or policies declared in onboarding but never added.</dd></div>
           </dl>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v11-ov-9"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See what was excluded</span></span></button></p>
         </div>
@@ -6881,12 +6881,12 @@
       <section class="v5-sec" id="v11-s10">
         <p class="v5-tag">10<b>What changed</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">What changed in the product.</h2>
-          <p class="v5-take">What changed is how the pieces connect, not what the pieces are. <b>It is too early for numbers, and I would rather say so than invent them.</b></p>
+          <h2 class="v5-title">No numbers yet. <span class="thin">Here is what would disprove the claims.</span></h2>
+          <p class="v5-take">What changed is how the pieces connect, not what the pieces are. It is too early for numbers, and I would rather say so than invent them.</p>
           <dl class="v9-cards">
-            <div class="v9-card"><dt>User</dt><dd>Contextual actions replaced competing promotional entry points. <b>A person finds out they are underinsured before it matters</b> — that employer cover is not personal cover, that a household member has nothing.</dd></div>
-            <div class="v9-card"><dt>Product</dt><dd>Portfolio can now read onboarding, policy, family and CoverRisk context. <b>Every section reads the same user state</b>, so the app behaves like one product rather than separate tools.</dd></div>
-            <div class="v9-card"><dt>Business</dt><dd>Existing capabilities gained contextual entry points instead of blanket promotion. <b>More exploration of those capabilities is the intended effect</b>, not a measured one.</dd></div>
+            <div class="v9-card"><dt>User</dt><dd>Contextual actions replaced competing promotional entry points. A person finds out they are underinsured before it matters — that employer cover is not personal cover, that a household member has nothing.</dd></div>
+            <div class="v9-card"><dt>Product</dt><dd>Portfolio can now read onboarding, policy, family and CoverRisk context. Every section reads the same user state, so the app behaves like one product rather than separate tools.</dd></div>
+            <div class="v9-card"><dt>Business</dt><dd>Existing capabilities gained an entry point tied to the user&rsquo;s state, instead of blanket promotion.</dd></div>
           </dl>
           <p class="sc-notice">Recently launched. <strong>Quantitative results are not yet available</strong> — the <a href="measurement/">measurement plan</a> sets out what would prove, or disprove, each claim above.</p>
           <p style="margin:22px 0 0"><button class="sc-more sub" type="button" data-open="v11-ov-10"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the measurement plan</span></span></button></p>
@@ -6897,7 +6897,7 @@
       <section class="v5-sec" id="v11-s11">
         <p class="v5-tag">11<b>My role</b></p>
         <div class="v5-body">
-          <h2 class="v5-title">I built the system behind what appears, when and why.</h2>
+          <h2 class="v5-title">I built the rules. <span class="thin">Product owns where each policy ranks.</span></h2>
           <p class="v5-take">My contribution was not adding more buttons. <b>It was working out what should appear, for whom, and when</b> &#8212; then making sure every one of those states resolves to something honest.</p>
           <div class="v8-tbl">
             <table>
@@ -7043,7 +7043,7 @@
       <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
     <div class="sc-ov-body">
       <div class="sc-sec"><h4>The failure mode I was designing against</h4>
-        <p class="sc-lede">A personalised section where everything can move produces a different screen on every visit. Users stop scanning it and start ignoring it, which is how recommendation surfaces become banner space. <b>The fix is not fewer recommendations &#8212; it is a frame that does not move.</b></p></div>
+        <p class="sc-lede">A personalised section where everything can move produces a different screen on every visit, which is how a recommendation surface turns into banner space. <b>The fix is not fewer recommendations &#8212; it is a frame that does not move.</b></p></div>
       <div class="sc-sec"><h4>The four slots, and why each sits where it does</h4>
         <p><b>Insurance on Card, always top.</b> It is the only card offering cover the user already owns and has not claimed. That makes it the highest-value item on the surface and the one with a real end state &#8212; once a card is added it is gone, so it can afford the best position while it lasts.</p>
         <p><b>Buy and add, in the middle.</b> This is the engine band and the only part that varies. Putting the variable content between two fixed anchors means a returning user can find it without reading the whole section.</p>

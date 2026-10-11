@@ -35,9 +35,9 @@ The work was not adding more features to Portfolio. It was building the system t
 
 ## 01 · The trigger
 
-**Title** — A dead-click issue exposed a bigger opportunity.
+**Title** — The dead click was the bug. Portfolio was the opportunity.
 
-**Lead** — I was handed a bug: taps that went nowhere. Fixing the route was the easy part. What it showed me was that Portfolio is the one screen almost everyone visits, and the rest of CoverSure had no way of being useful there.
+**Lead** — I was handed a bug: taps that went nowhere. Fixing the route was the easy part. What it showed me was the bigger gap: nothing else in CoverSure could reach the screen people actually land on.
 
 - **Dead clicks** — Taps that produced no result — users trying to reach Policy Details, stuck repeating the same one.
 - **Support** — The route sometimes had to be explained on the call.
@@ -76,14 +76,14 @@ Two controls, styled the same, doing different jobs. One revealed detail in plac
 
 ## 02 · The opportunity
 
-**Title** — Portfolio already had the traffic. The rest of the product already had the context.
+**Title** — CoverRisk knew the cover gap. Portfolio never used it.
 
 **Lead** — Nobody browses an insurance app. People come for a renewal, a document, a claim — and Portfolio is where they land. Everything we knew about them was sitting in other corners of the product, doing nothing. I proposed wiring it together.
 
 
 - **Decision** — Connect the context the product already had
 - **Instead of** — Adding another feature to Portfolio
-- **Because** — People do not browse an insurance app — they open it for a renewal, a document or a claim, and Portfolio is where those visits land. The signals that could make each visit useful already sat in onboarding, CoverRisk, family data and KYP. Nothing new had to be collected.
+- **Because** — People do not browse an insurance app — they open it for a renewal, a document or a claim, and The signals that could make each visit useful already sat in onboarding, CoverRisk, family data and KYP. Nothing new had to be collected.
 
 
 **Diagram** — On the left, three reasons people open the app — a renewal, a document, a claim — all land on Portfolio. On the right, five existing sources of context: onboarding, CoverRisk, family data, Know Your Policy and the buying journeys. A dashed line runs between the two sides and every connection from the right stops short of it. No system carried context across to the surface where the visits landed.
@@ -119,7 +119,7 @@ The opportunity was not to build another feature. It was to build the layer that
 
 ## 03 · The engine
 
-**Title** — I built a contextual recommendation engine, not a banner system.
+**Title** — Ten rules decide what Portfolio shows — and when it shows nothing.
 
 **Lead** — The engine is the new part. Everything it knows was already in the product. Nothing like it existed anywhere else in the app, which is why it had to be built from rules rather than guesses.
 
@@ -175,7 +175,7 @@ No rule fires on a single fact. Each weighs what we know about the user, how muc
 
 ## 04 · The rule set
 
-**Title** — Here is the actual rule set, not a description of one.
+**Title** — Ask for what is missing before selling what is next.
 
 **Lead** — Every recommendation comes down to three things we already know: what someone told us at signup, what they have actually saved, and whether they have run CoverRisk. No rule needs data we were not already holding.
 
@@ -196,7 +196,7 @@ No rule fires on a single fact. Each weighs what we know about the user, how muc
 *Caption* — The layout never changes. The primary action, the pitch beneath it, and which slots exist at all are decided by the rule set — watch the card slot disappear once a card is added, and Download wake up the moment a policy lands.
 
 
-**Note** — Six states, one layout. Watch the Primary slot and the strategy is visible: ask for what is missing before selling what is next.
+**Note** — Six states, one layout — watch the Primary slot change.
 
 
 ### See more — The rule set: “Every state resolved, including the ones nobody screenshots.”
@@ -245,14 +245,14 @@ Read down the Primary column of the rule set and the whole strategy is visible: 
 
 ## 05 · The sequence
 
-**Title** — The contents change. The slots do not.
+**Title** — Personalisation needs a frame that refuses to move.
 
 **Lead** — Personalise everything and the screen changes shape on every visit. So I fixed the order and let only one band move. Come back in six months and it is still the screen you learned.
 
 
 - **Decision** — Fix the slot order, let one band vary
 - **Instead of** — Letting the engine reorder the whole section
-- **Because** — A section where everything can move produces a different screen on every visit. Users stop scanning it and start ignoring it — which is how recommendation surfaces become banner space.
+- **Because** — A section where everything can move produces a different screen on every visit. which is how a recommendation surface turns into banner space.
 
 
 **What each slot actually carries**
@@ -283,7 +283,7 @@ Read down the Primary column of the rule set and the whole strategy is visible: 
 
 **The failure mode I was designing against**
 
-A personalised section where everything can move produces a different screen on every visit. Users stop scanning it and start ignoring it, which is how recommendation surfaces become banner space. The fix is not fewer recommendations — it is a frame that does not move.
+A personalised section where everything can move produces a different screen on every visit, which is how a recommendation surface turns into banner space. The fix is not fewer recommendations — it is a frame that does not move.
 
 **The four slots, and why each sits where it does**
 
@@ -311,7 +311,7 @@ Every pitch card leads with a price, not a product. The decision a user is actua
 
 ## 06 · Prioritisation
 
-**Title** — The engine needed a product priority, not just personalisation.
+**Title** — Health only is still step one. Term life next.
 
 **Lead** — Knowing what someone needs is only half of it. I ranked every product by how much it actually matters in a life, so the engine cannot jump to whichever one is easiest to sell.
 
@@ -363,7 +363,7 @@ Knowing what a user needs is only half the problem. I sorted every product by ho
 
 ## 07 · Family
 
-**Title** — Family completeness is a signal, not a display.
+**Title** — Without the household, every later recommendation is a guess.
 
 **Lead** — Family data used to just sit there on the screen. I turned it into something the engine reads — two plain facts about a household, and you get four genuinely different screens out of them.
 
@@ -407,7 +407,7 @@ When a member exists but their policy does not, the prompt sits on that member�
 
 ## 08 · Policy understanding
 
-**Title** — KYP became part of the policy context.
+**Title** — Owning a policy should be the route into its rating.
 
 **Lead** — We already had a feature that judged how good a policy was, sitting in a section of its own. I put its verdict straight onto the policy card, so you reach it by owning a policy rather than by going looking for it.
 
@@ -446,14 +446,14 @@ Know Your Policy already assessed policy quality and conditions. I connected tha
 
 ## 09 · Restraint
 
-**Title** — Contextual does not mean everything, everywhere.
+**Title** — An offer never outranks the reason you opened the screen.
 
 **Lead** — This is the kind of layer that quietly turns into a banner farm. So it sits below the user’s own policies by default, and only takes the top slot when there is genuinely nothing there to manage.
 
 
 - **Decision** — Keep the recommendation layer secondary by default
 - **Instead of** — A permanent promotional slot on a high-traffic screen
-- **Because** — Portfolio is for managing policies, and an offer never outranks the reason the user opened the screen. The layer promotes to primary only where there is no primary task — nothing stored yet, or policies declared in onboarding but never added.
+- **Because** — The layer promotes to primary only where there is no primary task — nothing stored yet, or policies declared in onboarding but never added.
 
 
 **Diagram** — Three blocks. In the default state, policy content holds the primary zone of the screen and the recommendation sits below it as secondary. In the promoted state, where there is no policy to manage, the recommendation takes the primary zone. The third block lists what was kept out of Portfolio: Advisor Portfolio and Share Policy, each placed in the context where it is relevant instead.
@@ -504,7 +504,7 @@ Two placements were kept out of Portfolio entirely and given a home where the co
 
 ## 10 · What changed
 
-**Title** — What changed in the product.
+**Title** — No numbers yet. Here is what would disprove the claims.
 
 **Lead** — What changed is how the pieces connect, not what the pieces are. It is too early for numbers, and I would rather say so than invent them.
 
@@ -538,7 +538,7 @@ The full measurement plan turns each claim in this case study into a hypothesis 
 
 ## 11 · My role
 
-**Title** — I built the system behind what appears, when and why.
+**Title** — I built the rules. Product owns where each policy ranks.
 
 **Lead** — My contribution was not adding more buttons. It was working out what should appear, for whom, and when — then making sure every one of those states resolves to something honest.
 
