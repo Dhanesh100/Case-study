@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>V11 review — CoverSure Policy Portfolio case study</title>
+<meta name="description" content="A six-lens review of version 11, with every proposed cut adversarially challenged. 12 October 2026.">
+<style>
+  :root {
+    --ground: #ffffff; --ground-2: #f5f5f7; --surface: #ffffff;
+    --ink: #1d1d1f; --ink-2: #424245; --ink-3: #6e6e73;
+    --rule: #d2d2d7; --rule-soft: #e8e8ed;
+    --accent: #0071e3; --accent-soft: #e9f1fc; --accent-ink: #0066cc;
+    --signal: #bf4800; --signal-soft: #fdf2ea;
+    --good: #0b7a44; --good-soft: #e8f5ee;
+    --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #000000; --ground-2: #1d1d1f; --surface: #1d1d1f;
+      --ink: #f5f5f7; --ink-2: #a1a1a6; --ink-3: #86868b;
+      --rule: #424245; --rule-soft: #2c2c2e;
+      --accent: #2997ff; --accent-soft: #10243d; --accent-ink: #2997ff;
+      --signal: #ff9f0a; --signal-soft: #2a1c0a;
+      --good: #41d18a; --good-soft: #0d2a1c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #000000; --ground-2: #1d1d1f; --surface: #1d1d1f;
+    --ink: #f5f5f7; --ink-2: #a1a1a6; --ink-3: #86868b;
+    --rule: #424245; --rule-soft: #2c2c2e;
+    --accent: #2997ff; --accent-soft: #10243d; --accent-ink: #2997ff;
+    --signal: #ff9f0a; --signal-soft: #2a1c0a;
+    --good: #41d18a; --good-soft: #0d2a1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.47;
+    letter-spacing: -0.01em; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+  header.mast { padding: clamp(48px, 9vw, 104px) 0 0; }
+  .kicker {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--ink-3);
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 26px;
+  }
+  .kicker b { color: var(--ink); font-weight: 500; }
+  h1 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(34px, 6.2vw, 68px); line-height: 1.04;
+    letter-spacing: -0.028em; margin: 0 0 22px; max-width: 16ch;
+  }
+  h1 .thin { color: var(--ink-3); }
+  .dek { font-size: clamp(18px, 2vw, 22px); line-height: 1.45; color: var(--ink-2); max-width: 56ch; margin: 0 0 20px; }
+  .meta {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-3);
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+    padding: 20px 0 0; margin: 0 0 8px; box-shadow: inset 0 1px 0 var(--rule-soft);
+  }
+  main { padding: clamp(56px, 9vw, 104px) 0 0; }
+  section { margin: 0 0 clamp(52px, 8vw, 92px); }
+  h2 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(24px, 3.4vw, 38px); line-height: 1.1;
+    letter-spacing: -0.022em; margin: 0 0 8px; max-width: 22ch;
+  }
+  .num {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent-ink); margin: 0 0 12px;
+  }
+  p { max-width: 64ch; margin: 0 0 16px; color: var(--ink-2); }
+  p strong, li strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .callout {
+    background: var(--ground-2); border-radius: 18px;
+    padding: 24px 26px; margin: 26px 0;
+  }
+  .callout.warn { background: var(--signal-soft); }
+  .callout.warn .lbl { color: var(--signal); }
+  .callout.good { background: var(--good-soft); }
+  .callout.good .lbl { color: var(--good); }
+  .lbl {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent-ink);
+    display: block; margin-bottom: 10px;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .tbl { overflow-x: auto; background: var(--ground-2); border-radius: 18px; padding: 6px 22px; margin: 24px 0; }
+  table { border-collapse: collapse; width: 100%; min-width: 540px; font-size: 14.5px; }
+  th {
+    text-align: left; font-family: var(--mono); font-size: 8.5px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3);
+    font-weight: 500; padding: 16px 16px 10px 0; vertical-align: bottom;
+  }
+  td { padding: 14px 16px 14px 0; vertical-align: top; line-height: 1.42; color: var(--ink-2); box-shadow: inset 0 -1px 0 var(--rule-soft); }
+  tr:last-child td { box-shadow: none; }
+  td:first-child { color: var(--ink-3); font-family: var(--mono); font-size: 11px; white-space: nowrap; }
+  td b { color: var(--ink); font-weight: 600; }
+  td .was { color: var(--ink-3); text-decoration: line-through; text-decoration-thickness: 1px; }
+  .figs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 26px 0; }
+  .fig { background: var(--ground-2); border-radius: 16px; padding: 20px; }
+  .fig em {
+    font-style: normal; font-family: var(--mono); font-size: 8.5px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-3);
+    display: block; margin-bottom: 8px;
+  }
+  .fig i {
+    font-style: normal; font-family: var(--display); font-weight: 600;
+    font-size: 30px; letter-spacing: -0.02em; color: var(--ink); display: block;
+    font-variant-numeric: tabular-nums; line-height: 1.05;
+  }
+  .fig i.hit { color: var(--accent); }
+  .fig span { display: block; font-size: 13px; color: var(--ink-3); margin-top: 6px; line-height: 1.4; }
+  ul, ol { max-width: 64ch; color: var(--ink-2); padding-left: 20px; }
+  li { margin-bottom: 9px; }
+  .steps { list-style: none; padding: 0; counter-reset: s; }
+  .steps > li {
+    counter-increment: s; background: var(--ground-2); border-radius: 16px;
+    padding: 20px 22px 20px 58px; position: relative; margin-bottom: 12px; max-width: none;
+  }
+  .steps > li::before {
+    content: counter(s); position: absolute; left: 22px; top: 20px;
+    font-family: var(--mono); font-size: 11px; color: var(--accent-ink); font-weight: 600;
+  }
+  .steps h3 {
+    font-family: var(--display); font-size: 18px; font-weight: 600;
+    letter-spacing: -0.015em; margin: 0 0 6px; color: var(--ink); line-height: 1.25;
+  }
+  .steps p { margin: 0; font-size: 14.5px; }
+  .steps .saving {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    color: var(--accent-ink); display: inline-block; margin-top: 8px;
+  }
+  blockquote {
+    margin: 22px 0; padding: 0 0 0 18px; box-shadow: inset 2px 0 0 var(--accent);
+    color: var(--ink-2); font-size: 16px;
+  }
+  footer {
+    margin-top: clamp(60px, 9vw, 110px); padding: 28px 0 64px;
+    box-shadow: inset 0 1px 0 var(--rule-soft);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3);
+    display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between;
+  }
+  code { font-family: var(--mono); font-size: 0.88em; background: var(--ground-2); padding: 2px 6px; border-radius: 5px; color: var(--ink); }
+  @media (max-width: 600px) { .steps > li { padding-left: 50px; } }
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="kicker"><b>CoverSure</b><span>/</span><span>Policy Portfolio</span><span>/</span><span>Version 11 review</span></p>
+    <h1>It is not a word problem. <span class="thin">It is a weighting problem.</span></h1>
+    <p class="dek">A six-lens review of V11, with every proposed cut adversarially challenged before it was allowed to stand. The surface is carrying paraphrase while the <em>See more</em> panels carry the judgement. The fix is to swap them.</p>
+    <p class="meta"><span>12 October 2026</span><span>·</span><span>Review of V11</span><span>·</span><span>35 agents, 30 of them challenging the other five</span></p>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <p class="num">00 · Correction first</p>
+  <h2>A number I reported was wrong.</h2>
+  <div class="callout warn">
+    <span class="lbl">Corrected 12 Oct 2026</span>
+    <p>V11 was published with the claim that its surface was <strong>2,120 words against V10&rsquo;s 2,347</strong> &mdash; a 227-word reduction. <strong>That was wrong.</strong> The measuring script stripped <code>&lt;svg&gt;</code> before counting, hiding ~470 words of diagram labels, and the engine simulator&rsquo;s copy lives in the script block where it was never seen at all.</p>
+    <p>Counted like for like, <strong>V11 is roughly 40 words heavier than V10, not 227 lighter.</strong> There was no reduction.</p>
+  </div>
+  <p><code>build-copy.py</code> had the same blind spots plus a third: no handler for the decision blocks, so <strong>all five were missing from <code>COPY-V11.md</code></strong> &mdash; a file whose own header claims it cannot drift from what is published. It had drifted by 676 words. Both are fixed.</p>
+  <blockquote>The lesson for any future measurement here: the surface is not just <code>&lt;p&gt;</code> tags. It is SVG text, table cells, definition lists, and copy that lives in JavaScript. Count all of it, or do not quote a number.</blockquote>
+</section>
+
+<section>
+  <p class="num">01 · The diagnosis</p>
+  <h2>Sixty-four things are bold. So nothing is.</h2>
+  <div class="figs">
+    <div class="fig"><em>Bold runs</em><i>64</i><span>across 11 sections. §05 alone has 14.</span></div>
+    <div class="fig"><em>Scan layer</em><i>590</i><span>words of heading, bold and label</span></div>
+    <div class="fig"><em>Time to skim it</em><i class="hit">2:34</i><span>at 230 wpm</span></div>
+    <div class="fig"><em>What a founder gives</em><i class="hit">0:60</i><span>~230 words</span></div>
+  </div>
+  <p>The layer that exists to be skimmed is <strong>2.6&times; over the budget of the person it was built for.</strong> Headings are not the problem &mdash; all eleven total only 94 words. Bold text totals 468. One section carries a single 26-word sentence entirely in bold.</p>
+  <p>The second finding matters more. <strong>The surface carries paraphrase; the <em>See more</em> panels carry the judgement.</strong> The sharpest line in the whole case study &mdash; <em>&ldquo;not where to place a CTA&rdquo;</em> &mdash; sits inside a dialog that a scanning founder never opens.</p>
+  <div class="callout">
+    <span class="lbl">So the answer is not subtraction</span>
+    <p>Every large surface cut proposed by the reviewers was tested and <strong>rejected</strong> &mdash; the rule-set rows, the shipped card copy and the simulator&rsquo;s reasoning are each the only instance of their content. What there is instead is ~250 words of restatement, and ~200 words of the best thinking sitting one click out of reach.</p>
+    <p><strong>Substitute at roughly constant length.</strong> Then cut hard in <em>See more</em>, where it costs nothing.</p>
+  </div>
+</section>
+
+<section>
+  <p class="num">02 · The change that does the most</p>
+  <h2>One bold claim per section.</h2>
+  <p>Sixty-four runs become eleven. No content leaves the page &mdash; it simply stops competing for the eye. This single change takes the scan layer from <strong>590 words to 266</strong>, which is <strong>69 seconds</strong>: inside the budget, with three seconds to spare.</p>
+  <div class="figs">
+    <div class="fig"><em>Bold runs</em><i>64 &rarr; <span style="color:var(--accent)">11</span></i><span>one claim per section</span></div>
+    <div class="fig"><em>Scan layer</em><i>590 &rarr; <span style="color:var(--accent)">266</span></i><span>words</span></div>
+    <div class="fig"><em>Skim time</em><i>2:34 &rarr; <span style="color:var(--accent)">1:09</span></i><span>&minus;55%</span></div>
+  </div>
+</section>
+
+<section>
+  <p class="num">03 · The spine</p>
+  <h2>Eleven headings that argue instead of describe.</h2>
+  <p>A heading has to survive alone, because for most readers it is the only thing that gets read. Each row pairs the recommended heading with the one sentence that should carry the bold beneath it.</p>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>§</th><th>Heading</th><th>The one bold line</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td><span class="was">A dead-click issue exposed a bigger opportunity.</span><br><b>The dead click was the bug. Portfolio was the opportunity.</b></td><td>The route existed &mdash; it just looked exactly like the control beside it.</td></tr>
+        <tr><td>02</td><td><span class="was">Portfolio already had the traffic. The rest of the product already had the context.</span><br><b>CoverRisk knew the cover gap. Portfolio never used it.</b></td><td>Nobody browses insurance. They arrive with a reason, and land on Portfolio.</td></tr>
+        <tr><td>03</td><td><span class="was">I built a contextual recommendation engine, not a banner system.</span><br><b>Ten rules decide what Portfolio shows &mdash; and when it shows nothing.</b></td><td>No rule fires on one fact. The highest-priority true condition wins.</td></tr>
+        <tr><td>04</td><td><span class="was">Here is the actual rule set, not a description of one.</span><br><b>Ask for what is missing before selling what is next.</b></td><td>Three things we already knew decide every recommendation. Nothing new was collected.</td></tr>
+        <tr><td>05</td><td><span class="was">The contents change. The slots do not.</span><br><b>Personalisation needs a frame that refuses to move.</b></td><td>Come back in six months and it is still the screen you learned.</td></tr>
+        <tr><td>06</td><td><span class="was">The engine needed a product priority, not just personalisation.</span><br><b>Health only is still step one. Term life next.</b></td><td>I ranked products by what they protect, not by what they earn.</td></tr>
+        <tr><td>07</td><td><span class="was">Family completeness is a signal, not a display.</span><br><b>Without the household, every later recommendation is a guess.</b></td><td>With nobody on file, the engine asks who you cover before pitching.</td></tr>
+        <tr><td>08</td><td><span class="was">KYP became part of the policy context.</span><br><b>Owning a policy should be the route into its rating.</b></td><td>A number invites price comparison; a verdict plus counts can be checked.</td></tr>
+        <tr><td>09</td><td><span class="was">Contextual does not mean everything, everywhere.</span><br><b>An offer never outranks the reason you opened the screen.</b></td><td>Entry points are already arriving. Keeping them out is the work now.</td></tr>
+        <tr><td>10</td><td><span class="was">What changed in the product.</span><br><b>No numbers yet. Here is what would disprove the claims.</b></td><td>Clicks will not prove this works. Banner stacks win clicks too.</td></tr>
+        <tr><td>11</td><td><span class="was">I built the system behind what appears, when and why.</span><br><b>I built the rules. Product owns where each policy ranks.</b></td><td>I did not build CoverRisk or KYP &mdash; I made them reach a decision.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>§10 was the only heading in V11 that described rather than argued. Every other section made a claim a reader could disagree with; that one announced a topic.</p>
+</section>
+
+<section>
+  <p class="num">04 · Show, don&rsquo;t tell</p>
+  <h2>Four places where copy should become a component.</h2>
+  <ol class="steps">
+    <li>
+      <h3>§05 &mdash; the ten-row table becomes a live deck</h3>
+      <p>Reuse the simulator&rsquo;s phone frame. Three slots hold still while the engine band cycles the seven shipped cards. The argument of the section <em>is</em> the motion, so the table that states it can go. The card copy stays &mdash; as UI inside a phone it reads as shipped evidence rather than as a list.</p>
+      <span class="saving">&minus;143 surface words</span>
+    </li>
+    <li>
+      <h3>§03 &mdash; five toggle chips for the five signals</h3>
+      <p>The reader flips signals on and off; matching rules light up and the winning one rises to the top. Turn everything off and the screen says <em>nothing relevant &rarr; nothing promoted</em>. They produce the engine&rsquo;s central constraint with their own hands, which no sentence can do.</p>
+      <span class="saving">&minus;48 surface words</span>
+    </li>
+    <li>
+      <h3>§10 &mdash; an empty dashboard</h3>
+      <p>Seven metric tiles with dashes where numbers will go, and a chip reading <em>awaiting first cohort</em>. One tile is struck through: <strong>recommendation click-through &mdash; &ldquo;not the goal&rdquo;</strong>. The honesty about having no data stops being an apology and becomes an instrument. Nothing counts up; motion here would imply data that does not exist.</p>
+      <span class="saving">the only section with no visual at all</span>
+    </li>
+    <li>
+      <h3>§11 &mdash; colour the pipeline by voice</h3>
+      <p>Redraw the engine diagram with ownership as colour: solid accent for <em>I built</em>, outlined for <em>I connected</em>, grey for <em>Product owns</em>. Three comma-chains of 143 words become a picture that answers &ldquo;what did you own&rdquo; by showing <em>where in the system it sits</em>.</p>
+      <span class="saving">&minus;45 surface words</span>
+    </li>
+  </ol>
+</section>
+
+<section>
+  <p class="num">05 · Accuracy, not style</p>
+  <h2>Three claims that have to change.</h2>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>§</th><th>The claim</th><th>Problem</th></tr></thead>
+      <tbody>
+        <tr><td>01</td><td><b>&ldquo;the one screen almost everyone visits&rdquo;</b></td><td>A frequency claim with no data behind it. Replace with the structural version &mdash; nothing else in CoverSure could reach it.</td></tr>
+        <tr><td>05</td><td><b>&ldquo;Users stop scanning it and start ignoring it&rdquo;</b></td><td>Asserts measured user behaviour. Reword to <em>which is how a recommendation surface turns into banner space</em>.</td></tr>
+        <tr><td>10</td><td><b>&ldquo;More exploration&hellip; is the intended effect, not a measured one&rdquo;</b></td><td><strong>Delete, do not merely unbold.</strong> The hedge does not retract the outcome it plants, and the project log already names this exact shape among claims that must not come back.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>§02 also says <em>&ldquo;Portfolio is where they land&rdquo;</em> and <em>&ldquo;Portfolio is where those visits land&rdquo;</em> &mdash; the same sentence twice, in the same section.</p>
+</section>
+
+<section>
+  <p class="num">06 · Defended</p>
+  <h2>What reviewers wanted to cut, and why it stays.</h2>
+  <div class="callout good">
+    <span class="lbl">These survived the challenge</span>
+    <p><strong>§05&rsquo;s shipped card copy.</strong> The only shipped-product evidence on the page, and the only gloss for HospiCash and Super Top-Up. It moves into the phone frame; it does not leave.</p>
+    <p><strong>§03&rsquo;s eight rule rows.</strong> The only evidence for &ldquo;every pitch card leads with a price&rdquo;, and the only place the non-pitch <em>Add your policy</em> card appears &mdash; which is what proves the strategy is not selling-first.</p>
+    <p><strong>The simulator&rsquo;s reasoning lines.</strong> Diagnosed correctly as repetitive, but deleting them removes the best copy on the page. They are the engine explaining itself.</p>
+    <p><strong>§07&rsquo;s &ldquo;rather than in the pitch band&rdquo;.</strong> The only named rejected placement in the entire document.</p>
+  </div>
+  <p>Thirty verification agents challenged every proposed cut, and the majority of them were rejected on the grounds that they would have cost design evidence or product context. That rejection list is as much the output of this review as the recommendations are.</p>
+</section>
+
+<section>
+  <p class="num">07 · The arithmetic</p>
+  <h2>Depth grows. The surface shrinks. Nothing is deleted.</h2>
+  <div class="tbl">
+    <table>
+      <thead><tr><th></th><th>Before</th><th>After</th></tr></thead>
+      <tbody>
+        <tr><td>Scan layer</td><td>590 words &middot; 2:34</td><td><b>266 words &middot; 1:09</b></td></tr>
+        <tr><td>Bold runs</td><td>64</td><td><b>11</b></td></tr>
+        <tr><td>Surface</td><td>2,960 words</td><td><b>~2,444</b></td></tr>
+        <tr><td>See more</td><td>3,056 words</td><td><b>~3,215</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The <em>See more</em> layer grows because four pieces of the best thinking come up to the surface and the paraphrases holding those slots go down into it. Surface length barely moves. <strong>Evidence density moves a lot.</strong></p>
+</section>
+
+<section>
+  <p class="num">08 · Order of work</p>
+  <h2>What to do first.</h2>
+  <ol>
+    <li><strong>The bold pass and the eleven headings.</strong> Mechanical, one sitting, and it buys the entire 55% scan-layer reduction on its own.</li>
+    <li><strong>The three accuracy fixes.</strong> Small, and they close the only places a sharp founder could push back.</li>
+    <li><strong>§10&rsquo;s empty dashboard.</strong> The only section with no visual, and the change that turns an apology into a demonstration of measurement literacy.</li>
+    <li><strong>§05&rsquo;s deck and §03&rsquo;s signal chips.</strong> The two biggest builds, best done one at a time.</li>
+  </ol>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <span>CoverSure &middot; Policy Portfolio</span>
+  <span><a href="../">Back to the case study</a></span>
+  <span>12 October 2026</span>
+</footer>
+
+</body>
+</html>

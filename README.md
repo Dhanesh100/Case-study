@@ -15,6 +15,7 @@ HTML file: no build step, no dependencies, no external requests.
 | 2 | **Portfolio Measurement Plan** — how to test whether the strategy works | [Read](https://dhanesh100.github.io/Case-study/measurement/) | [`measurement/`](measurement/) |
 | 3 | **Tiimo teardown** — competitive product design analysis | [Read](https://dhanesh100.github.io/Case-study/tiimo-teardown/) | [`tiimo-teardown/`](tiimo-teardown/) |
 | 4 | **Teardown analysis brief** — the reusable prompt behind #3 | — | [`ANALYSIS-BRIEF.md`](tiimo-teardown/ANALYSIS-BRIEF.md) |
+| 4a | **V11 review** — six lenses, every proposed cut adversarially challenged (12 Oct 2026) | [Read](https://dhanesh100.github.io/Case-study/review-v11/) | [`review-v11/`](review-v11/) · [`REVIEW-V11-2026-10-12.md`](REVIEW-V11-2026-10-12.md) |
 | 5 | **Context brief** — read first: standing instructions, product facts, what may not be claimed | — | [`CONTEXT.md`](CONTEXT.md) |
 | 5a | **Working agreement** — the session protocol, loaded automatically by Claude Code | — | [`CLAUDE.md`](CLAUDE.md) · [`sync.sh`](sync.sh) |
 | 6 | **Project log** — chronological record: feedback, decisions, corrections, deployment | — | [`PROJECT-LOG.md`](PROJECT-LOG.md) |
