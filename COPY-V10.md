@@ -37,7 +37,7 @@ The work was not adding more features to Portfolio. It was building the system t
 
 **Title** — A dead-click issue exposed a bigger opportunity.
 
-**Lead** — I was handed a bug: taps that went nowhere. Fixing the route was the easy part. What it showed me was that Portfolio is the one screen almost everyone visits, and the rest of CoverSure had no way of being useful there.
+**Lead** — I was handed a bug: taps that went nowhere. Fixing the route was the easy part. What it showed me was the bigger gap: nothing else in CoverSure could reach the screen people actually land on.
 
 - **Dead clicks** — Taps that produced no result — users trying to reach Policy Details, stuck repeating the same one.
 - **Support** — The route sometimes had to be explained on the call.
@@ -79,6 +79,11 @@ Two controls, styled the same, doing different jobs. One revealed detail in plac
 **Title** — Portfolio already had the traffic. The rest of the product already had the context.
 
 **Lead** — Nobody browses an insurance app. People come for a renewal, a document, a claim — and Portfolio is where they land. Everything we knew about them was sitting in other corners of the product, doing nothing. I proposed wiring it together.
+
+
+- **Decision** — Connect the context the product already had
+- **Instead of** — Adding another feature to Portfolio
+- **Because** — People do not browse an insurance app — they open it for a renewal, a document or a claim, and Portfolio is where those visits land. The signals that could make each visit useful already sat in onboarding, CoverRisk, family data and KYP. Nothing new had to be collected.
 
 
 **Diagram** — On the left, three reasons people open the app — a renewal, a document, a claim — all land on Portfolio. On the right, five existing sources of context: onboarding, CoverRisk, family data, Know Your Policy and the buying journeys. A dashed line runs between the two sides and every connection from the right stops short of it. No system carried context across to the surface where the visits landed.
@@ -273,6 +278,11 @@ Read down the Primary column of the rule set and the whole strategy is visible: 
 **Lead** — Personalise everything and the screen changes shape on every visit. So I fixed the order and let only one band move. Come back in six months and it is still the screen you learned.
 
 
+- **Decision** — Fix the slot order, let one band vary
+- **Instead of** — Letting the engine reorder the whole section
+- **Because** — A section where everything can move produces a different screen on every visit. A different screen on every visit — which is how a recommendation surface turns into banner space.
+
+
 **What each slot actually carries**
 
 | Band | Card | What the card says |
@@ -301,7 +311,7 @@ Read down the Primary column of the rule set and the whole strategy is visible: 
 
 **The failure mode I was designing against**
 
-A personalised section where everything can move produces a different screen on every visit. Users stop scanning it and start ignoring it, which is how recommendation surfaces become banner space. The fix is not fewer recommendations — it is a frame that does not move.
+A personalised section where everything can move produces a different screen on every visit, which is how a recommendation surface turns into banner space. The fix is not fewer recommendations — it is a frame that does not move.
 
 **The four slots, and why each sits where it does**
 
@@ -332,6 +342,11 @@ Every pitch card leads with a price, not a product. The decision a user is actua
 **Title** — The engine needed a product priority, not just personalisation.
 
 **Lead** — Knowing what someone needs is only half of it. I ranked every product by how much it actually matters in a life, so the engine cannot jump to whichever one is easiest to sell.
+
+
+- **Decision** — Rank products by how much they matter in a life
+- **Instead of** — Ranking by what converts, or what the business earns most on
+- **Because** — A low-premium policy that fails at the moment it matters is worse than no recommendation at all. Health and term life gate everything above them, and the engine never skips a rung because the next product is easier to sell.
 
 
 **Diagram** — A three-step ladder. Health and term life sit on the first step and both must exist before the engine moves up. Super Top-Up and Critical Illness are the second step. Personal Accident, Hospicash, Home and Device sit on the third, reached only when the user's context creates a reason.
@@ -424,6 +439,11 @@ When a member exists but their policy does not, the prompt sits on that member�
 
 **Lead** — We already had a feature that judged how good a policy was, sitting in a section of its own. I put its verdict straight onto the policy card, so you reach it by owning a policy rather than by going looking for it.
 
+
+- **Decision** — Surface the KYP verdict on the policy card
+- **Instead of** — Inventing a second score for Portfolio
+- **Because** — A new scoring system would compete with KYP and need its own explanation. Connecting the existing one makes owning a policy the route into the feature, rather than finding a separate section.
+
 - *Screen · kyp* — The scaleGREAT / GOOD / AVERAGE / POOR, with condition counts
 - *Screen · life* — On the policyKnow Your Policy, a tab beside Details
 
@@ -457,6 +477,11 @@ Know Your Policy already assessed policy quality and conditions. I connected tha
 **Title** — Contextual does not mean everything, everywhere.
 
 **Lead** — This is the kind of layer that quietly turns into a banner farm. So it sits below the user’s own policies by default, and only takes the top slot when there is genuinely nothing there to manage.
+
+
+- **Decision** — Keep the recommendation layer secondary by default
+- **Instead of** — A permanent promotional slot on a high-traffic screen
+- **Because** — Portfolio is for managing policies, and an offer never outranks the reason the user opened the screen. The layer promotes to primary only where there is no primary task — nothing stored yet, or policies declared in onboarding but never added.
 
 
 **Diagram** — Three blocks. In the default state, policy content holds the primary zone of the screen and the recommendation sits below it as secondary. In the promoted state, where there is no policy to manage, the recommendation takes the primary zone. The third block lists what was kept out of Portfolio: Advisor Portfolio and Share Policy, each placed in the context where it is relevant instead.

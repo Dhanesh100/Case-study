@@ -380,6 +380,12 @@ the best thinking sat in *See more* panels a scanning founder never opens.
 - **Two duplicates removed:** §02 said *"Portfolio is where they land"* twice in one section, and
   §09's decision block repeated what its new heading now says.
 
+**Also fixed in V10**, because V10 is not an archive &mdash; it is the version actively
+recommended for PDF export and anywhere motion will not run. The same three unevidenced claims
+were corrected there, leaving its headings and bolding alone (those are V11's identity).
+**V9 and below still carry *"More exploration&hellip; is the intended effect"*** and remain a
+genuine archive &mdash; open item §9.5 still applies to them.
+
 **Not yet applied &mdash; the four show-don't-tell builds:** §05's table as a live deck, §03's
 signal toggle chips, §10's empty dashboard, §11's pipeline coloured by ownership voice.
 
