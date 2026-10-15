@@ -4,7 +4,7 @@
 touching this repo, so Dhanesh does not have to explain it again. `PROJECT-LOG.md` is the
 chronological record of what happened. **This file is the standing brief.**
 
-Last updated: 12 October 2026 · current version: **V11**
+Last updated: 15 October 2026 · current version: **V12**
 
 ---
 
@@ -394,3 +394,40 @@ evidence on the page), §03's eight rule rows (the only place the non-pitch *Add
 appears), the simulator's reasoning lines, and §07's *"rather than in the pitch band"* (the only
 named rejected placement). 30 verification agents challenged every proposed cut; most were
 rejected for costing design evidence. **That rejection list is part of the output.**
+
+---
+
+## 14 · V12 — compact, added 15 October 2026
+
+Dhanesh: *"make understanding much more easy to founder, and quick overview when they scan
+portfolio, understand my stratergy, UX and skill … understanding with less reading … otherwise
+chances are they will skip if there is more reading. we can explain inside more information
+page in each section … create version that hit hard with compact"*.
+
+**Shape.** Eleven sections became **six beats** — Problem · System · Strategy · UX · Restraint ·
+My role. Each beat is: one arguing H2, one line with one bold claim, **one visual**, a row of
+*Shown* skill chips, and one **See …** opener.
+
+**The hero does the 60-second job on its own:** headline, a two-sentence standfirst, four fact
+tiles (5 signals reused · 0 new data asked of users · 10 rules, one of them "show nothing" ·
+1 primary action per state), three "in one minute" cards (gap / strategy / system), and a
+**What this shows** row of skill chips that jump to the beat proving each one.
+
+**Visuals.** §01 is a Before/After flip — five sources stopping short vs. one engine wiring
+them into Portfolio. §02 is the V11 simulator (shared code, not a copy) plus a generic vs
+CoverRisk pitch pair. §03 the ladder. §04 a slot stack where only the engine band animates,
+plus two real screens (member chips, KYP scale). §05 two mini phones and a struck-out
+"kept out" list.
+
+**Nothing was deleted.** Every V11 See-more panel, the rule table, the slot copy table and all
+five decision blocks moved into the six V12 overlays (`v12-ov-1`…`6`).
+
+**Measured, like for like** (panel markup minus scripts and aria-labels, SVG text included):
+V11 surface **2,604 words → V12 851**, about a third. The simulator's state copy lives in
+JavaScript in both and is excluded from both.
+
+**Shared code.** The V11 motion CSS is now scoped `:is(#panel-v11, #panel-v12)` and the
+simulator script builds every `[data-sim]` in either panel. Edit one, both change.
+
+**Defaults.** `DEFAULT_VIEW` is `v12`. V11 stays as the full motion telling; V10 stays the
+static one for PDF export.

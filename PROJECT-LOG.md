@@ -570,3 +570,17 @@ Twelve sections became eleven, with roughly double the evidence per section.
 - The five-colour signal rail — helps scanning, works against a calm surface.
 - Real visit-frequency numbers, dead-click counts, and the dead-click baseline export.
   Session-replay retention is 30–90 days, so this one is time-sensitive.
+
+---
+
+## 15 Oct 2026 — V12, the compact version
+
+**Feedback.** Founders scan; long pages get skipped. Wanted a version that shows strategy, UX
+and skills with far less reading, with the depth one tap away inside each section.
+
+**Done.** Added V12 as the default tab: six beats, one claim and one visual each, skill chips
+per beat, a hero with fact tiles, a one-minute summary and a skills index. All V11 See-more
+content, tables and decision blocks were merged into six overlays. Surface: 2,604 → 851 words.
+
+**Checks.** No duplicate ids; every `data-open` resolves; V12 tags balance; SVG markers
+resolve inside the panel; no horizontal overflow at 400px; rendered at 1280 and 400.
