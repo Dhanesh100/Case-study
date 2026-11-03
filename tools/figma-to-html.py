@@ -14,7 +14,11 @@ def rgba(c, op=1.0):
 
 FONT = {'PP Neue Montreal TT': 'PP Neue Montreal', 'PP Neue Montreal': 'PP Neue Montreal',
         'PP Pangram Sans': 'PP Pangram Sans', 'PP Eiko': 'PP Eiko'}
-FALLBACK = {'PP Eiko': 'Didot, Georgia, serif', 'Gloock': 'Georgia, serif', 'Helvetica Neue': 'Helvetica, Arial, sans-serif'}
+FALLBACK = {'PP Eiko': 'Didot, Georgia, serif', 'Gloock': 'Georgia, serif', 'Helvetica Neue': 'Helvetica, Arial, sans-serif',
+            'Invesco Editor': 'Georgia, "Times New Roman", serif',
+            'SF Pro Display': '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
+            'SF Compact Text': '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif',
+            'Graphik': '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif'}
 def ffam(f):
     fam = FONT.get(f, f)
     return '"%s", %s' % (fam, FALLBACK.get(fam, '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif'))
