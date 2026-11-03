@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dhanesh Shetye — Product Designer</title>
+<meta name="description" content="Product Designer at CoverSure. I design the logic behind what a product shows you, and why.">
+<style>
+  :root {
+    --ground: #ffffff; --ground-2: #f5f5f7; --surface: #ffffff;
+    --ink: #1d1d1f; --ink-2: #424245; --ink-3: #6e6e73;
+    --rule: #d2d2d7; --rule-soft: #e8e8ed;
+    --accent: #0071e3; --accent-soft: #e9f1fc; --accent-ink: #0066cc;
+    --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #000000; --ground-2: #1d1d1f; --surface: #1d1d1f;
+      --ink: #f5f5f7; --ink-2: #a1a1a6; --ink-3: #86868b;
+      --rule: #424245; --rule-soft: #2c2c2e;
+      --accent: #2997ff; --accent-soft: #10243d; --accent-ink: #2997ff;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #000000; --ground-2: #1d1d1f; --surface: #1d1d1f;
+    --ink: #f5f5f7; --ink-2: #a1a1a6; --ink-3: #86868b;
+    --rule: #424245; --rule-soft: #2c2c2e;
+    --accent: #2997ff; --accent-soft: #10243d; --accent-ink: #2997ff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.47;
+    letter-spacing: -0.01em; -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── masthead ───────────────────────────────────────────── */
+  .top {
+    position: sticky; top: 0; z-index: 20; background: var(--ground);
+    box-shadow: inset 0 -1px 0 var(--rule-soft);
+  }
+  .top-in {
+    max-width: 980px; margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .top-in b { color: var(--ink); font-weight: 500; }
+  .top-in span { color: var(--ink-3); }
+
+  header.hero { padding: clamp(60px, 11vw, 140px) 0 clamp(40px, 7vw, 80px); }
+  h1 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(36px, 7vw, 82px); line-height: 1.03;
+    letter-spacing: -0.03em; margin: 0 0 26px; max-width: 15ch;
+  }
+  h1 .thin { color: var(--ink-3); }
+  .lede {
+    font-size: clamp(18px, 2.1vw, 24px); line-height: 1.44;
+    letter-spacing: -0.014em; color: var(--ink-2); max-width: 50ch; margin: 0 0 18px;
+  }
+  .lede b { color: var(--ink); font-weight: 600; }
+  .avail {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-3);
+    display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 30px 0 0;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+  /* ── sections ───────────────────────────────────────────── */
+  section { padding: clamp(44px, 7vw, 86px) 0; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--ink-3); margin: 0 0 16px;
+  }
+  h2 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(26px, 3.6vw, 42px); line-height: 1.08;
+    letter-spacing: -0.024em; margin: 0 0 14px; max-width: 20ch;
+  }
+  p { color: var(--ink-2); max-width: 62ch; margin: 0 0 16px; }
+  p strong { color: var(--ink); font-weight: 600; }
+
+  /* ── the headline project ───────────────────────────────── */
+  .work {
+    display: block; background: var(--ground-2); border-radius: 22px;
+    padding: clamp(26px, 4vw, 44px); margin: 0 0 16px; color: inherit;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .work:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 12px 40px -14px rgba(0,0,0,0.2); }
+  .work-tag {
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent-ink);
+    display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 0 0 18px;
+  }
+  .work-tag .sep { color: var(--ink-3); }
+  .work h3 {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(22px, 3vw, 34px); line-height: 1.1;
+    letter-spacing: -0.022em; margin: 0 0 14px; color: var(--ink); max-width: 20ch;
+  }
+  .work p { font-size: 16px; max-width: 58ch; margin-bottom: 0; }
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+    gap: 10px; margin: 26px 0 22px;
+  }
+  .stat { background: var(--surface); border-radius: 14px; padding: 16px 18px; }
+  .stat i {
+    font-style: normal; font-family: var(--display); font-weight: 600;
+    font-size: 28px; letter-spacing: -0.02em; color: var(--accent);
+    display: block; line-height: 1.05; font-variant-numeric: tabular-nums;
+  }
+  .stat span { display: block; font-size: 12.5px; color: var(--ink-3); margin-top: 6px; line-height: 1.35; }
+  .go {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--accent); display: inline-flex; gap: 8px; align-items: center;
+  }
+
+  /* ── supporting work ────────────────────────────────────── */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(246px, 1fr)); gap: 14px; }
+  .card {
+    display: block; background: var(--ground-2); border-radius: 18px;
+    padding: 24px 26px; color: inherit;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 10px 32px -14px rgba(0,0,0,0.18); }
+  .card em {
+    font-style: normal; font-family: var(--mono); font-size: 9px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-3);
+    display: block; margin-bottom: 12px;
+  }
+  .card h3 {
+    font-family: var(--display); font-weight: 600; font-size: 19px;
+    line-height: 1.22; letter-spacing: -0.016em; margin: 0 0 10px; color: var(--ink);
+  }
+  .card p { font-size: 14.5px; margin: 0; color: var(--ink-3); }
+
+  /* ── skills ─────────────────────────────────────────────── */
+  .skills { display: flex; flex-wrap: wrap; gap: 9px; margin: 24px 0 0; padding: 0; list-style: none; }
+  .skills li {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-2);
+    background: var(--ground-2); border-radius: 980px; padding: 10px 17px;
+  }
+
+  /* ── how I work ─────────────────────────────────────────── */
+  .beliefs { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 12px; }
+  .beliefs li { background: var(--ground-2); border-radius: 16px; padding: 22px 24px; }
+  .beliefs b {
+    display: block; font-family: var(--display); font-size: 18px; font-weight: 600;
+    letter-spacing: -0.016em; color: var(--ink); margin-bottom: 7px; line-height: 1.25;
+  }
+  .beliefs span { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
+
+  footer {
+    padding: clamp(44px, 7vw, 80px) 0 70px;
+    box-shadow: inset 0 1px 0 var(--rule-soft); margin-top: clamp(40px, 6vw, 70px);
+  }
+  .foot-grid {
+    display: flex; flex-wrap: wrap; gap: 14px 32px; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--ink-3);
+  }
+  .mail {
+    font-family: var(--display); font-size: clamp(22px, 3.4vw, 38px); font-weight: 600;
+    letter-spacing: -0.024em; text-transform: none; display: block; margin: 0 0 22px;
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-in">
+    <b>Dhanesh Shetye</b>
+    <span>Product Designer &middot; CoverSure</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header class="hero">
+  <h1>I design the logic behind what a product shows you <span class="thin">&mdash; and why.</span></h1>
+  <p class="lede">Product Designer at <b>CoverSure</b>, an insurance platform that helps people understand the cover they already hold before it sells them anything.</p>
+  <p class="lede">Most recently I built its <b>first contextual recommendation layer</b> &mdash; a rule system that decides the single most useful next step for each user, from data the product already had.</p>
+  <p class="avail"><span class="dot" aria-hidden="true"></span><span>Post-MVP product work</span><span>&middot;</span><span>Insurance &amp; fintech</span><span>&middot;</span><span>India</span></p>
+</header>
+
+<section>
+  <p class="eyebrow">Selected work</p>
+  <a class="work" href="../">
+    <p class="work-tag"><span>CoverSure</span><span class="sep">/</span><span>Policy Portfolio</span><span class="sep">/</span><span>Shipped</span></p>
+    <h3>The right next step for every user &mdash; from data CoverSure already had.</h3>
+    <p>Policy Portfolio&rsquo;s job did not change: it still manages the policies you own. What changed is what it suggests next, and why. The engine reads what a user declared at signup, what they have actually stored, and whether their risk report has run &mdash; then picks one action.</p>
+    <div class="stats">
+      <div class="stat"><i>5</i><span>existing signals reused</span></div>
+      <div class="stat"><i>0</i><span>new data asked of users</span></div>
+      <div class="stat"><i>10</i><span>rules &mdash; one of them &ldquo;show nothing&rdquo;</span></div>
+      <div class="stat"><i>1</i><span>primary action per state</span></div>
+    </div>
+    <span class="go">Read the case study <span aria-hidden="true">&rarr;</span></span>
+  </a>
+  <p style="font-size:14.5px;color:var(--ink-3);max-width:58ch">Recently shipped, so there are no outcome numbers yet &mdash; and none are implied. Figures in the screens are design placeholders.</p>
+</section>
+
+<section>
+  <p class="eyebrow">Thinking, in public</p>
+  <h2>The work around the work.</h2>
+  <p>Three documents that show how I think when nobody is watching: how I would prove a design works, how I read someone else&rsquo;s product, and how I review my own.</p>
+  <div class="grid" style="margin-top:28px">
+    <a class="card" href="../measurement/">
+      <em>Measurement plan</em>
+      <h3>Measure the claims, not the clicks.</h3>
+      <p>A hypothesis register and a diagnostic ladder for the recommendation engine &mdash; including the metrics that would mislead.</p>
+    </a>
+    <a class="card" href="../tiimo-teardown/">
+      <em>Product teardown</em>
+      <h3>Tiimo makes time visible. That is the product, and also the liability.</h3>
+      <p>Written from public evidence only, with every claim tagged observed, reported, inferred or assumed.</p>
+    </a>
+    <a class="card" href="../review-v11/">
+      <em>Self-review</em>
+      <h3>It is not a word problem. It is a weighting problem.</h3>
+      <p>A six-lens review of my own case study, with every proposed cut argued against before it was allowed to stand.</p>
+    </a>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">What I do</p>
+  <h2>Systems, not screens.</h2>
+  <p>The screen is the easy part. The work is deciding what should appear, for whom, when &mdash; and what the product is allowed to claim when it does not know enough.</p>
+  <ul class="skills">
+    <li>Product strategy</li>
+    <li>Systems &amp; rule design</li>
+    <li>Information architecture</li>
+    <li>Interaction design</li>
+    <li>UX writing</li>
+    <li>Knowing what to leave out</li>
+  </ul>
+</section>
+
+<section>
+  <p class="eyebrow">How I work</p>
+  <h2>Three things I keep coming back to.</h2>
+  <ul class="beliefs">
+    <li>
+      <b>Use what the product already knows.</b>
+      <span>The best recommendation layer collects nothing new. Most products already hold enough to be useful and simply never connect it &mdash; which makes it a design problem, not a data project.</span>
+    </li>
+    <li>
+      <b>Personalisation needs a frame that refuses to move.</b>
+      <span>If everything can change, the screen is different on every visit and people stop reading it. Fix the structure, vary only what sits inside it.</span>
+    </li>
+    <li>
+      <b>Say what you cannot prove yet.</b>
+      <span>Shipped is not the same as validated. I would rather publish the hypothesis and the test than imply a result that no data supports.</span>
+    </li>
+  </ul>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <a class="mail" href="mailto:dhanesh.shetye@coversure.in">dhanesh.shetye@coversure.in</a>
+    <div class="foot-grid">
+      <span>Dhanesh Shetye &middot; Product Designer</span>
+      <span><a href="../">CoverSure Policy Portfolio case study</a></span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

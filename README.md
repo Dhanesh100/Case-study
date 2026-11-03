@@ -9,6 +9,7 @@ HTML file: no build step, no dependencies, no external requests.
 
 | # | Document | Read it | Source |
 |---|---|---|---|
+| 0 | **Portfolio home** — who I am and what the work is | [Open](https://dhanesh100.github.io/Case-study/home/) | [`home/`](home/) |
 | 1 | **CoverSure Policy Portfolio** — case study, every version in one file | [V12, current](https://dhanesh100.github.io/Case-study/#v12) · [V11](https://dhanesh100.github.io/Case-study/#v11) · [V10](https://dhanesh100.github.io/Case-study/#v10) · [Scan](https://dhanesh100.github.io/Case-study/#scan) · [Compact](https://dhanesh100.github.io/Case-study/#compact) · [Full study](https://dhanesh100.github.io/Case-study/#full) | [`index.html`](index.html) |
 | 1a | **Copy document (V10)** — every word on the page, generated from the markup | — | [`COPY-V10.md`](COPY-V10.md) · [`COPY-V9.md`](COPY-V9.md) · [`build-copy.py`](build-copy.py) |
 | 1b | **Scan version, standalone** — the same thing as one sendable file | [Read](https://dhanesh100.github.io/Case-study/scan/) | [`scan/`](scan/) |
