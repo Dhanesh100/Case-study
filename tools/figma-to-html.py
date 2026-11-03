@@ -21,7 +21,7 @@ def ffam(f):
 
 class Conv:
     def __init__(self, imgmap, links, warn, videos=None):
-        self.imgmap = imgmap; self.links = links; self.warn = warn; self.videos = videos or {}
+        self.imgmap = imgmap; self.links = links; self.warn = warn; self.videos = videos or {}; self.extra_cls = {}; self.extra_html = {}
         self.uid = 0; self.fonts = set(); self.used_imgs = {}
 
     # ── paints ──────────────────────────────────────────────────────────
@@ -313,5 +313,6 @@ class Conv:
             if link.startswith('http'): attr += ' target="_blank" rel="noopener"'
             lab = self.links.get(node['id'] + ':label')
             if lab: attr += ' aria-label="%s"' % H.escape(lab)
-        cls = 'n' + (' lk' if link else '')
+        cls = 'n' + (' lk' if link else '') + ((' ' + self.extra_cls[node['id']]) if node['id'] in self.extra_cls else '')
+        if node['id'] in self.extra_html: out.append(self.extra_html[node['id']])
         return '<%s class="%s"%s style="%s">%s</%s>' % (tag, cls, attr, q(';'.join(css)), ''.join(out), tag)
