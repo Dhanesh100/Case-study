@@ -4,274 +4,295 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dhanesh Shetye — Product Designer</title>
-<meta name="description" content="Product Designer at CoverSure. I design the logic behind what a product shows you, and why.">
+<meta name="description" content="Design veteran from Bombay. 10+ years bridging creativity with strategy to design impactful products across fintech, e-commerce, real estate and entertainment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ground: #ffffff; --ground-2: #f5f5f7; --surface: #ffffff;
-    --ink: #1d1d1f; --ink-2: #424245; --ink-3: #6e6e73;
-    --rule: #d2d2d7; --rule-soft: #e8e8ed;
-    --accent: #0071e3; --accent-soft: #e9f1fc; --accent-ink: #0066cc;
-    --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --ground: #000000; --ground-2: #1d1d1f; --surface: #1d1d1f;
-      --ink: #f5f5f7; --ink-2: #a1a1a6; --ink-3: #86868b;
-      --rule: #424245; --rule-soft: #2c2c2e;
-      --accent: #2997ff; --accent-soft: #10243d; --accent-ink: #2997ff;
-    }
-  }
-  :root[data-theme="dark"] {
-    --ground: #000000; --ground-2: #1d1d1f; --surface: #1d1d1f;
-    --ink: #f5f5f7; --ink-2: #a1a1a6; --ink-3: #86868b;
-    --rule: #424245; --rule-soft: #2c2c2e;
-    --accent: #2997ff; --accent-soft: #10243d; --accent-ink: #2997ff;
+    --ink: #000000; --ink-2: #262626; --ink-3: #343434; --ink-4: #777777;
+    --page: #ffffff; --soft: #f5f5f5; --line: #e6e6e6;
+    --sun: #ffc635; --sage: #becc9f; --cream: #f0e6c1;
+    --green: #228c22; --rust: #c2410c; --sky: #0071e3;
+    --display: "Instrument Serif", "PP Eiko", Didot, "Bodoni 72", Georgia, serif;
+    --sans: "Inter", "PP Pangram Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
-    margin: 0; background: var(--ground); color: var(--ink);
-    font-family: var(--body); font-size: 17px; line-height: 1.47;
-    letter-spacing: -0.01em; -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    margin: 0; background: var(--page); color: var(--ink);
+    font-family: var(--sans); font-size: 17px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1168px; margin: 0 auto; padding: 0 28px; }
 
-  /* ── masthead ───────────────────────────────────────────── */
-  .top {
-    position: sticky; top: 0; z-index: 20; background: var(--ground);
-    box-shadow: inset 0 -1px 0 var(--rule-soft);
-  }
-  .top-in {
-    max-width: 980px; margin: 0 auto; padding: 14px 24px;
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-  }
-  .top-in b { color: var(--ink); font-weight: 500; }
-  .top-in span { color: var(--ink-3); }
+  /* ── header ─────────────────────────────────────────── */
+  .hdr { position: sticky; top: 0; z-index: 30; background: var(--page); border-bottom: 1px solid var(--line); }
+  .hdr-in { max-width: 1168px; margin: 0 auto; padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+  .hdr-name { font-weight: 600; font-size: 16px; letter-spacing: -0.01em; }
+  .hdr-r { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 14px; }
+  .pill { border: 1px solid var(--ink); border-radius: 999px; padding: 9px 18px; font-weight: 500; transition: background .2s, color .2s; }
+  .pill:hover { background: var(--ink); color: var(--page); }
+  .pill.solid { background: var(--ink); color: var(--page); }
+  .pill.solid:hover { background: var(--ink-3); }
+  .hdr-mail { color: var(--ink-4); font-size: 13.5px; }
 
-  header.hero { padding: clamp(60px, 11vw, 140px) 0 clamp(40px, 7vw, 80px); }
-  h1 {
-    font-family: var(--display); font-weight: 600;
-    font-size: clamp(36px, 7vw, 82px); line-height: 1.03;
-    letter-spacing: -0.03em; margin: 0 0 26px; max-width: 15ch;
-  }
-  h1 .thin { color: var(--ink-3); }
-  .lede {
-    font-size: clamp(18px, 2.1vw, 24px); line-height: 1.44;
-    letter-spacing: -0.014em; color: var(--ink-2); max-width: 50ch; margin: 0 0 18px;
-  }
-  .lede b { color: var(--ink); font-weight: 600; }
-  .avail {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--ink-3);
-    display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 30px 0 0;
-  }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  /* ── hero ───────────────────────────────────────────── */
+  .hero { padding: clamp(52px, 8vw, 104px) 0 clamp(36px, 5vw, 64px); }
+  h1 { font-family: var(--display); font-weight: 400; font-size: clamp(54px, 10.5vw, 148px);
+       line-height: 0.94; letter-spacing: -0.03em; margin: 0 0 32px; }
+  .intro { font-size: clamp(17px, 1.7vw, 23px); line-height: 1.52; color: var(--ink-3); max-width: 44ch; margin: 0 0 30px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 34px; }
+  .tags li { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3);
+             background: var(--soft); border-radius: 999px; padding: 9px 16px; font-weight: 500; }
 
-  /* ── sections ───────────────────────────────────────────── */
-  section { padding: clamp(44px, 7vw, 86px) 0; }
-  .eyebrow {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--ink-3); margin: 0 0 16px;
-  }
-  h2 {
-    font-family: var(--display); font-weight: 600;
-    font-size: clamp(26px, 3.6vw, 42px); line-height: 1.08;
-    letter-spacing: -0.024em; margin: 0 0 14px; max-width: 20ch;
-  }
-  p { color: var(--ink-2); max-width: 62ch; margin: 0 0 16px; }
-  p strong { color: var(--ink); font-weight: 600; }
+  /* ── numbers ────────────────────────────────────────── */
+  .nums-h { font-weight: 600; font-size: 22px; letter-spacing: -0.01em; margin: 0 0 24px; }
+  .nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(188px, 1fr)); gap: 14px; margin: 0 0 26px; }
+  .num { background: var(--soft); border-radius: 22px; padding: 26px 24px; }
+  .num i { font-style: normal; font-weight: 600; font-size: clamp(40px, 4.6vw, 64px);
+           letter-spacing: -0.03em; line-height: 1; display: block; font-variant-numeric: tabular-nums; }
+  .num span { display: block; font-size: 14px; line-height: 1.45; color: var(--ink-3); margin-top: 12px; }
+  .num.a { background: var(--sun); } .num.b { background: var(--sage); }
+  .num.c { background: var(--cream); } .num.d { background: var(--soft); }
+  .fun { font-size: 15px; line-height: 1.6; color: var(--ink-4); max-width: 68ch; margin: 0; }
 
-  /* ── the headline project ───────────────────────────────── */
-  .work {
-    display: block; background: var(--ground-2); border-radius: 22px;
-    padding: clamp(26px, 4vw, 44px); margin: 0 0 16px; color: inherit;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .work:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 12px 40px -14px rgba(0,0,0,0.2); }
-  .work-tag {
-    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--accent-ink);
-    display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 0 0 18px;
-  }
-  .work-tag .sep { color: var(--ink-3); }
-  .work h3 {
-    font-family: var(--display); font-weight: 600;
-    font-size: clamp(22px, 3vw, 34px); line-height: 1.1;
-    letter-spacing: -0.022em; margin: 0 0 14px; color: var(--ink); max-width: 20ch;
-  }
-  .work p { font-size: 16px; max-width: 58ch; margin-bottom: 0; }
-  .stats {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
-    gap: 10px; margin: 26px 0 22px;
-  }
-  .stat { background: var(--surface); border-radius: 14px; padding: 16px 18px; }
-  .stat i {
-    font-style: normal; font-family: var(--display); font-weight: 600;
-    font-size: 28px; letter-spacing: -0.02em; color: var(--accent);
-    display: block; line-height: 1.05; font-variant-numeric: tabular-nums;
-  }
-  .stat span { display: block; font-size: 12.5px; color: var(--ink-3); margin-top: 6px; line-height: 1.35; }
-  .go {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--accent); display: inline-flex; gap: 8px; align-items: center;
-  }
+  /* ── sections ───────────────────────────────────────── */
+  section { padding: clamp(56px, 9vw, 112px) 0; }
+  .sec-h { font-family: var(--display); font-weight: 400; font-size: clamp(34px, 5.6vw, 76px);
+           line-height: 1.06; letter-spacing: -0.025em; color: var(--ink-2); margin: 0 0 14px; max-width: 17ch; }
+  .sec-h.mid { text-align: center; margin-left: auto; margin-right: auto; }
+  .sec-k { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); margin: 0 0 16px; }
 
-  /* ── supporting work ────────────────────────────────────── */
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(246px, 1fr)); gap: 14px; }
-  .card {
-    display: block; background: var(--ground-2); border-radius: 18px;
-    padding: 24px 26px; color: inherit;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .card:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 10px 32px -14px rgba(0,0,0,0.18); }
-  .card em {
-    font-style: normal; font-family: var(--mono); font-size: 9px;
-    letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-3);
-    display: block; margin-bottom: 12px;
-  }
-  .card h3 {
-    font-family: var(--display); font-weight: 600; font-size: 19px;
-    line-height: 1.22; letter-spacing: -0.016em; margin: 0 0 10px; color: var(--ink);
-  }
-  .card p { font-size: 14.5px; margin: 0; color: var(--ink-3); }
+  /* ── project cards ──────────────────────────────────── */
+  .proj { display: block; border-radius: 26px; overflow: hidden; margin: 0 0 18px;
+          background: var(--soft); transition: transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s; }
+  .proj:hover { transform: translateY(-3px); box-shadow: 0 20px 50px -22px rgba(0,0,0,.3); }
+  .proj-in { display: grid; grid-template-columns: minmax(0,.86fr) minmax(0,1.14fr); gap: 0; align-items: stretch; }
+  @media (max-width: 760px) { .proj-in { grid-template-columns: minmax(0,1fr); } }
+  .proj-l { padding: clamp(28px, 3.4vw, 46px); display: flex; flex-direction: column; justify-content: space-between; gap: 26px; min-height: 300px; }
+  .proj-name { font-weight: 600; font-size: 20px; letter-spacing: -0.01em; margin: 0 0 14px; }
+  .proj-head { font-weight: 600; font-size: clamp(22px, 2.5vw, 34px); line-height: 1.16; letter-spacing: -0.022em; margin: 0; }
+  .proj-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
+  .proj-meta span { border: 1px solid currentColor; border-radius: 999px; padding: 7px 13px; opacity: .72; }
+  .proj-r { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: clamp(22px, 2.6vw, 34px); align-content: center; }
+  .tile { border-radius: 16px; padding: 22px 20px; background: rgba(255,255,255,.72); min-height: 110px;
+          display: flex; flex-direction: column; justify-content: center; }
+  .tile i { font-style: normal; font-weight: 600; font-size: clamp(26px, 3vw, 40px); letter-spacing: -0.03em; line-height: 1; display: block; font-variant-numeric: tabular-nums; }
+  .tile span { font-size: 12.5px; line-height: 1.4; margin-top: 8px; opacity: .78; }
+  .tile.wide { grid-column: 1 / -1; }
+  /* per-project palettes, taken from the Figma */
+  .p-kotak  { background: #e8eeff; color: #0a2a6b; }
+  .p-inv    { background: #1a3bd8; color: #ffffff; }
+  .p-inv .tile  { background: rgba(255,255,255,.14); }
+  .p-king   { background: #ece9ff; color: #241b6b; }
+  .p-sp     { background: #e6f4f1; color: #0d4a44; }
+  .p-shop   { background: #fde9ef; color: #7a1236; }
+  .p-luxe   { background: #1f1d18; color: #f0e6c1; }
+  .p-luxe .tile { background: rgba(240,230,193,.1); }
+  .p-altin  { background: #eaf6ec; color: #14532d; }
+  .p-ozone  { background: #fde8ea; color: #9f1239; }
+  .p-cs     { background: #e9f1fc; color: #0a3a73; }
 
-  /* ── skills ─────────────────────────────────────────────── */
-  .skills { display: flex; flex-wrap: wrap; gap: 9px; margin: 24px 0 0; padding: 0; list-style: none; }
-  .skills li {
-    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--ink-2);
-    background: var(--ground-2); border-radius: 980px; padding: 10px 17px;
-  }
+  /* ── values ─────────────────────────────────────────── */
+  .vals { display: grid; grid-template-columns: repeat(auto-fit, minmax(276px, 1fr)); gap: 14px; margin-top: 44px; }
+  .val { border-radius: 24px; padding: 34px 32px; min-height: 260px; display: flex; align-items: flex-end;
+         font-weight: 600; font-size: 21px; line-height: 1.3; letter-spacing: -0.015em; }
+  .val.one { background: #1a6bff; color: #fff; }
+  .val.two { background: #9fd8f0; color: #073b52; }
+  .val.three { background: var(--sun); color: #3a2a00; }
 
-  /* ── how I work ─────────────────────────────────────────── */
-  .beliefs { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 12px; }
-  .beliefs li { background: var(--ground-2); border-radius: 16px; padding: 22px 24px; }
-  .beliefs b {
-    display: block; font-family: var(--display); font-size: 18px; font-weight: 600;
-    letter-spacing: -0.016em; color: var(--ink); margin-bottom: 7px; line-height: 1.25;
-  }
-  .beliefs span { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
-
-  footer {
-    padding: clamp(44px, 7vw, 80px) 0 70px;
-    box-shadow: inset 0 1px 0 var(--rule-soft); margin-top: clamp(40px, 6vw, 70px);
-  }
-  .foot-grid {
-    display: flex; flex-wrap: wrap; gap: 14px 32px; justify-content: space-between; align-items: baseline;
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em;
-    text-transform: uppercase; color: var(--ink-3);
-  }
-  .mail {
-    font-family: var(--display); font-size: clamp(22px, 3.4vw, 38px); font-weight: 600;
-    letter-spacing: -0.024em; text-transform: none; display: block; margin: 0 0 22px;
-  }
+  /* ── closing ────────────────────────────────────────── */
+  .close { text-align: center; padding: clamp(62px, 10vw, 132px) 0 clamp(40px, 6vw, 72px); }
+  .close h2 { font-family: var(--display); font-weight: 400; font-size: clamp(48px, 10vw, 136px);
+              line-height: .96; letter-spacing: -0.03em; color: var(--ink-2); margin: 0 0 40px; }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; list-style: none; padding: 0; margin: 0; }
+  .links a { font-family: var(--display); font-size: clamp(24px, 3.4vw, 44px); letter-spacing: -0.02em;
+             border-bottom: 2px solid transparent; transition: border-color .2s, color .2s; padding: 0 14px; }
+  .links a:hover { border-bottom-color: currentColor; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0 64px; font-size: 13px; color: var(--ink-4); }
+  .foot-in { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
 </style>
 </head>
 <body>
 
-<div class="top">
-  <div class="top-in">
-    <b>Dhanesh Shetye</b>
-    <span>Product Designer &middot; CoverSure</span>
+<div class="hdr">
+  <div class="hdr-in">
+    <span class="hdr-name">Dhanesh Shetye</span>
+    <div class="hdr-r">
+      <span class="hdr-mail">dhanesh.ns19@gmail.com</span>
+      <a class="pill" href="mailto:dhanesh.ns19@gmail.com">Resume</a>
+      <a class="pill solid" href="#connect">Get In Touch</a>
+    </div>
   </div>
 </div>
 
 <div class="wrap">
 
-<header class="hero">
-  <h1>I design the logic behind what a product shows you <span class="thin">&mdash; and why.</span></h1>
-  <p class="lede">Product Designer at <b>CoverSure</b>, an insurance platform that helps people understand the cover they already hold before it sells them anything.</p>
-  <p class="lede">Most recently I built its <b>first contextual recommendation layer</b> &mdash; a rule system that decides the single most useful next step for each user, from data the product already had.</p>
-  <p class="avail"><span class="dot" aria-hidden="true"></span><span>Post-MVP product work</span><span>&middot;</span><span>Insurance &amp; fintech</span><span>&middot;</span><span>India</span></p>
-</header>
+  <header class="hero">
+    <h1>Crafting<br>User-Driven<br>Solutions</h1>
+    <p class="intro">Hey! I&rsquo;m Dhanesh, a design veteran from Bombay. For 10+ years, I&rsquo;ve bridged creativity with strategy to design impactful products across diverse industries, creating meaningful experiences that resonate globally.</p>
+    <ul class="tags"><li>System</li><li>Design</li><li>Research</li><li>Strategy</li></ul>
+    <a class="pill solid" href="#connect" style="display:inline-block">Let&rsquo;s get connect</a>
+  </header>
 
-<section>
-  <p class="eyebrow">Selected work</p>
-  <a class="work" href="../">
-    <p class="work-tag"><span>CoverSure</span><span class="sep">/</span><span>Policy Portfolio</span><span class="sep">/</span><span>Shipped</span></p>
-    <h3>The right next step for every user &mdash; from data CoverSure already had.</h3>
-    <p>Policy Portfolio&rsquo;s job did not change: it still manages the policies you own. What changed is what it suggests next, and why. The engine reads what a user declared at signup, what they have actually stored, and whether their risk report has run &mdash; then picks one action.</p>
-    <div class="stats">
-      <div class="stat"><i>5</i><span>existing signals reused</span></div>
-      <div class="stat"><i>0</i><span>new data asked of users</span></div>
-      <div class="stat"><i>10</i><span>rules &mdash; one of them &ldquo;show nothing&rdquo;</span></div>
-      <div class="stat"><i>1</i><span>primary action per state</span></div>
+  <section style="padding-top:clamp(20px,3vw,40px)">
+    <p class="nums-h">Notable numbers</p>
+    <div class="nums">
+      <div class="num a"><i>19+</i><span>Products built &mdash; from vision to reality, 0 to 1.</span></div>
+      <div class="num d"><i>64M+</i><span>Users impacted. Solutions that enrich lives and scale globally.</span></div>
+      <div class="num b"><i>22.8M</i><span>Active mutual fund investors on platforms I designed for Axis, Tata, ITI, PGIM and Invesco.</span></div>
+      <div class="num c"><i>10+</i><span>Years of experience in design and innovation.</span></div>
+      <div class="num d"><i>4</i><span>Industries transformed: fintech, e-commerce, real estate, entertainment.</span></div>
     </div>
-    <span class="go">Read the case study <span aria-hidden="true">&rarr;</span></span>
-  </a>
-  <p style="font-size:14.5px;color:var(--ink-3);max-width:58ch">Recently shipped, so there are no outcome numbers yet &mdash; and none are implied. Figures in the screens are design placeholders.</p>
-</section>
+    <p class="fun">Fun fact: I come with a hereditary stammer &mdash; makes my storytelling unique. But don&rsquo;t worry, I&rsquo;ve mastered all other forms of communication to bring ideas to life seamlessly.</p>
+  </section>
 
-<section>
-  <p class="eyebrow">Thinking, in public</p>
-  <h2>The work around the work.</h2>
-  <p>Three documents that show how I think when nobody is watching: how I would prove a design works, how I read someone else&rsquo;s product, and how I review my own.</p>
-  <div class="grid" style="margin-top:28px">
-    <a class="card" href="../measurement/">
-      <em>Measurement plan</em>
-      <h3>Measure the claims, not the clicks.</h3>
-      <p>A hypothesis register and a diagnostic ladder for the recommendation engine &mdash; including the metrics that would mislead.</p>
-    </a>
-    <a class="card" href="../tiimo-teardown/">
-      <em>Product teardown</em>
-      <h3>Tiimo makes time visible. That is the product, and also the liability.</h3>
-      <p>Written from public evidence only, with every claim tagged observed, reported, inferred or assumed.</p>
-    </a>
-    <a class="card" href="../review-v11/">
-      <em>Self-review</em>
-      <h3>It is not a word problem. It is a weighting problem.</h3>
-      <p>A six-lens review of my own case study, with every proposed cut argued against before it was allowed to stand.</p>
-    </a>
-  </div>
-</section>
+  <section>
+    <p class="sec-k">My offerings</p>
+    <h2 class="sec-h">See How I Turn Challenges into Solutions</h2>
 
-<section>
-  <p class="eyebrow">What I do</p>
-  <h2>Systems, not screens.</h2>
-  <p>The screen is the easy part. The work is deciding what should appear, for whom, when &mdash; and what the product is allowed to claim when it does not know enough.</p>
-  <ul class="skills">
-    <li>Product strategy</li>
-    <li>Systems &amp; rule design</li>
-    <li>Information architecture</li>
-    <li>Interaction design</li>
-    <li>UX writing</li>
-    <li>Knowing what to leave out</li>
-  </ul>
-</section>
+    <a class="proj p-cs" href="../">
+      <div class="proj-in">
+        <div class="proj-l">
+          <div>
+            <p class="proj-name">CoverSure &middot; Policy Portfolio</p>
+            <p class="proj-head">The right next step for every user &mdash; from data the product already had.</p>
+          </div>
+          <div class="proj-meta"><span>Insurance</span><span>Shipped</span><span>Case study</span></div>
+        </div>
+        <div class="proj-r">
+          <div class="tile"><i>5</i><span>existing signals reused</span></div>
+          <div class="tile"><i>0</i><span>new data asked of users</span></div>
+          <div class="tile"><i>10</i><span>rules &mdash; one of them &ldquo;show nothing&rdquo;</span></div>
+          <div class="tile"><i>1</i><span>primary action per state</span></div>
+        </div>
+      </div>
+    </a>
 
-<section>
-  <p class="eyebrow">How I work</p>
-  <h2>Three things I keep coming back to.</h2>
-  <ul class="beliefs">
-    <li>
-      <b>Use what the product already knows.</b>
-      <span>The best recommendation layer collects nothing new. Most products already hold enough to be useful and simply never connect it &mdash; which makes it a design problem, not a data project.</span>
-    </li>
-    <li>
-      <b>Personalisation needs a frame that refuses to move.</b>
-      <span>If everything can change, the screen is different on every visit and people stop reading it. Fix the structure, vary only what sits inside it.</span>
-    </li>
-    <li>
-      <b>Say what you cannot prove yet.</b>
-      <span>Shipped is not the same as validated. I would rather publish the hypothesis and the test than imply a result that no data supports.</span>
-    </li>
-  </ul>
-</section>
+    <div class="proj p-kotak">
+      <div class="proj-in">
+        <div class="proj-l">
+          <div><p class="proj-name">Kotak Bank</p>
+          <p class="proj-head">Revolutionized banking for 32.7M users through innovative digital solutions.</p></div>
+          <div class="proj-meta"><span>Fintech</span><span>Mobile banking</span></div>
+        </div>
+        <div class="proj-r"><div class="tile wide"><i>32.7M</i><span>users served</span></div></div>
+      </div>
+    </div>
+
+    <div class="proj p-inv">
+      <div class="proj-in">
+        <div class="proj-l">
+          <div><p class="proj-name">Invesco Mutual Fund</p>
+          <p class="proj-head">Boosted distributor efficiency, driving sales like never before.</p></div>
+          <div class="proj-meta"><span>Fintech</span><span>Distributor platform</span></div>
+        </div>
+        <div class="proj-r">
+          <div class="tile"><i>2x</i><span>distributor efficiency</span></div>
+          <div class="tile"><i>40,000</i><span>distributors empowered</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj p-king">
+      <div class="proj-in">
+        <div class="proj-l">
+          <div><p class="proj-name">Kingdom OTT</p>
+          <p class="proj-head">Building family bonds through our OTT platform for U.S. viewers.</p></div>
+          <div class="proj-meta"><span>Entertainment</span><span>TV &amp; mobile</span></div>
+        </div>
+        <div class="proj-r"><div class="tile wide"><i>45%</i><span>of the U.S. audience prefer family-oriented shows on their TV</span></div></div>
+      </div>
+    </div>
+
+    <div class="proj p-sp">
+      <div class="proj-in">
+        <div class="proj-l">
+          <div><p class="proj-name">Shapoorji Pallonji Real Estate</p>
+          <p class="proj-head">Leading the way to 680% lead growth for India&rsquo;s top developer.</p></div>
+          <div class="proj-meta"><span>Real estate</span><span>Web</span></div>
+        </div>
+        <div class="proj-r">
+          <div class="tile"><i>680%</i><span>lead growth</span></div>
+          <div class="tile"><i>5x</i><span>lower cost per lead via website</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj p-shop">
+      <div class="proj-in">
+        <div class="proj-l">
+          <div><p class="proj-name">Shoppers Stop</p>
+          <p class="proj-head">Fashion made easy, style made achievable for 40K+ users.</p></div>
+          <div class="proj-meta"><span>E-commerce</span><span>Mobile</span></div>
+        </div>
+        <div class="proj-r"><div class="tile wide"><i>40K+</i><span>users shopping a simpler way</span></div></div>
+      </div>
+    </div>
+
+    <div class="proj p-altin">
+      <div class="proj-in">
+        <div class="proj-l">
+          <div><p class="proj-name">Altin Investment app</p>
+          <p class="proj-head">New investment for a new generation.</p></div>
+          <div class="proj-meta"><span>Fintech</span><span>0 to 1</span></div>
+        </div>
+        <div class="proj-r"><div class="tile wide"><i>0&ndash;1</i><span>built from scratch</span></div></div>
+      </div>
+    </div>
+
+    <div class="proj p-ozone">
+      <div class="proj-in">
+        <div class="proj-l">
+          <div><p class="proj-name">ICICI&rsquo;s Ozone portal</p>
+          <p class="proj-head">ICICI Bank&rsquo;s one-stop solution for campus efficiency.</p></div>
+          <div class="proj-meta"><span>Enterprise</span><span>Dashboard &amp; app</span></div>
+        </div>
+        <div class="proj-r">
+          <div class="tile"><i>4K+</i><span>active users</span></div>
+          <div class="tile"><i>30K+</i><span>saved per vendor by matching food to demand</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj p-luxe">
+      <div class="proj-in">
+        <div class="proj-l">
+          <div><p class="proj-name">Luxe</p>
+          <p class="proj-head">Luxury, designed to feel like luxury.</p></div>
+          <div class="proj-meta"><span>E-commerce</span><span>Brand &amp; product</span></div>
+        </div>
+        <div class="proj-r"><div class="tile wide"><i>Luxe</i><span>concept and product design</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec-h mid">My core values as a designer</h2>
+    <div class="vals">
+      <div class="val one">People first, pixels follow &mdash; relationships, empathy, collaboration and trust, for impact that goes beyond the UI.</div>
+      <div class="val two">Outcomes over output &mdash; meaningful impact for both users and the business.</div>
+      <div class="val three">Turning insights into impactful, user-centred solutions for real-world challenges.</div>
+    </div>
+  </section>
+
+  <section class="close" id="connect">
+    <h2>Hey!<br>Let&rsquo;s Work<br>Together</h2>
+    <ul class="links">
+      <li><a href="mailto:dhanesh.ns19@gmail.com">Email</a></li>
+      <li><a href="https://dribbble.com/" rel="noopener">Dribbble</a></li>
+      <li><a href="https://figma.com/" rel="noopener">Figma</a></li>
+      <li><a href="https://linkedin.com/" rel="noopener">Linkedin</a></li>
+    </ul>
+  </section>
 
 </div>
 
 <footer>
-  <div class="wrap">
-    <a class="mail" href="mailto:dhanesh.shetye@coversure.in">dhanesh.shetye@coversure.in</a>
-    <div class="foot-grid">
-      <span>Dhanesh Shetye &middot; Product Designer</span>
-      <span><a href="../">CoverSure Policy Portfolio case study</a></span>
-    </div>
+  <div class="wrap foot-in">
+    <span>Dhanesh Shetye &middot; Product Designer &middot; Bombay</span>
+    <span>dhanesh.ns19@gmail.com</span>
   </div>
 </footer>
 
