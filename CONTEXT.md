@@ -175,7 +175,8 @@ part of current design and its not distract or stop user from there primary job.
 | Family overview, no policy | node `3659:21849` |
 | KYP rating scale | node `2129:17149` |
 | Screen exports | `assets/src/*.png` → optimised to `assets/web/*.jpg` |
-| Reading Figma text | Text layers are **named after their content**, so `get_metadata` returns the copy without needing a screenshot. |
+| Reading Figma text | Text layers are **named after their content**, so metadata returns the copy without needing a screenshot. |
+| **Figma access** | The MCP server needs an **editor seat** on the team that owns a file. Dhanesh has a Full seat only on **CoverSure**; `Portfolio` (`8LqFO4NjyttqYMYpracfd0`) sits on a View-seat team, so the MCP refuses it &mdash; this is a seat problem, not a sharing one. **The REST API only needs view access**, so use `./tools/figma-fetch.sh <file-key> <node-id>` with a personal access token in `~/.figma-token`. That path works on every file he can open in a browser. |
 
 ---
 
