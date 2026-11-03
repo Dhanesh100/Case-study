@@ -26,7 +26,7 @@
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: #ffffff; color: var(--ink); font-family: var(--montreal);
+  body { overflow-x: clip; margin: 0; background: #ffffff; color: var(--ink); font-family: var(--montreal);
          -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   a { color: inherit; text-decoration: none; }
   img { display: block; max-width: 100%; }
@@ -61,9 +61,13 @@
   .intro { max-width: 900px; margin: 40px auto 0; font: 500 24px/36px var(--montreal); letter-spacing: .96px; color: var(--ink-34); }
 
   /* Figma multiplayer cursors — the four disciplines, floating where the file puts them */
-  .cur { position: absolute; display: block; pointer-events: none; z-index: 2;
-         animation: drift 6s ease-in-out infinite; }
-  .cur:nth-of-type(2n) { animation-duration: 7.5s; animation-delay: -2s; }
+  .cur { position: absolute; display: block; pointer-events: none; z-index: 2; will-change: transform; }
+  .cur-in { position: relative; display: block; animation: drift 6s ease-in-out infinite; }
+  .c-strategy .cur-in, .c-system .cur-in { animation-duration: 7.5s; animation-delay: -2s; }
+  /* while a cursor is following you, its idle drift stops and its label lifts */
+  .cur.live .cur-in { animation-play-state: paused; }
+  .cur .cur-l { transition: transform .25s ease, box-shadow .25s ease; }
+  .cur.live .cur-l { transform: translateY(-1px) scale(1.06); box-shadow: 0 4px 12px -4px rgba(0,0,0,.35); }
   .cur-a { display: block; filter: drop-shadow(0 1px 1.5px rgba(0,0,0,.28)); }
   .cur-a path { stroke: #fff; stroke-width: 1; stroke-linejoin: round; }
   .cur-l { position: absolute; left: 13px; top: 18px; padding: 2px 4px; border-radius: 2px 4px 4px 4px;
@@ -105,10 +109,58 @@
   .work { padding-top: 160px; }
   .work .sec-h { max-width: 1032px; }
   .projects { display: grid; gap: 120px; justify-items: center; margin-top: 64px; padding: 0 20px; }
-  .projects a { display: block; width: 100%; max-width: 1180px; border-radius: 24px;
-                transition: transform .45s cubic-bezier(.2,.7,.3,1); }
-  .projects a:hover { transform: translateY(-6px); }
-  .projects img { width: 100%; height: auto; }
+  /* ── project cards: the Figma "Pop" variant, plus a clickability nudge ──
+     Pop = scale ×1.0508 (1180→1240) and a 32/32/48 shadow at 8% black.
+     drop-shadow, not box-shadow, so the shadow follows each tile the way
+     Figma's does instead of drawing a box around the whole collage. */
+  .card { position: relative; display: block; width: 100%; max-width: 1180px;
+          transform-origin: 50% 50%; outline: none;
+          transition: transform .6s cubic-bezier(.2,.75,.2,1); }
+  .card img { width: 100%; height: auto;
+              filter: drop-shadow(0 0 0 rgba(0,0,0,0)) drop-shadow(0 0 0 rgba(0,0,0,0));
+              transition: filter .6s cubic-bezier(.2,.75,.2,1); }
+  /* hover: larger than the Figma's ×1.05 by request, lifted, and floating —
+     a wide soft shadow far below plus a faint tight one for contact */
+  .card:hover, .card:focus-visible { transform: translateY(-12px) scale(1.07); z-index: 2; }
+  .card:hover img, .card:focus-visible img {
+    filter: drop-shadow(0 34px 34px rgba(0,0,0,.11)) drop-shadow(0 8px 10px rgba(0,0,0,.05)); }
+  .card:hover, .card:hover img { will-change: transform, filter; }
+  a.card { cursor: pointer; }
+  .card.soon { cursor: default; }
+
+  /* the badge: always visible, so clickability does not depend on finding the hover */
+  .cta { position: absolute; right: 24px; bottom: 24px; z-index: 3; height: 56px; min-width: 56px;
+         display: inline-flex; align-items: center; justify-content: flex-end; gap: 0;
+         padding: 0 18px; border-radius: 64px; background: #151515; color: #fff;
+         box-shadow: 0 8px 24px -8px rgba(0,0,0,.35); overflow: hidden;
+         transition: gap .45s cubic-bezier(.2,.75,.2,1), padding .45s cubic-bezier(.2,.75,.2,1), background .3s ease; }
+  .cta-t { max-width: 0; opacity: 0; white-space: nowrap; overflow: hidden; display: inline-block;
+           font: 500 16px/24px var(--montreal); letter-spacing: .64px;
+           transition: max-width .45s cubic-bezier(.2,.75,.2,1), opacity .3s ease .05s; }
+  .cta svg { width: 20px; height: 20px; flex: 0 0 20px; transition: transform .45s cubic-bezier(.2,.75,.2,1); }
+  .card:hover .cta, .card:focus-visible .cta { gap: 10px; padding: 0 22px 0 26px; }
+  .card:hover .cta-t, .card:focus-visible .cta-t { max-width: 200px; opacity: 1; }
+  a.card:hover .cta svg, a.card:focus-visible .cta svg { transform: translate(2px,-2px) rotate(0deg); }
+  .card:focus-visible .cta { box-shadow: 0 0 0 3px #fff, 0 0 0 6px #151515; }
+  .card.soon .cta { background: rgba(21,21,21,.78); }
+  .card.soon .cta-t { max-width: 200px; opacity: 1; }
+  .card.soon .cta { padding: 0 22px; }
+
+  /* first-sight nudge: rise in, then the badge pulses twice — once */
+  .card.pre { opacity: 0; transform: translateY(48px); }
+  .card.in  { opacity: 1; transform: none;
+              transition: opacity .8s ease, transform .9s cubic-bezier(.2,.75,.2,1); }
+  .card.in:hover, .card.in:focus-visible { transform: translateY(-12px) scale(1.07); transition: transform .6s cubic-bezier(.2,.75,.2,1); }
+  .cta::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+  .card.nudge .cta::before { animation: ping 1.4s cubic-bezier(.2,.7,.3,1) .5s 2; }
+  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(21,21,21,.45); } 100% { box-shadow: 0 0 0 18px rgba(21,21,21,0); } }
+
+  /* no hover on touch screens: show the full label from the start */
+  @media (hover: none) {
+    .cta { gap: 10px; padding: 0 20px 0 24px; height: 48px; right: 14px; bottom: 14px; }
+    .cta-t { max-width: 200px; opacity: 1; font-size: 14px; }
+  }
+  @media (max-width: 860px) { .cta { right: 12px; bottom: 12px; height: 44px; } .cta-t { font-size: 13px; } }
 
   /* ════════ VALUES ════════ */
   .values { padding-top: 160px; }
@@ -169,7 +221,10 @@
     .row { grid-template-columns: 1fr; } .row small { padding-top: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .track { animation: none; } .nums { overflow-x: auto; } .cur { animation: none; }
+    .track { animation: none; } .nums { overflow-x: auto; } .cur-in { animation: none; }
+    .card, .card.in, .card.in:hover, .card:hover, .card:focus-visible { transform: none !important; transition: none; }
+    .card.pre { opacity: 1; } .card.nudge .cta::before { animation: none; }
+    .cta, .cta-t, .cta svg, .card img { transition: none; }
     html { scroll-behavior: auto; }
   }
 </style>
@@ -196,10 +251,10 @@
       <span class="ln">Solutions</span>
     </h1>
     <p class="intro">Hey! I’m Dhanesh, a design veteran Bombay. For 10+ years, I’ve bridged creativity with strategy to design impactful products across diverse industries, creating meaningful experiences that resonate globally.</p>
-    <span class="cur c-research"><svg class="cur-a" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M1 1 L1 12.2 L4 9.4 L6.2 13.4 L8 12.5 L5.9 8.6 L10 8.6 Z"/></svg><span class="cur-l">Research</span></span>
-    <span class="cur c-strategy"><svg class="cur-a" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M1 1 L1 12.2 L4 9.4 L6.2 13.4 L8 12.5 L5.9 8.6 L10 8.6 Z"/></svg><span class="cur-l">Strategy</span></span>
-    <span class="cur c-design"><svg class="cur-a" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M1 1 L1 12.2 L4 9.4 L6.2 13.4 L8 12.5 L5.9 8.6 L10 8.6 Z"/></svg><span class="cur-l">Design</span></span>
-    <span class="cur c-system"><svg class="cur-a" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M1 1 L1 12.2 L4 9.4 L6.2 13.4 L8 12.5 L5.9 8.6 L10 8.6 Z"/></svg><span class="cur-l">System</span></span>
+    <span class="cur c-research" data-q="research"><span class="cur-in"><svg class="cur-a" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M1 1 L1 12.2 L4 9.4 L6.2 13.4 L8 12.5 L5.9 8.6 L10 8.6 Z"/></svg><span class="cur-l">Research</span></span></span>
+    <span class="cur c-strategy" data-q="strategy"><span class="cur-in"><svg class="cur-a" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M1 1 L1 12.2 L4 9.4 L6.2 13.4 L8 12.5 L5.9 8.6 L10 8.6 Z"/></svg><span class="cur-l">Strategy</span></span></span>
+    <span class="cur c-design" data-q="design"><span class="cur-in"><svg class="cur-a" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M1 1 L1 12.2 L4 9.4 L6.2 13.4 L8 12.5 L5.9 8.6 L10 8.6 Z"/></svg><span class="cur-l">Design</span></span></span>
+    <span class="cur c-system" data-q="system"><span class="cur-in"><svg class="cur-a" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M1 1 L1 12.2 L4 9.4 L6.2 13.4 L8 12.5 L5.9 8.6 L10 8.6 Z"/></svg><span class="cur-l">System</span></span></span>
   </section>
 
   <div class="nums-wrap">
@@ -220,12 +275,12 @@
   <section class="work" aria-labelledby="work-h">
     <h2 class="sec-h" id="work-h">See How I Turn Challenges into Solutions</h2>
     <div class="projects">
-      <a href="#" aria-label="Kotak Bank — creating a scalable design language for digital banking, 32.7 million users"><img src="img/work-kotak.png" alt="Kotak Bank: creating a scalable design language to power digital banking for 32.7 million users; 25% reduction in banking task time." loading="lazy" width="1180" height="840"></a>
-      <a href="#" aria-label="Shoppers Stop"><img src="img/work-shoppers.png" alt="Shoppers Stop e-commerce app design." loading="lazy" width="1180" height="840"></a>
-      <a href="#" aria-label="Invesco Mutual Fund — 2x distributor efficiency"><img src="img/work-invesco.png" alt="Invesco Mutual Fund: 2x boosted distributor efficiency, driving sales like never before; 40,000 distributors empowered." loading="lazy" width="1180" height="840"></a>
-      <a href="#" aria-label="Kingdom OTT"><img src="img/work-kingdom.png" alt="Kingdom OTT: building family bonds through an OTT platform for U.S. viewers; 45% of the audience prefer family-oriented shows." loading="lazy" width="1180" height="840"></a>
-      <a href="#" aria-label="Shapoorji Pallonji Real Estate"><img src="img/work-shapoorji.png" alt="Shapoorji Pallonji Real Estate: 680% lead growth for India's top developer; cost per lead via website reduced 5x." loading="lazy" width="1180" height="840"></a>
-      <a href="#" aria-label="ICICI Ozone portal"><img src="img/work-ozone.png" alt="ICICI Bank's Ozone portal: a one-stop solution for campus efficiency; 4K+ active users and 30K+ saved per vendor." loading="lazy" width="1180" height="840"></a>
+      <a class="card pre" href="https://www.figma.com/proto/8LqFO4NjyttqYMYpracfd0/Portfolio?node-id=140-4208&amp;starting-point-node-id=140-4208&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;hide-ui=1" target="_blank" rel="noopener" aria-label="Kotak Bank — view case study (opens in a new tab)"><img src="img/work-kotak.png" alt="Kotak Bank: creating a scalable design language to power digital banking for 32.7 million users; 25% reduction in banking task time." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <div class="card soon pre"><img src="img/work-shoppers.png" alt="Shoppers Stop e-commerce app design." loading="lazy" width="1180" height="840"><span class="cta"><span class="cta-t">Case study coming soon</span></span></div>
+      <a class="card pre" href="https://www.figma.com/proto/8LqFO4NjyttqYMYpracfd0/Portfolio?node-id=140-3716&amp;starting-point-node-id=140-3716&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;hide-ui=1" target="_blank" rel="noopener" aria-label="Invesco Mutual Fund — view case study (opens in a new tab)"><img src="img/work-invesco.png" alt="Invesco Mutual Fund: 2x boosted distributor efficiency, driving sales like never before; 40,000 distributors empowered." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card pre" href="https://www.figma.com/proto/8LqFO4NjyttqYMYpracfd0/Portfolio?node-id=140-4415&amp;starting-point-node-id=140-4415&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;hide-ui=1" target="_blank" rel="noopener" aria-label="Kingdom OTT — view case study (opens in a new tab)"><img src="img/work-kingdom.png" alt="Kingdom OTT: building family bonds through an OTT platform for U.S. viewers; 45% of the audience prefer family-oriented shows." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card pre" href="https://www.figma.com/proto/8LqFO4NjyttqYMYpracfd0/Portfolio?node-id=140-3782&amp;starting-point-node-id=140-3782&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;hide-ui=1" target="_blank" rel="noopener" aria-label="Shapoorji Pallonji Real Estate — view case study (opens in a new tab)"><img src="img/work-shapoorji.png" alt="Shapoorji Pallonji Real Estate: 680% lead growth for India's top developer; cost per lead via website reduced 5x." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card pre" href="https://www.figma.com/proto/8LqFO4NjyttqYMYpracfd0/Portfolio?node-id=140-3999&amp;starting-point-node-id=140-3999&amp;scaling=scale-down-width&amp;content-scaling=fixed&amp;hide-ui=1" target="_blank" rel="noopener" aria-label="ICICI Ozone portal — view case study (opens in a new tab)"><img src="img/work-ozone.png" alt="ICICI Bank's Ozone portal: a one-stop solution for campus efficiency; 4K+ active users and 30K+ saved per vendor." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
     </div>
   </section>
 
@@ -262,5 +317,90 @@
   </section>
 
 </main>
+<script>
+  /* Cards rise in as they enter the viewport, and each badge pulses twice
+     the first time its card is seen. Without IntersectionObserver, or with
+     reduced motion, everything is simply shown. */
+  (function () {
+    var cards = [].slice.call(document.querySelectorAll('.card.pre'));
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (still || !('IntersectionObserver' in window)) {
+      cards.forEach(function (c) { c.classList.remove('pre'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var c = e.target;
+        c.classList.add('in'); c.classList.remove('pre');
+        setTimeout(function () { c.classList.add('nudge'); }, 350);
+        io.unobserve(c);
+      });
+    }, { threshold: 0.22, rootMargin: '0px 0px -8% 0px' });
+    cards.forEach(function (c) { io.observe(c); });
+  }());
+</script>
+<script>
+  /* The hero is split into a 2x2 grid. Each Figma-style cursor owns one
+     square — Research top-left, Strategy top-right, Design bottom-left,
+     System bottom-right. Move the mouse inside a square and that square's
+     cursor trails it like a collaborator; leave and it drifts home.
+     Pointer devices only, and off under reduced motion. */
+  (function () {
+    var hero = document.querySelector('.hero');
+    if (!hero) return;
+    var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!fine || still) return;
+
+    var Q = { research: [0, 0], strategy: [1, 0], design: [0, 1], system: [1, 1] };
+    var curs = [].slice.call(hero.querySelectorAll('.cur[data-q]')).map(function (el) {
+      return { el: el, q: Q[el.getAttribute('data-q')], x: 0, y: 0, tx: 0, ty: 0 };
+    });
+    var TRAIL_X = 18, TRAIL_Y = 20;   // sit just beside your pointer, never on it
+    var LABEL_W = 78, LABEL_H = 36;   // keep the whole label inside its square
+    var running = false, visible = true, mouse = null;
+
+    function homeOf(c) { return { x: c.el.offsetLeft, y: c.el.offsetTop }; }
+
+    function retarget() {
+      var w = hero.clientWidth, h = hero.clientHeight;
+      var active = mouse ? [mouse.x < w / 2 ? 0 : 1, mouse.y < h / 2 ? 0 : 1] : null;
+      curs.forEach(function (c) {
+        var home = homeOf(c);
+        var mine = active && c.q[0] === active[0] && c.q[1] === active[1];
+        c.el.classList.toggle('live', !!mine);
+        if (!mine) { c.tx = 0; c.ty = 0; return; }
+        var x0 = c.q[0] * w / 2, y0 = c.q[1] * h / 2;
+        var px = Math.min(Math.max(mouse.x + TRAIL_X, x0 + 8), x0 + w / 2 - LABEL_W);
+        var py = Math.min(Math.max(mouse.y + TRAIL_Y, y0 + 8), y0 + h / 2 - LABEL_H);
+        c.tx = px - home.x; c.ty = py - home.y;
+      });
+    }
+
+    function frame() {
+      var moving = false;
+      curs.forEach(function (c) {
+        var k = c.el.classList.contains('live') ? 0.14 : 0.08;   // follow briskly, return softly
+        c.x += (c.tx - c.x) * k; c.y += (c.ty - c.y) * k;
+        if (Math.abs(c.tx - c.x) > 0.3 || Math.abs(c.ty - c.y) > 0.3) moving = true;
+        c.el.style.transform = 'translate3d(' + c.x.toFixed(1) + 'px,' + c.y.toFixed(1) + 'px,0)';
+      });
+      if (moving && visible) requestAnimationFrame(frame); else running = false;
+    }
+    function kick() { if (!running) { running = true; requestAnimationFrame(frame); } }
+
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      mouse = { x: e.clientX - r.left, y: e.clientY - r.top };
+      retarget(); kick();
+    });
+    hero.addEventListener('mouseleave', function () { mouse = null; retarget(); kick(); });
+    window.addEventListener('resize', function () { retarget(); kick(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) kick(); }).observe(hero);
+    }
+  }());
+</script>
 </body>
 </html>
