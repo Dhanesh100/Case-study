@@ -14,7 +14,7 @@ def rgba(c, op=1.0):
 
 FONT = {'PP Neue Montreal TT': 'PP Neue Montreal', 'PP Neue Montreal': 'PP Neue Montreal',
         'PP Pangram Sans': 'PP Pangram Sans', 'PP Eiko': 'PP Eiko'}
-FALLBACK = {'PP Eiko': 'Didot, Georgia, serif'}
+FALLBACK = {'PP Eiko': 'Didot, Georgia, serif', 'Gloock': 'Georgia, serif', 'Helvetica Neue': 'Helvetica, Arial, sans-serif'}
 def ffam(f):
     fam = FONT.get(f, f)
     return '"%s", %s' % (fam, FALLBACK.get(fam, '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif'))
@@ -78,7 +78,20 @@ class Conv:
                 g = self.gradient(f, w, h)
                 if g: layers.append(g)
             elif t == 'IMAGE':
-                if f.get('opacity', 1) < 0.999: self.warn('image fill opacity %.2f ignored on %s' % (f['opacity'], node.get('name')))
+                if f.get('opacity', 1) < 0.999:
+                    vis = [g for g in node.get('fills') or [] if g.get('visible', True) is not False]
+                    if len(vis) == 1 and not node.get('children'):
+                        self._fill_op = f['opacity']      # sole fill, no children: element opacity is exact
+                        i = self.image(f, w, h, node)
+                        if i: layers.append(i)
+                        continue
+                    if f is vis[-1]:
+                        # top fill: draw it as its own faded layer above the fills beneath
+                        i = self.image(f, w, h, node)
+                        if i: self._overlay = (i, f['opacity'])
+                        continue
+                    else:
+                        self.warn('image fill opacity %.2f ignored on %s' % (f['opacity'], node.get('name')))
                 i = self.image(f, w, h, node)
                 if i: layers.append(i)
             else:
@@ -235,6 +248,8 @@ class Conv:
         tag = 'a' if link else 'div'
         attr = ' href="%s"' % H.escape(link) if link else ''
         if link and link.startswith('http'): attr += ' target="_blank" rel="noopener"'
+        if any(x.startswith('display:flex') for x in css):
+            body = '<span class="tv">%s</span>' % body   # one flex item, so runs stay inline
         return '<%s class="t"%s style="%s">%s</%s>' % (tag, attr, q(';'.join(css)), body, tag)
 
     def _seg(self, k, t, tbl, fam, wt):
@@ -267,11 +282,24 @@ class Conv:
         if t in ('VECTOR', 'BOOLEAN_OPERATION', 'STAR', 'LINE', 'REGULAR_POLYGON'):
             return self.svg(node, x, y, w, h)
         css = ['left:%spx' % r2(x), 'top:%spx' % r2(y), 'width:%spx' % r2(w), 'height:%spx' % r2(h)]
+        self._fill_op = None; self._overlay = None
         bg = self.background(node, w, h)
         if bg: css.append('background:%s' % bg)
+        fop = self._fill_op
         rad = self.radius(node)
         if rad: css.append('border-radius:%s' % rad)
-        if node.get('clipsContent'): css.append('overflow:hidden')
+        od = node.get('overflowDirection') or 'NONE'
+        scr = ''
+        if od != 'NONE':
+            b0 = node.get('absoluteBoundingBox') or {}
+            ks = [k['absoluteBoundingBox'] for k in node.get('children') or [] if k.get('visible', True) is not False and k.get('absoluteBoundingBox')]
+            over_x = ks and max(k['x'] + k['width'] for k in ks) - (b0['x'] + b0['width']) > 8
+            over_y = ks and max(k['y'] + k['height'] for k in ks) - (b0['y'] + b0['height']) > 8
+            if od in ('HORIZONTAL_SCROLLING', 'BOTH') and over_x: scr += ' sx'
+            if od in ('VERTICAL_SCROLLING', 'BOTH') and over_y: scr += ' sy'
+        if scr:
+            css.append('overflow-x:%s;overflow-y:%s' % ('auto' if 'sx' in scr else 'hidden', 'auto' if 'sy' in scr else 'hidden'))
+        elif node.get('clipsContent'): css.append('overflow:hidden')
         shadows, filt, back = self.effects(node)
         st = self.strokes(node)
         allsh = st['shadow'] + shadows
@@ -279,9 +307,14 @@ class Conv:
         if st['outline']: css.append(st['outline'].rstrip(';'))
         if filt: css.append('filter:%s' % ' '.join(filt))
         if back: css.append('-webkit-backdrop-filter:%s;backdrop-filter:%s' % (' '.join(back), ' '.join(back)))
-        if node.get('opacity', 1) < 0.999: css.append('opacity:%s' % r2(node['opacity']))
+        op = node.get('opacity', 1) * (fop or 1)
+        if op < 0.999: css.append('opacity:%s' % r2(op))
         kids = node.get('children') or []
         out = []
+        if self._overlay:
+            rad = self.radius(node)
+            out.append('<div class="n" style="%s"></div>' % q('left:0;top:0;width:100%%;height:100%%;background:%s;opacity:%s%s' % (
+                self._overlay[0], r2(self._overlay[1]), (';border-radius:' + rad) if rad else '')))
         vid = self.videos.get(node['id'])
         if vid:
             # Figma video fill: the API only exposes the first frame, which here is the empty
@@ -313,6 +346,6 @@ class Conv:
             if link.startswith('http'): attr += ' target="_blank" rel="noopener"'
             lab = self.links.get(node['id'] + ':label')
             if lab: attr += ' aria-label="%s"' % H.escape(lab)
-        cls = 'n' + (' lk' if link else '') + ((' ' + self.extra_cls[node['id']]) if node['id'] in self.extra_cls else '')
+        cls = 'n' + scr + (' lk' if link else '') + ((' ' + self.extra_cls[node['id']]) if node['id'] in self.extra_cls else '')
         if node['id'] in self.extra_html: out.append(self.extra_html[node['id']])
         return '<%s class="%s"%s style="%s">%s</%s>' % (tag, cls, attr, q(';'.join(css)), ''.join(out), tag)
