@@ -5,17 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dhanesh Shetye — Product Designer</title>
 <meta name="description" content="Design veteran from Bombay. 10+ years bridging creativity with strategy to design impactful products across fintech, e-commerce, real estate and entertainment.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/PPEiko-Black.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/PPNeueMontreal-Medium.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* ── the real typefaces from the Figma, self-hosted ──────────── */
+  @font-face { font-family: "PP Eiko"; src: url("fonts/PPEiko-Black.woff2") format("woff2");
+               font-weight: 900; font-style: normal; font-display: swap; }
+  @font-face { font-family: "PP Eiko"; src: url("fonts/PPEiko-Regular.woff2") format("woff2");
+               font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "PP Pangram Sans"; src: url("fonts/PPPangramSans-Semibold.woff2") format("woff2");
+               font-weight: 600; font-style: normal; font-display: swap; }
+  @font-face { font-family: "PP Pangram Sans"; src: url("fonts/PPPangramSans-Medium.woff2") format("woff2");
+               font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: "PP Neue Montreal"; src: url("fonts/PPNeueMontreal-Medium.woff2") format("woff2");
+               font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: "PP Neue Montreal"; src: url("fonts/PPNeueMontreal-Book.woff2") format("woff2");
+               font-weight: 400; font-style: normal; font-display: swap; }
   :root {
     --ink: #000000; --ink-2: #262626; --ink-3: #343434; --ink-4: #777777;
     --page: #ffffff; --soft: #f5f5f5; --line: #e6e6e6;
     --sun: #ffc635; --sage: #becc9f; --cream: #f0e6c1;
     --green: #228c22; --rust: #c2410c; --sky: #0071e3;
-    --display: "Instrument Serif", "PP Eiko", Didot, "Bodoni 72", Georgia, serif;
-    --sans: "Inter", "PP Pangram Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --display: "PP Eiko", Didot, "Bodoni 72", Georgia, serif;
+    --sans: "PP Pangram Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --body-f: "PP Neue Montreal", "PP Pangram Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
@@ -39,9 +52,10 @@
 
   /* ── hero ───────────────────────────────────────────── */
   .hero { padding: clamp(52px, 8vw, 104px) 0 clamp(36px, 5vw, 64px); }
-  h1 { font-family: var(--display); font-weight: 400; font-size: clamp(54px, 10.5vw, 148px);
-       line-height: 0.94; letter-spacing: -0.03em; margin: 0 0 32px; }
-  .intro { font-size: clamp(17px, 1.7vw, 23px); line-height: 1.52; color: var(--ink-3); max-width: 44ch; margin: 0 0 30px; }
+  h1 { font-family: var(--display); font-weight: 900; font-size: clamp(54px, 10.5vw, 148px);
+       line-height: 0.94; letter-spacing: -0.02em; margin: 0 0 32px; }
+  .intro { font-family: var(--body-f); font-size: clamp(17px, 1.7vw, 23px); line-height: 1.52;
+           letter-spacing: .04em; color: var(--ink-3); max-width: 44ch; margin: 0 0 30px; }
   .tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 34px; }
   .tags li { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3);
              background: var(--soft); border-radius: 999px; padding: 9px 16px; font-weight: 500; }
@@ -52,15 +66,15 @@
   .num { background: var(--soft); border-radius: 22px; padding: 26px 24px; }
   .num i { font-style: normal; font-weight: 600; font-size: clamp(40px, 4.6vw, 64px);
            letter-spacing: -0.03em; line-height: 1; display: block; font-variant-numeric: tabular-nums; }
-  .num span { display: block; font-size: 14px; line-height: 1.45; color: var(--ink-3); margin-top: 12px; }
+  .num span { font-family: var(--body-f); display: block; font-size: 14px; line-height: 1.45; color: var(--ink-3); margin-top: 12px; }
   .num.a { background: var(--sun); } .num.b { background: var(--sage); }
   .num.c { background: var(--cream); } .num.d { background: var(--soft); }
-  .fun { font-size: 15px; line-height: 1.6; color: var(--ink-4); max-width: 68ch; margin: 0; }
+  .fun { font-family: var(--body-f); font-size: 15px; line-height: 1.6; color: var(--ink-4); max-width: 68ch; margin: 0; }
 
   /* ── sections ───────────────────────────────────────── */
   section { padding: clamp(56px, 9vw, 112px) 0; }
   .sec-h { font-family: var(--display); font-weight: 400; font-size: clamp(34px, 5.6vw, 76px);
-           line-height: 1.06; letter-spacing: -0.025em; color: var(--ink-2); margin: 0 0 14px; max-width: 17ch; }
+           line-height: 1.08; letter-spacing: -0.009em; color: var(--ink-2); margin: 0 0 14px; max-width: 17ch; }
   .sec-h.mid { text-align: center; margin-left: auto; margin-right: auto; }
   .sec-k { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-4); margin: 0 0 16px; }
 
@@ -79,7 +93,7 @@
   .tile { border-radius: 16px; padding: 22px 20px; background: rgba(255,255,255,.72); min-height: 110px;
           display: flex; flex-direction: column; justify-content: center; }
   .tile i { font-style: normal; font-weight: 600; font-size: clamp(26px, 3vw, 40px); letter-spacing: -0.03em; line-height: 1; display: block; font-variant-numeric: tabular-nums; }
-  .tile span { font-size: 12.5px; line-height: 1.4; margin-top: 8px; opacity: .78; }
+  .tile span { font-family: var(--body-f); font-size: 12.5px; line-height: 1.4; margin-top: 8px; opacity: .78; }
   .tile.wide { grid-column: 1 / -1; }
   /* per-project palettes, taken from the Figma */
   .p-kotak  { background: #e8eeff; color: #0a2a6b; }
@@ -104,8 +118,8 @@
 
   /* ── closing ────────────────────────────────────────── */
   .close { text-align: center; padding: clamp(62px, 10vw, 132px) 0 clamp(40px, 6vw, 72px); }
-  .close h2 { font-family: var(--display); font-weight: 400; font-size: clamp(48px, 10vw, 136px);
-              line-height: .96; letter-spacing: -0.03em; color: var(--ink-2); margin: 0 0 40px; }
+  .close h2 { font-family: var(--display); font-weight: 900; font-size: clamp(48px, 10vw, 136px);
+              line-height: .96; letter-spacing: -0.02em; color: var(--ink-2); margin: 0 0 40px; }
   .links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; list-style: none; padding: 0; margin: 0; }
   .links a { font-family: var(--display); font-size: clamp(24px, 3.4vw, 44px); letter-spacing: -0.02em;
              border-bottom: 2px solid transparent; transition: border-color .2s, color .2s; padding: 0 14px; }
