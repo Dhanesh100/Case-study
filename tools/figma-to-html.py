@@ -20,8 +20,8 @@ def ffam(f):
     return '"%s", %s' % (fam, FALLBACK.get(fam, '-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif'))
 
 class Conv:
-    def __init__(self, imgmap, links, warn):
-        self.imgmap = imgmap; self.links = links; self.warn = warn
+    def __init__(self, imgmap, links, warn, videos=None):
+        self.imgmap = imgmap; self.links = links; self.warn = warn; self.videos = videos or {}
         self.uid = 0; self.fonts = set(); self.used_imgs = {}
 
     # ── paints ──────────────────────────────────────────────────────────
@@ -282,6 +282,11 @@ class Conv:
         if node.get('opacity', 1) < 0.999: css.append('opacity:%s' % r2(node['opacity']))
         kids = node.get('children') or []
         out = []
+        vid = self.videos.get(node['id'])
+        if vid:
+            # Figma video fill: the API only exposes the first frame, which here is the empty
+            # pre-load state. Play the real recording; poster is a populated frame.
+            out.append('<video class="vid" muted playsinline poster="%s" data-src="%s" data-start="%s" aria-label="%s"></video>' % vid)
         i = 0
         while i < len(kids):
             k = kids[i]
