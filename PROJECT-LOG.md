@@ -584,3 +584,20 @@ content, tables and decision blocks were merged into six overlays. Surface: 2,60
 
 **Checks.** No duplicate ids; every `data-open` resolves; V12 tags balance; SVG markers
 resolve inside the panel; no horizontal overflow at 400px; rendered at 1280 and 400.
+
+---
+
+## 5 Nov 2026 — Shapoorji and ICICI case-study pages from Figma
+
+**Asked.** Code the Kingdom OTT, SPRE and ICICI case studies exactly like their frames in the
+ProSure Figma file.
+
+**Done.** `home/work/shapoorji/` and `home/work/icici/`, built by the new `tools/build-case.py`
+in the Invesco page's shell; home cards for both now open them. Converter fixes found by
+comparing each page against the Figma render: rotated layers (placed by `relativeTransform`),
+frame strokes and inner shadows painted above children, layer blend modes, empty list lines.
+
+**Judgement calls.** SPRE's Next Project card in Figma is *Altin*, which has no page; it shows
+the ICICI card and links there, following the home page's order. Opaque PNGs ship as JPEG.
+
+**Not yet.** Kingdom OTT — the Figma API is rate-limiting the geometry request.

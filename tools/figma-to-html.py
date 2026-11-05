@@ -26,7 +26,30 @@ def ffam(f):
 class Conv:
     def __init__(self, imgmap, links, warn, videos=None):
         self.imgmap = imgmap; self.links = links; self.warn = warn; self.videos = videos or {}; self.extra_cls = {}; self.extra_html = {}
-        self.uid = 0; self.fonts = set(); self.used_imgs = {}
+        self.uid = 0; self.fonts = set(); self.used_imgs = {}; self.rot_ids = set()
+
+    def prepare(self, root):
+        """Mark every rotated node and its subtree. Those are placed by relativeTransform, because a
+        rotated layer's absoluteBoundingBox is the box around the turned shape, not the shape."""
+        def mark(n, on):
+            on = on or abs(n.get('rotation') or 0) > 1e-3
+            if on: self.rot_ids.add(n['id'])
+            for k in n.get('children') or []: mark(k, on)
+        mark(root, False)
+
+    BLEND = {'MULTIPLY', 'SCREEN', 'OVERLAY', 'DARKEN', 'LIGHTEN', 'COLOR_DODGE', 'COLOR_BURN', 'HARD_LIGHT',
+             'SOFT_LIGHT', 'DIFFERENCE', 'EXCLUSION', 'HUE', 'SATURATION', 'COLOR', 'LUMINOSITY'}
+    def blend(self, node):
+        m = node.get('blendMode')
+        if m in self.BLEND: return 'mix-blend-mode:' + m.lower().replace('_', '-')
+        if m and m not in ('PASS_THROUGH', 'NORMAL'): self.warn('blend mode %s ignored on %s' % (m, node.get('name')))
+        return ''
+
+    def xf(self, node):
+        if node['id'] not in self.rot_ids or not node.get('relativeTransform'): return ''
+        (a, b, _), (c, d, _) = node['relativeTransform']
+        if abs(a - 1) < 1e-4 and abs(d - 1) < 1e-4 and abs(b) < 1e-4 and abs(c) < 1e-4: return ''
+        return 'transform-origin:0 0;transform:matrix(%s,%s,%s,%s,0,0)' % tuple(r2(round(v, 5)) for v in (a, c, b, d))
 
     # ── paints ──────────────────────────────────────────────────────────
     def gradient(self, f, w, h):
@@ -105,6 +128,9 @@ class Conv:
 
     # ── node ────────────────────────────────────────────────────────────
     def box(self, node, parent):
+        rt = node.get('relativeTransform'); sz = node.get('size')
+        if node['id'] in self.rot_ids and rt and sz:
+            return rt[0][2], rt[1][2], sz['x'], sz['y']     # in the REST API a group is its children's space too
         b = node.get('absoluteBoundingBox') or {}
         pb = parent.get('absoluteBoundingBox') or {'x': 0, 'y': 0}
         return b.get('x', 0)-pb['x'], b.get('y', 0)-pb['y'], b.get('width', 0), b.get('height', 0)
@@ -190,6 +216,8 @@ class Conv:
         style = 'left:%spx;top:%spx;width:%spx;height:%spx;' % (r2(x), r2(y), r2(max(w, 0.01)), r2(max(h, 0.01)))
         if node.get('opacity', 1) < 0.999: style += 'opacity:%s;' % r2(node['opacity'])
         if filt: style += 'filter:%s;' % ' '.join(filt)
+        if self.xf(node): style += self.xf(node) + ';'
+        if self.blend(node): style += self.blend(node) + ';'
         return '<svg class="v" style="%s" viewBox="0 0 %s %s" preserveAspectRatio="none" aria-hidden="true" overflow="visible">%s</svg>' % (
             q(style), r2(max(w, 0.01)), r2(max(h, 0.01)), ''.join(paths))
 
@@ -208,6 +236,7 @@ class Conv:
                'font-family:%s' % ffam(fam), 'font-weight:%s' % wt, 'font-size:%spx' % r2(s.get('fontSize', 16)),
                'color:%s' % col]
         if auto != 'WIDTH_AND_HEIGHT': css.append('height:%spx' % r2(h))
+        if self.xf(node): css.append(self.xf(node))
         if lh: css.append('line-height:%spx' % r2(lh))
         if ls: css.append('letter-spacing:%spx' % r2(ls))
         al = s.get('textAlignHorizontal', 'LEFT')
@@ -286,6 +315,7 @@ class Conv:
         if t in ('VECTOR', 'BOOLEAN_OPERATION', 'STAR', 'LINE', 'REGULAR_POLYGON'):
             return self.svg(node, x, y, w, h)
         css = ['left:%spx' % r2(x), 'top:%spx' % r2(y), 'width:%spx' % r2(w), 'height:%spx' % r2(h)]
+        if self.xf(node): css.append(self.xf(node))
         self._fill_op = None; self._overlay = None
         bg = self.background(node, w, h)
         if bg: css.append('background:%s' % bg)
@@ -306,14 +336,19 @@ class Conv:
         elif node.get('clipsContent'): css.append('overflow:hidden')
         shadows, filt, back = self.effects(node)
         st = self.strokes(node)
-        allsh = st['shadow'] + shadows
+        kids = node.get('children') or []
+        # Figma paints a frame's stroke above its children; an inset shadow would sit beneath them
+        # and its inner shadows too (a phone bezel drawn as inset spreads must cover the screen)
+        inset = [x for x in shadows if x.startswith('inset ')]
+        top_stroke = (st['shadow'] + inset[::-1]) if kids else []     # Figma lists effects bottom-up; CSS paints the first on top
+        allsh = st['shadow'] + shadows if not kids else [x for x in shadows if x not in inset]
         if allsh: css.append('box-shadow:%s' % ', '.join(allsh))
         if st['outline']: css.append(st['outline'].rstrip(';'))
         if filt: css.append('filter:%s' % ' '.join(filt))
         if back: css.append('-webkit-backdrop-filter:%s;backdrop-filter:%s' % (' '.join(back), ' '.join(back)))
         op = node.get('opacity', 1) * (fop or 1)
         if op < 0.999: css.append('opacity:%s' % r2(op))
-        kids = node.get('children') or []
+        if self.blend(node): css.append(self.blend(node))
         out = []
         if self._overlay:
             rad = self.radius(node)
@@ -350,6 +385,9 @@ class Conv:
             if link.startswith('http'): attr += ' target="_blank" rel="noopener"'
             lab = self.links.get(node['id'] + ':label')
             if lab: attr += ' aria-label="%s"' % H.escape(lab)
+        if top_stroke:
+            out.append('<div class="n" style="%s"></div>' % q('left:0;top:0;width:100%%;height:100%%;pointer-events:none;box-shadow:%s%s' % (
+                ', '.join(top_stroke), (';border-radius:' + rad) if rad else '')))
         cls = 'n' + scr + (' lk' if link else '') + ((' ' + self.extra_cls[node['id']]) if node['id'] in self.extra_cls else '')
         if node['id'] in self.extra_html: out.append(self.extra_html[node['id']])
         return '<%s class="%s"%s style="%s">%s</%s>' % (tag, cls, attr, q(';'.join(css)), ''.join(out), tag)
