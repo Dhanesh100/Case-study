@@ -616,3 +616,20 @@ transitions, hover prefetch. Reduced motion turns off every animation.
 
 **Checks.** Loader removed after load on every page; all lazy images arrive (339/339 on
 Shoppers Stop); full-page render identical before and after; no JS errors on any page.
+
+---
+
+## 5 Nov 2026 — Lighter images, reading aids, link previews
+
+**Asked.** Apply the follow-up list: lighter images, reading aids, link previews (mobile layout
+and analytics need decisions — see CONTEXT §9).
+
+**Done.** All images re-encoded as WebP with `tools/webp.py` (kept only where ≥10% smaller):
+~117 MB → ~19 MB across home and six case studies; Kingdom alone 60.7 → 4.2 MB. Reading-progress
+bar and back-to-top on every case study. Open Graph and Twitter tags plus a 1200×630 `og.jpg`
+per page, rendered from the page's first screen.
+
+**Checks.** WebP compared against the Figma render at dashboard-text size: indistinguishable.
+Real-browser session over the DevTools protocol: lazy images arrive after scrolling, progress
+bar tracks position, back-to-top returns to 0 and moves focus to the header. Tags balanced, no
+duplicate ids, no nested links, no external sources on any page.

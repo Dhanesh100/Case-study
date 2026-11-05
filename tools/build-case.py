@@ -15,6 +15,8 @@ spec = importlib.util.spec_from_file_location('f2h', os.path.join(os.path.dirnam
 f2h = importlib.util.module_from_spec(spec); spec.loader.exec_module(f2h)
 spec = importlib.util.spec_from_file_location('ux', os.path.join(os.path.dirname(__file__), 'add-ux.py'))
 ux = importlib.util.module_from_spec(spec); spec.loader.exec_module(ux)
+spec = importlib.util.spec_from_file_location('webp', os.path.join(os.path.dirname(__file__), 'webp.py'))
+webp = importlib.util.module_from_spec(spec); spec.loader.exec_module(webp)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.environ.get('FIGMA_CACHE', 'figma-out')
@@ -196,6 +198,7 @@ def main(slug):
         cfg['title'], cfg['desc'], '\n'.join(faces), css, hdr_html, body, script)
     open(os.path.join(out_dir, 'index.html'), 'w').write(page)
     ux.apply(os.path.join(out_dir, 'index.html'))
+    webp.main(out_dir)
     for w in sorted(set(warns)): print('  warn:', w)
     print('%s: %d x %d, %d images, %d KB html' % (slug, W, H, len(rawpath), len(page) // 1024))
 

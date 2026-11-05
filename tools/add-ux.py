@@ -9,11 +9,25 @@ What it adds, all inline (pages stay self-contained, no requests):
   2. Case studies: every background image loads only near the viewport, behind a soft shimmer.
      The style keeps `var(--b0, none)` where the url was; the url moves to data-bg.
   3. Cross-document view transitions, and hover-prefetch of internal pages.
+  4. Case studies: a reading-progress bar and a back-to-top button.
+  5. Link-preview tags (Open Graph, Twitter). `--og` also renders each page's og.jpg.
 Reduced motion: no shimmer, no fades, no bar animation."""
-import glob, os, re
+import glob, html as H, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 A, B = '<!-- ux:start -->', '<!-- ux:end -->'
+SITE = 'https://dhanesh100.github.io/Case-study/'
+CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+
+META = '''<meta property="og:type" content="website"><meta property="og:site_name" content="Dhanesh Shetye">
+<meta property="og:title" content="%(title)s"><meta property="og:description" content="%(desc)s">
+<meta property="og:url" content="%(url)s"><meta property="og:image" content="%(url)sog.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="%(url)s">'''
+
+AIDS = '<div id="rp" aria-hidden="true"><i></i></div><button id="totop" type="button" aria-label="Back to top">' \
+       '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15V5M5.5 9.5 10 5l4.5 4.5" fill="none" stroke="currentColor" ' \
+       'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'
 
 CSS = '''<style>
 @view-transition{navigation:auto}
@@ -33,7 +47,16 @@ CSS = '''<style>
 [data-bg].ok::before{opacity:0;animation:none}
 @keyframes sk{from{background-position:100%% 0}to{background-position:0 0}}
 img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
-@media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.fade{transition:none}[data-bg]::before{animation:none}
+#rp{position:fixed;left:0;top:0;right:0;height:3px;z-index:60;pointer-events:none}
+#rp i{display:block;height:100%%;background:%(fg)s;transform:scaleX(0);transform-origin:0 50%%}
+#totop{position:fixed;right:24px;bottom:24px;z-index:60;width:48px;height:48px;padding:0;border:0;border-radius:50%%;
+  background:%(btn)s;color:%(btnfg)s;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px -8px rgba(0,0,0,.35);
+  opacity:0;transform:translateY(12px);visibility:hidden;transition:opacity .3s ease,transform .3s ease,visibility 0s .3s}
+#totop.on{opacity:1;transform:none;visibility:visible;transition:opacity .3s ease,transform .3s ease}
+#totop:hover{transform:translateY(-2px)}
+#totop:focus-visible{outline:3px solid %(fg)s;outline-offset:3px}
+#totop svg{width:20px;height:20px}
+@media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.fade,#totop{transition:none}[data-bg]::before{animation:none}
   @view-transition{navigation:none}}
 </style>
 <noscript><style>#ldr{display:none}[data-bg]::before{display:none}</style></noscript>'''
@@ -79,6 +102,18 @@ JS = r'''<script>
   prog(); setTimeout(finish,4000);
   /* back/forward cache: never show a stale loader */
   addEventListener('pageshow',function(e){ if(e.persisted) finish(); });
+
+  /* case studies: reading progress, and a way back to the top once you are a screen down */
+  var rp=document.querySelector('#rp i'), tt=document.getElementById('totop'), tick=false;
+  function upd(){ tick=false; var h=document.documentElement.scrollHeight-innerHeight, y=scrollY;
+    if(rp) rp.style.transform='scaleX('+(h>0?Math.min(1,y/h):0)+')'; if(tt) tt.classList.toggle('on',y>innerHeight); }
+  if(rp||tt){
+    addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(upd); } },{passive:true});
+    addEventListener('resize',upd); upd();
+    if(tt) tt.addEventListener('click',function(){
+      scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+      var f=document.querySelector('#hdr a'); if(f) f.focus({preventScroll:true}); });
+  }
 
   /* hovering a link to another page fetches it, so the click lands on a warm page */
   var seen={};
@@ -126,19 +161,33 @@ def apply(path):
     dark = lum(bg) < 0.4
     title = re.search(r'<title>(.*?)</title>', s).group(1)
     name = title.split(' — ')[0].split(' · ')[0] if case else 'Dhanesh Shetye'
-    tok = dict(bg='rgb(%d,%d,%d)' % bg, fg='#fff' if dark else '#151515',
+    url = SITE + os.path.relpath(os.path.dirname(path), ROOT) + '/'
+    desc = re.search(r'<meta name="description" content="([^"]*)"', s).group(1)
+    tok = dict(url=url, title=title, desc=desc,
+               btn='#fff' if dark else '#151515', btnfg='#151515' if dark else '#fff',
+               bg='rgb(%d,%d,%d)' % bg, fg='#fff' if dark else '#151515',
                track='rgba(255,255,255,.16)' if dark else 'rgba(0,0,0,.1)',
                sk='rgba(255,255,255,.04)' if dark else 'rgba(0,0,0,.04)',
                sk2='rgba(255,255,255,.10)' if dark else 'rgba(0,0,0,.08)',
                name=name, kicker='Case study' if case else 'Portfolio')
     if case: s = lazy_bgs(s)
-    s = s.replace('</head>', '%s\n%s\n%s\n</head>' % (A, CSS % tok, B), 1)
-    s = re.sub(r'<body([^>]*)>', lambda m: '<body%s>\n%s%s%s' % (m.group(1), A, OVERLAY % tok, B), s, count=1)
+    s = s.replace('</head>', '%s\n%s\n%s\n%s\n</head>' % (A, META % tok, CSS % tok, B), 1)
+    s = re.sub(r'<body([^>]*)>', lambda m: '<body%s>\n%s%s%s%s' % (m.group(1), A, OVERLAY % tok, AIDS if case else '', B), s, count=1)
     s = s.replace('</body>', '%s\n%s\n%s\n</body>' % (A, JS, B), 1)
     open(path, 'w').write(s)
     print('%-40s %s, %d lazy images' % (os.path.relpath(path, ROOT), 'dark' if dark else 'light', s.count('data-bg=')))
 
 
+def og_image(path):
+    """og.jpg, 1200x630: the page's first screen at 1440x756, after the loader has gone."""
+    out = os.path.join(os.path.dirname(path), 'og.jpg'); png = out + '.png'
+    subprocess.run([CHROME, '--headless=new', '--disable-gpu', '--hide-scrollbars', '--allow-file-access-from-files',
+                    '--virtual-time-budget=9000', '--window-size=1440,756', '--screenshot=' + png, 'file://' + path], capture_output=True)
+    subprocess.run(['sips', '-s', 'format', 'jpeg', '-s', 'formatOptions', '80', '--resampleWidth', '1200', png, '--out', out], capture_output=True)
+    os.remove(png)
+
+
 if __name__ == '__main__':
     for p in [os.path.join(ROOT, 'home', 'index.html')] + sorted(glob.glob(os.path.join(ROOT, 'home', 'work', '*', 'index.html'))):
         apply(p)
+        if '--og' in sys.argv: og_image(p)

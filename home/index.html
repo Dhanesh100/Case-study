@@ -7,7 +7,7 @@
 <meta name="description" content="Design veteran from Bombay. For 10+ years I’ve bridged creativity with strategy to design impactful products across fintech, e-commerce, real estate and entertainment.">
 <link rel="preload" href="fonts/PPEiko-Black.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/PPNeueMontreal-Medium.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="img/hero-photo.png" as="image">
+<link rel="preload" href="img/hero-photo.webp" as="image">
 <style>
   @font-face { font-family: "PP Eiko"; src: url("fonts/PPEiko-Black.woff2") format("woff2"); font-weight: 900; font-display: swap; }
   @font-face { font-family: "PP Eiko"; src: url("fonts/PPEiko-Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
@@ -229,6 +229,11 @@
   }
 </style>
 <!-- ux:start -->
+<meta property="og:type" content="website"><meta property="og:site_name" content="Dhanesh Shetye">
+<meta property="og:title" content="Dhanesh Shetye — Crafting User-Driven Solutions"><meta property="og:description" content="Design veteran from Bombay. For 10+ years I’ve bridged creativity with strategy to design impactful products across fintech, e-commerce, real estate and entertainment.">
+<meta property="og:url" content="https://dhanesh100.github.io/Case-study/home/"><meta property="og:image" content="https://dhanesh100.github.io/Case-study/home/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="https://dhanesh100.github.io/Case-study/home/">
 <style>
 @view-transition{navigation:auto}
 #ldr{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgb(255,255,255);color:#151515;
@@ -247,7 +252,16 @@
 [data-bg].ok::before{opacity:0;animation:none}
 @keyframes sk{from{background-position:100% 0}to{background-position:0 0}}
 img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
-@media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.fade{transition:none}[data-bg]::before{animation:none}
+#rp{position:fixed;left:0;top:0;right:0;height:3px;z-index:60;pointer-events:none}
+#rp i{display:block;height:100%;background:#151515;transform:scaleX(0);transform-origin:0 50%}
+#totop{position:fixed;right:24px;bottom:24px;z-index:60;width:48px;height:48px;padding:0;border:0;border-radius:50%;
+  background:#151515;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px -8px rgba(0,0,0,.35);
+  opacity:0;transform:translateY(12px);visibility:hidden;transition:opacity .3s ease,transform .3s ease,visibility 0s .3s}
+#totop.on{opacity:1;transform:none;visibility:visible;transition:opacity .3s ease,transform .3s ease}
+#totop:hover{transform:translateY(-2px)}
+#totop:focus-visible{outline:3px solid #151515;outline-offset:3px}
+#totop svg{width:20px;height:20px}
+@media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.fade,#totop{transition:none}[data-bg]::before{animation:none}
   @view-transition{navigation:none}}
 </style>
 <noscript><style>#ldr{display:none}[data-bg]::before{display:none}</style></noscript>
@@ -272,7 +286,7 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
   <section class="hero" aria-labelledby="hero-h">
     <h1 class="h1" id="hero-h">
       <span class="ln">Crafting</span>
-      <span class="ln ln2"><img src="img/hero-photo.png" alt="" width="164" height="104"><span>User-Driven</span></span>
+      <span class="ln ln2"><img src="img/hero-photo.webp" alt="" width="164" height="104"><span>User-Driven</span></span>
       <span class="ln">Solutions</span>
     </h1>
     <p class="intro">Hey! I’m Dhanesh, a design veteran Bombay. For 10+ years, I’ve bridged creativity with strategy to design impactful products across diverse industries, creating meaningful experiences that resonate globally.</p>
@@ -288,8 +302,8 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
       <span class="glow glow-orange" aria-hidden="true"></span>
       <h2 class="nums-h" id="nums-h">Notable numbers</h2>
       <div class="track">
-        <div class="stat"><b>19+</b><div><p>Products Built: From vision to reality, transforming ideas into powerful digital experiences.</p></div></div><div class="stat"><b>64M+</b><div><p>Users Impacted: Designing solutions that enrich lives and scale globally.</p><div class="avs" aria-hidden="true"><span class="av av1"><img src="img/avatar-1.png" alt=""></span><span class="av av2"><img src="img/avatar-2.png" alt=""></span><span class="av av3">+</span></div></div></div><div class="stat"><b>22.8M</b><div><p>Active mutual fund investors engaging with platforms I designed for Axis, Tata, ITI, PGIM, and Invesco.</p></div></div><div class="stat"><b>10+</b><div><p>Years of Experience: Proven expertise in design and innovation.</p></div></div><div class="stat"><b>4</b><div><p>Industries Transformed: Fintech, e-commerce, real estate, and entertainment.</p></div></div>
-        <div aria-hidden="true" style="display:contents"><div class="stat"><b>19+</b><div><p>Products Built: From vision to reality, transforming ideas into powerful digital experiences.</p></div></div><div class="stat"><b>64M+</b><div><p>Users Impacted: Designing solutions that enrich lives and scale globally.</p><div class="avs" aria-hidden="true"><span class="av av1"><img src="img/avatar-1.png" alt=""></span><span class="av av2"><img src="img/avatar-2.png" alt=""></span><span class="av av3">+</span></div></div></div><div class="stat"><b>22.8M</b><div><p>Active mutual fund investors engaging with platforms I designed for Axis, Tata, ITI, PGIM, and Invesco.</p></div></div><div class="stat"><b>10+</b><div><p>Years of Experience: Proven expertise in design and innovation.</p></div></div><div class="stat"><b>4</b><div><p>Industries Transformed: Fintech, e-commerce, real estate, and entertainment.</p></div></div></div>
+        <div class="stat"><b>19+</b><div><p>Products Built: From vision to reality, transforming ideas into powerful digital experiences.</p></div></div><div class="stat"><b>64M+</b><div><p>Users Impacted: Designing solutions that enrich lives and scale globally.</p><div class="avs" aria-hidden="true"><span class="av av1"><img src="img/avatar-1.webp" alt=""></span><span class="av av2"><img src="img/avatar-2.webp" alt=""></span><span class="av av3">+</span></div></div></div><div class="stat"><b>22.8M</b><div><p>Active mutual fund investors engaging with platforms I designed for Axis, Tata, ITI, PGIM, and Invesco.</p></div></div><div class="stat"><b>10+</b><div><p>Years of Experience: Proven expertise in design and innovation.</p></div></div><div class="stat"><b>4</b><div><p>Industries Transformed: Fintech, e-commerce, real estate, and entertainment.</p></div></div>
+        <div aria-hidden="true" style="display:contents"><div class="stat"><b>19+</b><div><p>Products Built: From vision to reality, transforming ideas into powerful digital experiences.</p></div></div><div class="stat"><b>64M+</b><div><p>Users Impacted: Designing solutions that enrich lives and scale globally.</p><div class="avs" aria-hidden="true"><span class="av av1"><img src="img/avatar-1.webp" alt=""></span><span class="av av2"><img src="img/avatar-2.webp" alt=""></span><span class="av av3">+</span></div></div></div><div class="stat"><b>22.8M</b><div><p>Active mutual fund investors engaging with platforms I designed for Axis, Tata, ITI, PGIM, and Invesco.</p></div></div><div class="stat"><b>10+</b><div><p>Years of Experience: Proven expertise in design and innovation.</p></div></div><div class="stat"><b>4</b><div><p>Industries Transformed: Fintech, e-commerce, real estate, and entertainment.</p></div></div></div>
       </div>
       <span class="fade fade-l" aria-hidden="true"></span>
       <span class="fade fade-r" aria-hidden="true"></span>
@@ -300,12 +314,12 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
   <section class="work" id="work" aria-labelledby="work-h">
     <h2 class="sec-h" id="work-h">See How I Turn Challenges into Solutions</h2>
     <div class="projects">
-      <a class="card pre" href="work/kotak/" aria-label="Kotak Bank — view case study"><img src="img/work-kotak.png" alt="Kotak Bank: creating a scalable design language to power digital banking for 32.7 million users; 25% reduction in banking task time." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-      <a class="card pre" href="work/shoppers-stop/" aria-label="Shoppers Stop — view case study"><img src="img/work-shoppers.png" alt="Shoppers Stop e-commerce app design." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-      <a class="card pre" href="work/invesco/" aria-label="Invesco Mutual Fund — view case study"><img src="img/work-invesco.png" alt="Invesco Mutual Fund: 2x boosted distributor efficiency, driving sales like never before; 40,000 distributors empowered." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-      <a class="card pre" href="work/kingdom/" aria-label="Kingdom OTT — view case study"><img src="img/work-kingdom.png" alt="Kingdom OTT: building family bonds through an OTT platform for U.S. viewers; 45% of the audience prefer family-oriented shows." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-      <a class="card pre" href="work/shapoorji/" aria-label="Shapoorji Pallonji Real Estate — view case study"><img src="img/work-shapoorji.png" alt="Shapoorji Pallonji Real Estate: 680% lead growth for India's top developer; cost per lead via website reduced 5x." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-      <a class="card pre" href="work/icici/" aria-label="ICICI Ozone portal — view case study"><img src="img/work-ozone.png" alt="ICICI Bank's Ozone portal: a one-stop solution for campus efficiency; 4K+ active users and 30K+ saved per vendor." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card pre" href="work/kotak/" aria-label="Kotak Bank — view case study"><img src="img/work-kotak.webp" alt="Kotak Bank: creating a scalable design language to power digital banking for 32.7 million users; 25% reduction in banking task time." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card pre" href="work/shoppers-stop/" aria-label="Shoppers Stop — view case study"><img src="img/work-shoppers.webp" alt="Shoppers Stop e-commerce app design." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card pre" href="work/invesco/" aria-label="Invesco Mutual Fund — view case study"><img src="img/work-invesco.webp" alt="Invesco Mutual Fund: 2x boosted distributor efficiency, driving sales like never before; 40,000 distributors empowered." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card pre" href="work/kingdom/" aria-label="Kingdom OTT — view case study"><img src="img/work-kingdom.webp" alt="Kingdom OTT: building family bonds through an OTT platform for U.S. viewers; 45% of the audience prefer family-oriented shows." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card pre" href="work/shapoorji/" aria-label="Shapoorji Pallonji Real Estate — view case study"><img src="img/work-shapoorji.webp" alt="Shapoorji Pallonji Real Estate: 680% lead growth for India's top developer; cost per lead via website reduced 5x." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a class="card pre" href="work/icici/" aria-label="ICICI Ozone portal — view case study"><img src="img/work-ozone.webp" alt="ICICI Bank's Ozone portal: a one-stop solution for campus efficiency; 4K+ active users and 30K+ saved per vendor." loading="lazy" width="1180" height="840"><span class="cta" aria-hidden="true"><span class="cta-t">View case study</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 14 L14 6 M7.5 6 H14 V12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
     </div>
   </section>
 
@@ -314,7 +328,7 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
     <div class="vgrid">
       <div class="vcard v1">
         <p>People First Pixels Follow <span class="dim">with a Focus on Relationships, Empathy, Collaboration, and Trust for Lasting Impact That Goes Beyond Just the UI Design</span></p>
-        <img src="img/review.png" alt="" loading="lazy" width="350" height="276">
+        <img src="img/review.webp" alt="" loading="lazy" width="350" height="276">
       </div>
       <div class="vcol">
         <div class="vcard v2"><p>Outcomes Over Output<span class="dim"> with a Focus on Delivering Meaningful Impact for Both Users and Business Success</span></p></div>
@@ -326,7 +340,7 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
   <section class="contact" id="contact" aria-labelledby="hey-h">
     <div class="c-in">
       <h2 class="hey" id="hey-h">
-        <span class="l1">Hey!<img src="img/wave.png" alt="" loading="lazy" width="81" height="80"></span>
+        <span class="l1">Hey!<img src="img/wave.webp" alt="" loading="lazy" width="81" height="80"></span>
         <span class="l2"><span>Let’s</span><span class="y">Work</span></span>
         <span class="y">Together</span>
       </h2>
@@ -465,6 +479,18 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
   prog(); setTimeout(finish,4000);
   /* back/forward cache: never show a stale loader */
   addEventListener('pageshow',function(e){ if(e.persisted) finish(); });
+
+  /* case studies: reading progress, and a way back to the top once you are a screen down */
+  var rp=document.querySelector('#rp i'), tt=document.getElementById('totop'), tick=false;
+  function upd(){ tick=false; var h=document.documentElement.scrollHeight-innerHeight, y=scrollY;
+    if(rp) rp.style.transform='scaleX('+(h>0?Math.min(1,y/h):0)+')'; if(tt) tt.classList.toggle('on',y>innerHeight); }
+  if(rp||tt){
+    addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(upd); } },{passive:true});
+    addEventListener('resize',upd); upd();
+    if(tt) tt.addEventListener('click',function(){
+      scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+      var f=document.querySelector('#hdr a'); if(f) f.focus({preventScroll:true}); });
+  }
 
   /* hovering a link to another page fetches it, so the click lands on a warm page */
   var seen={};
