@@ -633,3 +633,20 @@ per page, rendered from the page's first screen.
 Real-browser session over the DevTools protocol: lazy images arrive after scrolling, progress
 bar tracks position, back-to-top returns to 0 and moves focus to the header. Tags balanced, no
 duplicate ids, no nested links, no external sources on any page.
+
+---
+
+## 5 Nov 2026 — Phone layout for every case study
+
+**Decided.** Dhanesh chose an automatic reflow over designing mobile frames, and GoatCounter for
+analytics (waiting on his GoatCounter code).
+
+**Done.** `tools/mobile.mjs` reads each published desktop page in headless Chrome and writes a
+single-column version into the same file, shown below 768px. Article text becomes real HTML at
+phone sizes; text that other layers cover in the design is skipped (the ICICI hero carries a
+hidden duplicate title and an "Altin" line); visuals are split into stacked rows and columns
+and captured from the page at up to 2×. 171 images, ~5.4 MB, across six pages.
+
+**Checks.** Rendered at 390px for every page: no horizontal scroll, text readable. Tags
+balanced, no duplicate ids, no JS errors at 390 or 1440. Kotak keeps one of its seven screen
+recordings on phones; the six inside device mockups show as stills.
