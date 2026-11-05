@@ -176,7 +176,7 @@ part of current design and its not distract or stop user from there primary job.
 | KYP rating scale | node `2129:17149` |
 | Screen exports | `assets/src/*.png` → optimised to `assets/web/*.jpg` |
 | Reading Figma text | Text layers are **named after their content**, so metadata returns the copy without needing a screenshot. |
-| **ProSure file** | `uiFMtBP008pIHKLgtwwLY0` holds the portfolio case-study frames: Kingdom OTT `241:20349`, SPRE `241:19898`, ICICI Ozone `241:20128`. Build a page with `FIGMA_CACHE=<dir> python3 tools/build-case.py <slug>`; slugs and links are set in its `PAGES` table. |
+| **ProSure file** | `uiFMtBP008pIHKLgtwwLY0` holds the portfolio case-study frames: Kingdom OTT `241:20349`, SPRE `241:19898`, ICICI Ozone `241:20128`. Build a page with `FIGMA_CACHE=<dir> python3 tools/build-case.py <slug>`; slugs and links are set in its `PAGES` table. **API limits:** the account is on Figma's Starter tier; heavy `geometry=paths` requests can be refused for days (`Retry-After` ≈ 4.6 days on 5 Nov 2026). The script then falls back to the plain layer tree plus each vector exported as SVG. |
 | **Figma access** | The MCP server needs an **editor seat** on the team that owns a file. Dhanesh has a Full seat only on **CoverSure**; `Portfolio` (`8LqFO4NjyttqYMYpracfd0`) sits on a View-seat team, so the MCP refuses it &mdash; this is a seat problem, not a sharing one. **The REST API only needs view access**, so use `./tools/figma-fetch.sh <file-key> <node-id>` with a personal access token in `~/.figma-token`. That path works on every file he can open in a browser. |
 
 ---

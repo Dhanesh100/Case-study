@@ -68,12 +68,52 @@ def dims(path):
     return int(re.search(r'pixelWidth: (\d+)', out).group(1)), int(re.search(r'pixelHeight: (\d+)', out).group(1))
 
 
+VEC = {'VECTOR', 'BOOLEAN_OPERATION', 'STAR', 'LINE', 'REGULAR_POLYGON'}
+FILE_KEY = 'uiFMtBP008pIHKLgtwwLY0'
+
+
+def export_vectors(frame, img_dir, imgmap):
+    """Fallback when the geometry=paths request is refused (rate limit): export every vector, or
+    group of only vectors, as SVG through /v1/images, and place each as an image where it sits."""
+    def only_vec(n):
+        if n.get('visible', True) is False: return True
+        kids = n.get('children') or []
+        if n['type'] in VEC: return all(only_vec(k) for k in kids)
+        return n['type'] == 'GROUP' and bool(kids) and all(only_vec(k) for k in kids) and \
+            any(k['type'] in VEC for k in walk(n))
+    jobs = []
+    def visit(n):
+        if n.get('visible', True) is False: return
+        if only_vec(n): jobs.append(n); return
+        for k in n.get('children') or []: visit(k)
+    visit(frame)
+    tok = open(os.path.expanduser('~/.figma-token')).read().strip()
+    req = urllib.request.Request('https://api.figma.com/v1/images/%s?format=svg&ids=%s' % (FILE_KEY, ','.join(n['id'] for n in jobs)),
+                                 headers={'X-Figma-Token': tok})
+    urls = json.load(urllib.request.urlopen(req))['images']
+    for n in jobs:
+        name = 'v%s.svg' % hashlib.sha1(n['id'].encode()).hexdigest()[:9]
+        svg = urllib.request.urlopen(urls[n['id']]).read()
+        open(os.path.join(img_dir, name), 'wb').write(svg)
+        # the export is sized to the drawn shape (strokes included); centre it on the layer
+        w = float(re.search(rb'width="([\d.]+)"', svg).group(1)); h = float(re.search(rb'height="([\d.]+)"', svg).group(1))
+        b = n['absoluteBoundingBox']; cx, cy = b['x'] + b['width'] / 2, b['y'] + b['height'] / 2
+        ref = 'svg:' + n['id']; imgmap[ref] = 'img/' + name
+        n.update(type='RECTANGLE', children=[], strokes=[], effects=[], rotation=0,
+                 fills=[{'type': 'IMAGE', 'imageRef': ref, 'scaleMode': 'STRETCH'}],
+                 absoluteBoundingBox={'x': cx - w / 2, 'y': cy - h / 2, 'width': w, 'height': h})
+    return len(jobs)
+
+
 def main(slug):
     cfg = PAGES[slug]
     out_dir = os.path.join(ROOT, 'home', 'work', slug)
     img_dir = os.path.join(out_dir, 'img'); os.makedirs(img_dir, exist_ok=True)
     raw_dir = os.path.join(CACHE, 'raw'); os.makedirs(raw_dir, exist_ok=True)
-    geo = json.load(open(os.path.join(CACHE, 'geo-%s.json' % cfg['node'].replace(':', '-'))))
+    key = cfg['node'].replace(':', '-')
+    geo = json.load(open(os.path.join(CACHE, 'geo-%s.json' % key)))
+    crops = 'nodes' not in geo                       # geometry refused (rate limit): fall back to the plain tree
+    if crops: geo = json.load(open(os.path.join(CACHE, '%s.json' % key)))
     frame = list(geo['nodes'].values())[0]['document']
     fills = json.load(open(os.path.join(CACHE, 'imagefills.json')))['meta']['images']
     W, H = round(frame['absoluteBoundingBox']['width']), round(frame['absoluteBoundingBox']['height'])
@@ -89,6 +129,9 @@ def main(slug):
         ext = 'png' if has_alpha(raw) else 'jpg'
         name = '%s.%s' % (hashlib.sha1(ref.encode()).hexdigest()[:10], ext)
         imgmap[ref] = 'img/' + name; rawpath[ref] = (raw, name, ext)
+
+    if crops:
+        print('  no vector geometry: exported %d vectors as SVG' % export_vectors(frame, img_dir, imgmap))
 
     links, warns = {}, []
     conv = f2h.Conv(imgmap, links, warns.append)

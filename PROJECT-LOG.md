@@ -600,4 +600,4 @@ frame strokes and inner shadows painted above children, layer blend modes, empty
 **Judgement calls.** SPRE's Next Project card in Figma is *Altin*, which has no page; it shows
 the ICICI card and links there, following the home page's order. Opaque PNGs ship as JPEG.
 
-**Not yet.** Kingdom OTT — the Figma API is rate-limiting the geometry request.
+**Kingdom OTT.** Figma refused the geometry request (Starter tier, `Retry-After` ≈ 4.6 days), so the page was built from the plain layer tree with its 18 vectors exported as SVG. Home card and Invesco's Next Project now open `home/work/kingdom/`; every home card is a page now. Its *Explore Figma File* button has no target in the design and is left unlinked.
