@@ -228,8 +228,33 @@
     html { scroll-behavior: auto; }
   }
 </style>
+<!-- ux:start -->
+<style>
+@view-transition{navigation:auto}
+#ldr{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgb(255,255,255);color:#151515;
+  transition:opacity .45s cubic-bezier(.2,.75,.2,1),visibility 0s .45s;animation:ldr-bail 0s 6s forwards}
+#ldr.out{opacity:0;visibility:hidden}
+@keyframes ldr-bail{to{opacity:0;visibility:hidden}}
+.ldr-in{width:min(320px,72vw);text-align:center}
+.ldr-k{font:500 12px/16px "PP Neue Montreal",-apple-system,"Helvetica Neue",Arial,sans-serif;letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+.ldr-n{margin:10px 0 22px;font:500 clamp(26px,4vw,40px)/1.1 "PP Eiko",Didot,Georgia,serif;letter-spacing:-.01em}
+.ldr-bar{height:2px;border-radius:2px;background:rgba(0,0,0,.1);overflow:hidden}
+.ldr-bar i{display:block;height:100%;width:100%;background:currentColor;transform:scaleX(.04);transform-origin:0 50%;
+  transition:transform .5s cubic-bezier(.2,.75,.2,1)}
+[data-bg]::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(100deg,rgba(0,0,0,.04) 30%,rgba(0,0,0,.08) 50%,rgba(0,0,0,.04) 70%) 0 0/300% 100%;
+  animation:sk 1.4s linear infinite;transition:opacity .5s ease}
+[data-bg].ok::before{opacity:0;animation:none}
+@keyframes sk{from{background-position:100% 0}to{background-position:0 0}}
+img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
+@media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.fade{transition:none}[data-bg]::before{animation:none}
+  @view-transition{navigation:none}}
+</style>
+<noscript><style>#ldr{display:none}[data-bg]::before{display:none}</style></noscript>
+<!-- ux:end -->
 </head>
 <body>
+<!-- ux:start --><div id="ldr" role="progressbar" aria-label="Loading Dhanesh Shetye" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="ldr-in"><div class="ldr-k">Portfolio</div><div class="ldr-n">Dhanesh Shetye</div><div class="ldr-bar"><i></i></div></div></div><!-- ux:end -->
 
 <header class="hdr">
   <div class="hdr-in">
@@ -402,5 +427,54 @@
     }
   }());
 </script>
+<!-- ux:start -->
+<script>
+/* loading experience — see tools/add-ux.py */
+(function(){
+  var ldr=document.getElementById('ldr'), bar=ldr&&ldr.querySelector('.ldr-bar i'), t0=Date.now(), done=false;
+  var vh=innerHeight*1.15, waits=[], got=0;
+  function prog(){ var p=waits.length?got/waits.length:1; if(bar) bar.style.transform='scaleX('+(.04+.96*p)+')';
+    if(ldr) ldr.setAttribute('aria-valuenow',Math.round(p*100)); if(got>=waits.length) finish(); }
+  function finish(){ if(done||!ldr) return; done=true; if(bar) bar.style.transform='scaleX(1)';
+    setTimeout(function(){ ldr.classList.add('out'); setTimeout(function(){ ldr.remove(); },600); }, Date.now()-t0<150?0:220); }
+  function wait(p){ waits.push(p); p.then(function(){ got++; prog(); }); }
+
+  /* case studies: background images near the viewport, behind a shimmer */
+  var bgs=[].slice.call(document.querySelectorAll('[data-bg]'));
+  function load(el){
+    if(el._p) return el._p;
+    var urls=el.getAttribute('data-bg').split('|');
+    el._p=Promise.all(urls.map(function(u){ return new Promise(function(r){ var im=new Image(); im.onload=im.onerror=r; im.src=u; }); }))
+      .then(function(){ urls.forEach(function(u,i){ el.style.setProperty('--b'+i,'url("'+u+'")'); }); el.classList.add('ok'); });
+    return el._p;
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ load(e.target); io.unobserve(e.target); } }); },{rootMargin:'1200px 0px'});
+    bgs.forEach(function(el){ io.observe(el); });
+  } else bgs.forEach(load);
+  bgs.forEach(function(el){ if(el.getBoundingClientRect().top<vh) wait(load(el)); });
+
+  /* home: plain images fade in; the first screen's count toward the loader */
+  [].slice.call(document.querySelectorAll('img')).forEach(function(im){
+    if(im.complete&&im.naturalWidth) return;
+    im.classList.add('fade');
+    var p=new Promise(function(r){ im.addEventListener('load',r); im.addEventListener('error',r); }).then(function(){ im.classList.add('ok'); });
+    if(im.getBoundingClientRect().top<vh&&im.loading!=='lazy') wait(p);
+  });
+  if(document.fonts&&document.fonts.ready) wait(document.fonts.ready);
+  prog(); setTimeout(finish,4000);
+  /* back/forward cache: never show a stale loader */
+  addEventListener('pageshow',function(e){ if(e.persisted) finish(); });
+
+  /* hovering a link to another page fetches it, so the click lands on a warm page */
+  var seen={};
+  document.addEventListener('pointerover',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]'); if(!a) return;
+    var u=new URL(a.href,location.href); if(u.origin!==location.origin||u.pathname===location.pathname||seen[u.pathname]) return;
+    seen[u.pathname]=1; var l=document.createElement('link'); l.rel='prefetch'; l.href=u.pathname; document.head.appendChild(l);
+  },{passive:true});
+})();
+</script>
+<!-- ux:end -->
 </body>
 </html>

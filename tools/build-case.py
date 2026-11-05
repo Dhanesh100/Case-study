@@ -13,6 +13,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 import importlib.util
 spec = importlib.util.spec_from_file_location('f2h', os.path.join(os.path.dirname(__file__), 'figma-to-html.py'))
 f2h = importlib.util.module_from_spec(spec); spec.loader.exec_module(f2h)
+spec = importlib.util.spec_from_file_location('ux', os.path.join(os.path.dirname(__file__), 'add-ux.py'))
+ux = importlib.util.module_from_spec(spec); spec.loader.exec_module(ux)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.environ.get('FIGMA_CACHE', 'figma-out')
@@ -178,7 +180,7 @@ def main(slug):
         if f: faces.append('@font-face{font-family:"%s";src:url("../../fonts/%s.woff2") format("woff2");font-weight:%s;font-display:swap}' % (fam, f, wt))
         else: warns.append('no font file for %s %s — system fallback' % (fam, wt))
 
-    shell = open(os.path.join(ROOT, 'home', 'work', 'invesco', 'index.html')).read()
+    shell = ux.strip(open(os.path.join(ROOT, 'home', 'work', 'invesco', 'index.html')).read())
     css = shell[shell.index('*{box-sizing'):shell.index('</style>')]
     css = re.sub(r'\.canvas\{position:relative;width:1440px;height:\d+px;margin:0 auto;background:[^;]+;',
                  '.canvas{position:relative;width:1440px;height:%dpx;margin:0 auto;background:%s;' % (H, bg), css)
@@ -193,6 +195,7 @@ def main(slug):
             '<div class="hdr-wrap" id="hdr">%s</div>\n<main class="stage" id="stage"><div class="canvas" id="canvas">%s</div></main>\n%s</body>\n</html>\n') % (
         cfg['title'], cfg['desc'], '\n'.join(faces), css, hdr_html, body, script)
     open(os.path.join(out_dir, 'index.html'), 'w').write(page)
+    ux.apply(os.path.join(out_dir, 'index.html'))
     for w in sorted(set(warns)): print('  warn:', w)
     print('%s: %d x %d, %d images, %d KB html' % (slug, W, H, len(rawpath), len(page) // 1024))
 

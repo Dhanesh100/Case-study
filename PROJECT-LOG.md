@@ -601,3 +601,18 @@ frame strokes and inner shadows painted above children, layer blend modes, empty
 the ICICI card and links there, following the home page's order. Opaque PNGs ship as JPEG.
 
 **Kingdom OTT.** Figma refused the geometry request (Starter tier, `Retry-After` ≈ 4.6 days), so the page was built from the plain layer tree with its 18 vectors exported as SVG. Home card and Invesco's Next Project now open `home/work/kingdom/`; every home card is a page now. Its *Explore Figma File* button has no target in the design and is left unlinked.
+
+---
+
+## 5 Nov 2026 — Loading experience on the portfolio pages
+
+**Asked.** A loading animation and page loader while images and content load, for a better
+experience across the portfolio and case studies.
+
+**Done.** `tools/add-ux.py`, applied to home and all six case studies: a branded loader with a
+real progress bar (first-screen images + fonts; 4s ceiling; CSS bail-out without JS), lazy
+background images with a shimmer placeholder, image fade-in on home, cross-document view
+transitions, hover prefetch. Reduced motion turns off every animation.
+
+**Checks.** Loader removed after load on every page; all lazy images arrive (339/339 on
+Shoppers Stop); full-page render identical before and after; no JS errors on any page.
