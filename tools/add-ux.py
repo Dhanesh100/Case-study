@@ -58,6 +58,15 @@ img.ld-in{opacity:0;transition:opacity .5s ease}img.ld-in.ok{opacity:1}
 #totop svg{width:20px;height:20px}
 @media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.ld-in,#totop{transition:none}[data-bg]::before{animation:none}
   @view-transition{navigation:none}}
+/* View-case-study pill follows the pointer (mouse only: html.cf is set by script) */
+html.cf .card .cta,html.cf a.nx .cta{left:0;top:0;right:auto;bottom:auto;height:38px;min-width:0;gap:7px;padding:0 13px 0 15px;
+  pointer-events:none;opacity:0;scale:.6;transform-origin:0 0;box-shadow:0 8px 22px -8px rgba(0,0,0,.45);
+  transition:opacity .2s ease,scale .25s cubic-bezier(.2,.75,.2,1)}
+html.cf .card .cta-t,html.cf a.nx .cta-t{max-width:none;opacity:1;font-size:13.5px;line-height:18px;letter-spacing:.3px;transition:none}
+html.cf .card .cta svg,html.cf a.nx .cta svg{width:15px;height:15px;flex:0 0 15px;transform:none}
+html.cf .card:hover .cta,html.cf a.nx:hover .cta{opacity:1;scale:1;gap:7px;padding:0 13px 0 15px}
+html.cf .card.nudge .cta::before{animation:none}
+html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale:1;translate:none!important;left:auto;top:auto;right:20px;bottom:20px}
 </style>
 <noscript><style>#ldr{display:none}[data-bg]::before{display:none}</style></noscript>'''
 
@@ -122,6 +131,34 @@ JS = r'''<script>
     var u=new URL(a.href,location.href); if(u.origin!==location.origin||u.pathname===location.pathname||seen[u.pathname]) return;
     seen[u.pathname]=1; var l=document.createElement('link'); l.rel='prefetch'; l.href=u.pathname; document.head.appendChild(l);
   },{passive:true});
+})();
+
+/* View-case-study pill: on a mouse, it trails the pointer inside the card it belongs to */
+(function(){
+  if(!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  var cards=[].slice.call(document.querySelectorAll('.card, a.nx'));
+  if(!cards.length) return;
+  document.documentElement.classList.add('cf');
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cards.forEach(function(card){
+    var pill=card.querySelector('.cta'); if(!pill) return;
+    var x=0,y=0,tx=0,ty=0,run=false,live=false;
+    function aim(e){
+      var r=card.getBoundingClientRect(),kx=card.offsetWidth/r.width,ky=card.offsetHeight/r.height;
+      var px=(e.clientX-r.left)*kx+14, py=(e.clientY-r.top)*ky+18;
+      tx=Math.max(12,Math.min(px,card.offsetWidth-pill.offsetWidth-12));
+      ty=Math.max(12,Math.min(py,card.offsetHeight-pill.offsetHeight-12));
+    }
+    function frame(){
+      var k=still?1:.28; x+=(tx-x)*k; y+=(ty-y)*k;
+      pill.style.translate=x.toFixed(1)+'px '+y.toFixed(1)+'px';
+      if(live&&(Math.abs(tx-x)>.3||Math.abs(ty-y)>.3)) requestAnimationFrame(frame); else run=false;
+    }
+    function go(){ if(!run){run=true;requestAnimationFrame(frame);} }
+    card.addEventListener('pointerenter',function(e){ if(e.pointerType!=='mouse')return; live=true; aim(e); x=tx; y=ty; go(); });
+    card.addEventListener('pointermove',function(e){ if(e.pointerType!=='mouse')return; aim(e); go(); });
+    card.addEventListener('pointerleave',function(){ live=false; });
+  });
 })();
 </script>'''
 

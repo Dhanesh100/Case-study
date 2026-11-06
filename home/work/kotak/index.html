@@ -59,6 +59,34 @@ a.lk:focus-visible{outline:3px solid #151515;outline-offset:3px}
 .hdr-wrap>.n{left:50%!important;margin-left:-720px}
 @media (max-width:1439.98px){.canvas{margin:0}.hdr-wrap>.n{left:0!important;margin-left:0}}
 </style>
+<!-- mobile:start -->
+<style>
+.m{display:none}
+@media (max-width:767.98px){
+  .stage,.hdr-wrap{display:none!important}
+  .m{display:block;background:rgb(245, 245, 245);color:#151515;font-family:"PP Neue Montreal",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;overflow-x:clip}
+}
+.m-h{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:10px 16px;
+  background:rgba(245, 245, 245,.82);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.m-h a{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:40px;font:500 15px/1 "PP Neue Montreal",-apple-system,"Helvetica Neue",Arial,sans-serif;color:#151515;background:rgba(0,0,0,.06)}
+.m-h .m-name{flex:1;min-width:0;font:700 13px/1.2 "PP Neue Montreal",-apple-system,"Helvetica Neue",Arial,sans-serif;opacity:.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-h .m-go{background:#151515;color:rgb(245, 245, 245)}
+.m-body{padding:8px 20px 48px}
+.m-b{margin:20px -20px;padding:28px 20px}
+.m-card{margin:16px 0;padding:24px 20px;border-radius:20px}
+.m-t{margin:0 0 14px}
+h2.m-t{margin:28px 0 14px;text-wrap:balance}
+.m-b>h2.m-t:first-child,.m-card>h2.m-t:first-child{margin-top:0}
+.m-t .ul{margin:0;padding-left:1.2em}.m-t .ul li{margin:0 0 10px}
+.m-i,.m-vid{display:block;width:100%;height:auto;margin:16px auto}
+.m-bleed{width:calc(100% + 40px);max-width:none;margin-left:-20px;margin-right:-20px}
+.m-card .m-bleed,.m-b .m-b .m-bleed{width:100%;margin-left:0;margin-right:0}
+.m-vid{position:relative;overflow:hidden;border-radius:12px}
+.m-a{display:block;-webkit-tap-highlight-color:transparent}
+.m-a:active .m-i{transform:scale(.985);transition:transform .15s ease}
+.m a:focus-visible{outline:3px solid #151515;outline-offset:3px}
+</style>
+<!-- mobile:end -->
 <!-- ux:start -->
 <meta property="og:type" content="website"><meta property="og:site_name" content="Dhanesh Shetye">
 <meta property="og:title" content="Kotak Bank — a scalable design language for 32.7M users · Dhanesh Shetye"><meta property="og:description" content="Case study: creating a scalable design language to power digital banking at Kotak for 32.7 million users.">
@@ -94,37 +122,18 @@ img.ld-in{opacity:0;transition:opacity .5s ease}img.ld-in.ok{opacity:1}
 #totop svg{width:20px;height:20px}
 @media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.ld-in,#totop{transition:none}[data-bg]::before{animation:none}
   @view-transition{navigation:none}}
+/* View-case-study pill follows the pointer (mouse only: html.cf is set by script) */
+html.cf .card .cta,html.cf a.nx .cta{left:0;top:0;right:auto;bottom:auto;height:38px;min-width:0;gap:7px;padding:0 13px 0 15px;
+  pointer-events:none;opacity:0;scale:.6;transform-origin:0 0;box-shadow:0 8px 22px -8px rgba(0,0,0,.45);
+  transition:opacity .2s ease,scale .25s cubic-bezier(.2,.75,.2,1)}
+html.cf .card .cta-t,html.cf a.nx .cta-t{max-width:none;opacity:1;font-size:13.5px;line-height:18px;letter-spacing:.3px;transition:none}
+html.cf .card .cta svg,html.cf a.nx .cta svg{width:15px;height:15px;flex:0 0 15px;transform:none}
+html.cf .card:hover .cta,html.cf a.nx:hover .cta{opacity:1;scale:1;gap:7px;padding:0 13px 0 15px}
+html.cf .card.nudge .cta::before{animation:none}
+html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale:1;translate:none!important;left:auto;top:auto;right:20px;bottom:20px}
 </style>
 <noscript><style>#ldr{display:none}[data-bg]::before{display:none}</style></noscript>
 <!-- ux:end -->
-<!-- mobile:start -->
-<style>
-.m{display:none}
-@media (max-width:767.98px){
-  .stage,.hdr-wrap{display:none!important}
-  .m{display:block;background:rgb(245, 245, 245);color:#151515;font-family:"PP Neue Montreal",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;overflow-x:clip}
-}
-.m-h{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:10px;padding:10px 16px;
-  background:rgba(245, 245, 245,.82);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
-.m-h a{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:40px;font:500 15px/1 "PP Neue Montreal",-apple-system,"Helvetica Neue",Arial,sans-serif;color:#151515;background:rgba(0,0,0,.06)}
-.m-h .m-name{flex:1;min-width:0;font:700 13px/1.2 "PP Neue Montreal",-apple-system,"Helvetica Neue",Arial,sans-serif;opacity:.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.m-h .m-go{background:#151515;color:rgb(245, 245, 245)}
-.m-body{padding:8px 20px 48px}
-.m-b{margin:20px -20px;padding:28px 20px}
-.m-card{margin:16px 0;padding:24px 20px;border-radius:20px}
-.m-t{margin:0 0 14px}
-h2.m-t{margin:28px 0 14px;text-wrap:balance}
-.m-b>h2.m-t:first-child,.m-card>h2.m-t:first-child{margin-top:0}
-.m-t .ul{margin:0;padding-left:1.2em}.m-t .ul li{margin:0 0 10px}
-.m-i,.m-vid{display:block;width:100%;height:auto;margin:16px auto}
-.m-bleed{width:calc(100% + 40px);max-width:none;margin-left:-20px;margin-right:-20px}
-.m-card .m-bleed,.m-b .m-b .m-bleed{width:100%;margin-left:0;margin-right:0}
-.m-vid{position:relative;overflow:hidden;border-radius:12px}
-.m-a{display:block;-webkit-tap-highlight-color:transparent}
-.m-a:active .m-i{transform:scale(.985);transition:transform .15s ease}
-.m a:focus-visible{outline:3px solid #151515;outline-offset:3px}
-</style>
-<!-- mobile:end -->
 </head>
 <body>
 <!-- ux:start --><div id="ldr" role="progressbar" aria-label="Loading Kotak Bank" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="ldr-in"><div class="ldr-k">Case study</div><div class="ldr-n">Kotak Bank</div><div class="ldr-bar"><i></i></div></div></div><div id="rp" aria-hidden="true"><i></i></div><button id="totop" type="button" aria-label="Back to top"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 15V5M5.5 9.5 10 5l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><!-- ux:end -->
@@ -244,6 +253,34 @@ h2.m-t{margin:28px 0 14px;text-wrap:balance}
     var u=new URL(a.href,location.href); if(u.origin!==location.origin||u.pathname===location.pathname||seen[u.pathname]) return;
     seen[u.pathname]=1; var l=document.createElement('link'); l.rel='prefetch'; l.href=u.pathname; document.head.appendChild(l);
   },{passive:true});
+})();
+
+/* View-case-study pill: on a mouse, it trails the pointer inside the card it belongs to */
+(function(){
+  if(!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  var cards=[].slice.call(document.querySelectorAll('.card, a.nx'));
+  if(!cards.length) return;
+  document.documentElement.classList.add('cf');
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cards.forEach(function(card){
+    var pill=card.querySelector('.cta'); if(!pill) return;
+    var x=0,y=0,tx=0,ty=0,run=false,live=false;
+    function aim(e){
+      var r=card.getBoundingClientRect(),kx=card.offsetWidth/r.width,ky=card.offsetHeight/r.height;
+      var px=(e.clientX-r.left)*kx+14, py=(e.clientY-r.top)*ky+18;
+      tx=Math.max(12,Math.min(px,card.offsetWidth-pill.offsetWidth-12));
+      ty=Math.max(12,Math.min(py,card.offsetHeight-pill.offsetHeight-12));
+    }
+    function frame(){
+      var k=still?1:.28; x+=(tx-x)*k; y+=(ty-y)*k;
+      pill.style.translate=x.toFixed(1)+'px '+y.toFixed(1)+'px';
+      if(live&&(Math.abs(tx-x)>.3||Math.abs(ty-y)>.3)) requestAnimationFrame(frame); else run=false;
+    }
+    function go(){ if(!run){run=true;requestAnimationFrame(frame);} }
+    card.addEventListener('pointerenter',function(e){ if(e.pointerType!=='mouse')return; live=true; aim(e); x=tx; y=ty; go(); });
+    card.addEventListener('pointermove',function(e){ if(e.pointerType!=='mouse')return; aim(e); go(); });
+    card.addEventListener('pointerleave',function(){ live=false; });
+  });
 })();
 </script>
 <!-- ux:end -->
