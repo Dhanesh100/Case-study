@@ -352,7 +352,7 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
         <div class="row"><small>For my work<br>experience</small><div><a href="https://www.linkedin.com/in/dhanesh-n-shetye-10/" target="_blank" rel="noopener">Linkedin</a></div></div>
       </div>
     </div>
-    <footer class="foot">© 2024 Dhanesh N Shetye</footer>
+    <footer class="foot">© <span data-year>2026</span> Dhanesh N Shetye</footer>
   </section>
 
 </main>
@@ -502,5 +502,6 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
 })();
 </script>
 <!-- ux:end -->
+<script>document.querySelectorAll("[data-year]").forEach(function(e){e.textContent=new Date().getFullYear()})</script>
 </body>
 </html>
