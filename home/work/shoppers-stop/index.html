@@ -167,7 +167,7 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
 (function(){
   [].slice.call(document.querySelectorAll('.sx')).forEach(function(el){
     var down=false,x0=0,s0=0,moved=0;
-    el.addEventListener('pointerdown',function(e){ if(e.pointerType!=='mouse')return; down=true;moved=0;x0=e.clientX;s0=el.scrollLeft; });
+    el.addEventListener('pointerdown',function(e){ if(e.pointerType!=='mouse'||e.__sx)return; e.__sx=1; down=true;moved=0;x0=e.clientX;s0=el.scrollLeft; });
     addEventListener('pointermove',function(e){ if(!down)return; var dx=e.clientX-x0; moved=Math.max(moved,Math.abs(dx));
       if(moved>3){ el.classList.add('dragging'); el.scrollLeft=s0-dx/(parseFloat(getComputedStyle(document.getElementById('canvas')).transform.split(',')[0].replace('matrix(',''))||1); } });
     addEventListener('pointerup',function(){ if(!down)return; down=false; setTimeout(function(){el.classList.remove('dragging')},0); });
@@ -292,13 +292,14 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
 })();
 </script>
 <script src="../../pop.js" defer></script>
+<script src="../../scroll.js" defer></script>
 <!-- ux:end -->
 <!-- nav:start -->
 <style>.snav{cursor:pointer;transition:background .2s ease}.snav:hover{background:rgba(0,0,0,.05)}.snav .t{transition:color .2s ease}.snav:hover .t,.snav.on .t{color:#151515!important}.snav:focus-visible{outline:2px solid #151515;outline-offset:2px}.ps-ar{position:absolute;display:flex;gap:12px;z-index:3}
 .ps-ar button{width:56px;height:56px;border-radius:50%;border:0;background:#151515;color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s,opacity .2s,transform .2s}
 .ps-ar button:hover{background:#333;transform:scale(1.06)}.ps-ar button:disabled{opacity:.25;cursor:default;transform:none}
 .ps-ar button:focus-visible{outline:2px solid #151515;outline-offset:3px}
-.sx img{-webkit-user-drag:none;user-select:none}</style>
+.sx img{-webkit-user-drag:none;user-select:none}.sx .sx{overscroll-behavior-x:auto}.ex-ar{cursor:pointer;border-radius:6px;transition:transform .2s,opacity .2s}.ex-ar:hover{transform:scale(1.15);opacity:1!important}.ex-ar:focus-visible{outline:2px solid #151515;outline-offset:2px}</style>
 <script>
 /* Header section nav: click a label, the page scrolls to that section (Figma ProSure 240:3236).
    Targets are the section tops in the 1440px design; the dimmed items (Product Detail, Bargain,
@@ -307,6 +308,55 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
   var MAP={'Overview':[856,'overview'],'Product Story':[1912,'product-story'],'Strategy':[2860,'strategy'],'SS Home':[4129,'ss-home']};
   var hdr=document.getElementById('hdr'), stage=document.getElementById('stage'), cv=document.getElementById('canvas');
   if(!hdr||!stage||!cv) return;
+  /* Sideways rows whose content starts left of the frame (Figma shows them mid-scroll) could never
+     reach that part: move the content to 0 and open the row at the same spot instead. The Explore
+     row also runs edge to edge (1440), keeping its 54px start inset as scroll padding. */
+  [].slice.call(cv.querySelectorAll('.sx')).forEach(function(sx){
+    var inner=sx.firstElementChild; if(!inner) return;
+    var L=parseFloat(inner.style.left)||0, pad=0;
+    if(sx.offsetWidth===1332 && parseFloat(sx.style.left)===54){
+      pad=54; sx.style.left='0px'; sx.style.width='1440px'; sx.classList.add('ex-row');
+      var sp=document.createElement('div'); sp.className='n'; sp.setAttribute('aria-hidden','true');
+      sp.style.cssText='left:'+(pad+Math.max(0,L)+inner.offsetWidth+pad-1)+'px;top:0;width:1px;height:1px';
+      sx.appendChild(sp);
+    }
+    if(L<0||pad){ inner.style.left=(pad+Math.max(0,L))+'px'; sx.scrollLeft=Math.max(0,-L); }
+  });
+  /* "Scroll Left to Right for Explore Sections": drifts on its own and stays hand-scrollable.
+     Any hover, drag, wheel, touch or arrow click pauses it; it resumes from wherever the user left
+     it 2.5s after they stop, and turns round at either end. Off under reduced motion. */
+  (function(){
+    var ex=[].slice.call(document.querySelectorAll('#canvas .sx')).filter(function(e){ return e.classList.contains('ex-row'); })[0];
+    if(!ex) return;
+    var SPEED=36, dir=1, hold=0, hover=false, seen=false, last=0, pos=ex.scrollLeft, expected=-1;
+    function pause(ms){ hold=Math.max(hold, performance.now()+ms); }
+    ex.addEventListener('pointerenter',function(e){ if(e.pointerType==='mouse') hover=true; });
+    ex.addEventListener('pointerleave',function(){ hover=false; pause(1200); });
+    ['pointerdown','wheel','touchstart'].forEach(function(t){ ex.addEventListener(t,function(){ pause(2500); },{passive:true}); });
+    /* the two emoji arrows beside the heading move the row a card-group at a time */
+    var head=[].slice.call(document.querySelectorAll('#canvas .t')).filter(function(t){ return /Scroll Left to Right/.test(t.textContent); })[0];
+    if(head) [].slice.call(head.parentNode.children).forEach(function(t){
+      var k=t.textContent.trim(), d=k==='\u2B05\uFE0F'||k==='\u2B05'?-1:(k==='\u27A1\uFE0F'||k==='\u27A1'?1:0); if(!d) return;
+      t.classList.add('ex-ar'); t.setAttribute('role','button'); t.tabIndex=0; t.setAttribute('aria-label',d<0?'Scroll sections left':'Scroll sections right');
+      function go(){ pause(4000); dir=d; ex.scrollBy({left:d*420,behavior:'smooth'}); }
+      t.addEventListener('click',go); t.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
+    });
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if('IntersectionObserver' in window) new IntersectionObserver(function(es){ seen=es[0].isIntersecting; },{threshold:.2}).observe(ex); else seen=true;
+    function tick(now){
+      var dt=Math.min(.05,(now-(last||now))/1000); last=now;
+      /* someone scrolled it (trackpad, drag, arrows): adopt their position and wait */
+      if(expected>=0 && Math.abs(ex.scrollLeft-expected)>1.5){ pos=ex.scrollLeft; pause(2500); }
+      var max=ex.scrollWidth-ex.clientWidth;
+      if(seen && !hover && now>hold && max>0 && !ex.classList.contains('dragging')){
+        pos+=dir*SPEED*dt;
+        if(pos>=max){ pos=max; dir=-1; pause(1500); } else if(pos<=0){ pos=0; dir=1; pause(1500); }
+        ex.scrollLeft=pos; expected=ex.scrollLeft;
+      } else { pos=ex.scrollLeft; expected=ex.scrollLeft; }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
   /* Product Story cards: 760px tall in the 1440 design, taller than a laptop screen once scaled.
      Shrink the card row so heading + cards fit under the header, pull everything below up by the
      space saved, and give mouse users arrows (trackpad, shift+wheel and drag still work). */

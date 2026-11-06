@@ -211,7 +211,9 @@ def apply(path):
     s = s.replace('</head>', '%s\n%s\n%s\n%s\n</head>' % (A, META % tok, CSS % tok, B), 1)
     s = re.sub(r'<body([^>]*)>', lambda m: '<body%s>\n%s%s%s%s' % (m.group(1), A, OVERLAY % tok, AIDS if case else '', B), s, count=1)
     pop = os.path.relpath(os.path.join(ROOT, 'home', 'pop.js'), os.path.dirname(path))
-    s = s.replace('</body>', '%s\n%s\n<script src="%s" defer></script>\n%s\n</body>' % (A, JS, pop, B), 1)
+    extra = '<script src="%s" defer></script>' % pop
+    if case: extra += '\n<script src="%s" defer></script>' % pop.replace('pop.js', 'scroll.js')
+    s = s.replace('</body>', '%s\n%s\n%s\n%s\n</body>' % (A, JS, extra, B), 1)
     open(path, 'w').write(s)
     print('%-40s %s, %d lazy images' % (os.path.relpath(path, ROOT), 'dark' if dark else 'light', s.count('data-bg=')))
 
