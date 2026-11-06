@@ -293,5 +293,36 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
 </script>
 <script src="../../pop.js" defer></script>
 <!-- ux:end -->
+<!-- nav:start -->
+<style>.snav{cursor:pointer;transition:background .2s ease}.snav:hover{background:rgba(0,0,0,.05)}.snav .t{transition:color .2s ease}.snav:hover .t,.snav.on .t{color:#151515!important}.snav:focus-visible{outline:2px solid #151515;outline-offset:2px}</style>
+<script>
+/* Header section nav: click a label, the page scrolls to that section (Figma ProSure 240:3236).
+   Targets are the section tops in the 1440px design; the dimmed items (Product Detail, Bargain,
+   LUX, Cart) have no section in this case study and stay inert, as in Figma. */
+(function(){
+  var MAP={'Overview':[856,'overview'],'Product Story':[1912,'product-story'],'Strategy':[2860,'strategy'],'SS Home':[4129,'ss-home']};
+  var hdr=document.getElementById('hdr'), stage=document.getElementById('stage'), cv=document.getElementById('canvas');
+  if(!hdr||!stage||!cv) return;
+  function scale(){ var m=getComputedStyle(cv).transform; return m&&m!=='none'?parseFloat(m.split('(')[1]):1; }
+  function topOf(y){ var s=scale(); return stage.getBoundingClientRect().top+scrollY+y*s-72*s-8; }
+  var items=[];
+  [].slice.call(hdr.querySelectorAll('.t')).forEach(function(t){
+    var k=t.textContent.trim(), m=MAP[k]; if(!m) return;
+    var el=t.parentNode; el.classList.add('snav'); el.setAttribute('role','link'); el.tabIndex=0; el.setAttribute('aria-label','Jump to '+k);
+    items.push({el:el,y:m[0],id:m[1]});
+    function go(){ var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+      scrollTo({top:topOf(m[0]),behavior:rm?'auto':'smooth'}); history.replaceState(null,'','#'+m[1]); }
+    el.addEventListener('click',go);
+    el.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } });
+  });
+  /* the item for the section under the header reads darker */
+  var raf=0; function spy(){ raf=0; var cur=null;
+    items.forEach(function(it){ if(topOf(it.y)<=scrollY+4) cur=it; });
+    items.forEach(function(it){ it.el.classList.toggle('on',it===cur); }); }
+  addEventListener('scroll',function(){ if(!raf) raf=requestAnimationFrame(spy); },{passive:true}); spy();
+  var h=location.hash.slice(1); items.forEach(function(it){ if(it.id===h) addEventListener('load',function(){ setTimeout(function(){ scrollTo(0,topOf(it.y)); },50); }); });
+})();
+</script>
+<!-- nav:end -->
 </body>
 </html>
