@@ -109,11 +109,21 @@
   });
   addEventListener('resize', function () { if (isOpen) place(); });
 
-  /* Every "Get in touch" link points at #contact (home) or ../../#contact (case studies). */
+  /* Every "Get in touch" button opens it, whatever its href (header #contact links, the case-study
+     CTA banners that used to be mailto:, the phone header). The href stays as the no-JS fallback. */
+  var GIT = /get\s*in\s*touch/i;
+  function trigger(t) {
+    var a = t && t.closest && t.closest('a, button, [role="button"]');
+    return a && !root.contains(a) && GIT.test(a.textContent) ? a : null;
+  }
+  [].forEach.call(document.querySelectorAll('a, button'), function (a) {
+    if (!GIT.test(a.textContent)) return;
+    a.setAttribute('aria-haspopup', 'dialog');
+    if (a.getAttribute('aria-label') && !GIT.test(a.getAttribute('aria-label'))) a.setAttribute('aria-label', 'Get in touch');
+  });
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    var a = e.target.closest && e.target.closest('a[href$="#contact"]');
-    if (!a || !/get\s*in\s*touch/i.test(a.textContent)) return;
+    var a = trigger(e.target); if (!a) return;
     e.preventDefault(); e.stopPropagation();
     open(a);
   }, true);

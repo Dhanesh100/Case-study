@@ -441,6 +441,15 @@ static one for PDF export.
 
 - Get In Touch popover: ProSure `uiFMtBP008pIHKLgtwwLY0` node `249:20848` (copy of Portfolio
   `154:37340`). Built once in `home/pop.js`; `tools/add-ux.py` loads it on every page and it opens
-  from every "Get in touch" link (`href` ending `#contact`).
+  from **every** "Get in touch" button on every page, whatever its href (header, phone header, case-study
+  CTA banners — the banners were mailto: until 7 Nov 2026, Dhanesh wants them on the popover).
 - Case studies: Kotak = Portfolio `140:4208`; Shoppers Stop = ProSure `240:3236`; Invesco = ProSure `241:16776`.
 - Phone layout must hold at 412px wide (Dhanesh's test width).
+- Shoppers Stop header nav — all eight items live (Figma dims the last four; Dhanesh asked for them mapped):
+  Overview → See How We Transformed · Product Story → Product Story · Strategy → Challenges ·
+  SS Home → Beyond a Single Frame · Product Detail → Recommendations (product-level personalisation) ·
+  Bargain / LUX → Explore Sections row, scrolled to the bargains Store / Everyday Luxury card ·
+  Cart → Turning Likes into checkouts. The case study has no dedicated PDP or cart design.
+- Sideways rows run edge to edge (full 1440) with the 48/54px inset kept as scroll padding; anything laid
+  out wider than the canvas in Figma is made scrollable, never cut off. Long rows get a nudge (peek or
+  auto-scroll that pauses on any user input); phone screens peek upward and carry a "Scroll" chip.
