@@ -272,7 +272,7 @@ function render(spec, slug, pageBg) {
         const scale = Math.min(2, 1080 / it.r.w);
         shots.push({ name, r: it.r, hide: it.hide, scale });
         const w = Math.round(it.r.w * scale), h = Math.round(it.r.h * scale);
-        const wide = it.r.w >= 1200 ? ' m-bleed' : '', small = it.r.w < 360 ? ` style="max-width:${Math.round(it.r.w * 0.8)}px"` : '';
+        const wide = (it.r.w >= 1200 ? ' m-bleed' : '') + (it.r.h < 100 && it.r.w > it.r.h * 3 ? ' m-tx' : ''), small = it.r.w < 360 ? ` style="max-width:${Math.round(it.r.w * 0.8)}px"` : '';
         let body;
         if (it.video && it.video.src) {
           body = `<div class="m-vid${wide}" style="aspect-ratio:${it.r.w}/${it.r.h}"><video class="vid" muted playsinline poster="${esc(it.video.poster || 'm/' + name)}"` +
@@ -323,15 +323,16 @@ async function build(b, slug) {
 .m-h a{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 16px;border-radius:40px;font:500 15px/1 "PP Neue Montreal",-apple-system,"Helvetica Neue",Arial,sans-serif;color:${fg};background:${pill}}
 .m-h .m-name{flex:1;min-width:0;font:700 13px/1.2 "PP Neue Montreal",-apple-system,"Helvetica Neue",Arial,sans-serif;opacity:.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .m-h .m-go{background:${fg};color:${spec.bg}}
-.m-body{padding:8px 20px 48px}
-.m-b{margin:20px -20px;padding:28px 20px}
+.m-body{padding:8px 16px 48px}
+.m-b{margin:16px 0;padding:28px 20px;border-radius:20px;overflow:hidden}
 .m-card{margin:16px 0;padding:24px 20px;border-radius:20px}
 .m-t{margin:0 0 14px}
 h2.m-t{margin:28px 0 14px;text-wrap:balance}
 .m-b>h2.m-t:first-child,.m-card>h2.m-t:first-child{margin-top:0}
 .m-t .ul{margin:0;padding-left:1.2em}.m-t .ul li{margin:0 0 10px}
-.m-i,.m-vid{display:block;width:100%;height:auto;margin:16px auto}
-.m-bleed{width:calc(100% + 40px);max-width:none;margin-left:-20px;margin-right:-20px}
+.m-i,.m-vid{display:block;width:100%;height:auto;margin:16px auto;border-radius:16px}
+.m-bleed{width:100%;max-width:100%;margin-left:0;margin-right:0}
+.m-tx{border-radius:0}
 .m-card .m-bleed,.m-b .m-b .m-bleed{width:100%;margin-left:0;margin-right:0}
 .m-vid{position:relative;overflow:hidden;border-radius:12px}
 .m-a{display:block;-webkit-tap-highlight-color:transparent}
