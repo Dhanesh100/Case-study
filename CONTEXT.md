@@ -436,3 +436,11 @@ simulator script builds every `[data-sim]` in either panel. Edit one, both chang
 
 **Defaults.** `DEFAULT_VIEW` is `v12`. V11 stays as the full motion telling; V10 stays the
 static one for PDF export.
+
+## 15 · Portfolio site (`home/`) — Figma sources, set 7 November 2026
+
+- Get In Touch popover: ProSure `uiFMtBP008pIHKLgtwwLY0` node `249:20848` (copy of Portfolio
+  `154:37340`). Built once in `home/pop.js`; `tools/add-ux.py` loads it on every page and it opens
+  from every "Get in touch" link (`href` ending `#contact`).
+- Case studies: Kotak = Portfolio `140:4208`; Shoppers Stop = ProSure `240:3236`; Invesco = ProSure `241:16776`.
+- Phone layout must hold at 412px wide (Dhanesh's test width).
