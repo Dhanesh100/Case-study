@@ -80,13 +80,20 @@
 
   /* ════════ NOTABLE NUMBERS — one yellow card, 1172 × 514, r32 ════════ */
   .nums-wrap { max-width: 1172px; margin: 24px auto 0; display: grid; gap: 8px; }
-  .nums { position: relative; overflow: hidden; background: var(--sun); border-radius: 32px; padding: 80px 0 80px 80px; isolation: isolate; }
+  .nums { position: relative; overflow: hidden; background: var(--sun); border-radius: 32px; padding: 80px 0 80px 80px; isolation: isolate;
+          /* blurred glows paint far past their box; clip-path is a hard clip that filters cannot escape */
+          clip-path: inset(0 round 32px); }
   .glow { position: absolute; border-radius: 50%; z-index: -1; pointer-events: none; }
   .glow-cream  { width: 764px; height: 764px; left: 38px;  top: -580px; background: #ffeebc; filter: blur(240px); opacity: .55; }
   .glow-orange { width: 892px; height: 893px; left: 334px; top: 265px;  background: #c67000; filter: blur(240px); opacity: .32; }
   .nums-h { margin: 0 0 80px; font: 600 24px/29px var(--pangram); color: #000; }
-  .track { display: flex; gap: 80px; width: max-content; animation: tick 34s linear infinite; }
-  .nums:hover .track { animation-play-state: paused; }
+  .nums { --np: 80px; }
+  /* a real scroller, so people can scroll it themselves; a script drives the auto-scroll */
+  .nums-sc { margin-left: calc(-1 * var(--np)); padding-left: var(--np); overflow-x: auto; overflow-y: hidden;
+             scrollbar-width: none; overscroll-behavior-x: contain; cursor: grab; touch-action: pan-x pan-y; }
+  .nums-sc::-webkit-scrollbar { display: none; }
+  .nums-sc.dragging { cursor: grabbing; user-select: none; }
+  .track { display: flex; gap: 80px; width: max-content; padding-right: 220px; }
   .stat { width: 240px; flex: 0 0 240px; display: grid; gap: 24px; align-content: start; }
   .stat b { font: 600 80px/80px var(--pangram); letter-spacing: -.74px; color: #000; }
   .stat p { margin: 0; font: 500 18px/27px var(--montreal); letter-spacing: .72px; color: #000; }
@@ -99,7 +106,6 @@
   .fade { position: absolute; top: 0; bottom: 0; z-index: 3; pointer-events: none; }
   .fade-l { left: 0; width: 96px;  background: linear-gradient(90deg, var(--sun), rgba(255,199,33,0)); }
   .fade-r { right: 0; width: 220px; background: linear-gradient(270deg, var(--sun), rgba(255,199,33,0)); }
-  @keyframes tick { to { transform: translateX(calc(-50% - 40px)); } }
   .fun { background: #f3f3f3; border-radius: 24px; padding: 40px 80px; }
   .fun p { margin: 0; font: 400 18px/25px var(--montreal); letter-spacing: .72px; color: #191919; }
   .fun b { font-weight: 700; }
@@ -187,11 +193,10 @@
   .row { display: grid; grid-template-columns: 159px 1fr; align-items: start; }
   .row small { padding-top: 13px; font: 600 18px/23px var(--pangram); color: var(--ink-26); }
   .row a { font: 600 56px/73px var(--pangram); color: var(--ink-26); display: inline-block; position: relative; text-transform: uppercase; }
-  .row a.u { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 3px; }
   .row a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 10px; height: 3px; background: var(--sun); transition: right .3s ease; }
   .row a:hover::after { right: 0; }
-  .row .mail { display: block; margin-top: -12px; padding-left: 4px; font: 500 20px/26px var(--pangram); color: var(--ink-26); text-transform: none; text-decoration: underline; text-underline-offset: 3px; }
-  .row .mail::after { display: none; }
+  .row .mail { display: table; margin-top: -12px; padding-left: 4px; font: 500 20px/26px var(--pangram); color: var(--ink-26); text-transform: none; }
+  .row .mail::after { height: 2px; bottom: 1px; }
   .foot { max-width: 1172px; margin: 72px auto 0; padding-top: 16px; border-top: 2px solid var(--ink-73);
           display: flex; justify-content: flex-end; font: 500 14px/18px var(--montreal); color: var(--ink-73); }
 
@@ -212,7 +217,7 @@
     .c-in { flex-direction: column; } .links { width: 100%; }
     .hey { font-size: 68px; line-height: 70px; } .hey .l1 img { width: 56px; height: auto; }
     .row a { font-size: 40px; line-height: 54px; }
-    .nums { padding: 48px 0 48px 32px; } .nums-h { margin-bottom: 40px; }
+    .nums { padding: 48px 0 48px 32px; --np: 32px; } .nums-h { margin-bottom: 40px; }
     .fun { padding: 28px 32px; }
   }
   @media (max-width: 520px) {
@@ -221,7 +226,7 @@
     .row { grid-template-columns: 1fr; } .row small { padding-top: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .track { animation: none; } .nums { overflow-x: auto; } .cur-in { animation: none; }
+    .cur-in { animation: none; }
     .card, .card.in, .card.in:hover, .card:hover, .card:focus-visible { transform: none !important; transition: none; }
     .card.pre { opacity: 1; } .card.nudge .cta::before { animation: none; }
     .cta, .cta-t, .cta svg, .card img { transition: none; }
@@ -251,7 +256,7 @@
   animation:sk 1.4s linear infinite;transition:opacity .5s ease}
 [data-bg].ok::before{opacity:0;animation:none}
 @keyframes sk{from{background-position:100% 0}to{background-position:0 0}}
-img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
+img.ld-in{opacity:0;transition:opacity .5s ease}img.ld-in.ok{opacity:1}
 #rp{position:fixed;left:0;top:0;right:0;height:3px;z-index:60;pointer-events:none}
 #rp i{display:block;height:100%;background:#151515;transform:scaleX(0);transform-origin:0 50%}
 #totop{position:fixed;right:24px;bottom:24px;z-index:60;width:48px;height:48px;padding:0;border:0;border-radius:50%;
@@ -261,7 +266,7 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
 #totop:hover{transform:translateY(-2px)}
 #totop:focus-visible{outline:3px solid #151515;outline-offset:3px}
 #totop svg{width:20px;height:20px}
-@media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.fade,#totop{transition:none}[data-bg]::before{animation:none}
+@media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.ld-in,#totop{transition:none}[data-bg]::before{animation:none}
   @view-transition{navigation:none}}
 </style>
 <noscript><style>#ldr{display:none}[data-bg]::before{display:none}</style></noscript>
@@ -272,7 +277,7 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
 
 <header class="hdr">
   <div class="hdr-in">
-    <a href="#top" aria-label="Dhanesh Shetye — home"><svg class="logo" viewBox="0 0 55 24" width="55" height="24" role="img" aria-label="Dhanesh Shetye" fill="currentColor"><path transform="translate(31.43 0.73)" fill-rule="nonzero" d="M8.70947 0C5.37715 0.908814 4.54407 4.92274 4.54407 6.8161C4.54407 4.1654 2.27203 0.757345 0 0L8.70947 0Z"/><path transform="translate(19.69 15.87)" fill-rule="nonzero" d="M9.84548 0.378672C5.68009 1.51469 4.54407 5.68009 4.54407 7.95212C4.54407 4.77127 2.65071 1.13602 0 0L9.84548 0.378672Z"/><path transform="translate(18.93 1.10)" fill-rule="nonzero" d="M18.1763 13.2535L7.57345 0L0 0L18.9336 21.5843L18.1763 13.2535Z"/><path transform="translate(0.00 0.00)" fill-rule="evenodd" d="M54.5287 8.67786C53.2665 5.39603 47.7123 -1.16749 43.9255 1.48322C38.8375 5.04482 45.819 8.67814 49.606 9.81401C52.635 10.7225 56.1189 13.1463 54.9071 18.9021C54.5284 20.2906 52.635 23.219 48.0909 23.8249C43.5469 24.4307 40.3913 23.32 39.3815 22.6889L38.6241 15.1154C39.7601 17.6399 42.4109 22.3102 45.4402 22.6889C48.4696 23.0675 52.635 22.3102 50.363 17.0088C50.1105 16.5039 49.2274 15.4941 46.1978 14.7368C43.236 13.9964 37.0113 11.1975 39.0028 4.89125C41.2748 -2.30348 53.2409 0.347025 53.3923 1.10453C53.6084 2.18519 53.8246 3.7593 54.0408 5.33396L54.0408 5.33403L54.0408 5.33411C54.2034 6.51825 54.366 7.7027 54.5287 8.67786ZM0 0.725912L1.51469 2.2406C1.64091 2.2406 1.89336 2.39207 1.89336 2.99795L1.89336 21.1742C1.89336 21.3004 1.81763 21.6286 1.51469 21.9316L0 23.4463L11.7388 23.4463C15.2731 22.9414 22.4931 20.1897 23.099 13.2221C23.7049 6.25453 18.555 1.10458 11.7388 0.725912L0 0.725912ZM7.57345 1.48344L7.57345 22.3104C12.4519 23.8425 17.4189 18.145 17.4189 12.4649C17.4189 6.78485 16.3586 0.877561 7.57345 1.48344Z"/></svg></a>
+    <a href="#top" aria-label="Dhanesh Shetye — home"><svg class="logo" viewBox="0 0 55.15 24" width="55" height="24" role="img" aria-label="Dhanesh Shetye" fill="currentColor"><path transform="matrix(1 0 0 1 31.43 0.726)" fill-rule="nonzero" d="M8.70947 0C5.37715 0.908814 4.54407 4.92274 4.54407 6.8161C4.54407 4.1654 2.27203 0.757345 0 0L8.70947 0Z"/><path transform="matrix(-1 -0 0 -1 29.536 23.825)" fill-rule="nonzero" d="M9.84548 0.378672C5.68009 1.51469 4.54407 5.68009 4.54407 7.95212C4.54407 4.77127 2.65071 1.13602 0 0L9.84548 0.378672Z"/><path transform="matrix(1 0 0 1 18.934 1.105)" fill-rule="nonzero" d="M18.1763 13.2535L7.57345 0L0 0L18.9336 21.5843L18.1763 13.2535Z"/><path transform="matrix(1 0 0 1 0 0)" fill-rule="evenodd" d="M54.5287 8.67786C53.2665 5.39603 47.7123 -1.16749 43.9255 1.48322C38.8375 5.04482 45.819 8.67814 49.606 9.81401C52.635 10.7225 56.1189 13.1463 54.9071 18.9021C54.5284 20.2906 52.635 23.219 48.0909 23.8249C43.5469 24.4307 40.3913 23.32 39.3815 22.6889L38.6241 15.1154C39.7601 17.6399 42.4109 22.3102 45.4402 22.6889C48.4696 23.0675 52.635 22.3102 50.363 17.0088C50.1105 16.5039 49.2274 15.4941 46.1978 14.7368C43.236 13.9964 37.0113 11.1975 39.0028 4.89125C41.2748 -2.30348 53.2409 0.347025 53.3923 1.10453C53.6084 2.18519 53.8246 3.7593 54.0408 5.33396L54.0408 5.33403L54.0408 5.33411C54.2034 6.51825 54.366 7.7027 54.5287 8.67786ZM0 0.725912L1.51469 2.2406C1.64091 2.2406 1.89336 2.39207 1.89336 2.99795L1.89336 21.1742C1.89336 21.3004 1.81763 21.6286 1.51469 21.9316L0 23.4463L11.7388 23.4463C15.2731 22.9414 22.4931 20.1897 23.099 13.2221C23.7049 6.25453 18.555 1.10458 11.7388 0.725912L0 0.725912ZM7.57345 1.48344L7.57345 22.3104C12.4519 23.8425 17.4189 18.145 17.4189 12.4649C17.4189 6.78485 16.3586 0.877561 7.57345 1.48344Z"/></svg></a>
     <a class="hdr-mail" href="mailto:dhanesh.ns19@gmail.com">dhanesh.ns19@gmail.com</a>
     <nav class="hdr-r" aria-label="Primary">
       <a class="btn btn-soft" href="https://drive.google.com/file/d/1t6k4iGsR7Wti509n0RL9tXD6VJzWaM1Q/view?usp=sharing" target="_blank" rel="noopener">Resume</a>
@@ -301,9 +306,11 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
       <span class="glow glow-cream" aria-hidden="true"></span>
       <span class="glow glow-orange" aria-hidden="true"></span>
       <h2 class="nums-h" id="nums-h">Notable numbers</h2>
+      <div class="nums-sc" tabindex="0" aria-label="Notable numbers — scroll sideways">
       <div class="track">
         <div class="stat"><b>19+</b><div><p>Products Built: From vision to reality, transforming ideas into powerful digital experiences.</p></div></div><div class="stat"><b>64M+</b><div><p>Users Impacted: Designing solutions that enrich lives and scale globally.</p><div class="avs" aria-hidden="true"><span class="av av1"><img src="img/avatar-1.webp" alt=""></span><span class="av av2"><img src="img/avatar-2.webp" alt=""></span><span class="av av3">+</span></div></div></div><div class="stat"><b>22.8M</b><div><p>Active mutual fund investors engaging with platforms I designed for Axis, Tata, ITI, PGIM, and Invesco.</p></div></div><div class="stat"><b>10+</b><div><p>Years of Experience: Proven expertise in design and innovation.</p></div></div><div class="stat"><b>4</b><div><p>Industries Transformed: Fintech, e-commerce, real estate, and entertainment.</p></div></div>
         <div aria-hidden="true" style="display:contents"><div class="stat"><b>19+</b><div><p>Products Built: From vision to reality, transforming ideas into powerful digital experiences.</p></div></div><div class="stat"><b>64M+</b><div><p>Users Impacted: Designing solutions that enrich lives and scale globally.</p><div class="avs" aria-hidden="true"><span class="av av1"><img src="img/avatar-1.webp" alt=""></span><span class="av av2"><img src="img/avatar-2.webp" alt=""></span><span class="av av3">+</span></div></div></div><div class="stat"><b>22.8M</b><div><p>Active mutual fund investors engaging with platforms I designed for Axis, Tata, ITI, PGIM, and Invesco.</p></div></div><div class="stat"><b>10+</b><div><p>Years of Experience: Proven expertise in design and innovation.</p></div></div><div class="stat"><b>4</b><div><p>Industries Transformed: Fintech, e-commerce, real estate, and entertainment.</p></div></div></div>
+      </div>
       </div>
       <span class="fade fade-l" aria-hidden="true"></span>
       <span class="fade fade-r" aria-hidden="true"></span>
@@ -346,7 +353,7 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
       </h2>
       <div class="links">
         <div class="row"><small>For project<br>inquiries</small>
-          <div><a class="u" href="mailto:dhanesh.ns19@gmail.com">Email</a><a class="mail" href="mailto:dhanesh.ns19@gmail.com">dhanesh.ns19@gmail.com</a></div></div>
+          <div><a href="mailto:dhanesh.ns19@gmail.com">Email</a><a class="mail" href="mailto:dhanesh.ns19@gmail.com">dhanesh.ns19@gmail.com</a></div></div>
         <div class="row"><small>For more<br>work shots</small><div><a href="https://dribbble.com/Dhanesh10" target="_blank" rel="noopener">Dribbble</a></div></div>
         <div class="row"><small>For updated<br>work</small><div><a href="https://www.figma.com/design/3juSNaBmkrk7Iz2D4rqSq0/Portfolio-Work-1?node-id=221-29228&amp;t=uAKpDcfVVhRdSt7N-1" target="_blank" rel="noopener">Figma</a></div></div>
         <div class="row"><small>For my work<br>experience</small><div><a href="https://www.linkedin.com/in/dhanesh-n-shetye-10/" target="_blank" rel="noopener">Linkedin</a></div></div>
@@ -471,7 +478,7 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
   /* home: plain images fade in; the first screen's count toward the loader */
   [].slice.call(document.querySelectorAll('img')).forEach(function(im){
     if(im.complete&&im.naturalWidth) return;
-    im.classList.add('fade');
+    im.classList.add('ld-in');
     var p=new Promise(function(r){ im.addEventListener('load',r); im.addEventListener('error',r); }).then(function(){ im.classList.add('ok'); });
     if(im.getBoundingClientRect().top<vh&&im.loading!=='lazy') wait(p);
   });
@@ -503,5 +510,59 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
 </script>
 <!-- ux:end -->
 <script>document.querySelectorAll("[data-year]").forEach(function(e){e.textContent=new Date().getFullYear()})</script>
+<script>
+  /* Notable numbers: auto-scrolls in an endless loop, and stays scrollable by hand —
+     trackpad, wheel, touch or drag. Auto pauses while the pointer is over the card and
+     for a moment after any manual scroll; reduced motion means manual only. */
+  (function () {
+    var card = document.querySelector('.nums'), sc = card && card.querySelector('.nums-sc');
+    if (!sc) return;
+    var stats = sc.querySelectorAll('.stat');
+    var half = stats[5] ? stats[5].offsetLeft - stats[0].offsetLeft : 0;   /* width of one full set */
+    var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var speed = half / 34;                                                /* same pace as before: one set per 34s */
+    var pos = sc.scrollLeft, expected = pos, hover = false, busyUntil = 0, inView = true, last = 0;
+    function wrap() {
+      if (!half) return;
+      if (sc.scrollLeft >= half) { sc.scrollLeft -= half; pos -= half; }
+      else if (sc.scrollLeft <= 0 && pos > 1) { sc.scrollLeft += half; pos += half; }
+      expected = sc.scrollLeft;
+    }
+    function tick(t) {
+      var dt = last ? Math.min(64, t - last) / 1000 : 0; last = t;
+      /* moved since our last write? the user did it — adopt their position before anything else */
+      if (Math.abs(sc.scrollLeft - expected) > 2) { pos = sc.scrollLeft; userMoved(); wrap(); }
+      if (!still && inView && !hover && t > busyUntil && !drag.on) {
+        pos += speed * dt; sc.scrollLeft = pos; expected = sc.scrollLeft; wrap();
+      }
+      requestAnimationFrame(tick);
+    }
+    function userMoved() { busyUntil = performance.now() + 2500; }
+    /* a scroll we did not cause = the user. compare positions instead of flagging */
+    sc.addEventListener('scroll', function () {
+      if (Math.abs(sc.scrollLeft - expected) <= 2) return;
+      pos = sc.scrollLeft; userMoved(); wrap();
+    }, { passive: true });
+    ['wheel', 'touchstart', 'keydown'].forEach(function (ev) { sc.addEventListener(ev, userMoved, { passive: true }); });
+    card.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+    card.addEventListener('pointerleave', function () { hover = false; });
+    /* drag to scroll with a mouse */
+    var drag = { on: false, x: 0, s: 0, moved: 0 };
+    sc.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      drag.on = true; drag.x = e.clientX; drag.s = sc.scrollLeft; drag.moved = 0;
+    });
+    addEventListener('pointermove', function (e) {
+      if (!drag.on) return;
+      var dx = e.clientX - drag.x; drag.moved = Math.max(drag.moved, Math.abs(dx));
+      if (drag.moved > 3) { sc.classList.add('dragging'); sc.scrollLeft = drag.s - dx; }
+    });
+    addEventListener('pointerup', function () { if (drag.on) { drag.on = false; sc.classList.remove('dragging'); userMoved(); } });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; }).observe(card);
+    }
+    requestAnimationFrame(tick);
+  }());
+</script>
 </body>
 </html>

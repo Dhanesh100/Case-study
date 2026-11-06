@@ -83,7 +83,7 @@ a.lk:focus-visible{outline:3px solid #151515;outline-offset:3px}
   animation:sk 1.4s linear infinite;transition:opacity .5s ease}
 [data-bg].ok::before{opacity:0;animation:none}
 @keyframes sk{from{background-position:100% 0}to{background-position:0 0}}
-img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
+img.ld-in{opacity:0;transition:opacity .5s ease}img.ld-in.ok{opacity:1}
 #rp{position:fixed;left:0;top:0;right:0;height:3px;z-index:60;pointer-events:none}
 #rp i{display:block;height:100%;background:#151515;transform:scaleX(0);transform-origin:0 50%}
 #totop{position:fixed;right:24px;bottom:24px;z-index:60;width:48px;height:48px;padding:0;border:0;border-radius:50%;
@@ -93,7 +93,7 @@ img.fade{opacity:0;transition:opacity .5s ease}img.fade.ok{opacity:1}
 #totop:hover{transform:translateY(-2px)}
 #totop:focus-visible{outline:3px solid #151515;outline-offset:3px}
 #totop svg{width:20px;height:20px}
-@media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.fade,#totop{transition:none}[data-bg]::before{animation:none}
+@media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.ld-in,#totop{transition:none}[data-bg]::before{animation:none}
   @view-transition{navigation:none}}
 </style>
 <noscript><style>#ldr{display:none}[data-bg]::before{display:none}</style></noscript>
@@ -217,7 +217,7 @@ h2.m-t{margin:28px 0 14px;text-wrap:balance}
   /* home: plain images fade in; the first screen's count toward the loader */
   [].slice.call(document.querySelectorAll('img')).forEach(function(im){
     if(im.complete&&im.naturalWidth) return;
-    im.classList.add('fade');
+    im.classList.add('ld-in');
     var p=new Promise(function(r){ im.addEventListener('load',r); im.addEventListener('error',r); }).then(function(){ im.classList.add('ok'); });
     if(im.getBoundingClientRect().top<vh&&im.loading!=='lazy') wait(p);
   });
