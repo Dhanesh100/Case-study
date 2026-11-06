@@ -28,7 +28,7 @@ a{color:inherit;text-decoration:none}
 /* every node is placed exactly where the Figma frame puts it */
 .n,.t,.v{position:absolute;display:block}
 .t{margin:0;overflow-wrap:break-word}
-.sx,.sy{scrollbar-width:none;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.sx,.sy{scrollbar-width:none;-webkit-overflow-scrolling:touch}.sx{overscroll-behavior-x:contain}
 .sx::-webkit-scrollbar,.sy::-webkit-scrollbar{display:none}
 .sx{cursor:grab;touch-action:pan-x pan-y}.sx.dragging{cursor:grabbing;user-select:none}
 .vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
@@ -294,7 +294,11 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
 <script src="../../pop.js" defer></script>
 <!-- ux:end -->
 <!-- nav:start -->
-<style>.snav{cursor:pointer;transition:background .2s ease}.snav:hover{background:rgba(0,0,0,.05)}.snav .t{transition:color .2s ease}.snav:hover .t,.snav.on .t{color:#151515!important}.snav:focus-visible{outline:2px solid #151515;outline-offset:2px}</style>
+<style>.snav{cursor:pointer;transition:background .2s ease}.snav:hover{background:rgba(0,0,0,.05)}.snav .t{transition:color .2s ease}.snav:hover .t,.snav.on .t{color:#151515!important}.snav:focus-visible{outline:2px solid #151515;outline-offset:2px}.ps-ar{position:absolute;display:flex;gap:12px;z-index:3}
+.ps-ar button{width:56px;height:56px;border-radius:50%;border:0;background:#151515;color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s,opacity .2s,transform .2s}
+.ps-ar button:hover{background:#333;transform:scale(1.06)}.ps-ar button:disabled{opacity:.25;cursor:default;transform:none}
+.ps-ar button:focus-visible{outline:2px solid #151515;outline-offset:3px}
+.sx img{-webkit-user-drag:none;user-select:none}</style>
 <script>
 /* Header section nav: click a label, the page scrolls to that section (Figma ProSure 240:3236).
    Targets are the section tops in the 1440px design; the dimmed items (Product Detail, Bargain,
@@ -303,8 +307,45 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
   var MAP={'Overview':[856,'overview'],'Product Story':[1912,'product-story'],'Strategy':[2860,'strategy'],'SS Home':[4129,'ss-home']};
   var hdr=document.getElementById('hdr'), stage=document.getElementById('stage'), cv=document.getElementById('canvas');
   if(!hdr||!stage||!cv) return;
+  /* Product Story cards: 760px tall in the 1440 design, taller than a laptop screen once scaled.
+     Shrink the card row so heading + cards fit under the header, pull everything below up by the
+     space saved, and give mouse users arrows (trackpad, shift+wheel and drag still work). */
+  var sc=[].slice.call(document.querySelectorAll('#canvas .sx')).filter(function(e){ return e.offsetHeight===760; })[0], CUT=0;
+  if(sc){
+    var CH=760, CW=sc.offsetWidth, nodes=[], hs=[];
+    for(var n=sc; n && n!==document.getElementById('canvas'); n=n.parentNode) nodes.push(n);
+    var H0=parseFloat(document.getElementById('canvas').style.height)||document.getElementById('canvas').offsetHeight;
+    var orig=nodes.map(function(e){ return e.offsetHeight; });
+    var ar=document.createElement('div'); ar.className='ps-ar';
+    ar.innerHTML='<button type="button" aria-label="Previous card"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M13.5 5 7.5 11l6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" aria-label="Next card"><svg width="22" height="22" viewBox="0 0 22 22"><path d="M8.5 5l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
+    var sec=nodes[2]||nodes[1]; sec.appendChild(ar);
+    ar.style.right='48px'; ar.style.top=Math.max(0,nodes[1].offsetTop-76)+'px';
+    var bp=ar.children[0], bn=ar.children[1], k=1;
+    function step(){ var c=sc.firstElementChild; return ((c?c.offsetWidth:576)+24); }
+    bp.onclick=function(){ sc.scrollBy({left:-step(),behavior:'smooth'}); };
+    bn.onclick=function(){ sc.scrollBy({left:step(),behavior:'smooth'}); };
+    function ends(){ bp.disabled=sc.scrollLeft<4; bn.disabled=sc.scrollLeft>sc.scrollWidth-sc.clientWidth-4; }
+    sc.addEventListener('scroll',ends,{passive:true});
+    function fit(){
+      var cv=document.getElementById('canvas'), s=scale();
+      if(!cv.offsetWidth) return;
+      var avail=innerHeight-72*s-(nodes[1].offsetTop+24)*s-24;
+      k=Math.max(.55,Math.min(1,avail/(CH*s)));
+      CUT=Math.round(CH*(1-k));
+      sc.style.transformOrigin='0 0'; sc.style.transform=k<1?'scale('+k+')':''; sc.style.width=(CW/k)+'px';
+      nodes.forEach(function(e,i){
+        if(i>0) e.style.height=(orig[i]-CUT)+'px';
+        var bottom=e.offsetTop+orig[i];
+        [].forEach.call(e.parentNode.children,function(sib){ if(sib!==e && sib.offsetTop>=bottom-1) sib.style.translate=CUT?'0 '+(-CUT)+'px':''; });
+      });
+      cv.style.height=(H0-CUT)+'px';
+      document.getElementById('stage').style.height=((H0-CUT)*s)+'px';
+      ends();
+    }
+    fit(); addEventListener('resize',function(){ requestAnimationFrame(fit); }); addEventListener('load',fit);
+  }
   function scale(){ var m=getComputedStyle(cv).transform; return m&&m!=='none'?parseFloat(m.split('(')[1]):1; }
-  function topOf(y){ var s=scale(); return stage.getBoundingClientRect().top+scrollY+y*s-72*s-8; }
+  function topOf(y){ var s=scale(); if(y>2000) y-=CUT; return stage.getBoundingClientRect().top+scrollY+y*s-72*s-8; }
   var items=[];
   [].slice.call(hdr.querySelectorAll('.t')).forEach(function(t){
     var k=t.textContent.trim(), m=MAP[k]; if(!m) return;
