@@ -54,6 +54,7 @@ img.ld-in{opacity:0;transition:opacity .5s ease}img.ld-in.ok{opacity:1}
   opacity:0;transform:translateY(12px);visibility:hidden;transition:opacity .3s ease,transform .3s ease,visibility 0s .3s}
 #totop.on{opacity:1;transform:none;visibility:visible;transition:opacity .3s ease,transform .3s ease}
 #totop:hover{transform:translateY(-2px)}
+a.t,.t a[href],.m-body a[href]{transition:opacity .2s ease}a.t:hover,.t a[href]:hover,.m-body a[href]:hover{opacity:.62}
 #totop:focus-visible{outline:3px solid %(fg)s;outline-offset:3px}
 #totop svg{width:20px;height:20px}
 @media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.ld-in,#totop{transition:none}[data-bg]::before{animation:none}
@@ -94,10 +95,15 @@ JS = r'''<script>
       .then(function(){ urls.forEach(function(u,i){ el.style.setProperty('--b'+i,'url("'+u+'")'); }); el.classList.add('ok'); });
     return el._p;
   }
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ load(e.target); io.unobserve(e.target); } }); },{rootMargin:'1200px 0px'});
-    bgs.forEach(function(el){ io.observe(el); });
-  } else bgs.forEach(load);
+  /* load by vertical distance only: images off to the side inside a sideways row, or further down a
+     phone screen, are clipped from any IntersectionObserver until scrolled to, and would show as
+     placeholders mid-swipe. A phone screen's images go with the phone. */
+  var pendingBg=bgs.map(function(el){ return {el:el, ref:el.closest('.sy')||el}; });
+  function nearBg(){ nearBg.q=0; var lo=-1200, hi=innerHeight+1200;
+    pendingBg=pendingBg.filter(function(it){ var r=it.ref.getBoundingClientRect(); if(r.bottom>lo&&r.top<hi){ load(it.el); return false; } return true; });
+    if(!pendingBg.length){ removeEventListener('scroll',qBg); removeEventListener('resize',qBg); } }
+  function qBg(){ if(!nearBg.q) nearBg.q=requestAnimationFrame(nearBg); }
+  addEventListener('scroll',qBg,{passive:true}); addEventListener('resize',qBg); nearBg();
   bgs.forEach(function(el){ if(el.getBoundingClientRect().top<vh) wait(load(el)); });
 
   /* home: plain images fade in; the first screen's count toward the loader */
@@ -208,6 +214,12 @@ def apply(path):
                sk2='rgba(255,255,255,.10)' if dark else 'rgba(0,0,0,.08)',
                name=name, kicker='Case study' if case else 'Portfolio')
     if case: s = lazy_bgs(s)
+    # outside links open in a new tab (case-study source links came through from Figma without it)
+    def ext(m):
+        t = m.group(0)
+        if 'target=' in t or 'dhanesh100.github.io' in t: return t
+        return t[:-1] + ' target="_blank" rel="noopener">'
+    s = re.sub(r'<a\s[^>]*href="https?://[^"]*"[^>]*>', ext, s)
     s = s.replace('</head>', '%s\n%s\n%s\n%s\n</head>' % (A, META % tok, CSS % tok, B), 1)
     s = re.sub(r'<body([^>]*)>', lambda m: '<body%s>\n%s%s%s%s' % (m.group(1), A, OVERLAY % tok, AIDS if case else '', B), s, count=1)
     pop = os.path.relpath(os.path.join(ROOT, 'home', 'pop.js'), os.path.dirname(path))

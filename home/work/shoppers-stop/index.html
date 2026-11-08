@@ -126,6 +126,7 @@ img.ld-in{opacity:0;transition:opacity .5s ease}img.ld-in.ok{opacity:1}
   opacity:0;transform:translateY(12px);visibility:hidden;transition:opacity .3s ease,transform .3s ease,visibility 0s .3s}
 #totop.on{opacity:1;transform:none;visibility:visible;transition:opacity .3s ease,transform .3s ease}
 #totop:hover{transform:translateY(-2px)}
+a.t,.t a[href],.m-body a[href]{transition:opacity .2s ease}a.t:hover,.t a[href]:hover,.m-body a[href]:hover{opacity:.62}
 #totop:focus-visible{outline:3px solid #151515;outline-offset:3px}
 #totop svg{width:20px;height:20px}
 @media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.ld-in,#totop{transition:none}[data-bg]::before{animation:none}
@@ -203,97 +204,6 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
   vids.forEach(function(v){ io.observe(v); });
 })();
 </script>
-<!-- ux:start -->
-<script>
-/* loading experience — see tools/add-ux.py */
-(function(){
-  var ldr=document.getElementById('ldr'), bar=ldr&&ldr.querySelector('.ldr-bar i'), t0=Date.now(), done=false;
-  var vh=innerHeight*1.15, waits=[], got=0;
-  function prog(){ var p=waits.length?got/waits.length:1; if(bar) bar.style.transform='scaleX('+(.04+.96*p)+')';
-    if(ldr) ldr.setAttribute('aria-valuenow',Math.round(p*100)); if(got>=waits.length) finish(); }
-  function finish(){ if(done||!ldr) return; done=true; if(bar) bar.style.transform='scaleX(1)';
-    setTimeout(function(){ ldr.classList.add('out'); setTimeout(function(){ ldr.remove(); },600); }, Date.now()-t0<150?0:220); }
-  function wait(p){ waits.push(p); p.then(function(){ got++; prog(); }); }
-
-  /* case studies: background images near the viewport, behind a shimmer */
-  var bgs=[].slice.call(document.querySelectorAll('[data-bg]'));
-  function load(el){
-    if(el._p) return el._p;
-    var urls=el.getAttribute('data-bg').split('|');
-    el._p=Promise.all(urls.map(function(u){ return new Promise(function(r){ var im=new Image(); im.onload=im.onerror=r; im.src=u; }); }))
-      .then(function(){ urls.forEach(function(u,i){ el.style.setProperty('--b'+i,'url("'+u+'")'); }); el.classList.add('ok'); });
-    return el._p;
-  }
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ load(e.target); io.unobserve(e.target); } }); },{rootMargin:'1200px 0px'});
-    bgs.forEach(function(el){ io.observe(el); });
-  } else bgs.forEach(load);
-  bgs.forEach(function(el){ if(el.getBoundingClientRect().top<vh) wait(load(el)); });
-
-  /* home: plain images fade in; the first screen's count toward the loader */
-  [].slice.call(document.querySelectorAll('img')).forEach(function(im){
-    if(im.complete&&im.naturalWidth) return;
-    im.classList.add('ld-in');
-    var p=new Promise(function(r){ im.addEventListener('load',r); im.addEventListener('error',r); }).then(function(){ im.classList.add('ok'); });
-    if(im.getBoundingClientRect().top<vh&&im.loading!=='lazy') wait(p);
-  });
-  if(document.fonts&&document.fonts.ready) wait(document.fonts.ready);
-  prog(); setTimeout(finish,4000);
-  /* back/forward cache: never show a stale loader */
-  addEventListener('pageshow',function(e){ if(e.persisted) finish(); });
-
-  /* case studies: reading progress, and a way back to the top once you are a screen down */
-  var rp=document.querySelector('#rp i'), tt=document.getElementById('totop'), tick=false;
-  function upd(){ tick=false; var h=document.documentElement.scrollHeight-innerHeight, y=scrollY;
-    if(rp) rp.style.transform='scaleX('+(h>0?Math.min(1,y/h):0)+')'; if(tt) tt.classList.toggle('on',y>innerHeight); }
-  if(rp||tt){
-    addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(upd); } },{passive:true});
-    addEventListener('resize',upd); upd();
-    if(tt) tt.addEventListener('click',function(){
-      scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
-      var f=document.querySelector('#hdr a'); if(f) f.focus({preventScroll:true}); });
-  }
-
-  /* hovering a link to another page fetches it, so the click lands on a warm page */
-  var seen={};
-  document.addEventListener('pointerover',function(e){
-    var a=e.target.closest&&e.target.closest('a[href]'); if(!a) return;
-    var u=new URL(a.href,location.href); if(u.origin!==location.origin||u.pathname===location.pathname||seen[u.pathname]) return;
-    seen[u.pathname]=1; var l=document.createElement('link'); l.rel='prefetch'; l.href=u.pathname; document.head.appendChild(l);
-  },{passive:true});
-})();
-
-/* View-case-study pill: on a mouse, it trails the pointer inside the card it belongs to */
-(function(){
-  if(!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  var cards=[].slice.call(document.querySelectorAll('.card, a.nx'));
-  if(!cards.length) return;
-  document.documentElement.classList.add('cf');
-  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  cards.forEach(function(card){
-    var pill=card.querySelector('.cta'); if(!pill) return;
-    var x=0,y=0,tx=0,ty=0,run=false,live=false;
-    function aim(e){
-      var r=card.getBoundingClientRect(),kx=card.offsetWidth/r.width,ky=card.offsetHeight/r.height;
-      var px=(e.clientX-r.left)*kx+14, py=(e.clientY-r.top)*ky+18;
-      tx=Math.max(12,Math.min(px,card.offsetWidth-pill.offsetWidth-12));
-      ty=Math.max(12,Math.min(py,card.offsetHeight-pill.offsetHeight-12));
-    }
-    function frame(){
-      var k=still?1:.28; x+=(tx-x)*k; y+=(ty-y)*k;
-      pill.style.translate=x.toFixed(1)+'px '+y.toFixed(1)+'px';
-      if(live&&(Math.abs(tx-x)>.3||Math.abs(ty-y)>.3)) requestAnimationFrame(frame); else run=false;
-    }
-    function go(){ if(!run){run=true;requestAnimationFrame(frame);} }
-    card.addEventListener('pointerenter',function(e){ if(e.pointerType!=='mouse')return; live=true; aim(e); x=tx; y=ty; go(); });
-    card.addEventListener('pointermove',function(e){ if(e.pointerType!=='mouse')return; aim(e); go(); });
-    card.addEventListener('pointerleave',function(){ live=false; });
-  });
-})();
-</script>
-<script src="../../pop.js" defer></script>
-<script src="../../scroll.js" defer></script>
-<!-- ux:end -->
 <!-- nav:start -->
 <style>.snav{cursor:pointer;transition:background .2s ease}.snav:hover{background:rgba(0,0,0,.05)}.snav .t{transition:color .2s ease}.snav:hover .t,.snav.on .t{color:#151515!important}.snav:focus-visible{outline:2px solid #151515;outline-offset:2px}.ps-ar{position:absolute;display:flex;gap:12px;z-index:3}
 .ps-ar button{width:56px;height:56px;border-radius:50%;border:0;background:#151515;color:#fff;display:grid;place-items:center;cursor:pointer;transition:background .2s,opacity .2s,transform .2s}
@@ -477,5 +387,101 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
 })();
 </script>
 <!-- nav:end -->
+<!-- ux:start -->
+<script>
+/* loading experience — see tools/add-ux.py */
+(function(){
+  var ldr=document.getElementById('ldr'), bar=ldr&&ldr.querySelector('.ldr-bar i'), t0=Date.now(), done=false;
+  var vh=innerHeight*1.15, waits=[], got=0;
+  function prog(){ var p=waits.length?got/waits.length:1; if(bar) bar.style.transform='scaleX('+(.04+.96*p)+')';
+    if(ldr) ldr.setAttribute('aria-valuenow',Math.round(p*100)); if(got>=waits.length) finish(); }
+  function finish(){ if(done||!ldr) return; done=true; if(bar) bar.style.transform='scaleX(1)';
+    setTimeout(function(){ ldr.classList.add('out'); setTimeout(function(){ ldr.remove(); },600); }, Date.now()-t0<150?0:220); }
+  function wait(p){ waits.push(p); p.then(function(){ got++; prog(); }); }
+
+  /* case studies: background images near the viewport, behind a shimmer */
+  var bgs=[].slice.call(document.querySelectorAll('[data-bg]'));
+  function load(el){
+    if(el._p) return el._p;
+    var urls=el.getAttribute('data-bg').split('|');
+    el._p=Promise.all(urls.map(function(u){ return new Promise(function(r){ var im=new Image(); im.onload=im.onerror=r; im.src=u; }); }))
+      .then(function(){ urls.forEach(function(u,i){ el.style.setProperty('--b'+i,'url("'+u+'")'); }); el.classList.add('ok'); });
+    return el._p;
+  }
+  /* load by vertical distance only: images off to the side inside a sideways row, or further down a
+     phone screen, are clipped from any IntersectionObserver until scrolled to, and would show as
+     placeholders mid-swipe. A phone screen's images go with the phone. */
+  var pendingBg=bgs.map(function(el){ return {el:el, ref:el.closest('.sy')||el}; });
+  function nearBg(){ nearBg.q=0; var lo=-1200, hi=innerHeight+1200;
+    pendingBg=pendingBg.filter(function(it){ var r=it.ref.getBoundingClientRect(); if(r.bottom>lo&&r.top<hi){ load(it.el); return false; } return true; });
+    if(!pendingBg.length){ removeEventListener('scroll',qBg); removeEventListener('resize',qBg); } }
+  function qBg(){ if(!nearBg.q) nearBg.q=requestAnimationFrame(nearBg); }
+  addEventListener('scroll',qBg,{passive:true}); addEventListener('resize',qBg); nearBg();
+  bgs.forEach(function(el){ if(el.getBoundingClientRect().top<vh) wait(load(el)); });
+
+  /* home: plain images fade in; the first screen's count toward the loader */
+  [].slice.call(document.querySelectorAll('img')).forEach(function(im){
+    if(im.complete&&im.naturalWidth) return;
+    im.classList.add('ld-in');
+    var p=new Promise(function(r){ im.addEventListener('load',r); im.addEventListener('error',r); }).then(function(){ im.classList.add('ok'); });
+    if(im.getBoundingClientRect().top<vh&&im.loading!=='lazy') wait(p);
+  });
+  if(document.fonts&&document.fonts.ready) wait(document.fonts.ready);
+  prog(); setTimeout(finish,4000);
+  /* back/forward cache: never show a stale loader */
+  addEventListener('pageshow',function(e){ if(e.persisted) finish(); });
+
+  /* case studies: reading progress, and a way back to the top once you are a screen down */
+  var rp=document.querySelector('#rp i'), tt=document.getElementById('totop'), tick=false;
+  function upd(){ tick=false; var h=document.documentElement.scrollHeight-innerHeight, y=scrollY;
+    if(rp) rp.style.transform='scaleX('+(h>0?Math.min(1,y/h):0)+')'; if(tt) tt.classList.toggle('on',y>innerHeight); }
+  if(rp||tt){
+    addEventListener('scroll',function(){ if(!tick){ tick=true; requestAnimationFrame(upd); } },{passive:true});
+    addEventListener('resize',upd); upd();
+    if(tt) tt.addEventListener('click',function(){
+      scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+      var f=document.querySelector('#hdr a'); if(f) f.focus({preventScroll:true}); });
+  }
+
+  /* hovering a link to another page fetches it, so the click lands on a warm page */
+  var seen={};
+  document.addEventListener('pointerover',function(e){
+    var a=e.target.closest&&e.target.closest('a[href]'); if(!a) return;
+    var u=new URL(a.href,location.href); if(u.origin!==location.origin||u.pathname===location.pathname||seen[u.pathname]) return;
+    seen[u.pathname]=1; var l=document.createElement('link'); l.rel='prefetch'; l.href=u.pathname; document.head.appendChild(l);
+  },{passive:true});
+})();
+
+/* View-case-study pill: on a mouse, it trails the pointer inside the card it belongs to */
+(function(){
+  if(!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  var cards=[].slice.call(document.querySelectorAll('.card, a.nx'));
+  if(!cards.length) return;
+  document.documentElement.classList.add('cf');
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  cards.forEach(function(card){
+    var pill=card.querySelector('.cta'); if(!pill) return;
+    var x=0,y=0,tx=0,ty=0,run=false,live=false;
+    function aim(e){
+      var r=card.getBoundingClientRect(),kx=card.offsetWidth/r.width,ky=card.offsetHeight/r.height;
+      var px=(e.clientX-r.left)*kx+14, py=(e.clientY-r.top)*ky+18;
+      tx=Math.max(12,Math.min(px,card.offsetWidth-pill.offsetWidth-12));
+      ty=Math.max(12,Math.min(py,card.offsetHeight-pill.offsetHeight-12));
+    }
+    function frame(){
+      var k=still?1:.28; x+=(tx-x)*k; y+=(ty-y)*k;
+      pill.style.translate=x.toFixed(1)+'px '+y.toFixed(1)+'px';
+      if(live&&(Math.abs(tx-x)>.3||Math.abs(ty-y)>.3)) requestAnimationFrame(frame); else run=false;
+    }
+    function go(){ if(!run){run=true;requestAnimationFrame(frame);} }
+    card.addEventListener('pointerenter',function(e){ if(e.pointerType!=='mouse')return; live=true; aim(e); x=tx; y=ty; go(); });
+    card.addEventListener('pointermove',function(e){ if(e.pointerType!=='mouse')return; aim(e); go(); });
+    card.addEventListener('pointerleave',function(){ live=false; });
+  });
+})();
+</script>
+<script src="../../pop.js" defer></script>
+<script src="../../scroll.js" defer></script>
+<!-- ux:end -->
 </body>
 </html>
