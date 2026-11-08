@@ -158,7 +158,7 @@
     color: var(--ink-3);
   }
 
-  .vtab:hover { border-color: var(--ink-3); }
+  @media (hover:hover) and (pointer:fine){.vtab:hover{ border-color: var(--ink-3); }}
 
   .vtab[aria-selected="true"] {
     background: var(--accent-soft);
@@ -915,7 +915,7 @@
     border: none;
     color: var(--accent-ink);
   }
-  #panel-v9 .sc-more:hover .sc-more-k, #panel-v10 .sc-more:hover .sc-more-k { text-decoration: underline; text-underline-offset: 3px; }
+  @media (hover:hover) and (pointer:fine){#panel-v9 .sc-more:hover .sc-more-k, #panel-v10 .sc-more:hover .sc-more-k{ text-decoration: underline; text-underline-offset: 3px; }}
 
   /* 8 · diagrams and screens sit on a ground rather than in a frame */
   #panel-v9 .v9-fig, #panel-v10 .v9-fig {
@@ -1486,7 +1486,7 @@
   }
 
   .switch button[aria-pressed="true"] { background: #3559ff; color: #ffffff; }
-  .switch button:hover:not([aria-pressed="true"]) { color: #dbe3fb; }
+  @media (hover:hover) and (pointer:fine){.switch button:hover:not([aria-pressed="true"]){ color: #dbe3fb; }}
 
   .flip-panel[hidden] { display: none; }
   .flip-panel { display: flex; flex-direction: column; gap: 15px; align-items: center; animation: rise 240ms ease both; }
@@ -1548,7 +1548,7 @@
     margin-left: 6px;
   }
 
-  .car-play:hover { color: #dbe3fb; border-color: #3f4f80; }
+  @media (hover:hover) and (pointer:fine){.car-play:hover{ color: #dbe3fb; border-color: #3f4f80; }}
 
   /* ══════════ V2 POINTS ══════════ */
   .points { display: flex; flex-direction: column; }
@@ -1904,7 +1904,7 @@
     border-radius: 999px; padding: 10px 19px; cursor: pointer;
     transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
   }
-  .sc-more:hover { background: var(--accent-soft); border-color: var(--accent); }
+  @media (hover:hover) and (pointer:fine){.sc-more:hover{ background: var(--accent-soft); border-color: var(--accent); }}
   .sc-more:active { transform: scale(0.98); }
   .sc-more .sc-plus {
     display: inline-flex; align-items: center; justify-content: center;
@@ -1959,7 +1959,7 @@
     font-size: 17px; line-height: 1; cursor: pointer; display: flex;
     align-items: center; justify-content: center; transition: background 0.16s ease;
   }
-  .sc-ov-x:hover { background: var(--rule-soft); color: var(--ink); }
+  @media (hover:hover) and (pointer:fine){.sc-ov-x:hover{ background: var(--rule-soft); color: var(--ink); }}
 
   .sc-ov-body {
     overflow-y: auto; padding: clamp(22px, 3vw, 32px) clamp(20px, 3.5vw, 40px) clamp(30px, 4vw, 44px);
@@ -2321,7 +2321,7 @@
     width: 22px; height: 22px; border-radius: 50%; cursor: pointer; padding: 0;
     font-family: var(--mono); font-size: 11px; line-height: 1; transition: all .16s ease;
   }
-  .v5-why:hover, .v5-why[aria-expanded="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+   .v5-why[aria-expanded="true"]{ background: var(--accent); border-color: var(--accent); color: #fff; }@media (hover:hover) and (pointer:fine){.v5-why:hover{ background: var(--accent); border-color: var(--accent); color: #fff; }}
   .v5-mx tr.why-row td { padding-top: 0; border-bottom: 1px solid var(--rule-soft); }
   .v5-mx tr.why-row[hidden] { display: none; }
   .v5-whybox {
@@ -2391,8 +2391,8 @@
     opacity: 0; transition: opacity .16s ease, background .16s ease;
     -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
   }
-  .v6-shotwrap:hover .v6-zoom, .v6-zoom:focus-visible { opacity: 1; }
-  .v6-zoom:hover { background: rgba(10,18,54,0.85); }
+   .v6-zoom:focus-visible{ opacity: 1; }@media (hover:hover) and (pointer:fine){.v6-shotwrap:hover .v6-zoom{ opacity: 1; }}
+  @media (hover:hover) and (pointer:fine){.v6-zoom:hover{ background: rgba(10,18,54,0.85); }}
   @media (hover: none) { .v6-zoom { opacity: 1; } }
 
   /* Know more, with the question it answers */
@@ -2402,7 +2402,7 @@
     display: block; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.15em;
     text-transform: uppercase; color: var(--ink-3); margin-bottom: 3px; font-weight: 400;
   }
-  .sc-more:hover .sc-more-k { color: var(--accent-ink); }
+  @media (hover:hover) and (pointer:fine){.sc-more:hover .sc-more-k{ color: var(--accent-ink); }}
   .sc-more .sc-more-t { display: block; max-width: 34ch; line-height: 1.3; }
 
   /* the sentence a reader should leave with */
@@ -2448,7 +2448,7 @@
     border: 1px solid var(--rule); background: var(--ground-2); color: var(--ink-2);
     font-size: 16px; line-height: 1; cursor: pointer;
   }
-  .v6-lb-x:hover { background: var(--rule-soft); color: var(--ink); }
+  @media (hover:hover) and (pointer:fine){.v6-lb-x:hover{ background: var(--rule-soft); color: var(--ink); }}
   .v6-lb-body { overflow-y: auto; -webkit-overflow-scrolling: touch; background: #f3f3f5; }
   .v6-lb-body img { display: block; width: 100%; height: auto; }
   .v6-lb-foot {
@@ -2558,10 +2558,13 @@
     border-radius: 980px; background: transparent;
     transition: background 0.2s ease, box-shadow 0.2s ease;
   }
-  .v10-idx:hover, .v11-idx:hover ol {
+   .v10-idx:focus-within ol, .v11-idx:focus-within ol{
     background: var(--surface);
     box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.16);
-  }
+  }@media (hover:hover) and (pointer:fine){.v10-idx:hover ol, .v11-idx:hover ol{
+    background: var(--surface);
+    box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.16);
+  }}
   .v10-idx a, .v11-idx a {
     display: flex; align-items: center; justify-content: flex-end; gap: 9px;
     padding: 6px 11px; border-radius: 980px; text-decoration: none;
@@ -2569,14 +2572,14 @@
     color: var(--ink-3); white-space: nowrap;
     transition: color 0.2s ease, background 0.2s ease;
   }
-  .v10-idx a, .v11-idx a span { max-width: 0; overflow: hidden; opacity: 0; text-transform: uppercase;
+  .v10-idx a span, .v11-idx a span { max-width: 0; overflow: hidden; opacity: 0; text-transform: uppercase;
                     transition: max-width 0.3s ease, opacity 0.2s ease; }
-  .v10-idx a, .v11-idx a i { font-style: normal; opacity: 0.75; }
-  .v10-idx:hover, .v11-idx:hover a span { max-width: 190px; opacity: 1; }
-  .v10-idx a, .v11-idx a:hover { color: var(--ink); background: var(--ground-2); }
-  .v10-idx a, .v11-idx a[aria-current="step"] { color: var(--accent); background: var(--accent-soft); }
-  .v10-idx a, .v11-idx a[aria-current="step"] i { opacity: 1; font-weight: 600; }
-  @media (prefers-reduced-motion: reduce) { .v10-idx a, .v11-idx a, .v10-idx a, .v11-idx a span { transition: none; } }
+  .v10-idx a i, .v11-idx a i { font-style: normal; opacity: 0.75; }
+   .v10-idx:focus-within a span, .v11-idx:focus-within a span{ max-width: 190px; opacity: 1; }@media (hover:hover) and (pointer:fine){.v10-idx:hover a span, .v11-idx:hover a span{ max-width: 190px; opacity: 1; }}
+  @media (hover:hover) and (pointer:fine){.v10-idx a:hover, .v11-idx a:hover{ color: var(--ink); background: var(--ground-2); }}
+  .v10-idx a[aria-current="step"], .v11-idx a[aria-current="step"] { color: var(--accent); background: var(--accent-soft); }
+  .v10-idx a[aria-current="step"] i, .v11-idx a[aria-current="step"] i { opacity: 1; font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) { .v10-idx a, .v11-idx a, .v10-idx a span, .v11-idx a span { transition: none; } }
 
   /* ══════════ V10 — decision blocks ══════════
      Strategy is the thing founders and product leads are reading for, and
@@ -2685,7 +2688,7 @@
     border: none;
     color: var(--accent-ink);
   }
-  #panel-v9 .sc-more:hover .sc-more-k, #panel-v11 .sc-more:hover .sc-more-k { text-decoration: underline; text-underline-offset: 3px; }
+  @media (hover:hover) and (pointer:fine){#panel-v9 .sc-more:hover .sc-more-k, #panel-v11 .sc-more:hover .sc-more-k{ text-decoration: underline; text-underline-offset: 3px; }}
   #panel-v9 .v9-fig, #panel-v11 .v9-fig {
     background: var(--ground-2);
     border-radius: 18px;
@@ -2868,7 +2871,7 @@
   .v12-min { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 22px; }
   .v12-mcard { display: block; text-decoration: none; border-radius: 18px; padding: 18px;
                box-shadow: inset 0 0 0 1px var(--rule-soft); transition: box-shadow 0.2s ease, background 0.2s ease; }
-  .v12-mcard:hover { background: var(--ground-2); box-shadow: inset 0 0 0 1px var(--rule); }
+  @media (hover:hover) and (pointer:fine){.v12-mcard:hover{ background: var(--ground-2); box-shadow: inset 0 0 0 1px var(--rule); }}
   .v12-mcard span { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em;
                     text-transform: uppercase; color: var(--accent-ink); margin-bottom: 8px; }
   .v12-mcard b { display: block; font-family: var(--display); font-weight: 600; font-size: clamp(17px, 1.7vw, 20px);
@@ -2879,7 +2882,7 @@
                                 text-transform: uppercase; color: var(--ink-3); margin-right: 4px; }
   .v12-skills a { text-decoration: none; font-size: 14px; color: var(--ink); background: var(--ground-2);
                   border-radius: 980px; padding: 7px 14px; transition: background 0.2s ease, color 0.2s ease; }
-  .v12-skills a:hover { background: var(--accent-soft); color: var(--accent-ink); }
+  @media (hover:hover) and (pointer:fine){.v12-skills a:hover{ background: var(--accent-soft); color: var(--accent-ink); }}
   .v12-honest { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-3); max-width: 70ch; }
   .v12-honest b { color: var(--ink-2); font-weight: 600; }
 
@@ -2923,7 +2926,7 @@
   #panel-v12 .sc-more .sc-more-k { text-transform: none; letter-spacing: -0.01em; font-family: var(--body); font-size: 15px; font-weight: 600; color: var(--accent); }
   #panel-v12 .sc-more.sub { padding: 0; align-items: center; }
   #panel-v12 .sc-more.sub .sc-plus { margin-top: 0; }
-  #panel-v12 .sc-more:hover .sc-more-k { text-decoration: underline; text-underline-offset: 3px; }
+  @media (hover:hover) and (pointer:fine){#panel-v12 .sc-more:hover .sc-more-k{ text-decoration: underline; text-underline-offset: 3px; }}
 
   .v12-formula { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
   .v12-formula li { font-size: 14px; color: var(--ink); background: var(--ground-2); border-radius: 980px; padding: 8px 14px; }
@@ -3011,12 +3014,66 @@
     .v12-stack .band .sim-swap { animation: none; }
   }
 </style>
+<style>
+  /* ══════════ INTERACTION PASS · 9 Nov 2026 ══════════
+     Version bar: one scrolling row (it wrapped to 654px tall on a phone and covered the page).
+     Touch targets to 44px, press feedback, Pause motion (WCAG 2.2.2), calmer timings. */
+  .versions-in { flex-wrap: nowrap; padding-top: 6px; padding-bottom: 6px; }
+  .vt-list { display: flex; align-items: center; gap: 10px; flex: 1 1 auto; min-width: 0; padding: 4px 3px;
+             overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+             -webkit-mask-image: linear-gradient(90deg, var(--ground) calc(100% - 40px), transparent);
+             mask-image: linear-gradient(90deg, var(--ground) calc(100% - 40px), transparent); }
+  .vt-list::-webkit-scrollbar { display: none; }
+  .vt-list[data-end] { -webkit-mask-image: none; mask-image: none; }
+  .vtab, .versions-label { flex: 0 0 auto; }
+  .vtab { transition: border-color 140ms ease, color 140ms ease, transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  .motion-t { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 14px;
+              border: 1px solid var(--rule); border-radius: 980px; background: var(--surface); color: var(--ink-2); cursor: pointer;
+              font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase;
+              transition: border-color 140ms ease, color 140ms ease, transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  .motion-t svg { width: 14px; height: 14px; }
+  .motion-t[aria-pressed="true"] { color: var(--accent-ink); border-color: var(--accent); background: var(--accent-soft); }
+  .motion-t .mt-play, .motion-t[aria-pressed="true"] .mt-pause { display: none; }
+  .motion-t[aria-pressed="true"] .mt-play { display: inline; }
+  @media (max-width: 600px) {
+    .versions-in { padding-left: 16px; padding-right: 16px; }
+    .vtab { padding: 6px 13px; }
+    .motion-t { width: 44px; padding: 0; justify-content: center; }
+    .motion-t span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  }
+
+  :is(#panel-v11, #panel-v12) .sim-dots { gap: 0; margin-left: -9px; }
+  :is(#panel-v11, #panel-v12) .sim-dots button { width: 44px; height: 44px; background: none; position: relative; }
+  :is(#panel-v11, #panel-v12) .sim-dots button::before { content: ""; position: absolute; inset: 20px 9px; border-radius: 980px;
+                                                         background: var(--rule); transition: background-color .2s ease-out; }
+  :is(#panel-v11, #panel-v12) .sim-dots button[aria-current="true"] { background: none; }
+  :is(#panel-v11, #panel-v12) .sim-dots button[aria-current="true"]::before { background: var(--accent); }
+  :is(#panel-v11, #panel-v12) .sim-ctl { min-height: 44px; padding: 0 12px; margin-left: -12px; justify-self: start;
+                                         transition: transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  #panel-v12 .sc-more, #panel-v12 .sc-more.sub { padding: 12px 0; margin: -12px 0; }
+  .sc-ov-x { width: 44px; height: 44px; transition: background-color .16s ease, transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  .v12-seg button { min-height: 44px; transition: background-color .2s ease-out, color .2s ease-out, transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  :is(#panel-v11, #panel-v12) .mx-ctl button { min-height: 44px;
+    transition: background-color .16s ease-out, border-color .16s ease-out, color .16s ease-out, transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  :is(.vtab, .motion-t, .sc-ov-x, .v12-seg button, .sim-ctl, .mx-ctl button):active { transform: scale(.97); }
+
+  :is(#panel-v11, #panel-v12) .sim-swap { animation: simIn .32s cubic-bezier(.23, 1, .32, 1) both; }
+  [data-v12-ba] .v12-before, [data-v12-ba] .v12-after { transition: opacity .3s cubic-bezier(.77, 0, .175, 1); }
+  [data-v12-ba][data-state="after"]:not([data-play="on"]) .v12-after .svg-line-key { animation: none; }
+
+  html[data-motion="off"] :is(#panel-v11, #panel-v12) :is(.svg-line, .svg-line-key, .svg-line-dead, .rung, .sim-swap) { animation: none !important; }
+  html[data-motion="off"] :is(#panel-v11, #panel-v12) [data-climb] .rung { opacity: 1; }
+  html { scrollbar-gutter: stable; }
+  /* the beats grid sized its implicit column to the widest diagram (620px min), so phones scrolled sideways */
+  .v12-beats { grid-template-columns: minmax(0, 1fr); }
+</style>
 </head>
 <body>
 <!-- ══════════════════ VERSION TABS ══════════════════ -->
 <div class="versions">
-  <div class="versions-in" role="tablist" aria-label="Case study version">
-    <span class="versions-label">Version</span>
+  <div class="versions-in">
+   <div class="vt-list" role="tablist" aria-label="Case study version">
+    <span class="versions-label" aria-hidden="true">Version</span>
     <button class="vtab" role="tab" id="tab-v12" aria-controls="panel-v12" aria-selected="true">
         <b>V12</b><i>compact &#183; 6 beats</i>
       </button>
@@ -3053,6 +3110,10 @@
     <button class="vtab" role="tab" id="tab-full" aria-controls="panel-full" aria-selected="false">
       <b>Full study</b><i>narrative · 20 Aug</i>
     </button>
+   </div>
+   <button class="motion-t" type="button" data-motion-toggle aria-pressed="false" hidden>
+     <svg viewBox="0 0 16 16" aria-hidden="true"><path class="mt-pause" d="M5 3.5v9M11 3.5v9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="mt-play" d="M5 3.5l7 4.5-7 4.5z" fill="currentColor"/></svg><span data-mt-l>Pause motion</span>
+   </button>
   </div>
 </div>
 
@@ -10559,6 +10620,10 @@
       };
     })();
 
+    var vtList = document.querySelector('.vt-list');
+    function vtEdge() { if (vtList) { vtList.toggleAttribute('data-end', vtList.scrollLeft + vtList.clientWidth >= vtList.scrollWidth - 2); } }
+    if (vtList) { vtList.addEventListener('scroll', vtEdge, { passive: true }); window.addEventListener('resize', vtEdge); }
+
     function showView(view, isClick) {
       if (VIEWS.indexOf(view) === -1) { view = DEFAULT_VIEW; }
       VIEWS.forEach(function (v) {
@@ -10567,6 +10632,13 @@
         tabs[v].setAttribute('tabindex', on ? '0' : '-1');
         panels[v].hidden = !on;
       });
+      if (vtList) {
+        var lr = vtList.getBoundingClientRect(), tr = tabs[view].getBoundingClientRect();
+        if (tr.left < lr.left || tr.right > lr.right - 40) { vtList.scrollLeft += tr.left - lr.left - 24; }
+        vtEdge();
+      }
+      var mt = document.querySelector('[data-motion-toggle]');
+      if (mt) { mt.hidden = !(view === 'v11' || view === 'v12') || window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
       if (isClick) {
         history.replaceState(null, '', '#' + view);
         window.scrollTo(0, 0);
@@ -10610,7 +10682,10 @@
     aBtn.addEventListener('click', function () { flip(false); });
 
     function fromHash() {
-      return (location.hash || '').replace('#', '') || DEFAULT_VIEW;
+      var h = (location.hash || '').replace('#', '');
+      if (!h || VIEWS.indexOf(h) > -1) { return h || DEFAULT_VIEW; }
+      var el = document.getElementById(h), p = el && el.closest('[role="tabpanel"]');
+      return p ? p.id.replace('panel-', '') : DEFAULT_VIEW;
     }
 
     showView(fromHash(), false);
@@ -10683,6 +10758,7 @@
       if (!openOverlay) { return; }
       openOverlay.hidden = true;
       document.body.classList.remove('sc-locked');
+      [].forEach.call(document.querySelectorAll('.versions, [role="tabpanel"]'), function (n) { n.inert = false; });
       if (lastFocused && lastFocused.focus) { lastFocused.focus(); }
       openOverlay = null;
       lastFocused = null;
@@ -10695,6 +10771,7 @@
       lastFocused = trigger || document.activeElement;
       ov.hidden = false;
       document.body.classList.add('sc-locked');
+      [].forEach.call(document.querySelectorAll('.versions, [role="tabpanel"]'), function (n) { if (!n.contains(ov)) { n.inert = true; } });
       openOverlay = ov;
       var body = ov.querySelector('.sc-ov-body');
       if (body) { body.scrollTop = 0; }
@@ -10876,7 +10953,9 @@
         var t = document.getElementById(a.getAttribute('href').slice(1));
         if (!t) { return; }
         ev.preventDefault();
-        t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        t.setAttribute('tabindex', '-1');
+        t.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+        t.focus({ preventScroll: true });
       });
     });
     }
@@ -10938,7 +11017,8 @@
       var elWhy   = root.querySelector('[data-sim-why]');
       var dots    = root.querySelector('[data-sim-dots]');
       var toggle  = root.querySelector('[data-sim-toggle]');
-      var i = 0, timer = null, running = false, paused = false;
+      var i = 0, timer = null, running = false, paused = false, optIn = false, onScreen = false;
+      function motionOff() { return document.documentElement.getAttribute('data-motion') === 'off'; }
 
       STATES.forEach(function (s, n) {
         var li = document.createElement('li');
@@ -10974,21 +11054,27 @@
 
       function tick() { show((i + 1) % STATES.length); }
       function start() {
-        if (running || paused || reduce.matches) { return; }
+        if (running || paused || document.hidden || ((reduce.matches || motionOff()) && !optIn)) { return; }
         running = true; timer = window.setInterval(tick, 3600); setLabel();
       }
       function stop() { running = false; window.clearInterval(timer); timer = null; setLabel(); }
-      function setLabel() { toggle.textContent = running ? 'Pause' : 'Play'; }
+      function setLabel() {
+        toggle.textContent = running ? 'Pause' : 'Play';
+        /* a live region that changes every 3.6s would talk over everything: announce only when stepped by hand */
+        elState.setAttribute('aria-live', running ? 'off' : 'polite');
+      }
 
       toggle.addEventListener('click', function () {
-        if (running) { paused = true; stop(); } else { paused = false; start(); }
+        if (running) { paused = true; stop(); } else { paused = false; optIn = true; start(); }
       });
-      reduce.addEventListener('change', function () { if (reduce.matches) { stop(); } });
+      reduce.addEventListener('change', function () { if (reduce.matches) { optIn = false; stop(); } });
+      document.addEventListener('motionchange', function (e) { if (e.detail.off) { optIn = false; stop(); } else if (onScreen) { start(); } });
+      document.addEventListener('visibilitychange', function () { if (document.hidden) { if (running) { stop(); } } else if (onScreen) { start(); } });
 
       show(0); setLabel();
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (es) {
-          es.forEach(function (e) { if (e.isIntersecting) { start(); } else { if (!paused) { stop(); } } });
+          es.forEach(function (e) { onScreen = e.isIntersecting; if (e.isIntersecting) { start(); } else { if (!paused) { stop(); } } });
         }, { threshold: 0.3 }).observe(root);
       } else { start(); }
     }
@@ -11040,9 +11126,13 @@
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
     function whileVisible(el, on, off) {
-      if (!('IntersectionObserver' in window)) { on(); return; }
+      var vis = false;
+      function sync() { if (vis && !document.hidden && document.documentElement.getAttribute('data-motion') !== 'off') { on(); } else { off(); } }
+      document.addEventListener('visibilitychange', sync);
+      document.addEventListener('motionchange', sync);
+      if (!('IntersectionObserver' in window)) { vis = true; sync(); return; }
       new IntersectionObserver(function (es) {
-        es.forEach(function (e) { if (e.isIntersecting) { on(); } else { off(); } });
+        es.forEach(function (e) { vis = e.isIntersecting; sync(); });
       }, { threshold: 0.3 }).observe(el);
     }
 
@@ -11059,11 +11149,12 @@
         b.addEventListener('click', function () { held = true; window.clearInterval(t1); set(b.getAttribute('data-ba')); });
       });
       whileVisible(ba, function () {
+        ba.setAttribute('data-play', reduce.matches ? 'off' : 'on');
         if (held || reduce.matches || t1) { return; }
         t1 = window.setInterval(function () {
           set(ba.getAttribute('data-state') === 'before' ? 'after' : 'before');
         }, 3200);
-      }, function () { window.clearInterval(t1); t1 = null; });
+      }, function () { window.clearInterval(t1); t1 = null; ba.setAttribute('data-play', 'off'); });
       if (reduce.matches) { set('after'); }
     }
 
@@ -11091,9 +11182,35 @@
         var t = document.getElementById(a.getAttribute('href').slice(1));
         if (!t) { return; }
         ev.preventDefault();
+        t.setAttribute('tabindex', '-1');
         t.scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' });
+        t.focus({ preventScroll: true });
       });
     });
+  }());
+</script>
+
+<script>
+  /* ══════════ Pause motion ══════════
+     V11 and V12 run looping diagrams. WCAG 2.2.2: anything that moves for more than 5s needs a way
+     to stop it. One switch in the version bar stops all of them; the choice is remembered on this
+     device. Under prefers-reduced-motion nothing loops, so the switch stays hidden. */
+  (function () {
+    'use strict';
+    var b = document.querySelector('[data-motion-toggle]');
+    if (!b) { return; }
+    var root = document.documentElement, label = b.querySelector('[data-mt-l]'), KEY = 'cs-motion';
+    function set(off, save) {
+      root.setAttribute('data-motion', off ? 'off' : 'on');
+      b.setAttribute('aria-pressed', String(off));
+      label.textContent = off ? 'Play motion' : 'Pause motion';
+      if (save) { try { localStorage.setItem(KEY, off ? 'off' : 'on'); } catch (e) {} }
+      document.dispatchEvent(new CustomEvent('motionchange', { detail: { off: off } }));
+    }
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    set(saved === 'off', false);
+    b.addEventListener('click', function () { set(root.getAttribute('data-motion') !== 'off', true); });
   }());
 </script>
 </body>
