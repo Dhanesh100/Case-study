@@ -15,6 +15,7 @@ HTML file: no build step, no dependencies, no external requests.
 | 1b | **Scan version, standalone** — the same thing as one sendable file | [Read](https://dhanesh100.github.io/Case-study/scan/) | [`scan/`](scan/) |
 | 2 | **Portfolio Measurement Plan** — how to test whether the strategy works | [Read](https://dhanesh100.github.io/Case-study/measurement/) | [`measurement/`](measurement/) |
 | 3 | **Tiimo teardown** — competitive product design analysis | [Read](https://dhanesh100.github.io/Case-study/tiimo-teardown/) | [`tiimo-teardown/`](tiimo-teardown/) |
+| 3a | **Tiimo interaction layer** — the teardown's findings answered: motion, haptics, error states, loading, edge cases, accessibility, with a prototype you can break | [Read](https://dhanesh100.github.io/Case-study/tiimo-teardown/interaction/) | [`tiimo-teardown/interaction/`](tiimo-teardown/interaction/) |
 | 4 | **Teardown analysis brief** — the reusable prompt behind #3 | — | [`ANALYSIS-BRIEF.md`](tiimo-teardown/ANALYSIS-BRIEF.md) |
 | 4a | **V11 review** — six lenses, every proposed cut adversarially challenged (12 Oct 2026) | [Read](https://dhanesh100.github.io/Case-study/review-v11/) | [`review-v11/`](review-v11/) · [`REVIEW-V11-2026-10-12.md`](REVIEW-V11-2026-10-12.md) |
 | 5 | **Context brief** — read first: standing instructions, product facts, what may not be claimed | — | [`CONTEXT.md`](CONTEXT.md) |

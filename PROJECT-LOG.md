@@ -650,3 +650,44 @@ and captured from the page at up to 2×. 171 images, ~5.4 MB, across six pages.
 **Checks.** Rendered at 390px for every page: no horizontal scroll, text readable. Tags
 balanced, no duplicate ids, no JS errors at 390 or 1440. Kotak keeps one of its seven screen
 recordings on phones; the six inside device mockups show as stills.
+
+---
+
+## 9 Nov 2026 — Interaction pass: Tiimo companion, portfolio, case study
+
+**Asked.** Improve "this todo list app" (Tiimo, the only one in the repo) through motion, small
+interactions, error states, edge cases, haptics, loading and accessibility, and use the repo, skills and
+connectors to improve the case studies. Skills used: motion-design-principles, ui-micro-interactions,
+animation-craft-review. A subagent reviewed V11/V12 against the animation-craft bar; every finding
+applied here was re-measured before the fix.
+
+**Tiimo.** New `tiimo-teardown/interaction/`: ten findings → ten patterns, a motion spec, a haptic map
+(including where haptics are withheld and why), error and loading states, 14 edge cases, an
+accessibility table, and a validation plan. The prototype is a working day planner you can break in
+eight ways. Linked from the teardown's contents and its end.
+
+**Portfolio (`home/`).** Committed first: the 7 Nov session's uncommitted hover feedback, distance-based
+image loading, and outside links in a new tab. Then, in `tools/add-ux.py`: hover rules gated to
+pointer devices on every page; failed images stop shimmering and retry; pause/play on every Kotak
+recording; press feedback on back-to-top. `pop.js`: the exit animation was being cut by an instant
+`visibility` flip; the page behind is now inert. `scroll.js`: the chip follows resizes, and the bounce
+stops after four cycles. Shoppers Stop: the Explore row stops for good once the visitor takes it.
+
+**Case study.** Version bar 654px → 71px tall on phones; no more sideways scroll on V12; Pause motion
+button; quieter simulator live region; 44px targets; V10 index links unhidden; deep links, focus on jump,
+inert behind overlays; hover gated.
+
+**Checks.** Headless Chrome over the DevTools protocol:
+- **Prototype: 123/123 checks** at 1440, at 412, and in reduced-motion dark mode. Every state, undo,
+  focus return, Escape, a triple tap on Done, large text with no overflow, no JS errors.
+- **Portfolio: 78/78** on all seven pages at 1440 and 412. No ungated hover, the popover exit plays and
+  inert clears, recordings pause and the pause sticks, blocked images fall back and recover on
+  reconnect, the Explore row holds once taken. The only console errors were `file://` font CORS, which
+  disappear over HTTP.
+- **Case study: 44/44** at 375 to 1280.
+- Inline scripts parse, tags balance, no duplicate ids. Running `add-ux.py` twice gives no diff.
+
+**Not done.** The two-phase collapse for simulator slots, the index-label rework (it still animates
+`max-width`), and tiered reduced motion in V11/V12 (the global rule still removes all motion under
+reduced motion). Google Drive needs re-authorising before it can be searched.
+

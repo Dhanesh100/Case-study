@@ -4,7 +4,7 @@
 touching this repo, so Dhanesh does not have to explain it again. `PROJECT-LOG.md` is the
 chronological record of what happened. **This file is the standing brief.**
 
-Last updated: 15 October 2026 · current version: **V12**
+Last updated: 9 November 2026 · current version: **V12**
 
 ---
 
@@ -196,6 +196,7 @@ part of current design and its not distract or stop user from there primary job.
 | `build-scan.py` | Regenerates `scan/index.html` from the scan panel |
 | `measurement/` | How to test whether the engine works — hypotheses, metrics, 26 send-ready questions |
 | `tiimo-teardown/` | Competitive teardown, claims tagged observed / reported / inferred / assumed |
+| `tiimo-teardown/interaction/` | Companion: ten teardown findings answered as interaction patterns, plus a working day-planner prototype. See §16 |
 
 **Version tabs** are driven by `VIEWS` and `DEFAULT_VIEW` in the script block; each panel is
 `#panel-<key>` with a matching `#tab-<key>`, deep-linked by URL fragment.
@@ -453,3 +454,59 @@ static one for PDF export.
 - Sideways rows run edge to edge (full 1440) with the 48/54px inset kept as scroll padding; anything laid
   out wider than the canvas in Figma is made scrollable, never cut off. Long rows get a nudge (peek or
   auto-scroll that pauses on any user input); phone screens peek upward and carry a "Scroll" chip.
+- Interaction rules, set 9 Nov 2026, all in `tools/add-ux.py` so a rebuild keeps them:
+  - Every `:hover` rule in a page's own CSS is moved behind `@media (hover:hover) and (pointer:fine)` by
+    `gate_hover()` on each run, so a tap on a phone never leaves a card grown. Write hover rules normally;
+    the script gates them.
+  - A failed image stops shimmering, is retried once after 4s, and again on reconnect.
+  - Every screen recording gets a pause/play button (WCAG 2.2.2); a user's pause survives scrolling away.
+    Under reduced motion recordings don't autoplay and the button is the opt-in.
+  - Self-moving things stop for good once the visitor takes over. The Shoppers Stop Explore row
+    stops after a drag, wheel, touch, arrow, focus or header-nav jump, matching the phone peek; mouse hover
+    only pauses it.
+  - The Get in touch popover makes the page behind it `inert`, plays its exit (it used to cut), and
+    leaves faster than it arrives.
+
+---
+
+## 16 · Interaction pass — 9 November 2026
+
+Dhanesh: *"understand motion design, small interactions, interactions, animations, error states, edge
+cases, haptic, loading, accessibility, user experience … make this todo list app improve … use repo and
+connectors and skills and plugins … to improve this case studies."* "This todo list app" was read as
+**Tiimo**, the only to-do app in the repo.
+
+**Tiimo companion page** (`tiimo-teardown/interaction/`). Ten teardown findings, each answered with an
+interaction pattern, plus a prototype day planner with eight states (5-min cue, finish, miss, overrun,
+offline + calendar conflict, AI draft, slow AI, back after a week) and four access switches (reduce
+motion, larger text, no colour, haptics). It keeps the teardown's evidence rules:
+- **It is not a redesign of Tiimo's screens.** The teardown never saw them. The prototype's visual
+  language is deliberately its own, and the page says it is not affiliated with Tiimo.
+- Each pattern carries its finding's evidence tag. Where a finding is reported or unverified, the
+  pattern is a hypothesis to test, not a correction.
+- The motion tokens in the spec are the ones the prototype runs on: standard `cubic-bezier(.2,0,0,1)`,
+  enter `(.23,1,.32,1)`, sheet `(.32,.72,0,1)`; 120 / 240 / 360 ms; linear only for the time bar;
+  no overshoot anywhere.
+- iOS haptic API names are the real ones (`UIImpactFeedbackGenerator` `.soft/.medium/.light`,
+  `UINotificationFeedbackGenerator .success`, `UISelectionFeedbackGenerator`). Outside the app iOS
+  allows no custom patterns, so the page says the cue rides on a Time Sensitive notification.
+
+**Main case study (`index.html`), from a motion and accessibility review of V11/V12:**
+- **The version bar wrapped to 654px tall on a 375px phone (525px at 412px)** and stayed stuck over the
+  page. It is now one scrolling row, 71–75px at every width, fading at the right edge while more tabs hide.
+- V12 scrolled sideways on phones (the beats grid sized itself to a 620px diagram). Fixed.
+- **Pause motion** button in the version bar, on V11/V12 only, remembered per device: stops the
+  simulator, band, before/after, flows and ladder (WCAG 2.2.2). Hidden under reduced motion.
+- Simulator: its live region no longer announces every 3.6s; under reduced motion, Play now opts in;
+  loops stop in hidden tabs.
+- Touch targets to 44px (simulator markers, Pause, "See …" openers, overlay close, segments).
+- Comma-mangled selectors had hidden **every V10 section-index link**; fixed, and the labels now open on
+  keyboard focus too.
+- Deep links into a version (`#v11-s4`) open that version. Jumps move focus. Overlays make the page inert.
+- All `:hover` rules gated to pointer devices, using the same `gate_hover()` as the portfolio.
+
+**Connectors.** Google Drive returned *insufficient scope* when searched for the dead-click numbers
+(§9.4), so it needs re-authorising in claude.ai connector settings before it can help. Figma was not
+needed for this pass. Image generation (Magnific) was deliberately not used: generated screens would
+break "real over impressive".
+
