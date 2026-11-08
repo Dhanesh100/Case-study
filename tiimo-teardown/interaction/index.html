@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tiimo Teardown — Interaction Layer</title>
+<meta name="description" content="Companion to the Tiimo teardown: ten findings answered with interaction patterns for motion, haptics, error states, loading, edge cases and accessibility, plus a working prototype you can break on purpose.">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="Design the moment the plan breaks">
+<meta property="og:description" content="Ten teardown findings, ten interaction patterns, and a prototype you can break on purpose.">
+<meta property="og:type" content="article">
+<style>
+  :root {
+    --ground:   #f3f6f6;
+    --ground-2: #e8eeee;
+    --surface:  #ffffff;
+    --ink:      #101819;
+    --ink-2:    #45555a;
+    --ink-3:    #6b7c81;
+    --rule:     #d2dedf;
+    --rule-soft:#e4ecec;
+    --accent:   #0d666e;
+    --accent-soft: #e0f0f1;
+    --accent-ink:  #0a5158;
+    --warn:     #a8511a;
+    --warn-soft:#fbeee2;
+    --good:     #1b6547;
+    --good-soft:#e3f2ea;
+    --risk:     #a32d22;
+    --risk-soft:#fbe9e7;
+    --stage:    #0d1a1c;
+
+    /* prototype phone */
+    --p-bg:    #f6f8f8;
+    --p-card:  #ffffff;
+    --p-ink:   #101819;
+    --p-ink-2: #4c5c61;
+    --p-rule:  #e1e9ea;
+    --p-track: #e6eded;
+    --cb: #e3edfb; --cbi: #1f4f8f;
+    --cg: #e1f1e8; --cgi: #1b6547;
+    --ca: #f9eed9; --cai: #8a560e;
+    --cv: #ece7fa; --cvi: #573c9c;
+
+    /* motion system — the same tokens the prototype runs on */
+    --ease:        cubic-bezier(.2, 0, 0, 1);
+    --ease-out:    cubic-bezier(.23, 1, .32, 1);
+    --ease-drawer: cubic-bezier(.32, .72, 0, 1);
+    --quick: 120ms; --standard: 240ms; --slow: 360ms;
+
+    --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --body:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "SF Mono", ui-monospace, Menlo, Consolas, "Roboto Mono", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:   #0b1112; --ground-2: #121b1c; --surface: #161f21;
+      --ink: #e8eeee; --ink-2: #a5b4b7; --ink-3: #8597a0;
+      --rule: #263436; --rule-soft: #1c2729;
+      --accent: #4fb3bc; --accent-soft: #102b2e; --accent-ink: #6cc6ce;
+      --warn: #e0913f; --warn-soft: #2a1d10; --good: #56b98c; --good-soft: #11291f;
+      --risk: #e8776a; --risk-soft: #2c1512; --stage: #060c0d;
+      --p-bg: #0f1617; --p-card: #172123; --p-ink: #e8eeee; --p-ink-2: #a3b2b6; --p-rule: #243234; --p-track: #22302f;
+      --cb: #15273d; --cbi: #95bdf0; --cg: #112a1f; --cgi: #74c9a0; --ca: #2c2110; --cai: #e8b764; --cv: #231b37; --cvi: #bda8f1;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #0b1112; --ground-2: #121b1c; --surface: #161f21;
+    --ink: #e8eeee; --ink-2: #a5b4b7; --ink-3: #8597a0;
+    --rule: #263436; --rule-soft: #1c2729;
+    --accent: #4fb3bc; --accent-soft: #102b2e; --accent-ink: #6cc6ce;
+    --warn: #e0913f; --warn-soft: #2a1d10; --good: #56b98c; --good-soft: #11291f;
+    --risk: #e8776a; --risk-soft: #2c1512; --stage: #060c0d;
+    --p-bg: #0f1617; --p-card: #172123; --p-ink: #e8eeee; --p-ink-2: #a3b2b6; --p-rule: #243234; --p-track: #22302f;
+    --cb: #15273d; --cbi: #95bdf0; --cg: #112a1f; --cgi: #74c9a0; --ca: #2c2110; --cai: #e8b764; --cv: #231b37; --cvi: #bda8f1;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--body); font-size: 16.5px; line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  a { color: var(--accent-ink); }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 28px; }
+  .wide { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+  @media (max-width: 520px) { .wrap, .wide { padding: 0 16px; } }
+
+  header.top { padding: 56px 0 0; border-bottom: 1px solid var(--rule); }
+  .back { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; color: var(--ink-3); display: inline-block; margin-bottom: 30px; }
+  @media (hover: hover) and (pointer: fine) { .back:hover { color: var(--accent); } }
+  .eyebrow { font-family: var(--mono); font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 22px; }
+  h1 { font-family: var(--display); font-size: clamp(38px, 5.6vw, 62px); font-weight: 700; line-height: 1.04; letter-spacing: -.015em; margin: 0 0 22px; text-wrap: balance; }
+  .standfirst { font-size: clamp(18px, 2vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 56ch; margin: 0 0 34px; }
+  .byline { display: flex; flex-wrap: wrap; border-top: 1px solid var(--rule-soft); margin: 0; }
+  .byline div { flex: 1 1 160px; padding: 14px 18px 20px 0; display: flex; flex-direction: column; gap: 3px; }
+  .byline dt { font-family: var(--mono); font-size: 9.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--ink-3); }
+  .byline dd { margin: 0; font-size: 15px; font-weight: 600; }
+
+  .notice { background: var(--warn-soft); border-left: 3px solid var(--warn); padding: 20px 22px; margin: 42px 0 0; border-radius: 0 8px 8px 0; }
+  .notice h2 { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--warn); margin: 0 0 12px; }
+  .notice p { margin: 0 0 12px; font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+  .notice p:last-child { margin-bottom: 0; }
+  .notice strong { color: var(--ink); }
+
+  .tag { display: inline-block; font-family: var(--mono); font-size: 9px; letter-spacing: .11em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; vertical-align: .12em; white-space: nowrap; font-weight: 500; }
+  .tag.obs { background: var(--good-soft); color: var(--good); }
+  .tag.rep { background: var(--accent-soft); color: var(--accent-ink); }
+  .tag.inf { background: var(--ground-2); color: var(--ink-2); }
+  .tag.gap { background: var(--risk-soft); color: var(--risk); }
+
+  section { padding: 54px 0; border-bottom: 1px solid var(--rule-soft); }
+  .snum { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  h2 { font-family: var(--display); font-size: clamp(26px, 3.4vw, 36px); font-weight: 700; line-height: 1.1; letter-spacing: -.01em; margin: 0 0 14px; text-wrap: balance; }
+  h3 { font-size: 17px; font-weight: 700; margin: 30px 0 10px; }
+  p { margin: 0 0 14px; }
+  .lede { color: var(--ink-2); max-width: 62ch; }
+  .lede strong { color: var(--ink); }
+
+  .scroll { overflow-x: auto; margin: 22px 0 0; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+  .scroll table { min-width: 640px; }
+  th { text-align: left; font-family: var(--mono); font-size: 9.5px; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; padding: 0 14px 9px 0; border-bottom: 1px solid var(--rule); vertical-align: bottom; }
+  td { padding: 13px 14px 13px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.45; color: var(--ink-2); }
+  td:first-child { color: var(--ink); font-weight: 600; }
+  td strong { color: var(--ink); }
+  td code, p code, li code { font-family: var(--mono); font-size: .86em; background: var(--ground-2); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
+  td.n { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); white-space: nowrap; font-weight: 600; }
+  ul.rules, ol.rules { padding-left: 20px; margin: 0; color: var(--ink-2); }
+  ul.rules li, ol.rules li { margin: 0 0 10px; }
+  ul.rules strong, ol.rules strong { color: var(--ink); }
+  footer.end { padding: 48px 0 70px; color: var(--ink-3); font-size: 14px; }
+
+  /* ── lab: phone + controls ─────────────────────────────── */
+  .lab { display: grid; grid-template-columns: 356px minmax(0, 1fr); gap: 44px; align-items: start; margin-top: 30px; }
+  @media (max-width: 880px) { .lab { grid-template-columns: minmax(0, 1fr); gap: 28px; } }
+  .stagewrap { position: sticky; top: 20px; }
+  @media (max-width: 880px) { .stagewrap { position: static; display: grid; justify-items: center; } }
+
+  .ph { position: relative; width: 356px; max-width: 100%; height: 716px; padding: 10px; border-radius: 50px; background: var(--stage);
+        box-shadow: 0 30px 60px -30px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06); }
+  @media (max-width: 400px) { .ph { height: 660px; border-radius: 44px; } }
+  #ph-ring { position: absolute; inset: -7px; border-radius: 56px; border: 2px solid var(--accent); opacity: 0; pointer-events: none; }
+  .ph-scr { --fs: 1; position: relative; height: 100%; border-radius: 40px; overflow: hidden; background: var(--p-bg); color: var(--p-ink);
+            display: flex; flex-direction: column; font-size: calc(14px * var(--fs)); line-height: 1.35; }
+  @media (max-width: 400px) { .ph-scr { border-radius: 34px; } }
+  .ph.big .ph-scr { --fs: 1.28; }
+  .ph.grey .ph-scr { filter: grayscale(1); }
+
+  .ph-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 22px 18px 10px; flex: none; }
+  .ph-top b { font-size: calc(19px * var(--fs)); letter-spacing: -.01em; display: block; line-height: 1.1; }
+  .ph-top small { color: var(--p-ink-2); font-size: calc(12.5px * var(--fs)); font-variant-numeric: tabular-nums; }
+  .chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border-radius: 999px; font-size: calc(11.5px * var(--fs)); font-weight: 600;
+          background: var(--p-card); border: 1px solid var(--p-rule); color: var(--p-ink-2); white-space: nowrap; max-width: 62%; overflow: hidden; text-overflow: ellipsis; }
+  .chip svg { width: 13px; height: 13px; flex: none; }
+  .chip.off, .chip.conf { background: var(--ca); color: var(--cai); border-color: transparent; }
+  .spin { animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .ph-body { position: relative; flex: 1; overflow-y: auto; overflow-x: hidden; padding: 4px 12px 96px; overscroll-behavior: contain; scrollbar-width: none; }
+  .ph-body::-webkit-scrollbar { display: none; }
+  .ph h3.hd { margin: 14px 4px 8px; font-size: calc(11px * var(--fs)); letter-spacing: .12em; text-transform: uppercase; color: var(--p-ink-2); font-weight: 600; }
+
+  .ph button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent;
+               transition: transform var(--quick) var(--ease-out), background-color var(--quick) ease, opacity var(--quick) ease; }
+  .ph button:active { transform: scale(.97); }
+  .b { min-height: 44px; padding: 0 14px; border-radius: 13px; border: 1px solid var(--p-rule); background: var(--p-card); font-weight: 600;
+       font-size: calc(13.5px * var(--fs)); display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+  .b.pri { background: var(--p-ink); color: var(--p-bg); border-color: transparent; }
+  @media (hover: hover) and (pointer: fine) { .b:hover { background: var(--p-rule); } .b.pri:hover { background: var(--p-ink); opacity: .88; } }
+
+  .card { position: relative; background: var(--p-card); border: 1px solid var(--p-rule); border-radius: 18px; margin: 0 0 8px; }
+  .ic { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; flex: none; }
+  .ic svg { width: 20px; height: 20px; }
+  .c-blue   { background: var(--cb); color: var(--cbi); --ac: var(--cbi); }
+  .c-green  { background: var(--cg); color: var(--cgi); --ac: var(--cgi); }
+  .c-amber  { background: var(--ca); color: var(--cai); --ac: var(--cai); }
+  .c-violet { background: var(--cv); color: var(--cvi); --ac: var(--cvi); }
+  .flags { display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 2px; }
+  .flag { display: inline-flex; align-items: center; gap: 4px; font-size: calc(11.5px * var(--fs)); color: var(--p-ink-2); font-weight: 500; }
+  .flag svg { width: 12px; height: 12px; }
+  .flag.pend { color: var(--cai); }
+
+  /* later rows */
+  .row { display: grid; grid-template-columns: 50px 34px minmax(0, 1fr) 44px; grid-template-areas: "tm ic nm mo"; align-items: center; gap: 10px; padding: 7px 4px 7px 12px; min-height: 58px; }
+  .row .tm { grid-area: tm; font-variant-numeric: tabular-nums; line-height: 1.2; }
+  .row .tm b { display: block; font-size: calc(14px * var(--fs)); }
+  .row .tm span { font-size: calc(11.5px * var(--fs)); color: var(--p-ink-2); }
+  .row .ic { grid-area: ic; }
+  .row .nm { grid-area: nm; min-width: 0; }
+  .row .nm b { font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+  .row .mo { grid-area: mo; width: 44px; height: 44px; border: 0; border-radius: 12px; background: transparent; display: grid; place-items: center; color: var(--p-ink-2); }
+  .row .mo svg { width: 18px; height: 18px; }
+  @media (hover: hover) and (pointer: fine) { .row .mo:hover { background: var(--p-track); } }
+  .ph.big .row { grid-template-columns: 34px minmax(0, 1fr) 44px; grid-template-areas: "ic nm mo" "ic tm mo"; row-gap: 2px; }
+  .ph.big .row .tm { display: flex; gap: 6px; align-items: baseline; }
+  .ph.big .row .tm b { display: inline; }
+
+  /* earlier */
+  .sum { width: 100%; min-height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; border-radius: 14px;
+         border: 1px dashed var(--p-rule); background: transparent; color: var(--p-ink-2); font-size: calc(12.5px * var(--fs)); font-weight: 600; margin: 4px 0 6px; }
+  .sum svg { width: 16px; height: 16px; transition: transform var(--quick) var(--ease); }
+  .sum[aria-expanded="true"] svg { transform: rotate(180deg); }
+  .donerow { display: flex; align-items: center; gap: 10px; padding: 6px 12px; min-height: 40px; color: var(--p-ink-2); font-size: calc(13px * var(--fs)); }
+  .donerow svg { width: 16px; height: 16px; flex: none; }
+  .donerow b { font-weight: 600; color: var(--p-ink); opacity: .7; text-decoration: line-through; text-decoration-thickness: 1px; }
+  .donerow.skip b { text-decoration: none; }
+  .donerow span { margin-left: auto; font-variant-numeric: tabular-nums; font-size: calc(11.5px * var(--fs)); }
+
+  /* now */
+  .card.now { padding: 14px 14px 14px; border-width: 1.5px; background: var(--p-card); color: var(--p-ink);
+              border-color: color-mix(in srgb, var(--ac) 40%, var(--p-rule)); }
+  .now .glow { position: absolute; inset: -1.5px; border-radius: inherit; border: 2px solid var(--ac, var(--p-ink)); opacity: 0; pointer-events: none; }
+  .kick { font-size: calc(11px * var(--fs)); letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--p-ink-2); }
+  .now-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+  .now-h { display: flex; gap: 12px; align-items: center; }
+  .now-h .ic { width: 44px; height: 44px; border-radius: 13px; }
+  .now-h .ic svg { width: 24px; height: 24px; }
+  .now-h b { display: block; font-size: calc(19px * var(--fs)); letter-spacing: -.01em; line-height: 1.2; overflow-wrap: anywhere; }
+  .now-h span { color: var(--p-ink-2); font-size: calc(13px * var(--fs)); font-variant-numeric: tabular-nums; }
+  .bar { position: relative; height: 10px; border-radius: 5px; background: var(--p-track); overflow: hidden; margin: 14px 0 8px; }
+  .bar i { position: absolute; inset: 0; background: var(--ac, var(--p-ink)); transform-origin: 0 50%; transition: transform 90ms linear; border-radius: 5px; }
+  .bar s { position: absolute; inset: 0; display: none; background: repeating-linear-gradient(-45deg, var(--ac) 0 3px, transparent 3px 7px); opacity: .55; }
+  .over .bar i { opacity: .3; }
+  .over .bar s { display: block; }
+  .now-m { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: calc(12.5px * var(--fs)); color: var(--p-ink-2); }
+  .left { font-weight: 700; color: var(--p-ink); font-variant-numeric: tabular-nums; padding: 2px 0; border-radius: 6px;
+          transition: background-color var(--standard) var(--ease), color var(--standard) var(--ease), padding var(--standard) var(--ease); }
+  .left.soon { background: var(--ac); color: var(--p-card); padding: 2px 7px; }
+  .acts { display: flex; gap: 8px; margin-top: 14px; }
+  .acts .b { flex: 1; }
+  .chk { width: 18px; height: 18px; }
+  .chk circle { opacity: .45; }
+  .chk path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .did .chk path { stroke-dashoffset: 0; transition: stroke-dashoffset var(--standard) var(--ease-out) 60ms; }
+  .did .chk circle { opacity: 1; }
+  .ph.rm .did .chk path { transition: none; }
+  .q { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--p-rule); }
+  .q p { margin: 0 0 10px; font-size: calc(13.5px * var(--fs)); }
+  .opt { display: grid; gap: 4px; margin-bottom: 8px; }
+  .opt .b { width: 100%; }
+  .opt small { color: var(--p-ink-2); font-size: calc(12px * var(--fs)); padding: 0 4px; }
+
+  /* tray: didn't happen */
+  .tray { padding: 12px 14px; background: transparent; border-style: dashed; }
+  .tray .th { display: flex; gap: 10px; align-items: center; }
+  .tray .th b { display: block; font-weight: 600; }
+  .tray .th span { font-size: calc(12px * var(--fs)); color: var(--p-ink-2); font-variant-numeric: tabular-nums; }
+  .tray p { margin: 10px 0 0; font-size: calc(13px * var(--fs)); color: var(--p-ink-2); }
+  .tray .acts { flex-wrap: wrap; }
+
+  .free { padding: 16px 14px; text-align: left; }
+  .free b { display: block; font-size: calc(17px * var(--fs)); }
+  .free span { color: var(--p-ink-2); font-size: calc(13px * var(--fs)); }
+  .endnote { text-align: center; color: var(--p-ink-2); font-size: calc(12px * var(--fs)); padding: 10px 0 0; }
+
+  .blank { padding: 28px 18px 18px; text-align: left; }
+  .blank .ic { width: 48px; height: 48px; border-radius: 14px; margin-bottom: 16px; }
+  .blank .ic svg { width: 26px; height: 26px; }
+  .blank b { display: block; font-size: calc(22px * var(--fs)); letter-spacing: -.01em; line-height: 1.2; margin-bottom: 6px; }
+  .blank p { color: var(--p-ink-2); margin: 0 0 18px; font-size: calc(14px * var(--fs)); }
+  .blank .b { width: 100%; margin-bottom: 8px; }
+
+  /* sheet, scrim, toast */
+  .scrim { position: absolute; inset: 0; background: rgba(8,14,15,.32); opacity: 0; visibility: hidden; transition: opacity 200ms ease, visibility 0s 200ms; z-index: 5; }
+  .scrim.on { opacity: 1; visibility: visible; transition: opacity var(--slow) ease, visibility 0s; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; max-height: 86%; overflow-y: auto; background: var(--p-card); border-radius: 26px 26px 0 0;
+           padding: 8px 16px 20px; transform: translateY(100%); visibility: hidden;
+           transition: transform 220ms var(--ease-drawer), visibility 0s 220ms; box-shadow: 0 -12px 40px -16px rgba(0,0,0,.3); }
+  .sheet.on { transform: none; visibility: visible; transition: transform var(--slow) var(--ease-drawer), visibility 0s; }
+  .ph.rm .sheet { transform: none; opacity: 0; transition: opacity 160ms ease, visibility 0s 160ms; }
+  .ph.rm .sheet.on { opacity: 1; transition: opacity 160ms ease, visibility 0s; }
+  .grab { width: 38px; height: 5px; border-radius: 3px; background: var(--p-rule); margin: 0 auto 14px; }
+  .sheet h4 { margin: 0 0 4px; font-size: calc(17px * var(--fs)); letter-spacing: -.01em; }
+  .sheet .sub { margin: 0 0 14px; color: var(--p-ink-2); font-size: calc(13px * var(--fs)); }
+  .sheet .b { width: 100%; margin-bottom: 8px; justify-content: flex-start; }
+  .sheet .b.ctr { justify-content: center; }
+  .sheet .b small { margin-left: auto; color: var(--p-ink-2); font-weight: 500; font-size: calc(12px * var(--fs)); }
+  .sheet .b.pri small { color: inherit; opacity: .75; }
+  .sheet label { display: block; font-size: calc(12px * var(--fs)); font-weight: 600; color: var(--p-ink-2); margin-bottom: 6px; }
+  .sheet input { width: 100%; min-height: 46px; border-radius: 13px; border: 1px solid var(--p-rule); background: var(--p-bg); color: var(--p-ink); font: inherit; padding: 0 12px; margin-bottom: 10px; }
+  .steps { list-style: none; margin: 0 0 12px; padding: 0; }
+  .steps li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 9px 0; border-bottom: 1px solid var(--p-rule); font-size: calc(13.5px * var(--fs)); }
+  .steps li b { font-weight: 600; }
+  .steps li em { font-style: normal; font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+  .steps li small { grid-column: 1 / -1; color: var(--p-ink-2); font-size: calc(11.5px * var(--fs)); }
+  .steps li small.guess { color: var(--cai); }
+  .sk { display: block; height: 12px; border-radius: 6px; background: linear-gradient(100deg, var(--p-track) 30%, var(--p-rule) 50%, var(--p-track) 70%) 0 0 / 300% 100%; animation: sk 1.6s linear infinite; }
+  .sk.w2 { width: 60%; margin-top: 6px; height: 9px; }
+  @keyframes sk { from { background-position: 100% 0; } to { background-position: 0 0; } }
+  .ph.rm .sk { animation: none; }
+  .sheet .meta { font-size: calc(12px * var(--fs)); color: var(--p-ink-2); margin: 0 0 12px; }
+  .sheet .warnbox { background: var(--ca); color: var(--cai); border-radius: 12px; padding: 10px 12px; font-size: calc(13px * var(--fs)); margin: 0 0 12px; }
+  .vs { display: grid; gap: 8px; margin-bottom: 10px; }
+  .vs .b { flex-direction: column; align-items: flex-start; justify-content: center; padding: 10px 14px; min-height: 60px; gap: 1px; }
+  .vs .b span { font-size: calc(11.5px * var(--fs)); color: var(--p-ink-2); font-weight: 500; }
+  .vs .b.pri span { color: inherit; opacity: .78; }
+
+  .toast { position: absolute; left: 12px; right: 12px; bottom: 14px; z-index: 4; display: flex; align-items: center; gap: 10px; min-height: 48px;
+           padding: 6px 6px 6px 14px; border-radius: 15px; background: var(--p-ink); color: var(--p-bg); font-size: calc(13px * var(--fs));
+           opacity: 0; transform: translateY(8px); visibility: hidden; pointer-events: none;
+           transition: opacity 160ms ease, transform 160ms var(--ease), visibility 0s 160ms; }
+  .toast.on { opacity: 1; transform: none; visibility: visible; pointer-events: auto; transition: opacity var(--standard) var(--ease-out), transform var(--standard) var(--ease-out), visibility 0s; }
+  .ph.rm .toast { transform: none; }
+  .toast span { flex: 1; min-width: 0; }
+  .toast .tb { min-height: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: rgba(127,127,127,.25); color: inherit; font-weight: 700; }
+  .vh { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+  .note { margin: 18px auto 0; max-width: 356px; font-size: 14px; line-height: 1.5; color: var(--ink-2); background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; padding: 12px 14px; }
+  .note b { color: var(--ink); }
+
+  /* controls */
+  .ctl-k { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; }
+  .scn { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 26px; }
+  @media (max-width: 520px) { .scn { grid-template-columns: minmax(0, 1fr); } }
+  .scn button, .sw button, .reset { font: inherit; color: inherit; cursor: pointer; transition: transform var(--quick) var(--ease-out), border-color var(--quick) ease, background-color var(--quick) ease; }
+  .scn button:active, .sw button:active, .reset:active { transform: scale(.98); }
+  .scn button { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: start; text-align: left; padding: 12px 14px; min-height: 64px;
+                background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; }
+  .scn button > b { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); padding-top: 2px; }
+  .scn strong { display: block; font-size: 15px; line-height: 1.3; }
+  .scn em { display: block; font-style: normal; font-size: 13px; color: var(--ink-3); line-height: 1.35; margin-top: 2px; }
+  .scn button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+  @media (hover: hover) and (pointer: fine) { .scn button:hover { border-color: var(--accent); } .sw button:hover { border-color: var(--accent); } }
+  .sw { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+  .sw button { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 0 14px 0 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--rule); font-size: 14px; font-weight: 600; }
+  .sw button i { width: 30px; height: 18px; border-radius: 9px; background: var(--rule); position: relative; flex: none; transition: background-color var(--quick) ease; }
+  .sw button i::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform var(--quick) var(--ease); box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+  .sw button[aria-checked="true"] i { background: var(--accent); }
+  .sw button[aria-checked="true"] i::after { transform: translateX(12px); }
+  .logs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; margin-bottom: 22px; }
+  @media (max-width: 1000px) { .logs { grid-template-columns: minmax(0, 1fr); } }
+  .logbox { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 16px; min-height: 120px; }
+  #hlog { list-style: none; margin: 0; padding: 0; }
+  #hlog li { padding: 7px 0; border-bottom: 1px solid var(--rule-soft); font-size: 13.5px; line-height: 1.4; }
+  #hlog li:last-child { border-bottom: 0; }
+  #hlog li b { color: var(--ink); }
+  #hlog li span { color: var(--ink-2); }
+  #hlog li code { display: block; font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 2px; background: none; padding: 0; }
+  #hlog li.no b { color: var(--warn); }
+  #hlog li.fresh { animation: fresh var(--standard) var(--ease-out); }
+  @keyframes fresh { from { opacity: 0; transform: translateY(-4px); } }
+  #hlog:empty::before, #sr-out:empty::before { content: attr(data-empty); color: var(--ink-3); font-size: 13.5px; }
+  #sr-out { margin: 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); font-style: italic; }
+  .hnote { font-size: 12.5px; color: var(--ink-3); margin: 10px 0 0; line-height: 1.45; }
+  .reset { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--rule); background: transparent; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+
+  @media (prefers-reduced-motion: reduce) {
+    #hlog li.fresh { animation: none; }
+    .scn button, .sw button, .reset, .sw button i::after { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="back" href="../">← Tiimo teardown</a>
+    <div class="eyebrow">Companion to the teardown · Interaction design</div>
+    <h1>Design the moment the plan breaks.</h1>
+    <p class="standfirst">The teardown's central claim is that a planner for executive dysfunction is judged when the user fails, not when they plan. This takes that claim literally: ten findings, each answered with an interaction pattern, and a working prototype you can break on purpose.</p>
+    <dl class="byline">
+      <div><dt>Builds on</dt><dd>Teardown §05, §07, §12, §15</dd></div>
+      <div><dt>Format</dt><dd>Spec + working prototype</dd></div>
+      <div><dt>Hands-on</dt><dd>None, as in the teardown</dd></div>
+      <div><dt>Status</dt><dd>Concept, untested with users</dd></div>
+    </dl>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+  <aside class="notice" aria-labelledby="n-h">
+    <h2 id="n-h">Read this first</h2>
+    <p><strong>This is not a redesign of Tiimo's screens.</strong> The teardown never saw them, so there is nothing honest to redraw. The prototype uses a neutral visual language of its own, because the teardown warns against borrowing Tiimo's pastel look as a shortcut to trust.</p>
+    <p>Each pattern names the finding it answers and carries that finding's evidence tag. <strong>Where the finding is reported or unverified, the pattern is a hypothesis to test against the real app</strong>, not a claim about what the app does today. Not affiliated with Tiimo AS.</p>
+  </aside>
+</div>
+
+<section id="s1">
+  <div class="wrap">
+    <span class="snum">01 — The brief</span>
+    <h2>Ten findings, ten patterns. Nothing added for its own sake.</h2>
+    <p class="lede">Every row starts from something the teardown established, or flagged as unknown. The right-hand columns are the design response and where to try it in the prototype.</p>
+  </div>
+  <div class="wide">
+    <div class="scroll" role="region" aria-label="Findings and patterns table" tabindex="0">
+      <table>
+        <thead><tr><th>Teardown finding</th><th>Evidence</th><th>Interaction pattern</th><th>Try it</th></tr></thead>
+        <tbody>
+          <tr><td>Transitions between activities are a targeted difficulty (§05)</td><td><span class="tag obs">observed</span></td><td><strong>Five-minute cue</strong>: two soft taps and one highlight that names what's next, so the switch starts before the deadline</td><td class="n">1</td></tr>
+          <tr><td>Streaks turn a bad day into a visible loss (§07)</td><td><span class="tag obs">observed</span> <span class="tag inf">inferred</span></td><td><strong>Done without a scoreboard</strong>: one success tap and a five-second undo. No confetti, no counter for the next miss to break</td><td class="n">2</td></tr>
+          <tr><td>Does a missed activity reflow or "accusingly persist"? (§15 step 4)</td><td><span class="tag gap">hands-on required</span></td><td><strong>"Didn't happen" tray</strong>: no red, no "overdue", no haptic. A question with the answer already found: the next gap that fits</td><td class="n">3</td></tr>
+          <tr><td>Hyperfocus overrun goes unaddressed (§05)</td><td><span class="tag inf">inferred</span></td><td><strong>Overrun that bends the plan</strong>: two choices, the consequence of each shown before you pick. Fixed times never move</td><td class="n">4</td></tr>
+          <tr><td>Calendar sync failures (§12)</td><td><span class="tag rep">reported</span></td><td><strong>Local-first day</strong>: losing signal changes one chip, edits keep working and say they're waiting, a conflict is a choice, never a silent overwrite</td><td class="n">5</td></tr>
+          <tr><td>Lag and crashes when moving events (§12)</td><td><span class="tag rep">reported</span></td><td><strong>Optimistic moves</strong>: an item lands instantly and syncs behind. No spinner ever sits on the timeline</td><td class="n">3 · 5</td></tr>
+          <tr><td>AI misreads commands; its estimates can't be checked by the user (§12, §15 step 6)</td><td><span class="tag rep">reported</span></td><td><strong>AI as a draft</strong>: estimates as ranges with their source shown, nothing added until you agree</td><td class="n">6</td></tr>
+          <tr><td>Reliability is the feature, so waiting erodes trust (§01, §12)</td><td><span class="tag inf">inferred</span></td><td><strong>Honest loading</strong>: real steps arriving, no fake percentage. When it stalls it says so, confirms your day is unchanged, and offers a way out</td><td class="n">7</td></tr>
+          <tr><td>The re-entry state after a lapse decides long-term users (§15 step 9)</td><td><span class="tag gap">hands-on required</span></td><td><strong>Welcome back, no backlog</strong>: last week archived, today starts from now, a routine applied mid-morning drops what's already past</td><td class="n">8</td></tr>
+          <tr><td>Is any state carried by colour alone? Untested (§13, §15 step 7)</td><td><span class="tag gap">hands-on required</span></td><td><strong>Redundant encoding</strong>: every state is an icon, words and a colour, proven by a greyscale switch</td><td class="n">Access</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="wrap">
+    <span class="snum">02 — Prototype</span>
+    <h2>Break it yourself.</h2>
+    <p class="lede">A Tuesday at 10:20. Each button puts the day into a state the teardown says matters. <strong>The note under the phone gives the decision behind what you see</strong>; the logs show every haptic that would fire, every one that deliberately doesn't, and what a screen reader would say. Everything in the phone also works by hand: tap any item for its options.</p>
+  </div>
+  <div class="wide">
+    <div class="lab">
+      <div class="stagewrap">
+        <div class="ph" id="ph" role="region" aria-label="Prototype phone: a day plan">
+          <div id="ph-ring" aria-hidden="true"></div>
+          <div class="ph-scr" id="ph-scr">
+            <div class="ph-top" id="ph-top">
+              <div><b id="ph-day">Tuesday</b><small id="ph-clock">10:20</small></div>
+              <span class="chip" id="ph-sync"></span>
+            </div>
+            <div class="ph-body" id="ph-body"></div>
+            <div class="toast" id="ph-toast"></div>
+            <div class="scrim" id="ph-scrim"></div>
+            <div class="sheet" id="ph-sheet" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="sh-h"></div>
+            <div class="vh" id="ph-live" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+        <p class="note" id="ph-note"></p>
+      </div>
+
+      <div class="ctl">
+        <p class="ctl-k" id="scn-k">Put the day into a state</p>
+        <div class="scn" role="group" aria-labelledby="scn-k">
+          <button type="button" data-sc="cue" aria-pressed="false"><b>1</b><span><strong>Five minutes left</strong><em>A cue you can feel without looking</em></span></button>
+          <button type="button" data-sc="done" aria-pressed="false"><b>2</b><span><strong>Finish one</strong><em>Done, without a scoreboard</em></span></button>
+          <button type="button" data-sc="miss" aria-pressed="false"><b>3</b><span><strong>Miss one</strong><em>No red, no "overdue"</em></span></button>
+          <button type="button" data-sc="over" aria-pressed="false"><b>4</b><span><strong>Run over</strong><em>The plan bends, fixed times hold</em></span></button>
+          <button type="button" data-sc="offline" aria-pressed="false"><b>5</b><span><strong id="off-l">Lose signal</strong><em id="off-e">Everything still works</em></span></button>
+          <button type="button" data-sc="ai" aria-pressed="false"><b>6</b><span><strong>Ask for a plan</strong><em>AI as a draft, not a decision</em></span></button>
+          <button type="button" data-sc="slow" aria-pressed="false"><b>7</b><span><strong>Slow connection</strong><em>Loading that admits it's slow</em></span></button>
+          <button type="button" data-sc="back" aria-pressed="false"><b>8</b><span><strong>Back after a week</strong><em>No catch-up pile</em></span></button>
+        </div>
+
+        <p class="ctl-k" id="sw-k">Access</p>
+        <div class="sw" role="group" aria-labelledby="sw-k">
+          <button type="button" role="switch" aria-checked="false" data-sw="rm"><i></i>Reduce motion</button>
+          <button type="button" role="switch" aria-checked="false" data-sw="big"><i></i>Larger text</button>
+          <button type="button" role="switch" aria-checked="false" data-sw="grey"><i></i>No colour</button>
+          <button type="button" role="switch" aria-checked="true" data-sw="hap"><i></i>Haptics</button>
+        </div>
+
+        <div class="logs">
+          <div class="logbox">
+            <p class="ctl-k">Haptics, fired and withheld</p>
+            <ol id="hlog" data-empty="Nothing yet. Try state 1."></ol>
+            <p class="hnote" id="hnote"></p>
+          </div>
+          <div class="logbox">
+            <p class="ctl-k">A screen reader would say</p>
+            <p id="sr-out" data-empty="Move focus into the phone, or pick a state."></p>
+          </div>
+        </div>
+        <button type="button" class="reset" data-sc="reset">Reset the day</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="wrap">
+    <span class="snum">03 — Motion</span>
+    <h2>One personality: steady. Nothing bounces.</h2>
+    <p class="lede">The audience meets this app at its most anxious moments: a missed activity, a day coming apart. Motion that celebrates or startles there is noise. So the system has <strong>one easing for almost everything, three durations, no overshoot anywhere</strong>, and linear motion in exactly one place, the time bar, because time is linear.</p>
+    <div class="scroll" role="region" aria-label="Motion tokens" tabindex="0">
+      <table>
+        <thead><tr><th>Token</th><th>Value</th><th>Used for</th></tr></thead>
+        <tbody>
+          <tr><td>Standard easing</td><td><code>cubic-bezier(.2, 0, 0, 1)</code></td><td>Most motion: reflow, state changes, the chevron</td></tr>
+          <tr><td>Enter easing</td><td><code>cubic-bezier(.23, 1, .32, 1)</code></td><td>Things arriving: cards, toasts, the check stroke</td></tr>
+          <tr><td>Sheet easing</td><td><code>cubic-bezier(.32, .72, 0, 1)</code></td><td>Bottom sheets, matching the iOS drawer curve</td></tr>
+          <tr><td>Quick · 120 ms</td><td>press, toggles</td><td>Feedback the finger is waiting for</td></tr>
+          <tr><td>Standard · 240 ms</td><td>enter, toasts, check</td><td>Something new needs to be noticed</td></tr>
+          <tr><td>Slow · 360 ms</td><td>reflow, sheets</td><td>Something moved and the eye must follow it</td></tr>
+          <tr><td>Linear</td><td>time bar only</td><td>Constant motion that represents constant time</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Rules</h3>
+    <ul class="rules">
+      <li><strong>At most one thing moves on the Now view at a time.</strong> Ambient motion competes with the one thing the user is trying to start, and task initiation is the difficulty the Now view exists for.</li>
+      <li><strong>Exits are faster than entrances</strong>: 160 to 220 ms out, 240 to 360 ms in. The system answers fast, and the user gets time to read what arrived.</li>
+      <li><strong>Frequent actions don't animate.</strong> The options sheet slides because it is occasional. Scrolling the day, switching days and keyboard shortcuts don't.</li>
+      <li><strong>Same interaction, same motion, every time.</strong> For this audience predictability is an accessibility property, not a style preference.</li>
+    </ul>
+
+    <h3>Motion spec</h3>
+  </div>
+  <div class="wide">
+    <div class="scroll" role="region" aria-label="Motion spec" tabindex="0">
+      <table>
+        <thead><tr><th>Element</th><th>Trigger</th><th>Change</th><th>Duration · easing</th><th>Reduce Motion</th></tr></thead>
+        <tbody>
+          <tr><td>Any button</td><td>Press</td><td>scale 1 → 0.97</td><td>120 ms · enter</td><td>Kept: no travel</td></tr>
+          <tr><td>Item reflow</td><td>Moved, fitted in, shifted</td><td>translateY from old slot (FLIP)</td><td>360 ms · standard, 30 ms stagger, max 5 items</td><td>Fade in place, 200 ms</td></tr>
+          <tr><td>Item enters</td><td>Added, now card swaps</td><td>opacity 0 → 1, y 8 px → 0</td><td>240 ms · enter</td><td>Opacity only</td></tr>
+          <tr><td>Item leaves</td><td>Done, let go</td><td>opacity → 0, scale → 0.98</td><td>180 ms · standard</td><td>Opacity only</td></tr>
+          <tr><td>Check mark</td><td>Done</td><td>stroke draws (dashoffset 1 → 0)</td><td>240 ms · enter, 60 ms delay</td><td>Appears at once</td></tr>
+          <tr><td>Time bar</td><td>Each minute</td><td>scaleX = time remaining</td><td>linear</td><td>Kept: it is information</td></tr>
+          <tr><td>Five-minute cue</td><td>5 min before end</td><td>outline opacity 0 → 1 → 0, once; "5 min left" fills</td><td>700 ms · ease-in-out</td><td>No glow; the fill stays</td></tr>
+          <tr><td>Sheet</td><td>Open / close</td><td>translateY 100% → 0</td><td>360 ms in, 220 ms out · sheet</td><td>Fade, 160 ms</td></tr>
+          <tr><td>Toast</td><td>Undoable action</td><td>y 8 px → 0 + fade</td><td>240 ms in, 160 ms out</td><td>Fade only</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="wrap">
+    <span class="snum">04 — Haptics</span>
+    <h2>Haptics mark transitions, never failure.</h2>
+    <p class="lede">The product positions its focus timer to "manage transitions without losing momentum" <span class="tag obs">observed</span>. A haptic is the one cue that works with the phone in a pocket and eyes elsewhere, which makes it valuable and makes misuse expensive: <strong>a buzz on a missed activity is a notice of failure delivered to the body.</strong></p>
+  </div>
+  <div class="wide">
+    <div class="scroll" role="region" aria-label="Haptic map" tabindex="0">
+      <table>
+        <thead><tr><th>Moment</th><th>Pattern</th><th>iOS</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>5 min before an end</td><td>Two soft taps, 90 ms apart</td><td><code>UIImpactFeedbackGenerator(style: .soft)</code>, intensity 0.6, twice</td><td>The transition warning. Felt, not read</td></tr>
+          <tr><td>Next activity starts</td><td>One medium tap</td><td><code>UIImpactFeedbackGenerator(style: .medium)</code></td><td>Marks the boundary</td></tr>
+          <tr><td>Done</td><td>Success</td><td><code>UINotificationFeedbackGenerator</code> <code>.success</code></td><td>Acknowledges the user's own action, once, small</td></tr>
+          <tr><td>Item lands after a move or reflow</td><td>One light tap</td><td><code>UIImpactFeedbackGenerator(style: .light)</code></td><td>Confirms where it went without looking</td></tr>
+          <tr><td>A choice is made (keep going, let go, a version)</td><td>Selection tick</td><td><code>UISelectionFeedbackGenerator</code></td><td>Registers the decision, rewards nothing</td></tr>
+          <tr><td>Missed, overrun, sync failure, AI timeout</td><td><strong>None</strong></td><td>—</td><td>Not the user's action, or not an error. A buzz would read as blame</td></tr>
+          <tr><td>Scrolling, opening a sheet</td><td><strong>None</strong></td><td>—</td><td>Too frequent. Haptics that are everywhere stop meaning anything</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="wrap">
+    <h3>Rules</h3>
+    <ul class="rules">
+      <li><strong>Outside the app, iOS offers no custom patterns.</strong> A notification plays the system haptic. So the five-minute cue travels as a Time Sensitive notification, which can break through a Focus if the user allows it, and on Apple Watch as a <code>WKHapticType.notification</code> tap. The in-app pattern is a bonus, not the mechanism.</li>
+      <li><strong>Haptic, sound and visual cues are separate switches.</strong> Sensory sensitivity varies widely in this audience, so one person's helpful tap is another's alarm.</li>
+      <li><strong>At most one haptic a second</strong>, except selection ticks during a drag. Respect the system haptics setting.</li>
+      <li><strong>Android</strong>: map to <code>HapticFeedbackConstants</code> (<code>CONFIRM</code>, <code>CLOCK_TICK</code>) or <code>VibrationEffect</code> compositions, under the same restraint. A notification channel can carry a custom vibration pattern for the cue.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="wrap">
+    <span class="snum">05 — Errors and loading</span>
+    <h2>Every error answers three questions: what happened, is my plan safe, what now.</h2>
+    <p class="lede">The reported failures cluster around trust: sync that fails, moves that lag or crash, AI that misreads <span class="tag rep">reported</span>. For this audience an error message has a second job beyond explaining: <strong>confirming that the plan they rely on is intact.</strong></p>
+  </div>
+  <div class="wide">
+    <div class="scroll" role="region" aria-label="Error states" tabindex="0">
+      <table>
+        <thead><tr><th>State</th><th>What the user sees</th><th>What the system does</th><th>Never</th></tr></thead>
+        <tbody>
+          <tr><td>Missed activity</td><td>"Stretch didn't happen. That's fine." Fit it in at the next gap, or let it go today</td><td>Finds the first gap that fits; keeps undo for 5 s</td><td>Red, "overdue", a count of misses, a guilt notification</td></tr>
+          <tr><td>Several missed at once</td><td>One grouped question: "3 things didn't happen"</td><td>Offers to fit them all into the afternoon in one move</td><td>Three separate prompts in a row</td></tr>
+          <tr><td>Overrun</td><td>"12 min over. No problem." Two choices, each with its consequence</td><td>Moves flexible items only, and around fixed ones</td><td>Shifting the day without asking; silently eating a break</td></tr>
+          <tr><td>Offline</td><td>One chip: "Offline · saved on this phone"</td><td>Queues writes and marks each waiting item</td><td>A blocking spinner; "Something went wrong"</td></tr>
+          <tr><td>Calendar conflict</td><td>Both versions side by side, labelled by source</td><td>Keeps both until the user picks</td><td>Last-write-wins, silently</td></tr>
+          <tr><td>Sync failing for a day or more</td><td>A banner with the last successful sync time</td><td>Retries with backoff; offers export of today</td><td>Hiding it until data is lost</td></tr>
+          <tr><td>AI misreads or times out</td><td>"Your day hasn't changed." Retry, or write it yourself</td><td>Commits nothing before the user accepts</td><td>Adding AI output straight into the plan</td></tr>
+          <tr><td>Notifications denied</td><td>The Now view and widgets still carry every cue; one explanation in Settings</td><td>Falls back to on-screen and widget cues</td><td>Re-asking for permission on the timeline</td></tr>
+          <tr><td>Paywall</td><td>Appears only when a Pro feature is tapped</td><td>Remembers a dismissal</td><td>Interrupting the Now view (teardown §08)</td></tr>
+          <tr><td>Cancelling</td><td>Two taps from Settings; the end date is shown</td><td>Confirms by email</td><td>A retention maze; guilt copy (teardown §08: "indefensible")</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="wrap">
+    <h3>Loading</h3>
+    <ul class="rules">
+      <li><strong>The timeline never shows a spinner.</strong> The day lives on the phone first. The network is for syncing, not for seeing your own plan.</li>
+      <li><strong>Moves and edits apply instantly</strong> and sync behind. A failed sync shows on the item, not in a modal.</li>
+      <li><strong>Only work the user is waiting for gets a loading state</strong>, such as an AI draft or a first calendar import. Progress shows as real steps arriving, never as an invented percentage.</li>
+      <li><strong>Anything that can take more than about 8 seconds gets an exit</strong> and a reassurance: "Your day hasn't changed." The prototype stalls after 3 seconds so you don't have to wait.</li>
+      <li><strong>Loading, result and error are one surface changing state</strong>, not three screens replacing each other.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="s6">
+  <div class="wrap">
+    <span class="snum">06 — Edge cases</span>
+    <h2>Irregular days aren't the edge case here. They're why the app exists.</h2>
+    <p class="lede">A happy-path planner assumes the day goes roughly to plan. <strong>This audience installs the app because it doesn't.</strong> These are the cases that break a happy-path design.</p>
+  </div>
+  <div class="wide">
+    <div class="scroll" role="region" aria-label="Edge cases" tabindex="0">
+      <table>
+        <thead><tr><th>Case</th><th>Behaviour</th><th>In the prototype</th></tr></thead>
+        <tbody>
+          <tr><td>A gap between activities</td><td>Now shows "Free until 10:50" and names what's next. An empty Now is still an answer</td><td>State 2</td></tr>
+          <tr><td>A shift collides with a fixed time</td><td>The flexible item moves past the fixed one rather than overlapping or shrinking it, and says so</td><td>State 4, Keep going</td></tr>
+          <tr><td>A routine applied mid-morning</td><td>Starts from now. Items already past are left out, not marked missed</td><td>State 8</td></tr>
+          <tr><td>An empty day</td><td>A routine or one thing, never a blank canvas (teardown §14: templates beat blank canvases)</td><td>State 8, Start empty</td></tr>
+          <tr><td>No gap left today for a missed item</td><td>The offer becomes "Move to tomorrow"; letting go stays available</td><td>Built in; triggers when the day is full</td></tr>
+          <tr><td>Two items overlap (calendar import)</td><td>Side-by-side lanes, both readable, with "Overlaps with …" as text</td><td>Spec only</td></tr>
+          <tr><td>Activity crosses midnight</td><td>Belongs to the day it starts; shows "→ 02:00 tomorrow"</td><td>Spec only</td></tr>
+          <tr><td>Clocks change, or the user travels</td><td>Appointments keep their own time zone; routines follow local time; one line explains it</td><td>Spec only</td></tr>
+          <tr><td>Planned time exceeds waking hours</td><td>"2 h more than fits" with a suggestion of which flexible items to move; saving is never blocked</td><td>Spec only</td></tr>
+          <tr><td>Very long titles</td><td>Wrap to two lines, then truncate. The time is never truncated; the full title is in the screen-reader label</td><td>Spec only</td></tr>
+          <tr><td>Zero-length items ("take meds")</td><td>A marker on the timeline, not a zero-height card</td><td>Spec only</td></tr>
+          <tr><td>Phone locked when a timer ends</td><td>The notification carries the cue; on unlock, the current state, not a stack of alerts</td><td>Spec only</td></tr>
+          <tr><td>Focus mode on</td><td>Cues are Time Sensitive, so they arrive only if the user allowed it, and the Now view still shows them</td><td>Spec only</td></tr>
+          <tr><td>Double tap on Done</td><td>Idempotent: one completion, one haptic</td><td>Built in</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s7">
+  <div class="wrap">
+    <span class="snum">07 — Accessibility</span>
+    <h2>Accessible by construction, then tested on a device.</h2>
+    <p class="lede">The teardown could not run an accessibility pass <span class="tag gap">hands-on required</span>. These are the properties to build in and then verify. <strong>The prototype demonstrates the first four</strong>; the switches above the logs are live.</p>
+    <div class="scroll" role="region" aria-label="Accessibility properties" tabindex="0">
+      <table>
+        <thead><tr><th>Property</th><th>Rule</th><th>Prototype</th></tr></thead>
+        <tbody>
+          <tr><td>Colour never alone</td><td>Every state is an icon, words and a colour. "Fixed" has a lock and the word; "not synced" has a cloud and the words</td><td>No colour</td></tr>
+          <tr><td>Dynamic Type</td><td>At large sizes rows change layout: the time moves under the title instead of squeezing it. Nothing truncates the time</td><td>Larger text</td></tr>
+          <tr><td>Reduce Motion</td><td>Tiered, not deleted: travel becomes a fade, the time bar keeps updating, the cue glow becomes a static fill. Follows the system setting by default</td><td>Reduce motion</td></tr>
+          <tr><td>Screen reader</td><td>Each item reads as one sentence: name, time, state, what's next. Changes are announced politely, never assertively</td><td>Log</td></tr>
+          <tr><td>Targets</td><td>44 × 44 pt minimum, including the options button on each row</td><td>Built in</td></tr>
+          <tr><td>Time phrasing</td><td>Relative and absolute together: "25 min left, until 10:45". Relative serves time blindness, absolute serves planning</td><td>Built in</td></tr>
+          <tr><td>Focus</td><td>Sheets trap focus, close on Escape and return focus to what opened them</td><td>Built in</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <div class="wrap">
+    <span class="snum">08 — Validation</span>
+    <h2>What would prove these patterns wrong.</h2>
+    <p class="lede">Each pattern is a hypothesis until tested. <strong>The first three checks need nothing more than the hands-on session the teardown already asks for.</strong></p>
+    <ol class="rules">
+      <li><strong>Field-guide step 4: miss an activity.</strong> If the app already reflows humanely, pattern 3 is a refinement, not a fix, and should be presented that way.</li>
+      <li><strong>Step 9: leave it for a week.</strong> If re-entry already avoids a backlog, pattern 8 confirms existing work rather than correcting it.</li>
+      <li><strong>Step 7: the accessibility pass.</strong> Greyscale screenshots of every state settle the colour question in an afternoon.</li>
+      <li><strong>The teardown's diary study</strong> (five ADHD users, six weeks): does the five-minute cue get switched off? Switched off by week two would mean it is noise, not help.</li>
+      <li><strong>Instrument the tray</strong>: fit in, let go, or ignored. A growing "ignored" share is the signal that the tray itself has become a guilt list, which is the failure this whole page is designed against.</li>
+    </ol>
+  </div>
+</section>
+</main>
+
+<footer class="end">
+  <div class="wrap">
+    <p><a href="../">← Back to the Tiimo teardown</a></p>
+    <p>A design concept built on public evidence. Not affiliated with or endorsed by Tiimo AS. The prototype's visual language is deliberately its own.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var ph = $('#ph'), body = $('#ph-body'), clk = $('#ph-clock'), dayEl = $('#ph-day'), chip = $('#ph-sync'),
+      toastEl = $('#ph-toast'), sheet = $('#ph-sheet'), scrim = $('#ph-scrim'), live = $('#ph-live'), ring = $('#ph-ring'),
+      top = $('#ph-top'), hlog = $('#hlog'), srOut = $('#sr-out'), note = $('#ph-note');
+  var EASE = 'cubic-bezier(.2,0,0,1)', EOUT = 'cubic-bezier(.23,1,.32,1)';
+
+  /* ── icons ── */
+  var P = {
+    cup: 'M4.5 7.5h10v4.5a4 4 0 0 1-4 4h-2a4 4 0 0 1-4-4zM14.5 9h1.25a2 2 0 0 1 0 4H14.5M7.5 3.5v1.5M10.5 3.5v1.5',
+    body: 'M10 3.2a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2zM4.5 8.5l5.5 1 5.5-1M10 9.5v3.5M7 17.5l3-4.5 3 4.5',
+    doc: 'M6 2.8h5.5L15 6.3v10.9H6zM11.5 2.8v3.5H15M8.3 10h4.5M8.3 13h4.5',
+    mail: 'M3 5.5h14v9.5H3zM3 6l7 5.2L17 6',
+    tidy: 'M13.5 2.8l-5 8.2M4.5 11h7.5l-1 6H5.5zM7.5 13.5v1.5M10 13.5v1.5',
+    call: 'M6.2 3l2 4-1.6 1.4a8.5 8.5 0 0 0 5 5L13 11.8l4 2-.9 2.8a1.3 1.3 0 0 1-1.4.9A13 13 0 0 1 2.5 4.3a1.3 1.3 0 0 1 .9-1.4z',
+    fork: 'M6 2.8v4.5a1.8 1.8 0 0 0 3.6 0V2.8M7.8 2.8v14.4M14 2.8c-1.8 1.7-1.8 6.3 0 8v6.4',
+    wash: 'M4.5 2.8h11v14.4h-11zM4.5 6h11M10 8.3a3.3 3.3 0 1 0 0 6.6 3.3 3.3 0 0 0 0-6.6zM7 4.4h.01',
+    bag: 'M4.5 7h11l-1 10h-9zM7.5 7V5.3a2.5 2.5 0 0 1 5 0V7',
+    spark: 'M10 2.8l1.6 4.6 4.6 1.6-4.6 1.6L10 15.2l-1.6-4.6L3.8 9l4.6-1.6zM15.5 14l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z',
+    sun: 'M10 6.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM10 2v1.8M10 16.2V18M2 10h1.8M16.2 10H18M4.3 4.3l1.3 1.3M14.4 14.4l1.3 1.3M4.3 15.7l1.3-1.3M14.4 5.6l1.3-1.3',
+    lock: 'M5.5 9h9v7.5h-9zM7.5 9V6.8a2.5 2.5 0 0 1 5 0V9',
+    cloud: 'M6 15.5h8.2a3.3 3.3 0 0 0 .4-6.6A4.6 4.6 0 0 0 5.8 8a3.8 3.8 0 0 0 .2 7.5zM10 13.5V9.6M8.3 11.2L10 9.5l1.7 1.7',
+    ok: 'M4 10.5l3.5 3.5L16 5.5',
+    off: 'M3 3l14 14M6 15.5h8.2M8 7.5A4.6 4.6 0 0 1 14.6 9a3.3 3.3 0 0 1 2 5M5.8 8a3.8 3.8 0 0 0 .2 7.5',
+    sync: 'M15.5 8A5.8 5.8 0 0 0 5 6.5M4.5 12a5.8 5.8 0 0 0 10.5 1.5M5 3.5v3h3M15 16.5v-3h-3',
+    warn: 'M10 3.5l7.5 13h-15zM10 8.5v3.5M10 14.4h.01',
+    more: 'M5 10h.01M10 10h.01M15 10h.01',
+    chev: 'M5.5 8l4.5 4.5L14.5 8',
+    hour: 'M5.5 2.8h9M5.5 17.2h9M6.5 2.8c0 4 7 4.5 7 7.2s-7 3.2-7 7.2M13.5 2.8c0 4-7 4.5-7 7.2s7 3.2 7 7.2',
+    undo: 'M7 6.5L4 9.5l3 3M4 9.5h8a4 4 0 0 1 0 8h-2'
+  };
+  function ico(k, cls) { return '<svg' + (cls ? ' class="' + cls + '"' : '') + ' viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="' + P[k] + '"/></svg>'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function fmt(m) { return pad(Math.floor(m / 60) % 24) + ':' + pad(m % 60); }
+  function dur(m) { if (m < 60) return m + ' min'; var h = Math.floor(m / 60), r = m % 60; return h + ' h' + (r ? ' ' + r + ' min' : ''); }
+  function spoken(m) { return m === 1 ? '1 minute' : m + ' minutes'; }
+
+  /* ── state ── */
+  var DAY_END = 22 * 60;
+  function baseActs() {
+    return [
+      { id: 'bk', n: 'Breakfast', s: 480, d: 30, ic: 'cup', c: 'amber', st: 'done' },
+      { id: 'st', n: 'Stretch', s: 525, d: 10, ic: 'body', c: 'green', st: 'done' },
+      { id: 'dw', n: 'Deep work: report', s: 540, d: 60, ic: 'doc', c: 'blue', st: 'done' },
+      { id: 'em', n: 'Emails', s: 600, d: 45, ic: 'mail', c: 'blue', st: 'todo' },
+      { id: 'td', n: 'Tidy desk', s: 650, d: 30, ic: 'tidy', c: 'green', st: 'todo' },
+      { id: 'ca', n: 'Call with Sam', s: 690, d: 30, ic: 'call', c: 'violet', st: 'todo', fixed: true },
+      { id: 'lu', n: 'Lunch and a walk', s: 750, d: 45, ic: 'fork', c: 'amber', st: 'todo' },
+      { id: 'la', n: 'Laundry', s: 840, d: 60, ic: 'wash', c: 'green', st: 'todo' },
+      { id: 'pp', n: 'Pharmacy pickup', s: 960, d: 20, ic: 'bag', c: 'violet', st: 'todo' }
+    ];
+  }
+  var S = { t: 620, acts: baseActs(), mode: 'day', over: null, open: false, offline: false, sync: 'ok', hap: true,
+            rm: matchMedia('(prefers-reduced-motion: reduce)').matches, big: false, grey: false, later: '' };
+  var runTok = 0;
+  function clone(x) { return JSON.parse(JSON.stringify(x)); }
+  function find(id, acts) { return (acts || S.acts).filter(function (a) { return a.id === id; })[0]; }
+  function bySt(a, b) { return a.s - b.s; }
+  function todo(acts) { return (acts || S.acts).filter(function (a) { return a.st === 'todo'; }).sort(bySt); }
+
+  function curId() {
+    if (S.over && find(S.over) && find(S.over).st === 'todo') return S.over;
+    var c = todo().filter(function (a) { return a.s <= S.t && S.t < a.s + a.d; })[0];
+    return c ? c.id : null;
+  }
+  function classify() {
+    var cur = curId(), out = { earlier: [], tray: [], now: null, next: [] };
+    S.acts.slice().sort(bySt).forEach(function (a) {
+      if (a.st !== 'todo') out.earlier.push(a);
+      else if (a.id === cur) out.now = a;
+      else if (a.s + a.d <= S.t) out.tray.push(a);
+      else out.next.push(a);
+    });
+    return out;
+  }
+  /* first start time >= from where d minutes fit between unfinished items */
+  function gapIn(acts, d, from, ignore) {
+    var c = Math.max(from, S.t), list = todo(acts).filter(function (a) { return a.id !== ignore && a.s + a.d > c; });
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].s - c >= d) return c;
+      c = Math.max(c, list[i].s + list[i].d);
+    }
+    return c;
+  }
+  /* move flexible items that would start before `until`, in order, around fixed ones */
+  function shiftPlan(acts, until, curIdent) {
+    var moved = [];
+    todo(acts).forEach(function (a) {
+      if (a.id === curIdent || a.fixed || a.s >= until) return;
+      var to = gapIn(acts, a.d, until, a.id);
+      moved.push({ id: a.id, n: a.n, from: a.s, to: to, d: a.d });
+      a.s = to;
+    });
+    return moved;
+  }
+  function consText(m, acts) {
+    if (!m.length) return 'Nothing else moves.';
+    var x = m[0];
+    if (x.to <= S.t) return x.n + ' starts now and ends ' + fmt(x.to + x.d) + '.';
+    var f = todo(acts).filter(function (a) { return a.fixed && a.s >= x.from && a.s < x.to; })[0];
+    return x.n + ' moves to ' + fmt(x.to) + (f ? ', after ' + f.n + ' at ' + fmt(f.s) : '') + '.';
+  }
+
+  /* ── announcements, haptics, notes ── */
+  function say(t) { live.textContent = ''; setTimeout(function () { live.textContent = t; }, 40); srOut.textContent = t; }
+  var HAP = {
+    soft2: { l: 'Two soft taps', v: [12, 90, 12], api: 'UIImpactFeedbackGenerator(style: .soft) ×2, 90 ms apart' },
+    medium: { l: 'One medium tap', v: [22], api: 'UIImpactFeedbackGenerator(style: .medium)' },
+    success: { l: 'Success', v: [10, 60, 18], api: 'UINotificationFeedbackGenerator .success' },
+    light: { l: 'One light tap', v: [9], api: 'UIImpactFeedbackGenerator(style: .light)' },
+    select: { l: 'Selection tick', v: [5], api: 'UISelectionFeedbackGenerator' }
+  };
+  var lastHap = 0;
+  function hlogAdd(html, cls) {
+    var li = document.createElement('li'); li.innerHTML = html; li.className = (cls || '') + ' fresh';
+    hlog.insertBefore(li, hlog.firstChild);
+    while (hlog.children.length > 5) hlog.removeChild(hlog.lastChild);
+  }
+  function haptic(k, why) {
+    var h = HAP[k], now = Date.now();
+    if (!S.hap) { hlogAdd('<b>' + h.l + '</b> <span>· ' + esc(why) + ' (haptics off)</span>'); return; }
+    if (now - lastHap < 300) return;           /* idempotent: rapid repeats fire once */
+    lastHap = now;
+    var ua = navigator.userActivation;
+    if (navigator.vibrate && (!ua || ua.hasBeenActive)) { try { navigator.vibrate(h.v); } catch (e) {} }
+    if (ring.animate) ring.animate(S.rm ? [{ opacity: .7 }, { opacity: 0 }] : [{ opacity: .75, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(1.025)' }], { duration: 420, easing: EOUT });
+    hlogAdd('<b>' + h.l + '</b> <span>· ' + esc(why) + '</span><code>' + h.api + '</code>');
+  }
+  function noHaptic(why) { hlogAdd('<b>No haptic</b> <span>· ' + esc(why) + '</span>', 'no'); }
+  var NOTES = {
+    idle: '<b>Pick a state.</b> Everything in the phone also works by hand: tap Done, or any later item for its options.',
+    cue: '<b>Decision:</b> the warning comes five minutes before the end, as two soft taps and one highlight that names what\'s next, so the switch starts before the deadline. The fill stays; only the glow moves, once. <i>§05, transitions.</i>',
+    done: '<b>Decision:</b> finishing gets one success tap and five seconds to undo. No confetti, no counter: celebration is a promise the next miss has to break. The gap that follows still gets an answer: "Free until 10:50". <i>§07.</i>',
+    miss: '<b>Decision:</b> a missed item gets no red, no "overdue" and no haptic. It leaves the timeline as a question that already has an answer: the next gap that fits. <i>§15, step 4: reflow, not accusation.</i>',
+    over: '<b>Decision:</b> going over isn\'t an error, so nothing fires. The app offers two choices and shows the consequence of each before you pick. Fixed times never move. <i>§05: hyperfocus overrun, unaddressed today.</i>',
+    offline: '<b>Decision:</b> the day lives on the phone, so losing signal changes one chip, not the screen. Try moving something: it still works and says it\'s waiting. Then press <b>Reconnect</b>. <i>§12: sync failures.</i>',
+    sync: '<b>Decision:</b> on reconnect, a calendar change made elsewhere is a choice, never a silent overwrite. Both versions are kept until you pick. <i>§12.</i>',
+    ai: '<b>Decision:</b> the AI\'s output is a draft. Estimates are ranges, each labelled "from your history" or "a guess", because this user can\'t sanity-check a single number. Nothing is added until you agree. <i>§12, §15 step 6.</i>',
+    slow: '<b>Decision:</b> progress is real steps arriving, not a fake percentage. When it stalls it says so, confirms the day is unchanged, and offers a way out. <i>§01: reliability is the feature.</i>',
+    back: '<b>Decision:</b> no backlog, no broken streak, no count of what was missed. Last week is archived and today starts from now. <i>§07, §15 step 9.</i>'
+  };
+  function setNote(k) { note.innerHTML = NOTES[k] || NOTES.idle; }
+
+  /* ── rendering: keyed nodes + FLIP ── */
+  var nodes = {};
+  function node(key, cls, html, attrs) {
+    var el = nodes[key];
+    if (!el) { el = document.createElement('div'); el.setAttribute('data-key', key); nodes[key] = el; }
+    el.className = cls; el.innerHTML = html;
+    ['role', 'aria-label', 'tabindex'].forEach(function (a) { el.removeAttribute(a); });
+    if (attrs) for (var a in attrs) el.setAttribute(a, attrs[a]);
+    return el;
+  }
+  function flagsHtml(a) {
+    var f = '';
+    if (a.fixed) f += '<span class="flag">' + ico('lock') + 'Fixed time</span>';
+    if (a.pend) f += '<span class="flag pend">' + ico('cloud') + 'Not synced yet</span>';
+    if (a.steps) f += '<span class="flag">' + a.steps + ' steps</span>';
+    return f ? '<span class="flags">' + f + '</span>' : '';
+  }
+  function labelFor(a) {
+    return a.n + ', ' + fmt(a.s) + ' to ' + fmt(a.s + a.d) + ', ' + spoken(a.d) + (a.fixed ? ', fixed time' : '') + (a.pend ? ', not synced yet' : '');
+  }
+  function nowSentence(C) {
+    C = C || classify();
+    if (C.now) {
+      var a = C.now, left = a.s + a.d - S.t;
+      return 'Now: ' + a.n + (left < 0 ? ', ' + spoken(-left) + ' over' : ', ' + spoken(left) + ' left, until ' + fmt(a.s + a.d)) + '.' + (C.next[0] ? ' Next: ' + C.next[0].n + ' at ' + fmt(C.next[0].s) + '.' : '');
+    }
+    return C.next[0] ? 'Free until ' + fmt(C.next[0].s) + '. Next: ' + C.next[0].n + '.' : 'Nothing else planned today.';
+  }
+
+  function build() {
+    var L = [], C = classify();
+    if (S.mode === 'back') {
+      L.push(node('back', 'blank',
+        '<span class="ic c-blue">' + ico('sun') + '</span><b>Welcome back.</b>' +
+        '<p>Last week\'s plan is in History. There\'s nothing to catch up on: today starts from now.</p>' +
+        '<button class="b pri" type="button" data-k="routine">Start from your usual Tuesday</button>' +
+        '<button class="b" type="button" data-k="empty">Start with nothing planned</button>'));
+      return L;
+    }
+    if (!S.acts.length) {
+      L.push(node('empty', 'blank',
+        '<span class="ic c-green">' + ico('spark') + '</span><b>Nothing planned yet.</b>' +
+        '<p>Start from a routine, or add one thing. One is enough.</p>' +
+        '<button class="b pri" type="button" data-k="routine">Use your Tuesday routine</button>' +
+        '<button class="b" type="button" data-k="ai">Ask for a plan</button>'));
+      return L;
+    }
+    if (C.earlier.length) {
+      var dn = C.earlier.filter(function (a) { return a.st === 'done'; }).length, sk = C.earlier.length - dn;
+      L.push(node('sum', '', '<button class="sum" type="button" data-k="earlier" aria-expanded="' + S.open + '"><span>Earlier today · ' + dn + ' done' + (sk ? ', ' + sk + ' let go' : '') + '</span>' + ico('chev') + '</button>'));
+      if (S.open) C.earlier.forEach(function (a) {
+        L.push(node(a.id, 'donerow' + (a.st === 'skip' ? ' skip' : ''), (a.st === 'done' ? ico('ok') : ico('undo')) + '<b>' + esc(a.n) + '</b><span>' + (a.st === 'done' ? 'Done' : 'Let go') + ' · ' + fmt(a.s) + '</span>',
+          { role: 'group', 'aria-label': a.n + ', ' + (a.st === 'done' ? 'done' : 'let go today') }));
+      });
+    }
+    L.push(node('h-now', 'hd-wrap', '<h3 class="hd">Now</h3>'));
+    if (C.now) L.push(nowCard(C.now, C.next[0]));
+    else L.push(node('free', 'card free', '<b>' + (C.next[0] ? 'Free until ' + fmt(C.next[0].s) : 'Nothing else today') + '</b><span>' + (C.next[0] ? 'Next: ' + esc(C.next[0].n) : 'That\'s the whole plan.') + '</span>',
+      { role: 'group', 'aria-label': nowSentence(C) }));
+    if (C.tray.length) {
+      L.push(node('h-tray', 'hd-wrap', '<h3 class="hd">Didn\'t happen</h3>'));
+      C.tray.forEach(function (a) { L.push(trayCard(a)); });
+    }
+    if (C.next.length) {
+      L.push(node('h-next', 'hd-wrap', '<h3 class="hd">Later today</h3>'));
+      C.next.forEach(function (a) {
+        L.push(node(a.id, 'card row',
+          '<div class="tm"><b>' + fmt(a.s) + '</b><span>' + dur(a.d) + '</span></div><span class="ic c-' + a.c + '">' + ico(a.ic) + '</span>' +
+          '<div class="nm"><b>' + esc(a.n) + '</b>' + flagsHtml(a) + '</div>' +
+          '<button class="mo" type="button" data-k="more:' + a.id + '" aria-label="Options for ' + esc(a.n) + ', ' + fmt(a.s) + '">' + ico('more') + '</button>',
+          { role: 'group', 'aria-label': labelFor(a) }));
+      });
+    }
+    L.push(node('end', 'endnote', C.next.length ? 'Day ends ' + fmt(C.next[C.next.length - 1].s + C.next[C.next.length - 1].d) + '. Nothing after.' : ''));
+    return L;
+  }
+  function nowCard(a, nx) {
+    var end = a.s + a.d, left = end - S.t, over = left < 0, html =
+      '<span class="glow" aria-hidden="true"></span>' +
+      '<div class="now-top"><span class="kick">' + (over ? ico('hour', 'chk') + ' ' : '') + (over ? 'Running over' : 'In progress') + '</span>' + flagsHtml(a) + '</div>' +
+      '<div class="now-h"><span class="ic c-' + a.c + '">' + ico(a.ic) + '</span><div><b>' + esc(a.n) + '</b><span>' + fmt(a.s) + ' – ' + fmt(end) + '</span></div></div>' +
+      '<div class="bar" aria-hidden="true"><i style="transform:scaleX(' + Math.max(0, Math.min(1, left / a.d)).toFixed(3) + ')"></i><s></s></div>' +
+      '<div class="now-m"><span class="left' + (left <= 5 && left >= 0 ? ' soon' : '') + '">' + (over ? dur(-left) + ' over' : dur(left) + ' left') + '</span>' +
+      (nx ? '<span>Next: ' + esc(nx.n) + ', ' + fmt(nx.s) + '</span>' : '') + '</div>';
+    if (over) {
+      var A = clone(S.acts), keepEnd = S.t + 15; find(a.id, A).d = keepEnd - a.s;
+      var mk = shiftPlan(A, keepEnd, a.id);
+      var B = clone(S.acts); find(a.id, B).st = 'done';
+      var mw = shiftPlan(B, S.t, a.id);
+      S.plans = { keep: A, wrap: B, mk: mk, mw: mw };
+      html += '<div class="q"><p><b>' + dur(-left) + ' over.</b> No problem. Pick what happens next.</p>' +
+        '<div class="opt"><button class="b pri" type="button" data-k="keep:' + a.id + '">Keep going 15 min</button><small>' + esc(consText(mk, A)) + '</small></div>' +
+        '<div class="opt"><button class="b" type="button" data-k="wrap:' + a.id + '">Wrap up now</button><small>' + esc(consText(mw, B)) + '</small></div></div>';
+    } else {
+      html += '<div class="acts"><button class="b pri" type="button" data-k="done:' + a.id + '"><svg class="chk" viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path pathLength="1" d="M6.5 10.3l2.4 2.4 4.6-5"/></svg>Done</button>' +
+        '<button class="b" type="button" data-k="more:' + a.id + '" aria-label="More options for ' + esc(a.n) + '">More</button></div>';
+    }
+    return node(a.id, 'card now c-' + a.c + (over ? ' over' : ''), html, { role: 'group', 'aria-label': nowSentence() });
+  }
+  function trayCard(a) {
+    var g = gapIn(S.acts, a.d, S.t, a.id), fits = g + a.d <= DAY_END;
+    return node(a.id, 'card tray',
+      '<div class="th"><span class="ic c-' + a.c + '">' + ico(a.ic) + '</span><div><b>' + esc(a.n) + ' didn\'t happen.</b><span>Was ' + fmt(a.s) + ' · ' + dur(a.d) + '</span></div></div>' +
+      '<p>' + (fits ? 'That\'s fine. There\'s a ' + dur(a.d) + ' gap at ' + fmt(g) + '.' : 'That\'s fine. Today is full, so tomorrow is the next free slot.') + '</p>' +
+      '<div class="acts"><button class="b pri" type="button" data-k="fit:' + a.id + '">' + (fits ? 'Fit it in at ' + fmt(g) : 'Move to tomorrow') + '</button>' +
+      '<button class="b" type="button" data-k="go:' + a.id + '">Let it go today</button></div>',
+      { role: 'group', 'aria-label': a.n + ' didn\'t happen. Was ' + fmt(a.s) + '.' + (fits ? ' A ' + spoken(a.d) + ' gap is free at ' + fmt(g) + '.' : '') });
+  }
+
+  function render() {
+    var first = {}, k, br = body.getBoundingClientRect();
+    for (k in nodes) if (nodes[k].parentNode === body) first[k] = nodes[k].getBoundingClientRect();
+    var fa = document.activeElement, fk = fa && body.contains(fa) && fa.getAttribute('data-k');
+    var L = build(), placed = {};
+    L.forEach(function (el) { placed[el.getAttribute('data-key')] = 1; });
+    body.replaceChildren.apply(body, L);
+    for (k in first) if (!placed[k]) ghost(nodes[k], first[k], br);
+    var moved = 0;
+    L.forEach(function (el) {
+      var key = el.getAttribute('data-key'), a = first[key];
+      if (!a) { enter(el); return; }
+      var b = el.getBoundingClientRect(), dy = a.top - b.top;
+      if (Math.abs(dy) > 1) { slide(el, dy, Math.min(moved, 4)); moved++; }
+    });
+    if (fk) { var t = body.querySelector('[data-k="' + fk + '"]'); if (t) t.focus({ preventScroll: true }); else if (S.focusNext) focusKey(S.focusNext); }
+    else if (S.focusNext) focusKey(S.focusNext);
+    S.focusNext = null;
+    paintTop();
+  }
+  function focusKey(sel) { var t = body.querySelector(sel); if (t) t.focus({ preventScroll: true }); }
+  function ghost(el, r, br) {
+    if (!el.animate) return;
+    var g = el.cloneNode(true); g.removeAttribute('data-key'); g.setAttribute('aria-hidden', 'true'); g.inert = true;
+    g.style.cssText = 'position:absolute;margin:0;pointer-events:none;top:' + (r.top - br.top + body.scrollTop) + 'px;left:' + (r.left - br.left) + 'px;width:' + r.width + 'px';
+    body.appendChild(g);
+    g.animate(S.rm ? [{ opacity: 1 }, { opacity: 0 }] : [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(.98)' }], { duration: 180, easing: EASE, fill: 'forwards' })
+      .onfinish = function () { g.remove(); };
+  }
+  function enter(el) {
+    if (!el.animate) return;
+    el.animate(S.rm ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: S.rm ? 200 : 240, easing: EOUT });
+  }
+  function slide(el, dy, i) {
+    if (!el.animate) return;
+    if (S.rm) el.animate([{ opacity: .35 }, { opacity: 1 }], { duration: 200, easing: EASE });
+    else el.animate([{ transform: 'translateY(' + dy + 'px)' }, { transform: 'none' }], { duration: 360, easing: EASE, delay: i * 30, fill: 'backwards' });
+  }
+
+  /* partial paint for clock ticks: no re-layout of the list */
+  function paintTop() {
+    clk.textContent = S.mode === 'back' ? '09:00 · a week later' : fmt(S.t);
+    var pend = S.acts.filter(function (a) { return a.pend; }).length, h;
+    if (S.sync === 'off') h = ico('off') + 'Offline · ' + (pend ? pend + ' change' + (pend > 1 ? 's' : '') + ' saved here' : 'saved on this phone');
+    else if (S.sync === 'syncing') h = ico('sync', 'spin') + 'Syncing ' + (pend ? pend + ' change' + (pend > 1 ? 's' : '') : '') + '…';
+    else if (S.sync === 'conf') h = ico('warn') + 'One change needs you';
+    else h = ico('ok') + 'Synced';
+    chip.innerHTML = h; chip.className = 'chip ' + S.sync;
+    chip.setAttribute('aria-label', chip.textContent);
+  }
+  function tick() {
+    var C = classify();
+    if (!C.now || S.over) return render();
+    var el = nodes[C.now.id]; if (!el || !el.isConnected) return render();
+    var left = C.now.s + C.now.d - S.t, i = el.querySelector('.bar i'), l = el.querySelector('.left');
+    if (i) i.style.transform = 'scaleX(' + Math.max(0, left / C.now.d).toFixed(3) + ')';
+    if (l) { l.textContent = dur(Math.max(0, left)) + ' left'; l.classList.toggle('soon', left <= 5); }
+    el.setAttribute('aria-label', nowSentence(C));
+    paintTop();
+  }
+
+  /* ── toast with undo; pauses while hovered, focused or the tab is hidden ── */
+  var tT = 0, tLeft = 0, tStart = 0, tUndo = null, tOn = false, tPaused = false;
+  function toast(msg, undo) {
+    toastEl.innerHTML = '<span>' + esc(msg) + '</span>' + (undo ? '<button class="tb" type="button" data-t="undo">Undo</button>' : '');
+    tUndo = undo || null; tOn = true; tPaused = false; tLeft = 5000;
+    toastEl.classList.add('on'); tResume();
+  }
+  function tHide() { clearTimeout(tT); tOn = false; toastEl.classList.remove('on'); tUndo = null; }
+  function tResume() { if (!tOn) return; tPaused = false; clearTimeout(tT); tStart = Date.now(); tT = setTimeout(tHide, Math.max(1200, tLeft)); }
+  function tPause() { if (!tOn || tPaused) return; tPaused = true; clearTimeout(tT); tLeft -= Date.now() - tStart; }
+  toastEl.addEventListener('pointerenter', tPause); toastEl.addEventListener('pointerleave', tResume);
+  toastEl.addEventListener('focusin', tPause); toastEl.addEventListener('focusout', tResume);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) tPause(); else tResume(); });
+  toastEl.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-t="undo"]') || !tUndo) return;
+    var u = tUndo; tHide(); u();
+  });
+  function snap() { var s = { acts: clone(S.acts), over: S.over, t: S.t }; return function () { S.acts = s.acts; S.over = s.over; S.t = s.t; render(); haptic('light', 'undo'); say('Undone. ' + nowSentence()); }; }
+  function mark(a) { if (S.offline && a) a.pend = true; }
+
+  /* ── sheet ── */
+  var opener = null;
+  function openSheet(html) {
+    opener = document.activeElement;
+    sheet.innerHTML = '<div class="grab" aria-hidden="true"></div>' + html;
+    sheet.setAttribute('aria-hidden', 'false'); sheet.classList.add('on'); scrim.classList.add('on');
+    body.inert = true; top.inert = true; toastEl.inert = true;
+    setTimeout(function () { var f = sheet.querySelector('input, button'); if (f) f.focus({ preventScroll: true }); }, 40);
+  }
+  function closeSheet(keepFocus) {
+    if (!sheet.classList.contains('on')) return;
+    sheet.classList.remove('on'); scrim.classList.remove('on'); sheet.setAttribute('aria-hidden', 'true');
+    body.inert = false; top.inert = false; toastEl.inert = false;
+    if (!keepFocus && opener && opener.isConnected) opener.focus({ preventScroll: true });
+    opener = null;
+  }
+  scrim.addEventListener('click', function () { closeSheet(); });
+  ph.addEventListener('keydown', function (e) {
+    if (!sheet.classList.contains('on')) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeSheet(); return; }
+    if (e.key === 'Tab') {
+      var f = sheet.querySelectorAll('button, input'); if (!f.length) return;
+      var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    }
+  });
+  function itemSheet(id) {
+    var a = find(id); if (!a) return;
+    var isNow = curId() === id, g = gapIn(S.acts, a.d, a.s + 30, a.id);
+    openSheet('<h4 id="sh-h">' + esc(a.n) + '</h4><p class="sub">' + fmt(a.s) + ' – ' + fmt(a.s + a.d) + (a.fixed ? ' · fixed time' : '') + '</p>' +
+      (isNow ? '<button class="b pri" type="button" data-s="done:' + id + '">' + ico('ok', 'chk') + 'Mark done</button>' : '') +
+      (!a.fixed && !isNow && g + a.d <= DAY_END ? '<button class="b" type="button" data-s="later:' + id + '">' + ico('chev', 'chk') + 'Move later<small>' + fmt(g) + '</small></button>' : '') +
+      (a.fixed && !isNow ? '<p class="meta">' + ico('lock', 'chk') + ' Fixed times don\'t move automatically. Change it in your calendar.</p>' : '') +
+      '<button class="b" type="button" data-s="skip:' + id + '">' + ico('undo', 'chk') + 'Let it go today</button>' +
+      '<button class="b ctr" type="button" data-s="close">Cancel</button>');
+  }
+  sheet.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-s]'); if (!b) return;
+    var p = b.getAttribute('data-s').split(':'), k = p[0], id = p[1];
+    if (k === 'close') return closeSheet();
+    if (SH[k]) SH[k](id, b);
+  });
+
+  /* ── actions ── */
+  var ACT = {
+    earlier: function () { S.open = !S.open; S.focusNext = '[data-k="earlier"]'; render(); },
+    more: function (id) { itemSheet(id); },
+    done: function (id, b) {
+      var a = find(id); if (!a || a.st !== 'todo' || b.classList.contains('did')) return;
+      b.classList.add('did'); haptic('success', a.n + ' done');
+      setTimeout(function () {
+        var u = snap(); a.st = 'done'; mark(a); if (S.over === id) S.over = null;
+        S.focusNext = '.now .b.pri, .free, .tray .b.pri';
+        render(); toast(a.n + ' done', u); say(a.n + ' done. ' + nowSentence());
+        var fr = nodes.free; if (fr && fr.isConnected) { fr.tabIndex = -1; fr.focus({ preventScroll: true }); }
+      }, S.rm ? 60 : 300);
+    },
+    fit: function (id) {
+      var a = find(id); if (!a) return;
+      var u = snap(), g = gapIn(S.acts, a.d, S.t, a.id);
+      if (g + a.d > DAY_END) { a.st = 'skip'; render(); toast(a.n + ' moved to tomorrow', u); say(a.n + ' moved to tomorrow.'); haptic('light', 'moved to tomorrow'); return; }
+      a.s = g; mark(a); S.focusNext = '[data-k="more:' + id + '"]';
+      render(); haptic('light', a.n + ' landed at ' + fmt(g)); toast(a.n + ' is at ' + fmt(g), u); say(a.n + ' moved to ' + fmt(g) + '.');
+    },
+    go: function (id) {
+      var a = find(id); if (!a) return;
+      var u = snap(); a.st = 'skip'; mark(a); S.focusNext = '.now .b.pri';
+      render(); haptic('select', 'let go: a decision, not a failure'); toast(a.n + ' is off today', u); say('Okay. ' + a.n + ' is off today.');
+    },
+    keep: function (id) {
+      var u = snap(), m = S.plans.mk; S.acts = S.plans.keep; S.over = null; m.forEach(function (x) { mark(find(x.id)); });
+      S.focusNext = '.now .b.pri'; render(); haptic('select', 'keep going');
+      var msg = m.length ? consText(m, S.acts) : 'Nothing else moves.'; toast(msg, u); say(find(id).n + ' runs to ' + fmt(S.t + 15) + '. ' + msg);
+    },
+    wrap: function (id) {
+      var u = snap(), m = S.plans.mw, n = find(id).n; S.acts = S.plans.wrap; S.over = null; m.forEach(function (x) { mark(find(x.id)); });
+      S.focusNext = '.now .b.pri'; render(); haptic('success', n + ' wrapped up');
+      var msg = n + ' done. ' + (m.length ? consText(m, S.acts) : ''); toast(msg, u); say(msg);
+    },
+    routine: function () { startRoutine(); },
+    empty: function () { S.mode = 'day'; S.acts = []; render(); say('Nothing planned yet. Start from a routine, or add one thing.'); },
+    ai: function () { aiSheet(false, runTok); }
+  };
+  var SH = {
+    done: function (id) { closeSheet(true); var b = body.querySelector('[data-k="done:' + id + '"]'); if (b) ACT.done(id, b); },
+    later: function (id) {
+      var a = find(id); closeSheet(true); if (!a) return;
+      var u = snap(), g = gapIn(S.acts, a.d, a.s + 30, a.id); a.s = g; mark(a);
+      S.focusNext = '[data-k="more:' + id + '"]'; render(); haptic('light', a.n + ' landed at ' + fmt(g));
+      toast(a.n + ' moved to ' + fmt(g) + (S.offline ? ', saved on this phone' : ''), u); say(a.n + ' moved to ' + fmt(g) + '.' + (S.offline ? ' Saved on this phone, not synced yet.' : ''));
+    },
+    skip: function (id) { closeSheet(true); ACT.go(id); },
+    calendar: function () { resolve(true); }, mine: function () { resolve(false); },
+    draft: function () { aiRun(runTok); }, stop: function () { aiStop('Stopped. Your day hasn\'t changed.'); },
+    wait: function () { S.slowWait = true; }, self: function () { aiStop('Okay. Nothing was added.'); },
+    add: function () { aiAdd(); }, discard: function () { aiStop('Draft discarded. Your day hasn\'t changed.'); }
+  };
+  body.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-k]');
+    if (!b) { var r = e.target.closest('.row'); if (r) itemSheet(r.getAttribute('data-key')); return; }
+    var p = b.getAttribute('data-k').split(':');
+    if (ACT[p[0]]) ACT[p[0]](p[1], b);
+  });
+  ph.addEventListener('focusin', function (e) {
+    var g = e.target.closest('[aria-label]');
+    if (g && ph.contains(g) && g !== ph) srOut.textContent = (e.target.getAttribute('aria-label') || e.target.textContent.trim()) + (g !== e.target && g.getAttribute('role') === 'group' ? '. In: ' + g.getAttribute('aria-label') : '');
+  });
+
+  /* ── sync ── */
+  function resolve(useCal) {
+    var a = find('ca'); closeSheet(true);
+    if (useCal && a) a.s = 705;
+    S.acts.forEach(function (x) { x.pend = false; });
+    S.sync = 'ok'; render(); haptic('select', useCal ? 'kept the calendar\'s time' : 'kept this phone\'s time');
+    var msg = 'Call with Sam is at ' + fmt(a ? a.s : 690) + '. Everything is synced.';
+    toast(msg); say(msg);
+  }
+  function reconnect(tok) {
+    S.offline = false; S.sync = 'syncing'; paintTop(); setOffBtn(); setNote('sync'); noHaptic('reconnecting: the system\'s job, not the user\'s');
+    say('Back online. Syncing.');
+    setTimeout(function () {
+      if (tok !== runTok) return;
+      S.sync = 'conf'; paintTop();
+      openSheet('<h4 id="sh-h">Call with Sam changed</h4><p class="sub">Your calendar moved it while you were offline. Nothing is overwritten until you pick.</p>' +
+        '<div class="vs"><button class="b pri" type="button" data-s="calendar">11:45 – 12:15<span>From your calendar</span></button>' +
+        '<button class="b" type="button" data-s="mine">11:30 – 12:00<span>On this phone</span></button></div>');
+      say('Call with Sam changed in your calendar while you were offline. Pick a version.');
+      noHaptic('a conflict is information, not an error');
+    }, 1400);
+  }
+
+  /* ── AI draft ── */
+  var STEPS = [
+    { n: 'Clear the kitchen surfaces', e: '15–20 min', w: 'From your last four tidies' },
+    { n: 'Run a wash', e: '10 min', w: 'Then a 50 min cycle you don\'t have to watch' },
+    { n: 'Hoover the living room', e: '20–30 min', w: 'A guess: no history yet', g: 1 },
+    { n: 'Recycling out', e: '5 min', w: 'A guess', g: 1 }
+  ];
+  function aiSheet(slow, tok) {
+    S.slow = slow; S.slowWait = false;
+    openSheet('<h4 id="sh-h">Ask for a plan</h4><p class="sub">Nothing is added to your day until you say so.</p>' +
+      '<label for="ai-in">What needs doing?</label><input id="ai-in" value="sort out the flat" autocomplete="off">' +
+      '<button class="b pri ctr" type="button" data-s="draft">Draft a plan</button><button class="b ctr" type="button" data-s="discard">Cancel</button>');
+  }
+  function aiRun(tok) {
+    var q = ($('#ai-in', sheet) || {}).value || 'sort out the flat', got = 0, myTok = ++S.aiTok;
+    function frame(stalled) {
+      var li = '';
+      for (var i = 0; i < STEPS.length; i++) {
+        if (i < got) li += '<li><b>' + esc(STEPS[i].n) + '</b><em>' + STEPS[i].e + '</em><small' + (STEPS[i].g ? ' class="guess"' : '') + '>' + esc(STEPS[i].w) + '</small></li>';
+        else if (i === got && !stalled) li += '<li aria-hidden="true"><span><span class="sk"></span><span class="sk w2"></span></span><em></em></li>';
+      }
+      sheet.innerHTML = '<div class="grab" aria-hidden="true"></div><h4 id="sh-h">Drafting “' + esc(q) + '”</h4>' +
+        '<p class="sub">' + (stalled ? 'Still going.' : 'Step ' + (got + 1) + ' arriving…') + ' Nothing is added until you agree.</p>' +
+        (stalled ? '<p class="warnbox">This is taking longer than usual. Your day hasn\'t changed.</p>' : '') +
+        '<ul class="steps">' + li + '</ul>' +
+        (stalled ? '<button class="b pri ctr" type="button" data-s="wait">Keep waiting</button><button class="b ctr" type="button" data-s="self">Write it myself</button>'
+                 : '<button class="b ctr" type="button" data-s="stop">Stop</button>');
+      var f = sheet.querySelector('button'); if (f) f.focus({ preventScroll: true });
+    }
+    setNote(S.slow ? 'slow' : 'ai'); frame(false); say('Drafting a plan. Nothing is added until you agree.');
+    function next() {
+      if (myTok !== S.aiTok || tok !== runTok || !sheet.classList.contains('on')) return;
+      if (S.slow && got === 2 && !S.slowWait) {
+        frame(true); say('This is taking longer than usual. Your day hasn\'t changed.'); noHaptic('slowness isn\'t the user\'s doing');
+        var wait = setInterval(function () {
+          if (myTok !== S.aiTok || tok !== runTok || !sheet.classList.contains('on')) return clearInterval(wait);
+          if (S.slowWait) { clearInterval(wait); S.slow = false; frame(false); setTimeout(next, 700); }
+        }, 120);
+        return;
+      }
+      got++;
+      if (got < STEPS.length) { frame(false); setTimeout(next, S.slow && got === 2 ? 3000 : 650); }
+      else draftDone(q);
+    }
+    setTimeout(next, 700);
+  }
+  function draftDone(q) {
+    var g = gapIn(S.acts, 60, 900, null);
+    S.aiSlot = g;
+    sheet.innerHTML = '<div class="grab" aria-hidden="true"></div><h4 id="sh-h">Draft: ' + esc(q) + '</h4>' +
+      '<p class="sub">About 50–65 min of doing. Ranges, because a single number would hide the guesswork.</p><ul class="steps">' +
+      STEPS.map(function (s) { return '<li><b>' + esc(s.n) + '</b><em>' + s.e + '</em><small' + (s.g ? ' class="guess"' : '') + '>' + esc(s.w) + '</small></li>'; }).join('') + '</ul>' +
+      '<button class="b pri ctr" type="button" data-s="add">Add at ' + fmt(g) + '</button><button class="b ctr" type="button" data-s="discard">Discard</button>';
+    var f = sheet.querySelector('button'); if (f) f.focus({ preventScroll: true });
+    haptic('light', 'draft ready: something the user is waiting for'); say('Draft ready: 4 steps, about 50 to 65 minutes. Add at ' + fmt(g) + ', or discard.');
+  }
+  function aiAdd() {
+    closeSheet(true); S.aiTok++;
+    var u = snap(), g = S.aiSlot || gapIn(S.acts, 60, 900, null);
+    S.acts.push({ id: 'fl' + Date.now(), n: 'Sort out the flat', s: g, d: 60, ic: 'spark', c: 'blue', st: 'todo', steps: 4 });
+    mark(S.acts[S.acts.length - 1]); render(); haptic('light', 'added at ' + fmt(g));
+    toast('Added at ' + fmt(g), u); say('Sort out the flat added at ' + fmt(g) + ', 4 steps.');
+    var el = body.querySelector('.row:last-of-type'); if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest', behavior: S.rm ? 'auto' : 'smooth' });
+  }
+  function aiStop(msg) { S.aiTok++; closeSheet(); toast(msg); say(msg); }
+
+  /* ── routine & re-entry ── */
+  function startRoutine() {
+    var t = S.mode === 'back' ? 540 : S.t;
+    S.mode = 'day'; S.t = t;
+    var all = baseActs().map(function (a) { a.st = 'todo'; return a; });
+    var dropped = all.filter(function (a) { return a.s + a.d <= t; }).map(function (a) { return a.n; });
+    S.acts = all.filter(function (a) { return a.s + a.d > t; });
+    render();
+    var msg = 'Your Tuesday starts from ' + fmt(t) + '.' + (dropped.length ? ' ' + dropped.join(' and ') + ' were left out, not marked missed.' : '');
+    toast(msg); say(msg);
+  }
+
+  /* ── scenarios ── */
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function reset(keepNote) {
+    runTok++; S.aiTok = (S.aiTok || 0) + 1;
+    closeSheet(true); tHide();
+    S.t = 620; S.acts = baseActs(); S.mode = 'day'; S.over = null; S.open = false; S.offline = false; S.sync = 'ok';
+    setOffBtn(); render(); body.scrollTop = 0;
+    if (!keepNote) { setNote('idle'); pressed(null); }
+  }
+  function setOffBtn() {
+    $('#off-l').textContent = S.offline ? 'Reconnect' : 'Lose signal';
+    $('#off-e').textContent = S.offline ? 'See what happens to a conflict' : 'Everything still works';
+  }
+  function pressed(btn) {
+    [].forEach.call(document.querySelectorAll('.scn button'), function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+  }
+  var SC = {
+    cue: async function (tok) {
+      say('Emails, 25 minutes left.');
+      for (var t = 621; t <= 640; t++) { await sleep(70); if (tok !== runTok) return; S.t = t; tick(); }
+      var el = nodes.em, gl = el && el.querySelector('.glow');
+      if (gl && gl.animate && !S.rm) gl.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 700, easing: 'ease-in-out' });
+      haptic('soft2', '5 min left: the transition starts now, before the deadline');
+      say('Emails, 5 minutes left, until 10:45. Next: Tidy desk at 10:50.');
+    },
+    done: async function (tok) {
+      S.t = 640; render(); await sleep(450); if (tok !== runTok) return;
+      var b = body.querySelector('[data-k="done:em"]'); if (b) ACT.done('em', b);
+    },
+    miss: async function (tok) {
+      find('st').st = 'todo'; render(); noHaptic('Stretch was missed: not the user\'s action, so no buzz');
+      say('Stretch didn\'t happen. A 10 minute gap is free at 11:20.');
+    },
+    over: async function (tok) {
+      for (var t = 621; t <= 657; t++) { await sleep(t < 645 ? 25 : 60); if (tok !== runTok) return; S.t = t; if (t === 645) S.over = 'em'; t >= 645 ? render() : tick(); }
+      noHaptic('running over is not an error: the app waits to be asked');
+      say('Emails, 12 minutes over. Keep going 15 minutes, and Tidy desk moves to 12:00 after Call with Sam. Or wrap up now, and Tidy desk starts now.');
+    },
+    offline: async function (tok) {
+      S.offline = true; S.sync = 'off'; render(); setOffBtn(); noHaptic('lost signal: the system\'s problem, not the user\'s');
+      say('Offline. Your plan is saved on this phone, and changes will sync later.');
+    },
+    ai: async function (tok) { aiSheet(false, tok); },
+    slow: async function (tok) { aiSheet(true, tok); setTimeout(function () { if (tok === runTok && sheet.classList.contains('on')) SH.draft(); }, 500); },
+    back: async function (tok) { S.mode = 'back'; render(); noHaptic('coming back is not an event to mark'); say('Welcome back. Last week\'s plan is in History. Today starts from now.'); }
+  };
+  document.querySelector('.ctl').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-sc]'); if (!b) return;
+    var k = b.getAttribute('data-sc');
+    if (k === 'reset') { reset(); say('Day reset. ' + nowSentence()); return; }
+    if (k === 'offline' && S.offline) { pressed(b); reconnect(runTok); return; }
+    reset(true); pressed(b); setNote(k);
+    if (matchMedia('(max-width: 880px)').matches) ph.scrollIntoView({ block: 'center', behavior: S.rm ? 'auto' : 'smooth' });
+    SC[k](runTok);
+  });
+
+  /* ── access switches ── */
+  [].forEach.call(document.querySelectorAll('[data-sw]'), function (b) {
+    var k = b.getAttribute('data-sw');
+    b.setAttribute('aria-checked', S[k] ? 'true' : 'false');
+    b.addEventListener('click', function () {
+      S[k] = !S[k]; b.setAttribute('aria-checked', S[k] ? 'true' : 'false');
+      ph.classList.toggle(k, S[k] && k !== 'hap');
+      if (k === 'hap') hlogAdd('<b>Haptics ' + (S.hap ? 'on' : 'off') + '</b> <span>· a separate switch from sound and visual cues</span>');
+    });
+  });
+  ph.classList.toggle('rm', S.rm);
+
+  var canVibrate = 'vibrate' in navigator && !/iPhone|iPad|iPod/.test(navigator.userAgent);
+  $('#hnote').textContent = canVibrate
+    ? 'This device can vibrate, so the haptics play for real (Android). The iOS API each one maps to is listed under it.'
+    : 'A web page can\'t trigger haptics here, so the log shows what would fire on the phone and the frame pulses instead.';
+
+  reset();
+})();
+</script>
+</body>
+</html>
