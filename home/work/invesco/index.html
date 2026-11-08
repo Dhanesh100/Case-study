@@ -30,13 +30,14 @@ a{color:inherit;text-decoration:none}
 .t .ul li{margin:0 0 var(--li-gap,0)}
 .t .ul li:last-child{margin-bottom:0}
 a.lk{cursor:pointer;transition:transform .25s ease,opacity .25s ease}
-a.lk:hover{opacity:.86}
+@media (hover:hover) and (pointer:fine){a.lk:hover{opacity:.86}}
 /* Next Project card — the home page's hover: grow, lift, float; never a wash */
-a.lk.nx:hover{opacity:1}
+@media (hover:hover) and (pointer:fine){a.lk.nx:hover{opacity:1}}
 .nx{transform-origin:50% 0;transition:transform .6s cubic-bezier(.2,.75,.2,1),filter .6s cubic-bezier(.2,.75,.2,1);
     filter:drop-shadow(0 0 0 rgba(0,0,0,0)) drop-shadow(0 0 0 rgba(0,0,0,0))}
-a.nx:hover,a.nx:focus-visible{transform:translateY(-8px) scale(1.07);
-    filter:drop-shadow(0 34px 34px rgba(0,0,0,.34)) drop-shadow(0 8px 10px rgba(0,0,0,.18));z-index:2}
+a.nx:focus-visible{transform:translateY(-8px) scale(1.07);
+    filter:drop-shadow(0 34px 34px rgba(0,0,0,.34)) drop-shadow(0 8px 10px rgba(0,0,0,.18));z-index:2}@media (hover:hover) and (pointer:fine){a.nx:hover{transform:translateY(-8px) scale(1.07);
+    filter:drop-shadow(0 34px 34px rgba(0,0,0,.34)) drop-shadow(0 8px 10px rgba(0,0,0,.18));z-index:2}}
 a.nx:focus-visible{outline:none}
 .cta{position:absolute;right:24px;bottom:24px;z-index:3;height:56px;min-width:56px;display:inline-flex;align-items:center;
      justify-content:flex-end;gap:0;padding:0 18px;border-radius:64px;background:#151515;color:#fff;
@@ -46,12 +47,12 @@ a.nx:focus-visible{outline:none}
        font:500 16px/24px "PP Neue Montreal",-apple-system,"Helvetica Neue",Arial,sans-serif;letter-spacing:.64px;
        transition:max-width .45s cubic-bezier(.2,.75,.2,1),opacity .3s ease .05s}
 .cta svg{width:20px;height:20px;flex:0 0 20px;transition:transform .45s cubic-bezier(.2,.75,.2,1)}
-a.nx:hover .cta,a.nx:focus-visible .cta{gap:10px;padding:0 22px 0 26px}
-a.nx:hover .cta-t,a.nx:focus-visible .cta-t{max-width:200px;opacity:1}
-a.nx:hover .cta svg,a.nx:focus-visible .cta svg{transform:translate(2px,-2px)}
+a.nx:focus-visible .cta{gap:10px;padding:0 22px 0 26px}@media (hover:hover) and (pointer:fine){a.nx:hover .cta{gap:10px;padding:0 22px 0 26px}}
+a.nx:focus-visible .cta-t{max-width:200px;opacity:1}@media (hover:hover) and (pointer:fine){a.nx:hover .cta-t{max-width:200px;opacity:1}}
+a.nx:focus-visible .cta svg{transform:translate(2px,-2px)}@media (hover:hover) and (pointer:fine){a.nx:hover .cta svg{transform:translate(2px,-2px)}}
 a.nx:focus-visible .cta{box-shadow:0 0 0 3px #fff,0 0 0 6px #151515}
 @media (hover:none){.cta{gap:10px;padding:0 20px 0 24px}.cta-t{max-width:200px;opacity:1}}
-@media (prefers-reduced-motion:reduce){.nx,.cta,.cta-t,.cta svg{transition:none}a.nx:hover{transform:none}}
+@media (prefers-reduced-motion:reduce){.nx,.cta,.cta-t,.cta svg{transition:none}@media (hover:hover) and (pointer:fine){a.nx:hover{transform:none}}}
 a.lk:focus-visible{outline:3px solid #151515;outline-offset:3px}
 /* the frame is designed at 1440; below that it scales as one piece */
 .stage{position:relative;width:100%;overflow:hidden}
@@ -119,8 +120,14 @@ img.ld-in{opacity:0;transition:opacity .5s ease}img.ld-in.ok{opacity:1}
   background:#151515;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px -8px rgba(0,0,0,.35);
   opacity:0;transform:translateY(12px);visibility:hidden;transition:opacity .3s ease,transform .3s ease,visibility 0s .3s}
 #totop.on{opacity:1;transform:none;visibility:visible;transition:opacity .3s ease,transform .3s ease}
-#totop:hover{transform:translateY(-2px)}
-a.t,.t a[href],.m-body a[href]{transition:opacity .2s ease}a.t:hover,.t a[href]:hover,.m-body a[href]:hover{opacity:.62}
+#totop.on:active{transform:scale(.94);transition:transform .12s cubic-bezier(.23,1,.32,1)}
+a.t,.t a[href],.m-body a[href]{transition:opacity .2s ease}
+@media (hover:hover) and (pointer:fine){#totop:hover{transform:translateY(-2px)}a.t:hover,.t a[href]:hover,.m-body a[href]:hover{opacity:.62}.vc:hover{opacity:1}}
+[data-bg].err::before{animation:none;opacity:1;background:rgba(0,0,0,.08)}
+.vc{position:absolute;right:14px;bottom:14px;z-index:3;width:44px;height:44px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;
+  cursor:pointer;background:rgba(17,17,17,.62);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:.85;
+  transition:opacity .2s ease,transform .12s cubic-bezier(.23,1,.32,1)}
+.vc svg{width:18px;height:18px}.vc:active{transform:scale(.94)}.vc:focus-visible{outline:3px solid #fff;outline-offset:2px}
 #totop:focus-visible{outline:3px solid #151515;outline-offset:3px}
 #totop svg{width:20px;height:20px}
 @media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.ld-in,#totop{transition:none}[data-bg]::before{animation:none}
@@ -131,7 +138,7 @@ html.cf .card .cta,html.cf a.nx .cta{left:0;top:0;right:auto;bottom:auto;height:
   transition:opacity .2s ease,scale .25s cubic-bezier(.2,.75,.2,1)}
 html.cf .card .cta-t,html.cf a.nx .cta-t{max-width:none;opacity:1;font-size:13.5px;line-height:18px;letter-spacing:.3px;transition:none}
 html.cf .card .cta svg,html.cf a.nx .cta svg{width:15px;height:15px;flex:0 0 15px;transform:none}
-html.cf .card:hover .cta,html.cf a.nx:hover .cta{opacity:1;scale:1;gap:7px;padding:0 13px 0 15px}
+@media (hover:hover) and (pointer:fine){html.cf .card:hover .cta,html.cf a.nx:hover .cta{opacity:1;scale:1;gap:7px;padding:0 13px 0 15px}}
 html.cf .card.nudge .cta::before{animation:none}
 html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale:1;translate:none!important;left:auto;top:auto;right:20px;bottom:20px}
 </style>
@@ -215,10 +222,19 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
   function load(el){
     if(el._p) return el._p;
     var urls=el.getAttribute('data-bg').split('|');
-    el._p=Promise.all(urls.map(function(u){ return new Promise(function(r){ var im=new Image(); im.onload=im.onerror=r; im.src=u; }); }))
-      .then(function(){ urls.forEach(function(u,i){ el.style.setProperty('--b'+i,'url("'+u+'")'); }); el.classList.add('ok'); });
+    el._p=Promise.all(urls.map(function(u){ return new Promise(function(r){ var im=new Image(); im.onload=function(){ r(1); }; im.onerror=function(){ r(0); }; im.src=u; }); }))
+      .then(function(ok){
+        if(ok.indexOf(0)>-1){ el.classList.add('err'); el._p=null; failed.push(el); retrySoon(); return; }
+        el.classList.remove('err');
+        urls.forEach(function(u,i){ el.style.setProperty('--b'+i,'url("'+u+'")'); }); el.classList.add('ok'); });
     return el._p;
   }
+  /* error state: a shimmer that never ends would claim it is still loading. A failed image goes to a
+     still placeholder, is retried once a few seconds later, and again whenever the connection returns. */
+  var failed=[], rt=0, tries=0;
+  function retry(){ rt=0; var f=failed; failed=[]; f.forEach(load); }
+  function retrySoon(){ if(!rt&&tries<1){ tries++; rt=setTimeout(retry,4000); } }
+  addEventListener('online',function(){ tries=0; retry(); });
   /* load by vertical distance only: images off to the side inside a sideways row, or further down a
      phone screen, are clipped from any IntersectionObserver until scrolled to, and would show as
      placeholders mid-swipe. A phone screen's images go with the phone. */
@@ -261,6 +277,32 @@ html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale
     var u=new URL(a.href,location.href); if(u.origin!==location.origin||u.pathname===location.pathname||seen[u.pathname]) return;
     seen[u.pathname]=1; var l=document.createElement('link'); l.rel='prefetch'; l.href=u.pathname; document.head.appendChild(l);
   },{passive:true});
+})();
+
+/* Screen recordings loop, so each gets a pause/play control (WCAG 2.2.2: motion over 5s needs one).
+   A pause sticks: scrolling away and back doesn't restart it. Under reduced motion nothing autoplays,
+   and this button is how to opt in. If a recording fails to load, its poster stays and the button goes. */
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('video.vid')); if(!vids.length) return;
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var PLAY='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 4.5v11l9-5.5z" fill="currentColor"/></svg>',
+      PAUSE='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4.5h2.6v11H6zM11.4 4.5H14v11h-2.6z" fill="currentColor"/></svg>';
+  vids.forEach(function(v){
+    var held=still, orig=v.play.bind(v), b=document.createElement('button');
+    v.play=function(){ return held?Promise.resolve():orig(); };
+    b.type='button'; b.className='vc';
+    function paint(){ var on=!v.paused&&!held; b.innerHTML=on?PAUSE:PLAY; b.setAttribute('aria-label',(on?'Pause':'Play')+' screen recording'); }
+    b.addEventListener('click',function(){
+      if(!v.paused&&!held){ held=true; v.pause(); }
+      else{ held=false;
+        if(!v.getAttribute('src')){ v.preload='auto'; v.src=v.getAttribute('data-src'); }
+        var p=orig(); if(p&&p.catch) p.catch(function(){}); }
+      paint();
+    });
+    ['play','pause'].forEach(function(e){ v.addEventListener(e,paint); });
+    v.addEventListener('error',function(){ b.hidden=true; });
+    v.parentNode.appendChild(b); paint();
+  });
 })();
 
 /* View-case-study pill: on a mouse, it trails the pointer inside the card it belongs to */

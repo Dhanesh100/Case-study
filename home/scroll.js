@@ -14,7 +14,7 @@
     '.sy-chip{position:absolute;z-index:4;pointer-events:none;display:flex;align-items:center;gap:6px;padding:8px 14px 8px 10px;border-radius:999px;' +
       'background:rgba(21,21,21,.82);color:#fff;font:600 13px/16px "PP Neue Montreal",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;letter-spacing:.3px;' +
       '-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 8px 24px rgba(0,0,0,.18);transform:translateX(-50%);transition:opacity .4s ease}' +
-    '.sy-chip svg{animation:sy-b 1.4s ease-in-out infinite}' +
+    '.sy-chip svg{animation:sy-b 1.4s ease-in-out 4}' +
     '.sy-chip.gone{opacity:0}' +
     '@keyframes sy-b{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}' +
     '@media (prefers-reduced-motion:reduce){.sy-chip svg{animation:none}}';
@@ -25,9 +25,12 @@
     var chip = document.createElement('div');
     chip.className = 'sy-chip'; chip.setAttribute('aria-hidden', 'true');
     chip.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 3v10M4 9l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Scroll';
-    chip.style.left = (sy.offsetLeft + sy.offsetWidth / 2) + 'px';
-    chip.style.top = (sy.offsetTop + sy.offsetHeight - 64) + 'px';
-    sy.parentNode.appendChild(chip);
+    function place() {
+      chip.style.left = (sy.offsetLeft + sy.offsetWidth / 2) + 'px';
+      chip.style.top = (sy.offsetTop + sy.offsetHeight - 64) + 'px';
+    }
+    place(); sy.parentNode.appendChild(chip);
+    var rq = 0; addEventListener('resize', function () { if (!rq) rq = requestAnimationFrame(function () { rq = 0; place(); }); });
 
     function stop() {
       if (used) return; used = true; cancelAnimationFrame(anim); clearTimeout(timer);

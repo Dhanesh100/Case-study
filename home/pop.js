@@ -12,15 +12,15 @@
     '@font-face{font-family:"gpPangram";src:url("' + F + 'PPPangramSans-Semibold.woff2") format("woff2");font-weight:600;font-display:swap}' +
     '@font-face{font-family:"gpPangram";src:url("' + F + 'PPPangramSans-Medium.woff2") format("woff2");font-weight:500;font-display:swap}' +
     '@font-face{font-family:"gpMontreal";src:url("' + F + 'PPNeueMontreal-Regular.woff2") format("woff2");font-weight:400;font-display:swap}' +
-    '.gp{position:fixed;inset:0;z-index:2147483000;visibility:hidden;pointer-events:none;color:#262626;-webkit-font-smoothing:antialiased}' +
-    '.gp.on{visibility:visible;pointer-events:auto}' +
+    '.gp{position:fixed;inset:0;z-index:2147483000;visibility:hidden;pointer-events:none;color:#262626;-webkit-font-smoothing:antialiased;transition:visibility 0s .38s}' +
+    '.gp.on{visibility:visible;pointer-events:auto;transition:visibility 0s}' +
     '.gp *{box-sizing:border-box}' +
     '.gp-sc{position:absolute;inset:0;background:rgba(17,17,17,.36);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .35s ease}' +
     '.gp.on .gp-sc{opacity:1}' +
     '.gp-p{position:absolute;left:0;right:0;top:0;max-height:calc(100dvh - 112px);overflow:auto;overscroll-behavior:contain;background:#fff;' +
       'border-radius:0 0 40px 40px;box-shadow:0 32px 48px rgba(0,0,0,.08);padding:clamp(56px,13vh,120px) clamp(24px,9.45vw,136px) 0;' +
       'transform:translateY(-104%);transition:transform .55s cubic-bezier(.22,1,.36,1)}' +
-    '.gp.on .gp-p{transform:none}.gp-p:focus{outline:none}' +
+    '.gp.on .gp-p{transform:none}.gp:not(.on) .gp-p{transition:transform .36s cubic-bezier(.2,0,0,1)}.gp-p:focus{outline:none}' +
     '.gp-in{max-width:1172px;margin:0 auto;display:flex;justify-content:space-between;gap:40px}' +
     '.gp-h{margin:0;font:900 clamp(64px,7.2vw,104px)/1 gpEiko,"PP Eiko",Didot,Georgia,serif;letter-spacing:-.02em;color:#262626;display:grid;gap:8px}' +
     '.gp-h .l1{display:flex;align-items:center}.gp-h .l1 img{width:.78em;height:auto;margin-left:4px}' +
@@ -30,7 +30,7 @@
     '.gp-r small{padding-top:13px;font:600 18px/23px gpPangram,"PP Pangram Sans",system-ui,sans-serif;color:#262626}' +
     '.gp-r a{font:600 56px/73px gpPangram,"PP Pangram Sans",system-ui,sans-serif;color:#262626;text-decoration:none;display:inline-block;position:relative;text-transform:uppercase}' +
     '.gp-r a::after{content:"";position:absolute;left:0;right:100%;bottom:10px;height:3px;background:#ffc821;transition:right .3s ease}' +
-    '.gp-r a:hover::after,.gp-r a:focus-visible::after{right:0}' +
+    '.gp-r a:focus-visible::after{right:0}@media (hover:hover) and (pointer:fine){.gp-r a:hover::after{right:0}.gp-x:hover{background:#fff;scale:1.08}}' +
     '.gp-r .mail{display:table;margin-top:-12px;padding-left:4px;font:500 20px/26px gpPangram,"PP Pangram Sans",system-ui,sans-serif;text-transform:none}' +
     '.gp-r .mail::after{height:2px;bottom:1px}' +
     '.gp-f{max-width:1172px;margin:clamp(40px,8vh,84px) auto 0;padding:16px 0 18px;border-top:2px solid #737373;text-align:right;font:400 14px/18px gpMontreal,"PP Neue Montreal",system-ui,sans-serif;color:#737373}' +
@@ -38,7 +38,7 @@
       '-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 16px 40px rgba(0,0,0,.12);display:grid;place-items:center;cursor:pointer;color:#151515;' +
       'opacity:0;scale:.6;transition:opacity .25s ease,scale .35s cubic-bezier(.34,1.56,.64,1),background .2s}' +
     '.gp.on .gp-x{opacity:1;scale:1;transition-delay:.28s}' +
-    '.gp-x:hover{background:#fff;scale:1.08}' +
+    '.gp.on .gp-x:active{scale:.94;transition:scale .12s cubic-bezier(.23,1,.32,1)}' +
     '.gp a:focus-visible,.gp-x:focus-visible{outline:2px solid #151515;outline-offset:4px}' +
     'html.gp-lock,html.gp-lock body{overflow:hidden}' +
     '@media (max-width:900px){.gp-in{flex-direction:column}.gp-l{width:100%}.gp-r a{font-size:40px;line-height:54px}}' +
@@ -71,7 +71,7 @@
       '<path d="M8 8l16 16M24 8L8 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>';
 
   var panel = root.querySelector('.gp-p'), xbtn = root.querySelector('.gp-x');
-  var last = null, isOpen = false;
+  var last = null, isOpen = false, inerted = [];
 
   function place() { xbtn.style.top = (panel.getBoundingClientRect().height + 24) + 'px'; }
   function focusables() { return root.querySelectorAll('.gp-p a, .gp-x'); }
@@ -84,6 +84,8 @@
     place();
     root.setAttribute('aria-hidden', 'false');
     document.documentElement.classList.add('gp-lock');
+    /* the page behind can't be reached by any means while the dialog is open, not only by Tab */
+    [].forEach.call(document.body.children, function (n) { if (n !== root && !n.inert) { n.inert = true; inerted.push(n); } });
     void root.offsetWidth;
     root.classList.add('on');
     setTimeout(function () { if (isOpen) panel.focus({ preventScroll: true }); }, 60);
@@ -94,6 +96,7 @@
     root.classList.remove('on');
     root.setAttribute('aria-hidden', 'true');
     document.documentElement.classList.remove('gp-lock');
+    inerted.forEach(function (n) { n.inert = false; }); inerted = [];
     if (last && last.focus) last.focus({ preventScroll: true });
   }
 

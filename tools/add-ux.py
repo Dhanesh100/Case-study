@@ -11,7 +11,11 @@ What it adds, all inline (pages stay self-contained, no requests):
   3. Cross-document view transitions, and hover-prefetch of internal pages.
   4. Case studies: a reading-progress bar and a back-to-top button.
   5. Link-preview tags (Open Graph, Twitter). `--og` also renders each page's og.jpg.
-Reduced motion: no shimmer, no fades, no bar animation."""
+  6. Screen recordings get a pause/play control; a user's pause sticks.
+  7. Every :hover rule in the page's own CSS is moved behind (hover:hover) and (pointer:fine), so a
+     tap on a phone never leaves a card grown or a button stuck in its hover state.
+Reduced motion: no shimmer, no fades, no bar animation; recordings wait to be played.
+Error state: an image that fails stops shimmering and is retried, then retried again on reconnect."""
 import glob, html as H, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -53,8 +57,14 @@ img.ld-in{opacity:0;transition:opacity .5s ease}img.ld-in.ok{opacity:1}
   background:%(btn)s;color:%(btnfg)s;display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 24px -8px rgba(0,0,0,.35);
   opacity:0;transform:translateY(12px);visibility:hidden;transition:opacity .3s ease,transform .3s ease,visibility 0s .3s}
 #totop.on{opacity:1;transform:none;visibility:visible;transition:opacity .3s ease,transform .3s ease}
-#totop:hover{transform:translateY(-2px)}
-a.t,.t a[href],.m-body a[href]{transition:opacity .2s ease}a.t:hover,.t a[href]:hover,.m-body a[href]:hover{opacity:.62}
+#totop.on:active{transform:scale(.94);transition:transform .12s cubic-bezier(.23,1,.32,1)}
+a.t,.t a[href],.m-body a[href]{transition:opacity .2s ease}
+@media (hover:hover) and (pointer:fine){#totop:hover{transform:translateY(-2px)}a.t:hover,.t a[href]:hover,.m-body a[href]:hover{opacity:.62}.vc:hover{opacity:1}}
+[data-bg].err::before{animation:none;opacity:1;background:%(sk2)s}
+.vc{position:absolute;right:14px;bottom:14px;z-index:3;width:44px;height:44px;padding:0;border:0;border-radius:50%%;display:grid;place-items:center;
+  cursor:pointer;background:rgba(17,17,17,.62);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);opacity:.85;
+  transition:opacity .2s ease,transform .12s cubic-bezier(.23,1,.32,1)}
+.vc svg{width:18px;height:18px}.vc:active{transform:scale(.94)}.vc:focus-visible{outline:3px solid #fff;outline-offset:2px}
 #totop:focus-visible{outline:3px solid %(fg)s;outline-offset:3px}
 #totop svg{width:20px;height:20px}
 @media (prefers-reduced-motion:reduce){#ldr,.ldr-bar i,[data-bg]::before,img.ld-in,#totop{transition:none}[data-bg]::before{animation:none}
@@ -65,7 +75,7 @@ html.cf .card .cta,html.cf a.nx .cta{left:0;top:0;right:auto;bottom:auto;height:
   transition:opacity .2s ease,scale .25s cubic-bezier(.2,.75,.2,1)}
 html.cf .card .cta-t,html.cf a.nx .cta-t{max-width:none;opacity:1;font-size:13.5px;line-height:18px;letter-spacing:.3px;transition:none}
 html.cf .card .cta svg,html.cf a.nx .cta svg{width:15px;height:15px;flex:0 0 15px;transform:none}
-html.cf .card:hover .cta,html.cf a.nx:hover .cta{opacity:1;scale:1;gap:7px;padding:0 13px 0 15px}
+@media (hover:hover) and (pointer:fine){html.cf .card:hover .cta,html.cf a.nx:hover .cta{opacity:1;scale:1;gap:7px;padding:0 13px 0 15px}}
 html.cf .card.nudge .cta::before{animation:none}
 html.cf .card:focus-visible .cta,html.cf a.nx:focus-visible .cta{opacity:1;scale:1;translate:none!important;left:auto;top:auto;right:20px;bottom:20px}
 </style>
@@ -91,10 +101,19 @@ JS = r'''<script>
   function load(el){
     if(el._p) return el._p;
     var urls=el.getAttribute('data-bg').split('|');
-    el._p=Promise.all(urls.map(function(u){ return new Promise(function(r){ var im=new Image(); im.onload=im.onerror=r; im.src=u; }); }))
-      .then(function(){ urls.forEach(function(u,i){ el.style.setProperty('--b'+i,'url("'+u+'")'); }); el.classList.add('ok'); });
+    el._p=Promise.all(urls.map(function(u){ return new Promise(function(r){ var im=new Image(); im.onload=function(){ r(1); }; im.onerror=function(){ r(0); }; im.src=u; }); }))
+      .then(function(ok){
+        if(ok.indexOf(0)>-1){ el.classList.add('err'); el._p=null; failed.push(el); retrySoon(); return; }
+        el.classList.remove('err');
+        urls.forEach(function(u,i){ el.style.setProperty('--b'+i,'url("'+u+'")'); }); el.classList.add('ok'); });
     return el._p;
   }
+  /* error state: a shimmer that never ends would claim it is still loading. A failed image goes to a
+     still placeholder, is retried once a few seconds later, and again whenever the connection returns. */
+  var failed=[], rt=0, tries=0;
+  function retry(){ rt=0; var f=failed; failed=[]; f.forEach(load); }
+  function retrySoon(){ if(!rt&&tries<1){ tries++; rt=setTimeout(retry,4000); } }
+  addEventListener('online',function(){ tries=0; retry(); });
   /* load by vertical distance only: images off to the side inside a sideways row, or further down a
      phone screen, are clipped from any IntersectionObserver until scrolled to, and would show as
      placeholders mid-swipe. A phone screen's images go with the phone. */
@@ -139,6 +158,32 @@ JS = r'''<script>
   },{passive:true});
 })();
 
+/* Screen recordings loop, so each gets a pause/play control (WCAG 2.2.2: motion over 5s needs one).
+   A pause sticks: scrolling away and back doesn't restart it. Under reduced motion nothing autoplays,
+   and this button is how to opt in. If a recording fails to load, its poster stays and the button goes. */
+(function(){
+  var vids=[].slice.call(document.querySelectorAll('video.vid')); if(!vids.length) return;
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var PLAY='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.5 4.5v11l9-5.5z" fill="currentColor"/></svg>',
+      PAUSE='<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6 4.5h2.6v11H6zM11.4 4.5H14v11h-2.6z" fill="currentColor"/></svg>';
+  vids.forEach(function(v){
+    var held=still, orig=v.play.bind(v), b=document.createElement('button');
+    v.play=function(){ return held?Promise.resolve():orig(); };
+    b.type='button'; b.className='vc';
+    function paint(){ var on=!v.paused&&!held; b.innerHTML=on?PAUSE:PLAY; b.setAttribute('aria-label',(on?'Pause':'Play')+' screen recording'); }
+    b.addEventListener('click',function(){
+      if(!v.paused&&!held){ held=true; v.pause(); }
+      else{ held=false;
+        if(!v.getAttribute('src')){ v.preload='auto'; v.src=v.getAttribute('data-src'); }
+        var p=orig(); if(p&&p.catch) p.catch(function(){}); }
+      paint();
+    });
+    ['play','pause'].forEach(function(e){ v.addEventListener(e,paint); });
+    v.addEventListener('error',function(){ b.hidden=true; });
+    v.parentNode.appendChild(b); paint();
+  });
+})();
+
 /* View-case-study pill: on a mouse, it trails the pointer inside the card it belongs to */
 (function(){
   if(!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -172,6 +217,67 @@ JS = r'''<script>
 def lum(rgb):
     r, g, b = [int(x) / 255 for x in rgb[:3]]
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def _skip(css, i):
+    """index just past a comment or string starting at i, else i"""
+    if css.startswith('/*', i):
+        j = css.find('*/', i + 2); return len(css) if j < 0 else j + 2
+    if css[i] in '"\'':
+        q, j = css[i], i + 1
+        while j < len(css) and css[j] != q: j += 2 if css[j] == '\\' else 1
+        return j + 1
+    return i
+
+
+def _split_top(sel):
+    out, d, cur = [], 0, ''
+    for c in sel:
+        if c in '([': d += 1
+        elif c in ')]': d -= 1
+        if c == ',' and d == 0: out.append(cur); cur = ''
+        else: cur += c
+    return out + [cur]
+
+
+def gate_hover(css, inside=False):
+    """Move every :hover selector behind @media (hover:hover) and (pointer:fine). Rules keep their
+    order; comma lists are split so the non-hover selectors stay put. Idempotent."""
+    out, i, n = [], 0, len(css)
+    while i < n:
+        j = i
+        while j < n and css[j] not in '{}':
+            k = _skip(css, j); j = k if k != j else j + 1
+        if j >= n or css[j] == '}': out.append(css[i:]); break
+        d, k = 0, j
+        while k < n:
+            m = _skip(css, k)
+            if m != k: k = m; continue
+            if css[k] == '{': d += 1
+            elif css[k] == '}':
+                d -= 1
+                if d == 0: break
+            k += 1
+        pre, body = css[i:j], css[j + 1:k]
+        head = re.match(r'(\s*(?:/\*.*?\*/\s*)*)(.*)$', pre, re.S)
+        lead, sel = head.group(1), head.group(2)
+        if sel.lstrip().startswith('@'):
+            if re.match(r'\s*@(media|supports|container|layer)\b', sel):
+                hov = inside or 'hover:hover' in sel.replace(' ', '')
+                out.append(pre + '{' + gate_hover(body, hov) + '}')
+            else:
+                out.append(pre + '{' + body + '}')
+        elif inside or ':hover' not in sel:
+            out.append(pre + '{' + body + '}')
+        else:
+            parts = _split_top(sel)
+            h = [p for p in parts if ':hover' in p]; r = [p for p in parts if ':hover' not in p]
+            res = lead
+            if r: res += ','.join(r).rstrip() + '{' + body + '}'
+            res += '@media (hover:hover) and (pointer:fine){' + ','.join(h).strip() + '{' + body + '}}'
+            out.append(res)
+        i = k + 1
+    return ''.join(out)
 
 
 def strip(s):
@@ -214,6 +320,7 @@ def apply(path):
                sk2='rgba(255,255,255,.10)' if dark else 'rgba(0,0,0,.08)',
                name=name, kicker='Case study' if case else 'Portfolio')
     if case: s = lazy_bgs(s)
+    s = re.sub(r'(<style[^>]*>)(.*?)(</style>)', lambda m: m.group(1) + gate_hover(m.group(2)) + m.group(3), s, flags=re.S)
     # outside links open in a new tab (case-study source links came through from Figma without it)
     def ext(m):
         t = m.group(0)
