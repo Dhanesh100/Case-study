@@ -570,3 +570,44 @@ V12 is still ~850 words.
 **Checks:** 39/39 on the new layer (1440, 375, 412, reduced-motion dark), the 44/44 case-study suite
 still passes, structure checks clean.
 
+---
+
+## 18 · How UI is presented — set 9 November 2026
+
+Dhanesh: *"UI screens and components use in case study were amature … dont need to add mobile full
+screen everywhere … for small component, add full mobile screen is lack of interface understanding."*
+
+**The rule.** Show a component as a component, at its own size, on the app's own background. Show a
+whole screen only when the claim is about the whole screen. No device chrome, no status bar, no Figma
+canvas, no arbitrary crops of a long screenshot.
+
+**Applied to V12** (the default):
+
+| Beat | Was | Now |
+|---|---|---|
+| 02 pitch pair | Two HTML text boxes | The two shipped cards: *Buy Life policy* and *Recommended · Buy ₹1 Cr life cover* |
+| 04 fixed frame | An HTML stack of grey boxes | The shipped bottom section (Insurance on Card, engine band, Download, Found 2 inactive), each slot's rule on a leader line beside it; the band swaps shipped cards at a fixed height |
+| 04 member chips | The top of a full phone screenshot | The chip row and the member card's policy row, tagged *switches person* / *opens in place* — the two controls the dead click confused |
+| 04 KYP | The raw component-set capture (grey canvas, Figma's dashed selection border) | The shipped policy card; pick Great / Good / Average / Poor / Not yet and the real rating component is laid over the card's own rating |
+| 05 restraint | Two schematic mini-phones | The real components in both states: policy card on top, engine card below; the Add-your-policy block on top, engine card below |
+
+**Older versions:** the rating-scale image they all share was rebuilt as a clean sheet from the five
+exported variants, so V4–V11 lose the grey canvas and dashed border too. Their other screens are unchanged.
+
+**Sources.** Exported from Figma `x1YQ5nU9BirfL1IW8CHd20` at 2x: bottom-section cards from
+**Component 351** (`10410:56686`, the later of two sets with identical copy — 344 is the older one); policy
+card `I4919:28497;2140:22309`; KYP variants `2129:17150 … 17298`; chips and tabs `4919:28403`;
+Add-your-policy block `6527:21460` (from frame `3526:37129`). The member card was cropped from the 2x
+`assets/src/family-overview.png`. Embedded as WebP; the page grew by about 0.4 MB.
+
+**Canvas tokens.** `--ui-canvas` is `#f7f7f7`, sampled from the app's own background. The `--ui-*` tokens
+are defined once and **not** overridden for dark mode: the app has no dark mode, so its components sit on
+a light canvas in both themes.
+
+**Price correction.** The shipped *Recommended · Buy ₹1 Cr life cover* card says **₹500 per month**.
+V12 had quoted ₹80 (the generic card's floor). Fixed in V12's surface, the car picture and the shared
+simulator. **V11 and V10 still pair ₹1 Cr with ₹80** in their pitch cards — open.
+
+**Figma rate limit.** The REST API returned 429 with `Retry-After` ≈ 4.6 days after this pass's
+exports (Starter tier, same as 5 Nov). Further exports wait until about 14 Nov 2026, or use the MCP.
+

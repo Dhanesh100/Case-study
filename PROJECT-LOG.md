@@ -717,3 +717,27 @@ reduced motion, phones at 375 and 412, dark mode, ladder lens); the 44/44 case-s
 tags balance, no duplicate ids, markers resolve in their own panel, no colour literals outside the
 token blocks, no undefined classes.
 
+---
+
+## 9 Nov 2026 — Component presentation: real components, not full screens
+
+**Asked.** The UI screens and component mockups read as amateur; small components were shown as full
+phone screens.
+
+**Found.** V12 showed the KYP scale as a raw capture of the Figma component set (grey canvas, dashed
+purple selection border); the member chips as the top of a full screenshot with status bar and back
+arrow; the fixed frame, the pitch pair and the restraint states as hand-built grey boxes.
+
+**Done.** Exported the shipped components from Figma at 2x and rebuilt each V12 visual from them (table
+in CONTEXT §18). The fixed frame became an annotated spec of the real bottom section. The chips tile now
+shows the two controls the dead click confused. The KYP tile lets the reader switch the real rating
+component on the real card. The shared rating-scale image was rebuilt clean for every version. The ₹1 Cr
+card's price is corrected to the shipped ₹500/month in V12. Old mock-component CSS removed.
+
+**Checks.** 31/31 presentation checks: images decode, nothing overflows its canvas or the page at 375,
+412, 768 and 1440, components shown at ≥ 0.7 of their own size, light canvas in dark mode, the KYP overlay
+aligned to the card's own rating, the band at a fixed height. The case-study suite (44/44) and the
+picture suite (39/39) still pass. Structure checks clean.
+
+**Open.** V11 and V10 still pair ₹1 Cr with ₹80. The Figma REST API is rate-limited until about 14 Nov.
+
