@@ -691,3 +691,29 @@ inert behind overlays; hover gated.
 `max-width`), and tiered reduced motion in V11/V12 (the global rule still removes all motion under
 reduced motion). Google Drive needs re-authorising before it can be searched.
 
+---
+
+## 9 Nov 2026 — Everyday layer on V12: the engine as a car dashboard
+
+**Asked.** Explain with everyday, real-life examples; use them in diagrams; make the diagram animated or
+interactive so it shows everything at once and unfolds through interaction or animation.
+
+**Decision.** One analogy world, the car, so every example points at the same picture: sensors are the
+data CoverSure already had, the order of importance is the protection ladder, the dashboard's one message
+is the next step, the gauges that never move are the fixed slots. Mapping table in CONTEXT §17.
+Applied to V12 in place because it is the default view; no new version tab.
+
+**Built.** Section 00, "It works like your car's dashboard": a car row and a Portfolio row through the
+same three columns, six steps that dim, light and swap the one moving message, a caption per step with
+both readings and a link to the beat that proves it. A car lens on the beat-03 ladder. One everyday line
+per beat; the dead click as look-alike wiper and indicator stalks in the beat-01 overlay. New green
+tokens for the everyday layer.
+
+**Honest cost.** V12's surface grew from 806 to 1,541 words by the same count; 244 of them show at once in
+section 00, plus 121 in the everyday lines.
+
+**Checks.** 39/39 new-layer checks in headless Chrome (walkthrough, take-over, keyboard, Pause motion,
+reduced motion, phones at 375 and 412, dark mode, ladder lens); the 44/44 case-study suite still passes;
+tags balance, no duplicate ids, markers resolve in their own panel, no colour literals outside the
+token blocks, no undefined classes.
+

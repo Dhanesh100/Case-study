@@ -25,6 +25,9 @@
     --accent-ink:  #0066cc;
     --signal:      #bf4800;
     --signal-soft: #fdf2ea;
+    --life:        #248a3d;
+    --life-soft:   #e8f5eb;
+    --life-ink:    #1b7a33;
     --stage:       #000000;
     --stage-ink:   #f5f5f7;
     --stage-rule:  #424245;
@@ -52,6 +55,9 @@
       --accent-ink:  #2997ff;
       --signal:      #ff9f0a;
       --signal-soft: #2a1c0a;
+      --life:        #30d158;
+      --life-soft:   #0c2613;
+      --life-ink:    #30d158;
       --stage:       #000000;
       --stage-ink:   #f5f5f7;
       --stage-rule:  #424245;
@@ -72,6 +78,9 @@
     --accent-ink:  #2997ff;
     --signal:      #ff9f0a;
     --signal-soft: #2a1c0a;
+    --life:        #30d158;
+    --life-soft:   #0c2613;
+    --life-ink:    #30d158;
     --stage:       #000000;
     --stage-ink:   #f5f5f7;
     --stage-rule:  #424245;
@@ -3066,6 +3075,255 @@
   html { scrollbar-gutter: stable; }
   /* the beats grid sized its implicit column to the widest diagram (620px min), so phones scrolled sideways */
   .v12-beats { grid-template-columns: minmax(0, 1fr); }
+</style>
+<style>
+  /* ══════════ EVERYDAY LAYER · 9 Nov 2026 ══════════
+     The engine told through a car dashboard. One picture holds the whole idea (00) and unfolds in six
+     steps; each beat gets one everyday line; the ladder gets a car lens. Green = everyday, blue = CoverSure.
+     Motion: opacity and transform only; standard (.2,0,0,1) for dims, enter (.23,1,.32,1) for swaps;
+     linear only for the step timer and the wire flow. One pass, then it rests on "All". */
+  .v12-x { --x-cell: color-mix(in srgb, var(--ink) 3%, var(--surface));
+           --x-chip: color-mix(in srgb, var(--ink) 6%, var(--surface));
+           --x-dur: 6s; }
+  .v12-x-fig { padding: clamp(16px, 2.6vw, 26px); }
+
+  /* controls */
+  .v12-x-bar { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; }
+  .v12-x:not(.js) .v12-x-bar { display: none; }
+  .v12-x-play { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 16px 0 13px;
+                border: none; border-radius: 980px; background: var(--ink); color: var(--ground); cursor: pointer;
+                font: 600 14px/1 var(--body); transition: transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  .v12-x-play svg { width: 14px; height: 14px; }
+  .v12-x-play .xp-pause { display: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+  .v12-x-play .xp-play { fill: currentColor; }
+  .v12-x-play[data-state="on"] .xp-pause { display: inline; }
+  .v12-x-play[data-state="on"] .xp-play { display: none; }
+  .v12-x-steps { display: flex; gap: 2px; padding: 3px; min-width: 0; border-radius: 980px; background: var(--rule-soft);
+                 overflow-x: auto; scrollbar-width: none; }
+  .v12-x-steps::-webkit-scrollbar { display: none; }
+  .v12-x-steps button { position: relative; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+                        min-width: 44px; min-height: 40px; padding: 0 13px; border: none; border-radius: 980px; overflow: hidden;
+                        background: transparent; color: var(--ink-2); cursor: pointer; font: 500 13.5px/1 var(--body);
+                        transition: background-color .2s ease-out, color .2s ease-out, transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  .v12-x-steps i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+  .v12-x-steps button[aria-current="step"] { background: var(--surface); color: var(--ink);
+                                             box-shadow: 0 1px 4px -1px color-mix(in srgb, var(--ink) 30%, transparent); }
+  .v12-x-steps button[aria-current="step"] i { color: var(--accent-ink); }
+  /* the step timer: a hairline that fills while the walkthrough plays */
+  .v12-x-steps button::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 5px; height: 2px; border-radius: 2px;
+                               background: var(--accent); transform: scaleX(0); transform-origin: left; opacity: 0; }
+  .v12-x[data-playing] .v12-x-steps button[aria-current="step"]::after { opacity: 1; animation: xbar var(--x-dur) linear both; }
+  :is(.v12-x-play, .v12-x-steps button):active { transform: scale(.97); }
+  @keyframes xbar { to { transform: scaleX(1); } }
+
+  /* the picture: two rows (car, Portfolio) through the same three columns */
+  .v12-x-grid { display: grid; gap: 10px 4px; align-items: stretch;
+                grid-template-columns: 78px minmax(0, 1fr) 30px minmax(0, 1fr) 30px minmax(0, 1.12fr);
+                grid-template-areas: ".  hA .  hB .  hC"
+                                     "rc cA a1 cB a2 cC"
+                                     "rp pA a3 pB a4 pC"; }
+  .x-hA { grid-area: hA; } .x-hB { grid-area: hB; } .x-hC { grid-area: hC; }
+  .x-rc { grid-area: rc; } .x-rp { grid-area: rp; }
+  .x-cA { grid-area: cA; } .x-cB { grid-area: cB; } .x-cC { grid-area: cC; }
+  .x-pA { grid-area: pA; } .x-pB { grid-area: pB; } .x-pC { grid-area: pC; }
+  .x-a1 { grid-area: a1; } .x-a2 { grid-area: a2; } .x-a3 { grid-area: a3; } .x-a4 { grid-area: a4; }
+  .x-d1 { grid-area: d1; } .x-d2 { grid-area: d2; }
+  .v12-x-h { margin: 0; padding: 0 2px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); }
+  .v12-x-row { margin: 0; align-self: center; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; line-height: 1.45; }
+  .v12-x-row::before { content: ""; display: block; width: 8px; height: 8px; margin: 0 0 8px; border-radius: 50%; background: currentColor; }
+  .v12-x-row.car { color: var(--life-ink); }
+  .v12-x-row.pf { color: var(--accent-ink); }
+
+  .v12-x-cell { min-width: 0; display: flex; flex-direction: column; justify-content: flex-start; gap: 8px; padding: 12px;
+                border-radius: 14px; background: var(--x-cell); }
+  .v12-x-cell.car { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--life) 30%, transparent); }
+  .v12-x-cell.pf { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent); }
+  .v12-x-k { margin: 0; font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .car .v12-x-k { color: var(--life-ink); }
+  .pf .v12-x-k { color: var(--accent-ink); }
+
+  /* step dimming: everything stays on screen; what is not part of the step steps back */
+  .v12-x [data-lit] { transition: opacity .24s cubic-bezier(.2, 0, 0, 1); }
+  .v12-x[data-step="1"] [data-lit]:not([data-lit~="1"]),
+  .v12-x[data-step="2"] [data-lit]:not([data-lit~="2"]),
+  .v12-x[data-step="3"] [data-lit]:not([data-lit~="3"]),
+  .v12-x[data-step="4"] [data-lit]:not([data-lit~="4"]),
+  .v12-x[data-step="5"] [data-lit]:not([data-lit~="5"]),
+  .v12-x[data-step="6"] [data-lit]:not([data-lit~="6"]) { opacity: .34; }
+
+  /* A · what is already known */
+  .v12-x-in { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+  .v12-x-in li { padding: 6px 9px; border-radius: 9px; background: var(--x-chip); transition: background-color .3s ease-out; }
+  .v12-x-in b { display: block; font-size: 12.5px; font-weight: 600; line-height: 1.25; color: var(--ink); }
+  .v12-x-in i { display: block; font-style: normal; font-size: 11px; line-height: 1.3; color: var(--ink-3); }
+  .v12-x[data-step="1"] .car .v12-x-in li { background: var(--life-soft); }
+  .v12-x[data-step="1"] .pf .v12-x-in li { background: var(--accent-soft); }
+  .v12-x[data-step="1"] .v12-x-in li:nth-child(2) { transition-delay: 70ms; }
+  .v12-x[data-step="1"] .v12-x-in li:nth-child(3) { transition-delay: 140ms; }
+  .v12-x[data-step="1"] .v12-x-in li:nth-child(4) { transition-delay: 210ms; }
+  .v12-x[data-step="1"] .v12-x-in li:nth-child(5) { transition-delay: 280ms; }
+
+  /* wires between the columns: dead in step 1, flowing in step 2 */
+  .v12-x-arr { position: relative; display: flex; align-items: center; justify-content: center; color: var(--ink-3); }
+  .v12-x-arr svg { width: 30px; height: 12px; overflow: visible; }
+  .v12-x-down { display: none; }
+  .v12-x-down svg { width: 12px; height: 22px; }
+  .v12-x-arr path { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .v12-x-arr b { position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; border-radius: 50%;
+                 background: var(--signal-soft); color: var(--signal); font: 600 12px/18px var(--body); text-align: center;
+                 opacity: 0; transform: translate(-50%, -50%) scale(.9);
+                 transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .24s cubic-bezier(.23, 1, .32, 1); }
+  .v12-x[data-step="1"] .v12-x-arr { color: var(--signal); }
+  .v12-x[data-step="1"] .v12-x-arr .ln { stroke-dasharray: 3 4; }
+  .v12-x[data-step="1"] .v12-x-arr .hd { opacity: 0; }
+  .v12-x[data-step="1"] .v12-x-arr b { opacity: 1; transform: translate(-50%, -50%); }
+  .v12-x[data-step="2"] .v12-x-arr.car { color: var(--life); }
+  .v12-x[data-step="2"] .v12-x-arr.pf, .v12-x[data-step="2"] .v12-x-down { color: var(--accent); }
+  .v12-x[data-step="2"] .v12-x-arr .ln { stroke-dasharray: 4 4; animation: xflow .8s linear infinite; }
+  @keyframes xflow { to { stroke-dashoffset: -16; } }
+
+  /* B · the order of importance */
+  .v12-x-lad { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+  .v12-x-lad li { position: relative; padding: 6px 9px 6px 27px; border-radius: 9px; background: var(--x-chip);
+                  font-size: 12px; line-height: 1.3; color: var(--ink); }
+  .v12-x-lad li::before { content: attr(data-n); position: absolute; left: 10px; top: 6px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
+  .v12-x-lad li.r3 { margin-left: 22px; }
+  .v12-x-lad li.r2 { margin-left: 11px; }
+  .v12-x-lad b { font-weight: 600; }
+  .v12-x-lad i { display: block; font-style: normal; font-size: 11px; color: var(--ink-3); }
+  .car .v12-x-lad .r1 { background: var(--life-soft); }
+  .pf .v12-x-lad .r1 { background: var(--accent-soft); }
+  .v12-x-lad .ms { border-radius: 4px; }
+  .v12-x[data-step="3"] .v12-x-lad .hv::after { content: " \2713"; }
+  .v12-x[data-step="3"] .car .hv::after { color: var(--life-ink); }
+  .v12-x[data-step="3"] .pf .hv::after { color: var(--accent-ink); }
+  .v12-x[data-step="3"] .v12-x-lad .ms::after { content: "next"; display: inline-block; margin-left: 5px; padding: 2px 6px 1px; border-radius: 980px;
+                                                font: 600 9px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--surface);
+                                                vertical-align: 1px; animation: simIn .32s cubic-bezier(.23, 1, .32, 1) both; }
+  .v12-x[data-step="3"] .car .ms::after { background: var(--life); }
+  .v12-x[data-step="3"] .pf .ms::after { background: var(--accent); }
+  .v12-x-none { margin: 0; padding: 5px 9px; border-radius: 9px; font-size: 11.5px; color: var(--ink-2);
+                outline: 1px dashed var(--rule); outline-offset: -1px; }
+
+  /* C · what the screen shows: gauges and slots that never move, one message that does */
+  .v12-x-dash, .v12-x-ph { flex: 1 1 auto; min-width: 0; display: grid; align-content: center; gap: 7px; padding: 9px; border-radius: 12px; background: var(--x-chip); }
+  .v12-x-dash { gap: 14px; }
+  .v12-x-dials { position: relative; display: flex; justify-content: space-around; gap: 6px; }
+  .v12-x-dials .dial { display: grid; justify-items: center; border-radius: 10px; padding: 2px 4px 0; }
+  .v12-x-dials svg { width: 66px; height: 40px; overflow: visible; }
+  .v12-x-dials i { font-style: normal; font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+  .dial .arc { fill: none; stroke: var(--rule); stroke-width: 4; stroke-linecap: round; }
+  .dial .tk { stroke: var(--ink-3); stroke-width: 1.3; stroke-linecap: round; }
+  .dial text { font: 600 7px var(--mono); fill: var(--ink-3); }
+  .dial .ndl { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; transform-box: view-box; transform-origin: 33px 36px;
+               transition: transform .6s cubic-bezier(.2, 0, 0, 1); }
+  .dial.sp .ndl { transform: rotate(-24deg); }
+  .dial.fu .ndl { transform: rotate(-68deg); }
+  .v12-x[data-step="6"] .dial.fu .ndl { transform: rotate(46deg); }
+
+  .v12-x-msg { position: relative; display: grid; align-items: center; min-height: 48px; padding: 7px 10px; border-radius: 9px; background: var(--x-cell);
+               transition: background-color .24s ease-out, box-shadow .24s ease-out; }
+  .car .v12-x-msg { box-shadow: inset 0 0 0 1.5px var(--life); }
+  .pf .v12-x-msg { background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
+  .v12-x-msg > span { grid-area: 1 / 1; visibility: hidden; opacity: 0; transform: translateY(6px);
+                      transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .24s cubic-bezier(.23, 1, .32, 1), visibility 0s .24s; }
+  .v12-x-msg b { display: block; font-size: 12.5px; font-weight: 600; line-height: 1.3; }
+  .car .v12-x-msg b { color: var(--life-ink); }
+  .pf .v12-x-msg b { color: var(--accent-ink); }
+  .v12-x-msg i { display: block; font-style: normal; font-size: 11px; line-height: 1.3; color: var(--ink-2); }
+  .v12-x-msg s { display: block; font-size: 11px; line-height: 1.3; color: var(--ink-3); text-decoration-color: var(--signal); }
+  .v12-x-msg .nil i { color: var(--ink-3); }
+  .v12-x[data-step="1"] .v12-x-msg, .v12-x[data-step="6"] .v12-x-msg { background: transparent; box-shadow: inset 0 0 0 1px var(--rule); }
+  .v12-x[data-step="0"] .v12-x-msg [data-at~="0"],
+  .v12-x[data-step="1"] .v12-x-msg [data-at~="1"],
+  .v12-x[data-step="2"] .v12-x-msg [data-at~="2"],
+  .v12-x[data-step="3"] .v12-x-msg [data-at~="3"],
+  .v12-x[data-step="4"] .v12-x-msg [data-at~="4"],
+  .v12-x[data-step="5"][data-sub="a"] .v12-x-msg [data-at~="5a"],
+  .v12-x[data-step="5"][data-sub="b"] .v12-x-msg [data-at~="5b"],
+  .v12-x[data-step="5"][data-sub="c"] .v12-x-msg [data-at~="5c"],
+  .v12-x[data-step="6"] .v12-x-msg [data-at~="6"] { visibility: visible; opacity: 1; transform: none;
+      transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .24s cubic-bezier(.23, 1, .32, 1), visibility 0s; }
+
+  .v12-x-ph > div:not(.v12-x-msg) { position: relative; padding: 6px 9px; border-radius: 8px; background: var(--x-cell);
+                                    font-size: 11.5px; line-height: 1.3; color: var(--ink-2); }
+  .v12-x-ph > .top { padding: 8px 9px; font-size: 12.5px; font-weight: 600; color: var(--ink); }
+  /* step 5 pins what never moves; step 6 marks what always comes first */
+  .v12-x .fx::after, .v12-x-dials::after { position: absolute; font: 500 9px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+                                           color: var(--ink-3); opacity: 0; transition: opacity .2s cubic-bezier(.2, 0, 0, 1); }
+  .v12-x .fx::after { content: "fixed"; right: 8px; top: 50%; transform: translateY(-50%); }
+  .v12-x-dials::after { content: "never move"; right: 0; top: -2px; }
+  .v12-x[data-step="5"] .fx::after, .v12-x[data-step="5"] .v12-x-dials::after { opacity: 1; }
+  .v12-x[data-step="6"] .v12-x-ph > .top { box-shadow: inset 0 0 0 1.5px var(--accent); }
+  .v12-x[data-step="6"] .v12-x-ph > .top::after { content: "always first"; opacity: 1; color: var(--accent-ink); }
+  .v12-x[data-step="6"] .dial.sp { box-shadow: inset 0 0 0 1.5px var(--life); }
+
+  /* the caption: one step at a time with script, the whole list without it */
+  .v12-x-caps { display: grid; gap: 22px; margin: 0 0 22px; }
+  .v12-x.js .v12-x-caps { gap: 0; }
+  .v12-x.js .v12-x-cap { grid-area: 1 / 1; visibility: hidden; }
+  .v12-x.js[data-step="0"] [data-cap="0"], .v12-x.js[data-step="1"] [data-cap="1"], .v12-x.js[data-step="2"] [data-cap="2"],
+  .v12-x.js[data-step="3"] [data-cap="3"], .v12-x.js[data-step="4"] [data-cap="4"], .v12-x.js[data-step="5"] [data-cap="5"],
+  .v12-x.js[data-step="6"] [data-cap="6"] { visibility: visible; animation: simIn .32s cubic-bezier(.23, 1, .32, 1) both; }
+  .v12-x-cap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-content: start; gap: 8px 22px; }
+  .v12-x-t { grid-column: 1; grid-row: 1; display: flex; align-items: center; gap: 10px; margin: 0 0 2px;
+             font-size: clamp(17px, 1.8vw, 20px); font-weight: 600; letter-spacing: -0.014em; color: var(--ink); }
+  .v12-x-t i { font-style: normal; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0; padding: 3px 8px; border-radius: 980px;
+               color: var(--accent-ink); background: var(--accent-soft); }
+  .v12-x-cap p.car, .v12-x-cap p.pf { margin: 0; padding-left: 12px; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+  .v12-x-cap p.car { box-shadow: inset 2px 0 0 var(--life); }
+  .v12-x-cap p.pf { box-shadow: inset 2px 0 0 var(--accent); }
+  .v12-x-cap p span { display: block; margin-bottom: 3px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; }
+  .v12-x-cap p.car span { color: var(--life-ink); }
+  .v12-x-cap p.pf span { color: var(--accent-ink); }
+  .v12-x-proof { grid-column: 2; grid-row: 1; justify-self: end; align-self: center; margin: -10px 0; padding: 12px 0; font-size: 14px; color: var(--accent-ink); text-decoration: none; }
+  @media (hover:hover) and (pointer:fine) { .v12-x-proof:hover { text-decoration: underline; } }
+
+  /* one everyday line under each beat */
+  .v12-life { display: flex; align-items: baseline; gap: 10px; margin: 16px 0 0; max-width: 64ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+  .v12-life-k { flex: 0 0 auto; padding: 3px 8px 2px; border-radius: 980px; background: var(--life-soft); color: var(--life-ink);
+                font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.13em; text-transform: uppercase; transform: translateY(-1px); }
+  .sc-ov .v12-life { margin: 12px 0 0; }
+  .v12-life + :is(.v12-pair, .v12-dec, .v12-next) { margin-top: 20px; }
+
+  /* 03 · the ladder, read in CoverSure terms or a car's */
+  [data-lens-fig] .lx-cs, [data-lens-fig] .lx-car { transition: opacity .24s cubic-bezier(.2, 0, 0, 1); }
+  [data-lens-fig][data-lens="cs"] .lx-car, [data-lens-fig][data-lens="car"] .lx-cs { opacity: 0; }
+  [data-lens-fig] .rung-1 rect { transition: fill .24s ease-out, stroke .24s ease-out; }
+  [data-lens-fig][data-lens="car"] .rung-1 rect { fill: var(--life-soft); stroke: var(--life); }
+  [data-lens-fig][data-lens="car"] .lx-car .svg-name-key { fill: var(--life-ink); }
+  [data-lens-fig][data-lens="car"] .lx-car .x-ink { fill: var(--life-ink); }
+
+  @media (max-width: 960px) {
+    .v12-x-steps span { display: none; }
+  }
+  @media (max-width: 880px) {
+    .v12-x-bar { flex-wrap: wrap; }
+    .v12-x-steps { flex: 1 1 100%; }
+    .v12-x-steps button { flex: 1 1 0; min-width: 0; padding: 0 4px; min-height: 44px; }
+    .v12-x-grid { gap: 8px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                  grid-template-areas: "rc rp" "hA hA" "cA pA" "d1 d1" "hB hB" "cB pB" "d2 d2" "hC hC" "cC pC"; }
+    .v12-x-h { padding-top: 4px; }
+    .v12-x-row { align-self: end; }
+    .v12-x-row::before { display: inline-block; margin: 0 6px 1px 0; vertical-align: middle; }
+    .v12-x-arr.x-a1, .v12-x-arr.x-a2, .v12-x-arr.x-a3, .v12-x-arr.x-a4 { display: none; }
+    .v12-x-down { display: flex; }
+    .v12-x-cell { padding: 9px; }
+    .v12-x-in i { display: none; }
+    .v12-x-lad li { padding-left: 22px; }
+    .v12-x-lad li::before { left: 8px; }
+    .v12-x-lad li.r3 { margin-left: 12px; }
+    .v12-x-lad li.r2 { margin-left: 6px; }
+    .v12-x-dials svg { width: 52px; height: 32px; }
+    .v12-x-dials::after { content: none; }
+  }
+  @media (max-width: 760px) {
+    .v12-x-cap { grid-template-columns: minmax(0, 1fr); }
+    .v12-x-proof { grid-column: 1; grid-row: auto; justify-self: start; margin: -6px 0 -10px; }
+    .v12-life { flex-direction: column; gap: 6px; }
+  }
+  /* prefers-reduced-motion: the page-wide rule already drops every transition and animation; steps then switch instantly. */
+  html[data-motion="off"] .v12-x .v12-x-arr .ln { animation: none !important; }
 </style>
 </head>
 <body>
@@ -6643,6 +6901,171 @@
 
   <div class="sc-wrap v12-beats">
 
+    <!-- 00 · the whole idea in one picture, told through a car ───── -->
+    <section class="v12-beat v12-x" id="v12-s0" data-v12-x data-step="0" data-sub="a" aria-labelledby="v12-x-h">
+      <p class="v12-tag"><i>00</i>The idea in one picture</p>
+      <h2 class="v12-h2" id="v12-x-h">It works like your car&rsquo;s dashboard.</h2>
+      <p class="v12-line">A car measures everything but shows one message &#8212; the most important one, or none. <b>The engine does the same with what CoverSure already knew.</b></p>
+
+      <figure class="v12-fig v12-x-fig">
+        <div class="v12-x-bar">
+          <button class="v12-x-play" type="button" data-x-play data-state="off"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="xp-pause" d="M5 3.5v9M11 3.5v9"/><path class="xp-play" d="M5 3.5l7 4.5-7 4.5z"/></svg><span data-x-play-l>Play</span></button>
+          <div class="v12-x-steps" role="group" aria-label="Steps through the picture">
+            <button type="button" data-x-go="0" aria-current="step" aria-label="All steps at once"><i>All</i></button>
+            <button type="button" data-x-go="1" aria-label="Step 1: it already knew"><i>1</i><span>Known</span></button>
+            <button type="button" data-x-go="2" aria-label="Step 2: one brain, one message"><i>2</i><span>One message</span></button>
+            <button type="button" data-x-go="3" aria-label="Step 3: the most important thing first"><i>3</i><span>Order</span></button>
+            <button type="button" data-x-go="4" aria-label="Step 4: specific, not generic"><i>4</i><span>Specific</span></button>
+            <button type="button" data-x-go="5" aria-label="Step 5: the frame never moves"><i>5</i><span>Frame</span></button>
+            <button type="button" data-x-go="6" aria-label="Step 6: quiet when nothing fits"><i>6</i><span>Quiet</span></button>
+          </div>
+        </div>
+
+        <div class="v12-x-caps">
+          <div class="v12-x-cap" data-cap="0">
+            <p class="v12-x-t"><b>Everything at once.</b></p>
+            <p class="car"><span>In a car</span>Sensors &#8594; an order of importance &#8594; one message, on a dashboard that never moves.</p>
+            <p class="pf"><span>In Portfolio</span>Five sources &#8594; ten rules &#8594; one next step, in a frame that never moves.</p>
+          </div>
+          <div class="v12-x-cap" data-cap="1">
+            <p class="v12-x-t"><i>1</i><b>It already knew.</b></p>
+            <p class="car"><span>In a car</span>Your car measures fuel, seats and wear without asking you anything.</p>
+            <p class="pf"><span>In Portfolio</span>CoverSure already held five sources of context. Portfolio used none of them.</p>
+            <a class="v12-x-proof" href="#v12-s1" data-jump>Shown in 01 &#8595;</a>
+          </div>
+          <div class="v12-x-cap" data-cap="2">
+            <p class="v12-x-t"><i>2</i><b>One brain, one message.</b></p>
+            <p class="car"><span>In a car</span>It reads every sensor but shows one message, not twelve lights at once.</p>
+            <p class="pf"><span>In Portfolio</span>Ten rules read what CoverSure knew and pick one next step.</p>
+            <a class="v12-x-proof" href="#v12-s2" data-jump>Shown in 02 &#8595;</a>
+          </div>
+          <div class="v12-x-cap" data-cap="3">
+            <p class="v12-x-t"><i>3</i><b>The most important thing first.</b></p>
+            <p class="car"><span>In a car</span>Brakes fine, seatbelt faulty? Fix the seatbelt first, not an airbag upgrade.</p>
+            <p class="pf"><span>In Portfolio</span>Health held, term life missing? Term life comes next, not Super Top-Up.</p>
+            <a class="v12-x-proof" href="#v12-s3" data-jump>Shown in 03 &#8595;</a>
+          </div>
+          <div class="v12-x-cap" data-cap="4">
+            <p class="v12-x-t"><i>4</i><b>Specific, not generic.</b></p>
+            <p class="car"><span>In a car</span>&ldquo;Low fuel&rdquo; is a warning. &ldquo;38 km left&rdquo; lets you decide.</p>
+            <p class="pf"><span>In Portfolio</span>CoverRisk&rsquo;s amount and premium ride on the button, so nobody guesses how much.</p>
+            <a class="v12-x-proof" href="#v12-s2" data-jump>Shown in 02 &#8595;</a>
+          </div>
+          <div class="v12-x-cap" data-cap="5">
+            <p class="v12-x-t"><i>5</i><b>The frame never moves.</b></p>
+            <p class="car"><span>In a car</span>The speedometer is always in the same place. Only the message strip changes.</p>
+            <p class="pf"><span>In Portfolio</span>Four slots stay where they are. Only the engine band changes.</p>
+            <a class="v12-x-proof" href="#v12-s4" data-jump>Shown in 04 &#8595;</a>
+          </div>
+          <div class="v12-x-cap" data-cap="6">
+            <p class="v12-x-t"><i>6</i><b>Quiet when nothing fits.</b></p>
+            <p class="car"><span>In a car</span>All fine? It stays blank, and no message ever covers the speedometer.</p>
+            <p class="pf"><span>In Portfolio</span>Nothing fits? Nothing is promoted. And no offer ever sits above your policies.</p>
+            <a class="v12-x-proof" href="#v12-s5" data-jump>Shown in 05 &#8595;</a>
+          </div>
+        </div>
+
+        <div class="v12-x-grid">
+          <p class="v12-x-h x-hA" aria-hidden="true">Already known</p>
+          <p class="v12-x-h x-hB" aria-hidden="true">Decides</p>
+          <p class="v12-x-h x-hC" aria-hidden="true">Shows</p>
+
+          <!-- row 1 · in a car -->
+          <p class="v12-x-row car x-rc">In a car</p>
+          <div class="v12-x-cell car x-cA">
+            <p class="sr-only">Already known:</p>
+            <ul class="v12-x-in" data-lit="1 2">
+              <li><b>Your settings</b><i>what you told it</i></li>
+              <li><b>Fuel gauge</b><i>what is actually in</i></li>
+              <li><b>Service report</b><i>what it needs, at what cost</i></li>
+              <li><b>Seat sensors</b><i>who is on board</i></li>
+              <li><b>Wear check</b><i>how good the parts are</i></li>
+            </ul>
+          </div>
+          <span class="v12-x-arr car x-a1" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 30 12"><path class="ln" d="M1 6H27"/><path class="hd" d="M23 2l5 4-5 4"/></svg><b>&#215;</b></span>
+          <div class="v12-x-cell car x-cB">
+            <p class="v12-x-k" data-lit="2 3">Order of importance</p>
+            <ul class="v12-x-lad">
+              <li class="r3" data-n="3" data-lit="2"><b>Child seat &#183; Roof carrier</b><i>only with a reason</i></li>
+              <li class="r2" data-n="2" data-lit="2"><b>Extra airbags &#183; ABS</b></li>
+              <li class="r1" data-n="1" data-lit="2 3"><b><span class="hv">Brakes</span> + <span class="ms">Seatbelts</span></b><i>both, first</i></li>
+            </ul>
+            <p class="v12-x-none" data-lit="2 6">All fine &#8594; no message</p>
+          </div>
+          <span class="v12-x-arr car x-a2" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 30 12"><path class="ln" d="M1 6H27"/><path class="hd" d="M23 2l5 4-5 4"/></svg><b>&#215;</b></span>
+          <div class="v12-x-cell car x-cC">
+            <p class="sr-only">Shows, on the dashboard:</p>
+            <div class="v12-x-dash">
+              <div class="v12-x-dials" aria-hidden="true">
+                <span class="dial sp" data-lit="5 6"><svg viewBox="0 0 66 40"><path class="arc" d="M6 36A27 27 0 0 1 60 36"/><path class="tk" d="M13 36L9 36M15.7 26L12.2 24M23 18.7L21 15.2M33 16L33 12M43 18.7L45 15.2M50.3 26L53.8 24M53 36L57 36"/><line class="ndl" x1="33" y1="36" x2="33" y2="17"/></svg><i>Speed</i></span>
+                <span class="dial fu" data-lit="5"><svg viewBox="0 0 66 40"><path class="arc" d="M6 36A27 27 0 0 1 60 36"/><path class="tk" d="M13 36L9 36M33 16L33 12M53 36L57 36"/><text x="6" y="31">E</text><text x="56" y="31">F</text><line class="ndl" x1="33" y1="36" x2="33" y2="17"/></svg><i>Fuel</i></span>
+              </div>
+              <div class="v12-x-msg" data-lit="2 3 4 5 6">
+                <span data-at="0"><b>Low fuel</b><i>38 km left</i></span>
+                <span data-at="1" class="nil"><i>Blank &#8212; no sensor is wired to it</i></span>
+                <span data-at="2"><b>Fasten seatbelt</b><i>fuel is low too; this one wins</i></span>
+                <span data-at="3"><b>Seatbelt fault</b><i>fix it before any upgrade</i></span>
+                <span data-at="4"><s>Low fuel</s><b>Low fuel &#183; 38 km left</b></span>
+                <span data-at="5a"><b>Low fuel</b><i>38 km left</i></span>
+                <span data-at="5b"><b>Door open</b><i>rear left</i></span>
+                <span data-at="5c"><b>Service due</b><i>in 300 km</i></span>
+                <span data-at="6" class="nil"><i>Blank &#8212; all fine</i></span>
+              </div>
+            </div>
+          </div>
+
+          <span class="v12-x-arr v12-x-down x-d1" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 12 22"><path class="ln" d="M6 1V19"/><path class="hd" d="M2 15l4 5 4-5"/></svg><b>&#215;</b></span>
+          <span class="v12-x-arr v12-x-down x-d2" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 12 22"><path class="ln" d="M6 1V19"/><path class="hd" d="M2 15l4 5 4-5"/></svg><b>&#215;</b></span>
+
+          <!-- row 2 · in Portfolio -->
+          <p class="v12-x-row pf x-rp">In Portfolio</p>
+          <div class="v12-x-cell pf x-pA">
+            <p class="sr-only">Already known:</p>
+            <ul class="v12-x-in" data-lit="1 2">
+              <li><b>Onboarding</b><i>what they told us</i></li>
+              <li><b>Policy data</b><i>what is actually stored</i></li>
+              <li><b>CoverRisk</b><i>cover needed, at what premium</i></li>
+              <li><b>Family data</b><i>who depends on them</i></li>
+              <li><b>Know Your Policy</b><i>how good each policy is</i></li>
+            </ul>
+          </div>
+          <span class="v12-x-arr pf x-a3" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 30 12"><path class="ln" d="M1 6H27"/><path class="hd" d="M23 2l5 4-5 4"/></svg><b>&#215;</b></span>
+          <div class="v12-x-cell pf x-pB">
+            <p class="v12-x-k" data-lit="2 3">Engine &#183; 10 rules</p>
+            <ul class="v12-x-lad">
+              <li class="r3" data-n="3" data-lit="2"><b>Personal Accident &#183; Hospicash &#183; Home &#183; Device</b><i>only with a reason</i></li>
+              <li class="r2" data-n="2" data-lit="2"><b>Super Top-Up &#183; Critical Illness</b></li>
+              <li class="r1" data-n="1" data-lit="2 3"><b><span class="hv">Health</span> + <span class="ms">Term life</span></b><i>both, first</i></li>
+            </ul>
+            <p class="v12-x-none" data-lit="2 6">Nothing fits &#8594; nothing promoted</p>
+          </div>
+          <span class="v12-x-arr pf x-a4" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 30 12"><path class="ln" d="M1 6H27"/><path class="hd" d="M23 2l5 4-5 4"/></svg><b>&#215;</b></span>
+          <div class="v12-x-cell pf x-pC">
+            <p class="sr-only">Shows, in Portfolio:</p>
+            <div class="v12-x-ph">
+              <div class="top" data-lit="5 6">Your policies</div>
+              <div class="fx" data-lit="5">Insurance on Card</div>
+              <div class="v12-x-msg" data-lit="2 3 4 5 6">
+                <span data-at="0"><b>Buy &#8377;1 Cr life cover</b><i>&#8377;80/month, from the risk report</i></span>
+                <span data-at="1" class="nil"><i>Empty &#8212; nothing decides what goes here</i></span>
+                <span data-at="2"><b>Buy Health policy</b><i>From &#8377;200/month</i></span>
+                <span data-at="3"><b>Buy &#8377;1 Cr life cover</b><i>term life completes step one</i></span>
+                <span data-at="4"><s>Buy Life policy</s><b>Buy &#8377;1 Cr life cover &#183; &#8377;80/month</b></span>
+                <span data-at="5a"><b>Buy Health policy</b><i>From &#8377;200/month</i></span>
+                <span data-at="5b"><b>Add Term policy</b><i>You told us you have one</i></span>
+                <span data-at="5c"><b>Buy Super Top-up</b><i>When bills go beyond your cover</i></span>
+                <span data-at="6" class="nil"><i>Nothing promoted</i></span>
+              </div>
+              <div class="fx" data-lit="5">Download portfolio</div>
+              <div class="fx" data-lit="5">Inactive policies</div>
+            </div>
+          </div>
+        </div>
+
+        <p class="sr-only" data-x-live aria-live="polite"></p>
+      </figure>
+    </section>
+
     <!-- 01 ───────────────────────────────────────────── -->
     <section class="v12-beat" id="v12-s1">
       <p class="v12-tag"><i>01</i>The problem</p>
@@ -6700,6 +7123,7 @@
         <p class="v12-cap v12-before-t"><b>Five sources of context. None reached Portfolio.</b></p>
         <p class="v12-cap v12-after-t"><b>One new engine reads all five and picks the next step.</b></p>
       </figure>
+      <p class="v12-life"><span class="v12-life-k">Everyday</span><span>Like a car whose sensors all work, wired to a dashboard that shows nothing.</span></p>
 
       <div class="v12-foot">
         <p class="v12-chips"><span class="v12-chips-k">Evidence</span><span>Dead clicks</span><span>Support calls</span><span>B2B onboarding</span></p>
@@ -6740,6 +7164,7 @@
           </div>
         </div>
       </figure>
+      <p class="v12-life"><span class="v12-life-k">Everyday</span><span>A dashboard reads every sensor but shows one message: &ldquo;Fasten seatbelt&rdquo; wins over &ldquo;Low fuel&rdquo;.</span></p>
 
       <div class="v12-pair">
         <div class="v12-pc"><span>Generic pitch</span><b>Buy Life policy</b><i>The user still has to guess how much cover.</i></div>
@@ -6759,31 +7184,45 @@
       <h2 class="v12-h2">Rank by what matters in a life, <span class="thin">not what sells.</span></h2>
       <p class="v12-line">Health and term life come first &#8212; both of them. <b>The engine never skips a rung</b> because the next product is easier to sell.</p>
 
-      <figure class="v12-fig" data-climb>
+      <figure class="v12-fig" data-climb data-lens-fig data-lens="cs">
+        <div class="v12-seg" role="group" aria-label="Read the ladder in">
+          <button type="button" data-lens-to="cs" aria-pressed="true">CoverSure</button>
+          <button type="button" data-lens-to="car" aria-pressed="false">In a car</button>
+        </div>
         <div class="v9-scroll">
-          <svg viewBox="0 0 840 300" role="img" aria-label="A three-step ladder. Health and term life sit on the first step and both must exist before the engine moves up. Super Top-Up and Critical Illness are the second step. Personal Accident, Hospicash, Home and Device sit on the third, reached only when the user's context creates a reason.">
+          <svg viewBox="0 0 840 300" role="img" aria-label="A three-step ladder. Health and term life sit on the first step and both must exist before the engine moves up. Super Top-Up and Critical Illness are the second step. Personal Accident, Hospicash, Home and Device sit on the third, reached only when the user's context creates a reason." data-label-cs="A three-step ladder. Health and term life sit on the first step and both must exist before the engine moves up. Super Top-Up and Critical Illness are the second step. Personal Accident, Hospicash, Home and Device sit on the third, reached only when the user's context creates a reason." data-label-car="The same ladder in a car. Brakes and seatbelts sit on the first step and both must work before anything else. Extra airbags and ABS are the second step. A child seat or roof carrier sits on the third, fitted only when there is a child or a trip.">
             <defs>
               <marker id="v12L1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)"/></marker>
             </defs>
             <g class="rung rung-3"><rect x="500" y="14" width="330" height="70" rx="10" fill="var(--surface)" stroke="var(--rule)" stroke-width="1.5" stroke-dasharray="5 3"/>
             <text class="svg-name" x="518" y="38">03 &#183; SITUATIONAL</text>
-            <text class="svg-sub" x="518" y="56">Personal Accident &#183; Hospicash &#183; Home &#183; Device</text>
+            <g class="lx-cs"><text class="svg-sub" x="518" y="56">Personal Accident &#183; Hospicash &#183; Home &#183; Device</text>
             <text class="svg-sub" x="518" y="73">only when a signal creates a reason</text></g>
+            <g class="lx-car"><text class="svg-sub" x="518" y="56">Child seat &#183; Roof carrier</text>
+            <text class="svg-sub" x="518" y="73">only when there is a child, or a trip</text></g></g>
             <path class="svg-line-key" d="M544 110 L544 90" marker-end="url(#v12L1)"/>
             <text class="svg-edge" x="558" y="106">gate: a reason exists?</text>
             <g class="rung rung-2"><rect x="256" y="114" width="330" height="70" rx="10" fill="var(--surface)" stroke="var(--rule)" stroke-width="1.5"/>
-            <text class="svg-name" x="274" y="138">02 &#183; EXTENDS COVER</text>
+            <g class="lx-cs"><text class="svg-name" x="274" y="138">02 &#183; EXTENDS COVER</text>
             <text class="svg-sub" x="274" y="156">Super Top-Up &#183; Critical Illness</text>
             <text class="svg-sub" x="274" y="173">only once both of step one exist</text></g>
+            <g class="lx-car"><text class="svg-name" x="274" y="138">02 &#183; EXTENDS SAFETY</text>
+            <text class="svg-sub" x="274" y="156">Extra airbags &#183; ABS</text>
+            <text class="svg-sub" x="274" y="173">only once both of step one work</text></g></g>
             <path class="svg-line-key" d="M300 210 L300 190" marker-end="url(#v12L1)"/>
-            <text class="svg-edge" x="314" y="206">gate: both held?</text>
+            <text class="svg-edge lx-cs" x="314" y="206">gate: both held?</text>
+            <text class="svg-edge lx-car" x="314" y="206">gate: both working?</text>
             <g class="rung rung-1"><rect x="12" y="214" width="330" height="76" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
-            <text class="svg-name-key" x="30" y="240">01 &#183; MUST HAVE</text>
+            <g class="lx-cs"><text class="svg-name-key" x="30" y="240">01 &#183; MUST HAVE</text>
             <text class="svg-sub" x="30" y="259">Health &#183; Term life</text>
             <text class="svg-sub" x="30" y="277" fill="var(--accent-ink)">health only? still step one &#8594; term life next</text></g>
+            <g class="lx-car"><text class="svg-name-key" x="30" y="240">01 &#183; MUST HAVE</text>
+            <text class="svg-sub" x="30" y="259">Brakes &#183; Seatbelts</text>
+            <text class="svg-sub x-ink" x="30" y="277" fill="var(--accent-ink)">brakes only? still step one &#8594; seatbelts next</text></g></g>
           </svg>
         </div>
       </figure>
+      <p class="v12-life"><span class="v12-life-k">Everyday</span><span>A good mechanic fixes brakes and seatbelts before selling you alloy wheels, and fits a child seat only once there is a child.</span></p>
 
       <dl class="v12-dec">
         <div class="yes"><dt>Chose</dt><dd>A protection ladder, set with Product</dd></div>
@@ -6821,6 +7260,7 @@
           <p class="v12-tcap"><b>A verdict, not a new score.</b> The existing KYP rating, moved onto the policy itself.</p>
         </div>
       </div>
+      <p class="v12-life"><span class="v12-life-k">Everyday</span><span>Like a car dashboard: the speedometer is always in the same place. Only the message strip changes.</span></p>
 
       <div class="v12-foot">
         <p class="v12-chips"><span class="v12-chips-k">Shown</span><span>Information architecture</span><span>Interaction design</span><span>Edge states</span></p>
@@ -6855,6 +7295,7 @@
           <p><s>Share Policy promo</s><i>appears with nominee context instead</i></p>
         </div>
       </div>
+      <p class="v12-life"><span class="v12-life-k">Everyday</span><span>Supermarkets often put milk at the back, so you walk past the offers to reach it. Portfolio does the opposite: your policies come first.</span></p>
 
       <div class="v12-foot">
         <p class="v12-chips"><span class="v12-chips-k">Shown</span><span>Saying no</span><span>Protecting the primary job</span></p>
@@ -6875,6 +7316,7 @@
         <div><p class="v12-role-k">With Product</p>
           <ul><li>Insurance-domain judgement</li><li>Final recommendation priorities</li><li>CoverRisk and KYP themselves</li></ul></div>
       </div>
+      <p class="v12-life"><span class="v12-life-k">Everyday</span><span>Like a sat-nav: I built how it picks the route. Product owns the map, and adds new roads without the routing changing.</span></p>
 
       <div class="v12-next">
         <p class="v12-next-k">No numbers yet. What I will measure:</p>
@@ -6919,7 +7361,8 @@
         <p>I fixed the navigation defect. <b>The contextual recommendation work was the larger product opportunity that came next</b> — and it is the rest of this case study.</p></div>
       <div class="sc-sec"><h4>How the problem was framed</h4>
         <p>The work started with a dead-click issue &#8212; taps that did nothing, leaving users stuck in a loop. I fixed that route. <b>But it exposed something larger: Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery far more relevant.</b></p>
-        <p>Two controls, styled the same, doing different jobs. One revealed detail in place; the other was the way through. Taps landed on the first and produced nothing.</p></div>
+        <p>Two controls, styled the same, doing different jobs. One revealed detail in place; the other was the way through. Taps landed on the first and produced nothing.</p>
+        <p class="v12-life"><span class="v12-life-k">Everyday</span><span>Like wiper and indicator stalks shaped alike: you flick the wipers when you meant to signal, again and again.</span></p></div>
       <p class="v12-part">The opportunity</p>
       <dl class="v10-dec">
         <div class="d-call"><dt>Decision</dt><dd>Connect the context the product already had</dd></div>
@@ -11187,6 +11630,125 @@
         t.focus({ preventScroll: true });
       });
     });
+  }());
+</script>
+
+<script>
+  /* ══════════ V12 · the idea in one picture, and the ladder lens ══════════
+     00 · The whole engine sits on screen at once, a car row above the Portfolio row. When it scrolls
+     into view it walks the six steps once (6s each, a timer hairline on the active step), then rests on
+     "All". It stops for good the moment the reader picks a step, presses Pause or follows a link; Play
+     replays it. Nothing runs off screen, in a hidden tab, under Pause motion or prefers-reduced-motion
+     (there Play is the opt-in). The live region speaks only when a step is chosen by hand.
+     03 · The ladder reads in CoverSure terms or a car's; the toggle swaps labels, not structure. */
+  (function () {
+    'use strict';
+    var panel = document.getElementById('panel-v12');
+    if (!panel) { return; }
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function motionOff() { return reduce.matches || document.documentElement.getAttribute('data-motion') === 'off'; }
+
+    var x = panel.querySelector('[data-v12-x]');
+    if (x) {
+      x.classList.add('js');
+      var DUR = 6000, LAST = 6, SUBS = ['a', 'b', 'c'];
+      var steps = [].slice.call(x.querySelectorAll('[data-x-go]'));
+      var play = x.querySelector('[data-x-play]'), playL = x.querySelector('[data-x-play-l]');
+      var live = x.querySelector('[data-x-live]');
+      var step = 0, timer = 0, cyc = 0, playing = false, held = false, done = false, optIn = false, vis = false;
+
+      var go = function (n, byHand) {
+        step = n;
+        x.setAttribute('data-step', String(n));
+        steps.forEach(function (b) { b.setAttribute('aria-current', b.getAttribute('data-x-go') === String(n) ? 'step' : 'false'); });
+        /* step 5 cycles the one moving message twice, then holds; the gauges and slots never change */
+        window.clearInterval(cyc); cyc = 0; x.setAttribute('data-sub', 'a');
+        if (n === 5 && (!motionOff() || optIn)) {
+          var k = 0;
+          cyc = window.setInterval(function () {
+            k++; x.setAttribute('data-sub', SUBS[k % 3]);
+            if (k >= 6) { window.clearInterval(cyc); cyc = 0; }
+          }, 1500);
+        }
+        if (byHand) {
+          var cap = x.querySelector('[data-cap="' + n + '"]');
+          live.textContent = cap ? cap.textContent.replace(/[↓]/g, '').replace(/\s+/g, ' ').trim() : '';
+        }
+      };
+      var label = function () {
+        play.setAttribute('data-state', playing ? 'on' : 'off');
+        playL.textContent = playing ? 'Pause' : (done ? 'Replay' : 'Play');
+        play.setAttribute('aria-label', playing ? 'Pause the walkthrough' : (done ? 'Replay the walkthrough' : 'Play the walkthrough'));
+      };
+      var next = function () {
+        window.clearTimeout(timer);
+        timer = window.setTimeout(function () {
+          if (step >= LAST) { stop(); done = true; go(0); label(); return; }
+          go(step + 1); next();
+        }, DUR);
+      };
+      var start = function () {
+        if (playing) { return; }
+        playing = true;
+        if (step === 0 || done) { done = false; go(1); }
+        x.setAttribute('data-playing', '');
+        next(); label();
+      };
+      var stop = function () {
+        playing = false; window.clearTimeout(timer); timer = 0;
+        x.removeAttribute('data-playing'); label();
+      };
+      /* a walkthrough the reader cannot see whole is not worth starting for them (phones): Play is the opt-in there */
+      var grid = x.querySelector('.v12-x-grid');
+      var fits = function () { return grid.getBoundingClientRect().height <= window.innerHeight * 0.85; };
+      var takeOver = function () { held = true; if (playing) { stop(); } };
+      /* auto-play only once, only while seen, only when motion is welcome */
+      var sync = function () {
+        var ok = vis && !document.hidden && !held && !done && (!motionOff() || optIn) && (optIn || fits());
+        if (ok && !playing) { start(); } else if (!ok && playing) { stop(); }
+      };
+
+      steps.forEach(function (b, i) {
+        b.addEventListener('click', function () { takeOver(); go(Number(b.getAttribute('data-x-go')), true); });
+        b.addEventListener('keydown', function (e) {
+          var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (!d) { return; }
+          e.preventDefault();
+          var t = steps[(i + d + steps.length) % steps.length];
+          t.focus(); t.click();
+        });
+      });
+      play.addEventListener('click', function () {
+        if (playing) { takeOver(); return; }
+        held = false; optIn = true; start();
+      });
+      [].slice.call(x.querySelectorAll('.v12-x-proof')).forEach(function (a) { a.addEventListener('click', takeOver); });
+
+      reduce.addEventListener('change', function () { if (reduce.matches) { optIn = false; } sync(); });
+      document.addEventListener('motionchange', function (e) { if (e.detail && e.detail.off) { optIn = false; window.clearInterval(cyc); cyc = 0; } sync(); });
+      document.addEventListener('visibilitychange', sync);
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) { vis = e.isIntersecting; sync(); });
+        }, { threshold: 0.45 }).observe(x.querySelector('.v12-x-grid'));
+      }
+      go(0); label();
+    }
+
+    /* 03 · the ladder lens */
+    var lf = panel.querySelector('[data-lens-fig]');
+    if (lf) {
+      var lb = [].slice.call(lf.querySelectorAll('[data-lens-to]'));
+      var svg = lf.querySelector('svg[role="img"]');
+      lb.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var to = b.getAttribute('data-lens-to');
+          lf.setAttribute('data-lens', to);
+          lb.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+          if (svg) { svg.setAttribute('aria-label', svg.getAttribute('data-label-' + to)); }
+        });
+      });
+    }
   }());
 </script>
 

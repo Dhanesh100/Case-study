@@ -4,7 +4,7 @@
 touching this repo, so Dhanesh does not have to explain it again. `PROJECT-LOG.md` is the
 chronological record of what happened. **This file is the standing brief.**
 
-Last updated: 9 November 2026 · current version: **V12**
+Last updated: 9 November 2026 · current version: **V12** (with the everyday layer, §17)
 
 ---
 
@@ -509,4 +509,64 @@ motion, larger text, no colour, haptics). It keeps the teardown's evidence rules
 (§9.4), so it needs re-authorising in claude.ai connector settings before it can help. Figma was not
 needed for this pass. Image generation (Magnific) was deliberately not used: generated screens would
 break "real over impressive".
+
+---
+
+## 17 · The everyday layer — 9 November 2026
+
+Dhanesh: *"while explaining, use examples that in real life or everyday related to user understand that
+better, we can use those in diagram and make diagram animated or interactive that showcase everything at
+once, unfold everything with interaction or animation."* Applied to **V12 in place** (the default view),
+not as a V13.
+
+**One analogy world: the car.** Everyone has sat in one, and its parts map onto the engine without
+forcing. Keep this mapping when adding or editing anything in the layer:
+
+| CoverSure | Car |
+|---|---|
+| Onboarding — what they told us | Your settings — what you told it |
+| Policy data — what is actually stored | Fuel gauge — what is actually in |
+| CoverRisk — cover needed, at what premium | Service report — what it needs, at what cost |
+| Family data — who depends on them | Seat sensors — who is on board |
+| Know Your Policy — how good each policy is | Wear check — how good the parts are |
+| Recommendation engine, ten rules | Order of importance |
+| Tier 1 · Health **and** term life | Brakes **and** seatbelts |
+| Tier 2 · Super Top-Up, Critical Illness | Extra airbags, ABS |
+| Tier 3 · PA, Hospicash, Home, Device — only with a reason | Child seat, roof carrier — only with a child or a trip |
+| Health only → term life next, not Super Top-Up | Brakes fine, seatbelt faulty → seatbelt first, not an airbag upgrade |
+| "Buy Life policy" vs "Buy ₹1 Cr life cover · ₹80/month" | "Low fuel" vs "Low fuel · 38 km left" |
+| Fixed slots, one engine band | Speedometer never moves, only the message strip changes |
+| Nothing fits → nothing promoted; no offer above your policies | All fine → blank; nothing covers the speedometer |
+
+Two examples sit outside the car on purpose, because they fit better: **beat 05** contrasts the
+supermarket that puts milk at the back so you pass the offers, and **beat 06** uses a sat-nav (I built the
+routing; Product owns the map). The dead click is told as wiper and indicator stalks shaped alike, inside
+the beat-01 overlay only — the engine stays the subject.
+
+**What was built.**
+- **00 · The idea in one picture** (`#v12-s0`), first in the beats. A car row above a Portfolio row, through
+  the same three columns (Already known → Decides → Shows), so the whole engine and its everyday twin are
+  on screen at once. Six steps unfold it: already known · one message · order · specific · frame · quiet.
+  Each step dims what is not part of it (never hides it), changes the one moving message, and shows a
+  caption with "In a car" and "In Portfolio" side by side plus a link to the beat that proves it.
+- **Ladder lens** on beat 03: *CoverSure | In a car* swaps the labels, not the structure.
+- **One "Everyday" line** under each of the six beats (green pill).
+- **Colour:** green = everyday (`--life`, `--life-soft`, `--life-ink`, added to all three token blocks),
+  blue = CoverSure.
+
+**Motion rules for the picture.** It walks the six steps once (6 s each, a linear timer hairline on the
+active step) when it scrolls into view, then rests on *All* and offers *Replay*. It auto-plays only when
+the whole picture fits on screen — on phones it is taller than the screen, so *Play* is the opt-in. It
+stops for good once the reader picks a step, presses Pause or follows a link. Nothing runs off screen, in
+a hidden tab, under Pause motion, or under reduced motion. The live region speaks only for steps chosen by
+hand. Captions are real HTML: without script, every caption shows as a list.
+
+**Measured, same method both times** (panel markup minus scripts, overlays and attributes): the V12
+surface went from **806 to 1,541 words**. Most of the increase is step captions and message variants that
+show one at a time: at rest, section 00 shows **244 words** on screen, and the six everyday lines add
+**121**. This is a real cost to a version built to be compact; it was the trade asked for. Do not claim
+V12 is still ~850 words.
+
+**Checks:** 39/39 on the new layer (1440, 375, 412, reduced-motion dark), the 44/44 case-study suite
+still passes, structure checks clean.
 
