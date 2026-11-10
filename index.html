@@ -3056,208 +3056,9 @@
   .v12-beats { grid-template-columns: minmax(0, 1fr); }
 </style>
 <style>
-  /* ══════════ EVERYDAY LAYER · 9 Nov 2026 ══════════
-     The engine told through a car dashboard. One picture holds the whole idea (00) and unfolds in six
-     steps; each beat gets one everyday line; the ladder gets a car lens. Green = everyday, blue = CoverSure.
-     Motion: opacity and transform only; standard (.2,0,0,1) for dims, enter (.23,1,.32,1) for swaps;
-     linear only for the step timer and the wire flow. One pass, then it rests on "All". */
-  .v12-x { --x-cell: color-mix(in srgb, var(--ink) 3%, var(--surface));
-           --x-chip: color-mix(in srgb, var(--ink) 6%, var(--surface));
-           --x-dur: 6s; }
-  .v12-x-fig { padding: clamp(16px, 2.6vw, 26px); }
-
-  /* controls */
-  .v12-x-bar { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; }
-  .v12-x:not(.js) .v12-x-bar { display: none; }
-  .v12-x-play { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 16px 0 13px;
-                border: none; border-radius: 980px; background: var(--ink); color: var(--ground); cursor: pointer;
-                font: 600 14px/1 var(--body); transition: transform 160ms cubic-bezier(.23, 1, .32, 1); }
-  .v12-x-play svg { width: 14px; height: 14px; }
-  .v12-x-play .xp-pause { display: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-  .v12-x-play .xp-play { fill: currentColor; }
-  .v12-x-play[data-state="on"] .xp-pause { display: inline; }
-  .v12-x-play[data-state="on"] .xp-play { display: none; }
-  .v12-x-steps { display: flex; gap: 2px; padding: 3px; min-width: 0; border-radius: 980px; background: var(--rule-soft);
-                 overflow-x: auto; scrollbar-width: none; }
-  .v12-x-steps::-webkit-scrollbar { display: none; }
-  .v12-x-steps button { position: relative; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-                        min-width: 44px; min-height: 40px; padding: 0 13px; border: none; border-radius: 980px; overflow: hidden;
-                        background: transparent; color: var(--ink-2); cursor: pointer; font: 500 13.5px/1 var(--body);
-                        transition: background-color .2s ease-out, color .2s ease-out, transform 160ms cubic-bezier(.23, 1, .32, 1); }
-  .v12-x-steps i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
-  .v12-x-steps button[aria-current="step"] { background: var(--surface); color: var(--ink);
-                                             box-shadow: 0 1px 4px -1px color-mix(in srgb, var(--ink) 30%, transparent); }
-  .v12-x-steps button[aria-current="step"] i { color: var(--accent-ink); }
-  /* the step timer: a hairline that fills while the walkthrough plays */
-  .v12-x-steps button::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 5px; height: 2px; border-radius: 2px;
-                               background: var(--accent); transform: scaleX(0); transform-origin: left; opacity: 0; }
-  .v12-x[data-playing] .v12-x-steps button[aria-current="step"]::after { opacity: 1; animation: xbar var(--x-dur) linear both; }
-  :is(.v12-x-play, .v12-x-steps button):active { transform: scale(.97); }
-  @keyframes xbar { to { transform: scaleX(1); } }
-
-  /* the picture: two rows (car, Portfolio) through the same three columns */
-  .v12-x-grid { display: grid; gap: 10px 4px; align-items: stretch;
-                grid-template-columns: 78px minmax(0, 1fr) 30px minmax(0, 1fr) 30px minmax(0, 1.12fr);
-                grid-template-areas: ".  hA .  hB .  hC"
-                                     "rc cA a1 cB a2 cC"
-                                     "rp pA a3 pB a4 pC"; }
-  .x-hA { grid-area: hA; } .x-hB { grid-area: hB; } .x-hC { grid-area: hC; }
-  .x-rc { grid-area: rc; } .x-rp { grid-area: rp; }
-  .x-cA { grid-area: cA; } .x-cB { grid-area: cB; } .x-cC { grid-area: cC; }
-  .x-pA { grid-area: pA; } .x-pB { grid-area: pB; } .x-pC { grid-area: pC; }
-  .x-a1 { grid-area: a1; } .x-a2 { grid-area: a2; } .x-a3 { grid-area: a3; } .x-a4 { grid-area: a4; }
-  .x-d1 { grid-area: d1; } .x-d2 { grid-area: d2; }
-  .v12-x-h { margin: 0; padding: 0 2px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); }
-  .v12-x-row { margin: 0; align-self: center; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; line-height: 1.45; }
-  .v12-x-row::before { content: ""; display: block; width: 8px; height: 8px; margin: 0 0 8px; border-radius: 50%; background: currentColor; }
-  .v12-x-row.car { color: var(--life-ink); }
-  .v12-x-row.pf { color: var(--accent-ink); }
-
-  .v12-x-cell { min-width: 0; display: flex; flex-direction: column; justify-content: flex-start; gap: 8px; padding: 12px;
-                border-radius: 14px; background: var(--x-cell); }
-  .v12-x-cell.car { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--life) 30%, transparent); }
-  .v12-x-cell.pf { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent); }
-  .v12-x-k { margin: 0; font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
-  .car .v12-x-k { color: var(--life-ink); }
-  .pf .v12-x-k { color: var(--accent-ink); }
-
-  /* step dimming: everything stays on screen; what is not part of the step steps back */
-  .v12-x [data-lit] { transition: opacity .24s cubic-bezier(.2, 0, 0, 1); }
-  .v12-x[data-step="1"] [data-lit]:not([data-lit~="1"]),
-  .v12-x[data-step="2"] [data-lit]:not([data-lit~="2"]),
-  .v12-x[data-step="3"] [data-lit]:not([data-lit~="3"]),
-  .v12-x[data-step="4"] [data-lit]:not([data-lit~="4"]),
-  .v12-x[data-step="5"] [data-lit]:not([data-lit~="5"]),
-  .v12-x[data-step="6"] [data-lit]:not([data-lit~="6"]) { opacity: .34; }
-
-  /* A · what is already known */
-  .v12-x-in { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
-  .v12-x-in li { padding: 6px 9px; border-radius: 9px; background: var(--x-chip); transition: background-color .3s ease-out; }
-  .v12-x-in b { display: block; font-size: 12.5px; font-weight: 600; line-height: 1.25; color: var(--ink); }
-  .v12-x-in i { display: block; font-style: normal; font-size: 11px; line-height: 1.3; color: var(--ink-3); }
-  .v12-x[data-step="1"] .car .v12-x-in li { background: var(--life-soft); }
-  .v12-x[data-step="1"] .pf .v12-x-in li { background: var(--accent-soft); }
-  .v12-x[data-step="1"] .v12-x-in li:nth-child(2) { transition-delay: 70ms; }
-  .v12-x[data-step="1"] .v12-x-in li:nth-child(3) { transition-delay: 140ms; }
-  .v12-x[data-step="1"] .v12-x-in li:nth-child(4) { transition-delay: 210ms; }
-  .v12-x[data-step="1"] .v12-x-in li:nth-child(5) { transition-delay: 280ms; }
-
-  /* wires between the columns: dead in step 1, flowing in step 2 */
-  .v12-x-arr { position: relative; display: flex; align-items: center; justify-content: center; color: var(--ink-3); }
-  .v12-x-arr svg { width: 30px; height: 12px; overflow: visible; }
-  .v12-x-down { display: none; }
-  .v12-x-down svg { width: 12px; height: 22px; }
-  .v12-x-arr path { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  .v12-x-arr b { position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; border-radius: 50%;
-                 background: var(--signal-soft); color: var(--signal); font: 600 12px/18px var(--body); text-align: center;
-                 opacity: 0; transform: translate(-50%, -50%) scale(.9);
-                 transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .24s cubic-bezier(.23, 1, .32, 1); }
-  .v12-x[data-step="1"] .v12-x-arr { color: var(--signal); }
-  .v12-x[data-step="1"] .v12-x-arr .ln { stroke-dasharray: 3 4; }
-  .v12-x[data-step="1"] .v12-x-arr .hd { opacity: 0; }
-  .v12-x[data-step="1"] .v12-x-arr b { opacity: 1; transform: translate(-50%, -50%); }
-  .v12-x[data-step="2"] .v12-x-arr.car { color: var(--life); }
-  .v12-x[data-step="2"] .v12-x-arr.pf, .v12-x[data-step="2"] .v12-x-down { color: var(--accent); }
-  .v12-x[data-step="2"] .v12-x-arr .ln { stroke-dasharray: 4 4; animation: xflow .8s linear infinite; }
-  @keyframes xflow { to { stroke-dashoffset: -16; } }
-
-  /* B · the order of importance */
-  .v12-x-lad { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
-  .v12-x-lad li { position: relative; padding: 6px 9px 6px 27px; border-radius: 9px; background: var(--x-chip);
-                  font-size: 12px; line-height: 1.3; color: var(--ink); }
-  .v12-x-lad li::before { content: attr(data-n); position: absolute; left: 10px; top: 6px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
-  .v12-x-lad li.r3 { margin-left: 22px; }
-  .v12-x-lad li.r2 { margin-left: 11px; }
-  .v12-x-lad b { font-weight: 600; }
-  .v12-x-lad i { display: block; font-style: normal; font-size: 11px; color: var(--ink-3); }
-  .car .v12-x-lad .r1 { background: var(--life-soft); }
-  .pf .v12-x-lad .r1 { background: var(--accent-soft); }
-  .v12-x-lad .ms { border-radius: 4px; }
-  .v12-x[data-step="3"] .v12-x-lad .hv::after { content: " \2713"; }
-  .v12-x[data-step="3"] .car .hv::after { color: var(--life-ink); }
-  .v12-x[data-step="3"] .pf .hv::after { color: var(--accent-ink); }
-  .v12-x[data-step="3"] .v12-x-lad .ms::after { content: "next"; display: inline-block; margin-left: 5px; padding: 2px 6px 1px; border-radius: 980px;
-                                                font: 600 9px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--surface);
-                                                vertical-align: 1px; animation: simIn .32s cubic-bezier(.23, 1, .32, 1) both; }
-  .v12-x[data-step="3"] .car .ms::after { background: var(--life); }
-  .v12-x[data-step="3"] .pf .ms::after { background: var(--accent); }
-  .v12-x-none { margin: 0; padding: 5px 9px; border-radius: 9px; font-size: 11.5px; color: var(--ink-2);
-                outline: 1px dashed var(--rule); outline-offset: -1px; }
-
-  /* C · what the screen shows: gauges and slots that never move, one message that does */
-  .v12-x-dash, .v12-x-ph { flex: 1 1 auto; min-width: 0; display: grid; align-content: center; gap: 7px; padding: 9px; border-radius: 12px; background: var(--x-chip); }
-  .v12-x-dash { gap: 14px; }
-  .v12-x-dials { position: relative; display: flex; justify-content: space-around; gap: 6px; }
-  .v12-x-dials .dial { display: grid; justify-items: center; border-radius: 10px; padding: 2px 4px 0; }
-  .v12-x-dials svg { width: 66px; height: 40px; overflow: visible; }
-  .v12-x-dials i { font-style: normal; font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
-  .dial .arc { fill: none; stroke: var(--rule); stroke-width: 4; stroke-linecap: round; }
-  .dial .tk { stroke: var(--ink-3); stroke-width: 1.3; stroke-linecap: round; }
-  .dial text { font: 600 7px var(--mono); fill: var(--ink-3); }
-  .dial .ndl { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; transform-box: view-box; transform-origin: 33px 36px;
-               transition: transform .6s cubic-bezier(.2, 0, 0, 1); }
-  .dial.sp .ndl { transform: rotate(-24deg); }
-  .dial.fu .ndl { transform: rotate(-68deg); }
-  .v12-x[data-step="6"] .dial.fu .ndl { transform: rotate(46deg); }
-
-  .v12-x-msg { position: relative; display: grid; align-items: center; min-height: 48px; padding: 7px 10px; border-radius: 9px; background: var(--x-cell);
-               transition: background-color .24s ease-out, box-shadow .24s ease-out; }
-  .car .v12-x-msg { box-shadow: inset 0 0 0 1.5px var(--life); }
-  .pf .v12-x-msg { background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent); }
-  .v12-x-msg > span { grid-area: 1 / 1; visibility: hidden; opacity: 0; transform: translateY(6px);
-                      transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .24s cubic-bezier(.23, 1, .32, 1), visibility 0s .24s; }
-  .v12-x-msg b { display: block; font-size: 12.5px; font-weight: 600; line-height: 1.3; }
-  .car .v12-x-msg b { color: var(--life-ink); }
-  .pf .v12-x-msg b { color: var(--accent-ink); }
-  .v12-x-msg i { display: block; font-style: normal; font-size: 11px; line-height: 1.3; color: var(--ink-2); }
-  .v12-x-msg s { display: block; font-size: 11px; line-height: 1.3; color: var(--ink-3); text-decoration-color: var(--signal); }
-  .v12-x-msg .nil i { color: var(--ink-3); }
-  .v12-x[data-step="1"] .v12-x-msg, .v12-x[data-step="6"] .v12-x-msg { background: transparent; box-shadow: inset 0 0 0 1px var(--rule); }
-  .v12-x[data-step="0"] .v12-x-msg [data-at~="0"],
-  .v12-x[data-step="1"] .v12-x-msg [data-at~="1"],
-  .v12-x[data-step="2"] .v12-x-msg [data-at~="2"],
-  .v12-x[data-step="3"] .v12-x-msg [data-at~="3"],
-  .v12-x[data-step="4"] .v12-x-msg [data-at~="4"],
-  .v12-x[data-step="5"][data-sub="a"] .v12-x-msg [data-at~="5a"],
-  .v12-x[data-step="5"][data-sub="b"] .v12-x-msg [data-at~="5b"],
-  .v12-x[data-step="5"][data-sub="c"] .v12-x-msg [data-at~="5c"],
-  .v12-x[data-step="6"] .v12-x-msg [data-at~="6"] { visibility: visible; opacity: 1; transform: none;
-      transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .24s cubic-bezier(.23, 1, .32, 1), visibility 0s; }
-
-  .v12-x-ph > div:not(.v12-x-msg) { position: relative; padding: 6px 9px; border-radius: 8px; background: var(--x-cell);
-                                    font-size: 11.5px; line-height: 1.3; color: var(--ink-2); }
-  .v12-x-ph > .top { padding: 8px 9px; font-size: 12.5px; font-weight: 600; color: var(--ink); }
-  /* step 5 pins what never moves; step 6 marks what always comes first */
-  .v12-x .fx::after, .v12-x-dials::after { position: absolute; font: 500 9px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
-                                           color: var(--ink-3); opacity: 0; transition: opacity .2s cubic-bezier(.2, 0, 0, 1); }
-  .v12-x .fx::after { content: "fixed"; right: 8px; top: 50%; transform: translateY(-50%); }
-  .v12-x-dials::after { content: "never move"; right: 0; top: -2px; }
-  .v12-x[data-step="5"] .fx::after, .v12-x[data-step="5"] .v12-x-dials::after { opacity: 1; }
-  .v12-x[data-step="6"] .v12-x-ph > .top { box-shadow: inset 0 0 0 1.5px var(--accent); }
-  .v12-x[data-step="6"] .v12-x-ph > .top::after { content: "always first"; opacity: 1; color: var(--accent-ink); }
-  .v12-x[data-step="6"] .dial.sp { box-shadow: inset 0 0 0 1.5px var(--life); }
-
-  /* the caption: one step at a time with script, the whole list without it */
-  .v12-x-caps { display: grid; gap: 22px; margin: 0 0 22px; }
-  .v12-x.js .v12-x-caps { gap: 0; }
-  .v12-x.js .v12-x-cap { grid-area: 1 / 1; visibility: hidden; }
-  .v12-x.js[data-step="0"] [data-cap="0"], .v12-x.js[data-step="1"] [data-cap="1"], .v12-x.js[data-step="2"] [data-cap="2"],
-  .v12-x.js[data-step="3"] [data-cap="3"], .v12-x.js[data-step="4"] [data-cap="4"], .v12-x.js[data-step="5"] [data-cap="5"],
-  .v12-x.js[data-step="6"] [data-cap="6"] { visibility: visible; animation: simIn .32s cubic-bezier(.23, 1, .32, 1) both; }
-  .v12-x-cap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-content: start; gap: 8px 22px; }
-  .v12-x-t { grid-column: 1; grid-row: 1; display: flex; align-items: center; gap: 10px; margin: 0 0 2px;
-             font-size: clamp(17px, 1.8vw, 20px); font-weight: 600; letter-spacing: -0.014em; color: var(--ink); }
-  .v12-x-t i { font-style: normal; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0; padding: 3px 8px; border-radius: 980px;
-               color: var(--accent-ink); background: var(--accent-soft); }
-  .v12-x-cap p.car, .v12-x-cap p.pf { margin: 0; padding-left: 12px; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
-  .v12-x-cap p.car { box-shadow: inset 2px 0 0 var(--life); }
-  .v12-x-cap p.pf { box-shadow: inset 2px 0 0 var(--accent); }
-  .v12-x-cap p span { display: block; margin-bottom: 3px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; }
-  .v12-x-cap p.car span { color: var(--life-ink); }
-  .v12-x-cap p.pf span { color: var(--accent-ink); }
-  .v12-x-proof { grid-column: 2; grid-row: 1; justify-self: end; align-self: center; margin: -10px 0; padding: 12px 0; font-size: 14px; color: var(--accent-ink); text-decoration: none; }
-  @media (hover:hover) and (pointer:fine) { .v12-x-proof:hover { text-decoration: underline; } }
-
+  /* ══════════ EVERYDAY LAYER · 9–10 Nov 2026 ══════════
+     The engine told through a car. Section 00 is a four-beat story (below); each beat of the case study
+     gets one everyday line; the ladder gets a car lens. Green = everyday, blue = CoverSure. */
   /* one everyday line under each beat */
   .v12-life { display: flex; align-items: baseline; gap: 10px; margin: 16px 0 0; max-width: 64ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
   .v12-life-k { flex: 0 0 auto; padding: 3px 8px 2px; border-radius: 980px; background: var(--life-soft); color: var(--life-ink);
@@ -3272,37 +3073,217 @@
   [data-lens-fig][data-lens="car"] .rung-1 rect { fill: var(--life-soft); stroke: var(--life); }
   [data-lens-fig][data-lens="car"] .lx-car .svg-name-key { fill: var(--life-ink); }
   [data-lens-fig][data-lens="car"] .lx-car .x-ink { fill: var(--life-ink); }
+  @media (max-width: 760px) { .v12-life { flex-direction: column; gap: 6px; } }
+  @keyframes xbar { to { transform: scaleX(1); } }
 
-  @media (max-width: 960px) {
-    .v12-x-steps span { display: none; }
-  }
-  @media (max-width: 880px) {
-    .v12-x-bar { flex-wrap: wrap; }
-    .v12-x-steps { flex: 1 1 100%; }
-    .v12-x-steps button { flex: 1 1 0; min-width: 0; padding: 0 4px; min-height: 44px; }
-    .v12-x-grid { gap: 8px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-                  grid-template-areas: "rc rp" "hA hA" "cA pA" "d1 d1" "hB hB" "cB pB" "d2 d2" "hC hC" "cC pC"; }
-    .v12-x-h { padding-top: 4px; }
-    .v12-x-row { align-self: end; }
-    .v12-x-row::before { display: inline-block; margin: 0 6px 1px 0; vertical-align: middle; }
-    .v12-x-arr.x-a1, .v12-x-arr.x-a2, .v12-x-arr.x-a3, .v12-x-arr.x-a4 { display: none; }
-    .v12-x-down { display: flex; }
-    .v12-x-cell { padding: 9px; }
-    .v12-x-in i { display: none; }
-    .v12-x-lad li { padding-left: 22px; }
-    .v12-x-lad li::before { left: 8px; }
-    .v12-x-lad li.r3 { margin-left: 12px; }
-    .v12-x-lad li.r2 { margin-left: 6px; }
-    .v12-x-dials svg { width: 52px; height: 32px; }
-    .v12-x-dials::after { content: none; }
-  }
+  /* ══════════ 00 · THE STORY · 10 Nov 2026 ══════════
+     One scene, read left to right: what it already knows → what it picks → what the screen shows.
+     Four beats, six words or fewer each, told first in a car and then — the same scene, morphed in
+     place — in Portfolio. The scene carries the explanation; there is no caption to read.
+     Keys: data-key = lens + beat (c0–c4, p0–p4); anything with data-b shows only for the keys it lists.
+     Motion: transform and opacity; enter (.23,1,.32,1), standard (.2,0,0,1); linear only for the timer
+     hairline and the signal pulses. The page-wide reduced-motion rule makes every change instant. */
+  .v12-s { --s-cell: color-mix(in srgb, var(--ink) 3%, var(--surface));
+           --s-chip: color-mix(in srgb, var(--ink) 6%, var(--surface));
+           --h: var(--life); --h-soft: var(--life-soft); --h-ink: var(--life-ink); --s-dur: 3s; }
+  .v12-s[data-lens="pf"] { --h: var(--accent); --h-soft: var(--accent-soft); --h-ink: var(--accent-ink); }
+  .v12-s-fig { padding: clamp(16px, 2.8vw, 28px); }
+
+  /* crossfading pairs: the car reading and the Portfolio reading share one place */
+  .v12-s .x2 { display: inline-grid; }
+  .v12-s .x2 > * { grid-area: 1 / 1; transition: opacity .3s cubic-bezier(.2, 0, 0, 1), visibility 0s; }
+  .v12-s[data-lens="car"] .x2 > .p, .v12-s[data-lens="pf"] .x2 > .c,
+  .v12-s[data-lens="car"] .v12-s-scr > .p, .v12-s[data-lens="pf"] .v12-s-scr > .c { opacity: 0; visibility: hidden;
+      transition: opacity .3s cubic-bezier(.2, 0, 0, 1), visibility 0s .3s; }
+  .v12-s-sig li:nth-child(2) .x2 > * { transition-delay: 40ms; }
+  .v12-s-sig li:nth-child(3) .x2 > * { transition-delay: 80ms; }
+  .v12-s-sig li:nth-child(4) .x2 > * { transition-delay: 120ms; }
+  .v12-s-sig li:nth-child(5) .x2 > * { transition-delay: 160ms; }
+
+  /* head: the beat's title and the lens */
+  .v12-s-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 18px; margin: 0 0 22px; }
+  .v12-s-title { display: flex; align-items: center; gap: 10px; margin: 0; min-height: 34px;
+                 font-family: var(--display); font-size: clamp(20px, 2.3vw, 26px); font-weight: 600; letter-spacing: -0.018em; color: var(--ink); }
+  .v12-s-title.swap [data-s-title] { display: inline-block; animation: simIn .32s cubic-bezier(.23, 1, .32, 1) both; }
+  .v12-s-n { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0; padding: 4px 8px; border-radius: 980px;
+             color: var(--h-ink); background: var(--h-soft); }
+  .v12-s-n:empty { display: none; }
+  .v12-s-lens { margin: 0; }
+
+  /* the scene */
+  .v12-s-stage { position: relative; display: grid; align-items: start;
+                 grid-template-columns: minmax(0, .95fr) minmax(0, 1.12fr) minmax(0, .95fr); column-gap: clamp(34px, 5.4vw, 60px); }
+  .v12-s-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+  .v12-s-col { position: relative; z-index: 1; min-width: 0; transition: opacity .3s cubic-bezier(.2, 0, 0, 1); }
+  .v12-s-k { margin: 0 0 10px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); }
+
+  /* A · what it already knows */
+  .v12-s-sig { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .v12-s-chip { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 0 10px; border-radius: 11px; background: var(--s-chip); }
+  .v12-s-chip .ic { flex: 0 0 auto; width: 20px; height: 20px; color: var(--ink-2); }
+  .v12-s-chip .ic svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .v12-s-chip .lb { min-width: 0; font-size: 14px; font-weight: 600; color: var(--ink); }
+  .v12-s-chip .st { margin-left: auto; display: flex; }
+  .v12-s .st i, .v12-s .cand, .v12-s-none { display: none; }
+  .v12-s .st i { font-style: normal; white-space: nowrap; font: 600 11.5px/1 var(--body); padding: 5px 8px; border-radius: 980px; }
+  .v12-s .st i.warn { color: var(--signal); background: var(--signal-soft); }
+  .v12-s .st i.ok   { color: var(--life-ink); background: var(--life-soft); }
+  .v12-s .st i.info { color: var(--accent-ink); background: var(--accent-soft); }
+
+  /* B · what it picks */
+  .v12-s-eng { padding: 14px; border-radius: 16px; background: var(--s-cell); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--h) 35%, transparent);
+               transition: box-shadow .3s ease-out; }
+  .v12-s-eng-t { margin: 0 0 10px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--h-ink); }
+  .v12-s-rungs { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .v12-s-rungs li { display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 9px; border-radius: 10px; background: var(--s-chip);
+                    font-size: 13.5px; transition: background-color .3s ease-out; }
+  .v12-s-rungs li i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+  .v12-s-rungs li b { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .v12-s-rungs .r1 { background: var(--h-soft); }
+  .v12-s-rungs .r3 { margin-left: 14px; }
+  .v12-s-rungs .r2 { margin-left: 7px; }
+  .v12-s .cand { margin-left: auto; white-space: nowrap; font: 600 11.5px/1 var(--body); padding: 5px 8px; border-radius: 980px; }
+  .v12-s .cand.wait { color: var(--ink-3); background: var(--rule-soft); }
+  .v12-s .cand.win { color: var(--surface); background: var(--h); }
+  .v12-s .cand.win::before { content: "\2713\00a0"; }
+  .v12-s-none { margin: 8px 0 0; padding: 8px 10px; border-radius: 10px; font-size: 12.5px; color: var(--ink-2);
+                outline: 1px dashed var(--rule); outline-offset: -1px; }
+
+  /* C · what the screen shows: fixed parts, one moving message */
+  .v12-s-scr { display: grid; }
+  .v12-s-scr > * { grid-area: 1 / 1; transition: opacity .3s cubic-bezier(.2, 0, 0, 1), visibility 0s; }
+  .v12-s-dash, .v12-s-ph { display: grid; align-content: start; padding: 12px; border-radius: 16px; background: var(--s-chip); }
+  .v12-s-dash { gap: 14px; padding-top: 16px; }
+  .v12-s-ph { gap: 6px; padding: 10px; }
+  .v12-s-dials { position: relative; display: flex; justify-content: space-around; }
+  .v12-s .dial svg { width: 70px; height: 42px; overflow: visible; }
+  .v12-s .dial .arc { fill: none; stroke: var(--rule); stroke-width: 4; stroke-linecap: round; }
+  .v12-s .dial .tk { stroke: var(--ink-3); stroke-width: 1.3; stroke-linecap: round; }
+  .v12-s .dial text { font: 600 7px var(--mono); fill: var(--ink-3); }
+  .v12-s .dial .ndl { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; transform-box: view-box; transform-origin: 33px 36px;
+                      transition: transform .7s cubic-bezier(.2, 0, 0, 1); }
+  .v12-s .dial.sp .ndl { transform: rotate(-24deg); }
+  .v12-s .dial.fu .ndl { transform: rotate(-68deg); }
+  .v12-s[data-key="c4"] .dial.fu .ndl { transform: rotate(52deg); }
+  .v12-s-ph > .fx { position: relative; padding: 8px 10px; border-radius: 9px; background: var(--s-cell); font-size: 12.5px; color: var(--ink-2); }
+  .v12-s-ph > .top { font-weight: 600; color: var(--ink); }
+  .v12-s-msg { position: relative; display: grid; align-items: center; min-height: 54px; padding: 8px 12px; border-radius: 11px;
+               background: var(--s-cell); box-shadow: inset 0 0 0 1.5px var(--h); transition: box-shadow .3s ease-out; }
+  .v12-s-msg > span { grid-area: 1 / 1; visibility: hidden; opacity: 0; transform: translateX(-16px);
+                      transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .36s cubic-bezier(.23, 1, .32, 1), visibility 0s .36s;
+                      font-size: 14px; font-weight: 600; color: var(--h-ink); }
+  .v12-s-msg > span b { display: block; font-weight: 600; }
+  .v12-s-msg > span small { display: block; font-size: 12px; font-weight: 400; color: var(--ink-2); }
+  .v12-s-msg > span.nil { font-size: 12.5px; font-weight: 400; color: var(--ink-3); transform: none; }
+  .v12-s[data-beat="1"] .v12-s-msg, .v12-s[data-beat="2"] .v12-s-msg, .v12-s[data-beat="4"] .v12-s-msg { box-shadow: inset 0 0 0 1px var(--rule); }
+  /* "fixed" appears on everything that does not move while the message lands */
+  .v12-s .fx::after { content: "fixed"; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font: 500 9px/1 var(--mono);
+                      letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); opacity: 0; transition: opacity .24s ease-out; }
+  .v12-s-dials.fx::after { top: auto; bottom: -6px; right: 50%; transform: translateX(50%); }
+  .v12-s[data-beat="3"] .fx::after { opacity: 1; }
+
+  /* what each key shows (key = lens + beat) */
+  .v12-s[data-key="c0"] :is(.st i, .cand)[data-b~="c0"],
+  .v12-s[data-key="c1"] :is(.st i, .cand)[data-b~="c1"],
+  .v12-s[data-key="c2"] :is(.st i, .cand)[data-b~="c2"],
+  .v12-s[data-key="c3"] :is(.st i, .cand)[data-b~="c3"],
+  .v12-s[data-key="c4"] :is(.st i, .cand)[data-b~="c4"],
+  .v12-s[data-key="p0"] :is(.st i, .cand)[data-b~="p0"],
+  .v12-s[data-key="p1"] :is(.st i, .cand)[data-b~="p1"],
+  .v12-s[data-key="p2"] :is(.st i, .cand)[data-b~="p2"],
+  .v12-s[data-key="p3"] :is(.st i, .cand)[data-b~="p3"],
+  .v12-s[data-key="p4"] :is(.st i, .cand)[data-b~="p4"] { display: inline-flex; }
+  .v12-s[data-key="c0"] .v12-s-none[data-b~="c0"],
+  .v12-s[data-key="c1"] .v12-s-none[data-b~="c1"],
+  .v12-s[data-key="c2"] .v12-s-none[data-b~="c2"],
+  .v12-s[data-key="c3"] .v12-s-none[data-b~="c3"],
+  .v12-s[data-key="c4"] .v12-s-none[data-b~="c4"],
+  .v12-s[data-key="p0"] .v12-s-none[data-b~="p0"],
+  .v12-s[data-key="p1"] .v12-s-none[data-b~="p1"],
+  .v12-s[data-key="p2"] .v12-s-none[data-b~="p2"],
+  .v12-s[data-key="p3"] .v12-s-none[data-b~="p3"],
+  .v12-s[data-key="p4"] .v12-s-none[data-b~="p4"] { display: block; }
+  .v12-s[data-key="c0"] .v12-s-msg > span[data-b~="c0"],
+  .v12-s[data-key="c1"] .v12-s-msg > span[data-b~="c1"],
+  .v12-s[data-key="c2"] .v12-s-msg > span[data-b~="c2"],
+  .v12-s[data-key="c3"] .v12-s-msg > span[data-b~="c3"],
+  .v12-s[data-key="c4"] .v12-s-msg > span[data-b~="c4"],
+  .v12-s[data-key="p0"] .v12-s-msg > span[data-b~="p0"],
+  .v12-s[data-key="p1"] .v12-s-msg > span[data-b~="p1"],
+  .v12-s[data-key="p2"] .v12-s-msg > span[data-b~="p2"],
+  .v12-s[data-key="p3"] .v12-s-msg > span[data-b~="p3"],
+  .v12-s[data-key="p4"] .v12-s-msg > span[data-b~="p4"] { visibility: visible; opacity: 1; transform: none;
+      transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .36s cubic-bezier(.23, 1, .32, 1), visibility 0s; }
+
+  /* each beat steps the rest of the scene back, so the eye goes to one place */
+  .v12-s[data-beat="1"] :is(.v12-s-b, .v12-s-c), .v12-s[data-beat="2"] .v12-s-c, .v12-s[data-beat="3"] .v12-s-a { opacity: .32; }
+  .v12-s[data-beat="1"] .v12-s-chip { animation: simIn .36s cubic-bezier(.23, 1, .32, 1) both; }
+  .v12-s[data-beat="1"] .v12-s-chip:nth-child(2) { animation-delay: 60ms; }
+  .v12-s[data-beat="1"] .v12-s-chip:nth-child(3) { animation-delay: 120ms; }
+  .v12-s[data-beat="1"] .v12-s-chip:nth-child(4) { animation-delay: 180ms; }
+  .v12-s[data-beat="1"] .v12-s-chip:nth-child(5) { animation-delay: 240ms; }
+  .v12-s[data-beat="1"] .st i { animation: sPop .32s cubic-bezier(.23, 1, .32, 1) .55s both; }
+  .v12-s[data-beat="2"] .cand.wait { animation: sPop .32s cubic-bezier(.23, 1, .32, 1) .5s both; }
+  .v12-s[data-beat="2"] .cand.win { animation: sPop .32s cubic-bezier(.23, 1, .32, 1) 1.1s both; }
+  .v12-s[data-beat="4"] .st i, .v12-s[data-beat="4"] .v12-s-none { animation: sPop .32s cubic-bezier(.23, 1, .32, 1) .2s both; }
+  @keyframes sPop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+
+  /* wires: a base line per signal, and a pulse that travels it while the engine reads */
+  .v12-s-wires .wb { fill: none; stroke: var(--rule); stroke-width: 1.5; transition: stroke .3s ease-out, opacity .3s ease-out; }
+  .v12-s-wires .wp { fill: none; stroke: var(--ink-3); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 12 200; stroke-dashoffset: 12; opacity: 0; }
+  .v12-s-wires .end { fill: var(--rule); transition: fill .3s ease-out; }
+  .v12-s[data-lens="car"] .wb.h-cw, .v12-s[data-lens="pf"] .wb.h-pw { stroke: color-mix(in srgb, var(--signal) 55%, transparent); }
+  .v12-s[data-lens="pf"] .wb.h-pi { stroke: color-mix(in srgb, var(--accent) 55%, transparent); }
+  .v12-s[data-lens="car"] .wp.h-cw, .v12-s[data-lens="pf"] .wp.h-pw { stroke: var(--signal); }
+  .v12-s[data-lens="pf"] .wp.h-pi { stroke: var(--accent); }
+  .v12-s[data-beat="1"] .v12-s-wires, .v12-s[data-beat="4"] .wb:is(.h-cw, .h-pw, .h-pi) { opacity: .35; }
+  .v12-s[data-beat="1"] .v12-s-wires .wb.out, .v12-s[data-beat="2"] .v12-s-wires .wb.out { opacity: .35; }
+  .v12-s[data-beat="2"] .wp:not(.out) { opacity: 1; animation: sFlow 1.2s linear 2; }
+  .v12-s[data-beat="2"] .wp:not(.out):is(.h-cw, .h-pw, .h-pi) { animation-delay: .15s; }
+  .v12-s[data-beat="3"] .wp.out { opacity: 1; stroke: var(--h); animation: sFlow .9s linear 1 both; }
+  .v12-s[data-beat="3"] .wb.out, .v12-s[data-beat="0"] .wb.out { stroke: var(--h); }
+  .v12-s[data-beat="3"] .end.out, .v12-s[data-beat="0"] .end.out { fill: var(--h); }
+  @keyframes sFlow { from { stroke-dashoffset: 12; } to { stroke-dashoffset: -100; } }
+
+  /* controls */
+  .v12-s-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 24px 0 0; }
+  .v12-s:not(.js) :is(.v12-s-ctl, .v12-s-lens) { display: none; }
+  .v12-s-play { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 16px 0 13px; border: none;
+                border-radius: 980px; background: var(--ink); color: var(--ground); cursor: pointer; font: 600 14px/1 var(--body);
+                transition: transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  .v12-s-play svg { width: 14px; height: 14px; }
+  .v12-s-play .xp-pause { display: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+  .v12-s-play .xp-play { fill: currentColor; }
+  .v12-s-play[data-state="on"] .xp-pause { display: inline; }
+  .v12-s-play[data-state="on"] .xp-play { display: none; }
+  .v12-s-beats { display: flex; gap: 2px; padding: 3px; border-radius: 980px; background: var(--rule-soft); }
+  .v12-s-beats button { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; min-height: 40px;
+                        padding: 0 13px; border: none; border-radius: 980px; overflow: hidden; background: transparent; color: var(--ink-2);
+                        cursor: pointer; font: 500 13.5px/1 var(--body);
+                        transition: background-color .2s ease-out, color .2s ease-out, transform 160ms cubic-bezier(.23, 1, .32, 1); }
+  .v12-s-beats i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+  .v12-s-beats button[aria-current="step"] { background: var(--surface); color: var(--ink);
+                                             box-shadow: 0 1px 4px -1px color-mix(in srgb, var(--ink) 30%, transparent); }
+  .v12-s-beats button[aria-current="step"] i { color: var(--h-ink); }
+  .v12-s-beats button::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 5px; height: 2px; border-radius: 2px;
+                               background: var(--h); transform: scaleX(0); transform-origin: left; opacity: 0; }
+  .v12-s[data-playing] .v12-s-beats button[aria-current="step"]::after { opacity: 1; animation: xbar var(--s-dur) linear both; }
+  :is(.v12-s-play, .v12-s-beats button):active { transform: scale(.97); }
+
   @media (max-width: 760px) {
-    .v12-x-cap { grid-template-columns: minmax(0, 1fr); }
-    .v12-x-proof { grid-column: 1; grid-row: auto; justify-self: start; margin: -6px 0 -10px; }
-    .v12-life { flex-direction: column; gap: 6px; }
+    .v12-s-stage { grid-template-columns: minmax(0, 1fr); row-gap: 40px; }
+    .v12-s-top { margin-bottom: 18px; }
+    .v12-s-lens { width: 100%; display: flex; }
+    .v12-s-lens button { flex: 1 1 0; }
+    .v12-s-beats { flex: 1 1 100%; }
+    .v12-s-beats button { flex: 1 1 0; min-width: 0; padding: 0 4px; min-height: 44px; }
+    .v12-s .dial svg { width: 62px; height: 38px; }
+    .v12-s-sig { gap: 4px; }
+    .v12-s-chip { min-height: 38px; }
   }
-  /* prefers-reduced-motion: the page-wide rule already drops every transition and animation; steps then switch instantly. */
-  html[data-motion="off"] .v12-x .v12-x-arr .ln { animation: none !important; }
+  @media (max-width: 420px) {
+    .v12-s-beats span { display: none; }
+  }
 </style>
 <style>
   /* ══════════ UI PRESENTATION · 9 Nov 2026 ══════════
@@ -6988,168 +6969,76 @@
 
   <div class="sc-wrap v12-beats">
 
-    <!-- 00 · the whole idea in one picture, told through a car ───── -->
-    <section class="v12-beat v12-x" id="v12-s0" data-v12-x data-step="0" data-sub="a" aria-labelledby="v12-x-h">
+    <!-- 00 · the whole idea as a four-beat story: a car first, then the same scene as Portfolio ── -->
+    <section class="v12-beat v12-s" id="v12-s0" data-v12-s data-lens="car" data-beat="0" data-key="c0" aria-labelledby="v12-s-h">
       <p class="v12-tag"><i>00</i>The idea in one picture</p>
-      <h2 class="v12-h2" id="v12-x-h">It works like your car&rsquo;s dashboard.</h2>
-      <p class="v12-line">A car measures everything but shows one message &#8212; the most important one, or none. <b>The engine does the same with what CoverSure already knew.</b></p>
+      <h2 class="v12-h2" id="v12-s-h">It works like your car&rsquo;s dashboard.</h2>
+      <p class="v12-line">Your car knows a lot but tells you one thing, or nothing. <b>The engine does the same with what CoverSure already knew.</b></p>
 
-      <figure class="v12-fig v12-x-fig">
-        <div class="v12-x-bar">
-          <button class="v12-x-play" type="button" data-x-play data-state="off"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="xp-pause" d="M5 3.5v9M11 3.5v9"/><path class="xp-play" d="M5 3.5l7 4.5-7 4.5z"/></svg><span data-x-play-l>Play</span></button>
-          <div class="v12-x-steps" role="group" aria-label="Steps through the picture">
-            <button type="button" data-x-go="0" aria-current="step" aria-label="All steps at once"><i>All</i></button>
-            <button type="button" data-x-go="1" aria-label="Step 1: it already knew"><i>1</i><span>Known</span></button>
-            <button type="button" data-x-go="2" aria-label="Step 2: one brain, one message"><i>2</i><span>One message</span></button>
-            <button type="button" data-x-go="3" aria-label="Step 3: the most important thing first"><i>3</i><span>Order</span></button>
-            <button type="button" data-x-go="4" aria-label="Step 4: specific, not generic"><i>4</i><span>Specific</span></button>
-            <button type="button" data-x-go="5" aria-label="Step 5: the frame never moves"><i>5</i><span>Frame</span></button>
-            <button type="button" data-x-go="6" aria-label="Step 6: quiet when nothing fits"><i>6</i><span>Quiet</span></button>
+      <figure class="v12-fig v12-s-fig">
+        <div class="v12-s-top">
+          <p class="v12-s-title"><span class="v12-s-n" data-s-n aria-hidden="true"></span><span data-s-title>Your car already does this.</span></p>
+          <div class="v12-seg v12-s-lens" role="group" aria-label="Show it">
+            <button type="button" data-s-lens="car" aria-pressed="true">In a car</button>
+            <button type="button" data-s-lens="pf" aria-pressed="false">In Portfolio</button>
           </div>
         </div>
 
-        <div class="v12-x-caps">
-          <div class="v12-x-cap" data-cap="0">
-            <p class="v12-x-t"><b>Everything at once.</b></p>
-            <p class="car"><span>In a car</span>Sensors &#8594; an order of importance &#8594; one message, on a dashboard that never moves.</p>
-            <p class="pf"><span>In Portfolio</span>Five sources &#8594; ten rules &#8594; one next step, in a frame that never moves.</p>
-          </div>
-          <div class="v12-x-cap" data-cap="1">
-            <p class="v12-x-t"><i>1</i><b>It already knew.</b></p>
-            <p class="car"><span>In a car</span>Your car measures fuel, seats and wear without asking you anything.</p>
-            <p class="pf"><span>In Portfolio</span>CoverSure already held five sources of context. Portfolio used none of them.</p>
-            <a class="v12-x-proof" href="#v12-s1" data-jump>Shown in 01 &#8595;</a>
-          </div>
-          <div class="v12-x-cap" data-cap="2">
-            <p class="v12-x-t"><i>2</i><b>One brain, one message.</b></p>
-            <p class="car"><span>In a car</span>It reads every sensor but shows one message, not twelve lights at once.</p>
-            <p class="pf"><span>In Portfolio</span>Ten rules read what CoverSure knew and pick one next step.</p>
-            <a class="v12-x-proof" href="#v12-s2" data-jump>Shown in 02 &#8595;</a>
-          </div>
-          <div class="v12-x-cap" data-cap="3">
-            <p class="v12-x-t"><i>3</i><b>The most important thing first.</b></p>
-            <p class="car"><span>In a car</span>Brakes fine, seatbelt faulty? Fix the seatbelt first, not an airbag upgrade.</p>
-            <p class="pf"><span>In Portfolio</span>Health held, term life missing? Term life comes next, not Super Top-Up.</p>
-            <a class="v12-x-proof" href="#v12-s3" data-jump>Shown in 03 &#8595;</a>
-          </div>
-          <div class="v12-x-cap" data-cap="4">
-            <p class="v12-x-t"><i>4</i><b>Specific, not generic.</b></p>
-            <p class="car"><span>In a car</span>&ldquo;Low fuel&rdquo; is a warning. &ldquo;38 km left&rdquo; lets you decide.</p>
-            <p class="pf"><span>In Portfolio</span>CoverRisk&rsquo;s amount and premium ride on the button, so nobody guesses how much.</p>
-            <a class="v12-x-proof" href="#v12-s2" data-jump>Shown in 02 &#8595;</a>
-          </div>
-          <div class="v12-x-cap" data-cap="5">
-            <p class="v12-x-t"><i>5</i><b>The frame never moves.</b></p>
-            <p class="car"><span>In a car</span>The speedometer is always in the same place. Only the message strip changes.</p>
-            <p class="pf"><span>In Portfolio</span>Four slots stay where they are. Only the engine band changes.</p>
-            <a class="v12-x-proof" href="#v12-s4" data-jump>Shown in 04 &#8595;</a>
-          </div>
-          <div class="v12-x-cap" data-cap="6">
-            <p class="v12-x-t"><i>6</i><b>Quiet when nothing fits.</b></p>
-            <p class="car"><span>In a car</span>All fine? It stays blank, and no message ever covers the speedometer.</p>
-            <p class="pf"><span>In Portfolio</span>Nothing fits? Nothing is promoted. And no offer ever sits above your policies.</p>
-            <a class="v12-x-proof" href="#v12-s5" data-jump>Shown in 05 &#8595;</a>
-          </div>
-        </div>
-
-        <div class="v12-x-grid">
-          <p class="v12-x-h x-hA" aria-hidden="true">Already known</p>
-          <p class="v12-x-h x-hB" aria-hidden="true">Decides</p>
-          <p class="v12-x-h x-hC" aria-hidden="true">Shows</p>
-
-          <!-- row 1 · in a car -->
-          <p class="v12-x-row car x-rc">In a car</p>
-          <div class="v12-x-cell car x-cA">
-            <p class="sr-only">Already known:</p>
-            <ul class="v12-x-in" data-lit="1 2">
-              <li><b>Your settings</b><i>what you told it</i></li>
-              <li><b>Fuel gauge</b><i>what is actually in</i></li>
-              <li><b>Service report</b><i>what it needs, at what cost</i></li>
-              <li><b>Seat sensors</b><i>who is on board</i></li>
-              <li><b>Wear check</b><i>how good the parts are</i></li>
+        <div class="v12-s-stage" data-s-stage>
+          <svg class="v12-s-wires" data-s-wires aria-hidden="true"></svg>
+          <div class="v12-s-col v12-s-a">
+            <p class="v12-s-k">Already knows</p>
+            <ul class="v12-s-sig" aria-label="What it already knows">
+              <li class="v12-s-chip"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><path d="M3.5 6.5h13M3.5 13.5h13"/><circle cx="8" cy="6.5" r="2.2"/><circle cx="12.5" cy="13.5" r="2.2"/></svg><svg class="p" viewBox="0 0 20 20"><rect x="4.5" y="4" width="11" height="13.5" rx="2"/><path d="M8 3h4v2.5H8zM7.5 10h5M7.5 13.5h3.5"/></svg></span><span class="lb"><span class="x2"><span class="c">Your settings</span><span class="p">Onboarding</span></span></span></li>
+              <li class="v12-s-chip" data-hot="cw pw"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><rect x="4" y="3.5" width="8" height="14" rx="1.6"/><path d="M4 9h8M12 7.5h1.6l2.4 2.4v5.1a1.5 1.5 0 0 1-3 0v-2.5H12"/></svg><svg class="p" viewBox="0 0 20 20"><path d="M6 2.8h5.8l3.7 3.7v10.3a1.2 1.2 0 0 1-1.2 1.2H6a1.2 1.2 0 0 1-1.2-1.2V4A1.2 1.2 0 0 1 6 2.8z"/><path d="M11.5 3v3.8h3.8M7.8 11h4.6M7.8 14h3"/></svg></span><span class="lb"><span class="x2"><span class="c">Fuel</span><span class="p">Policies</span></span></span><span class="st"><i class="warn" data-b="c1 c2 c3 c0">low</i><i class="ok" data-b="c4">full</i><i class="warn" data-b="p1 p2 p3 p0">health only</i><i class="ok" data-b="p4">all covered</i></span></li>
+              <li class="v12-s-chip" data-hot="pi"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><path d="M12.6 3.2a4 4 0 0 0-4.3 5.4L3.6 13.3a1.6 1.6 0 0 0 2.3 2.3l4.7-4.7a4 4 0 0 0 5.4-4.3l-2.4 2.4-2.2-.4-.4-2.2z"/></svg><svg class="p" viewBox="0 0 20 20"><path d="M3.3 14.5a6.7 6.7 0 0 1 13.4 0"/><path d="M10 14.5l3.2-4.2M5.2 10.4l1 .7M10 7.8v1.2M14.8 10.4l-1 .7"/></svg></span><span class="lb"><span class="x2"><span class="c">Service</span><span class="p">CoverRisk</span></span></span><span class="st"><i class="info" data-b="p1 p2 p3 p0 p4">&#8377;1 Cr needed</i></span></li>
+              <li class="v12-s-chip" data-hot="cw"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><path d="M7.2 2.8h2.6a1 1 0 0 1 1 1.1l-.9 7.9H7.6L6.2 4a1 1 0 0 1 1-1.2z"/><path d="M5.8 11.8h7.4a1.6 1.6 0 0 1 1.6 1.6v1.4H5.8zM8 14.8v2.6M12.8 14.8v2.6"/></svg><svg class="p" viewBox="0 0 20 20"><circle cx="7.5" cy="7" r="2.6"/><circle cx="13.6" cy="8.2" r="2.1"/><path d="M2.8 16.5a4.7 4.7 0 0 1 9.4 0M11.6 13.2a3.6 3.6 0 0 1 5.8 3.3"/></svg></span><span class="lb"><span class="x2"><span class="c">Seats</span><span class="p">Family</span></span></span><span class="st"><i class="warn" data-b="c1 c2 c3 c0">belt off</i><i class="ok" data-b="c4">belt on</i></span></li>
+              <li class="v12-s-chip"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.2"/><circle cx="10" cy="10" r="2.8"/><path d="M10 2.8v4.4M10 12.8v4.4M2.8 10h4.4M12.8 10h4.4"/></svg><svg class="p" viewBox="0 0 20 20"><path d="M10 2.6l6 2.4v4.6c0 4-2.6 6.7-6 7.9-3.4-1.2-6-3.9-6-7.9V5z"/><path d="M7.4 10l1.9 1.9 3.4-3.7"/></svg></span><span class="lb"><span class="x2"><span class="c">Tyres</span><span class="p">KYP rating</span></span></span></li>
             </ul>
           </div>
-          <span class="v12-x-arr car x-a1" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 30 12"><path class="ln" d="M1 6H27"/><path class="hd" d="M23 2l5 4-5 4"/></svg><b>&#215;</b></span>
-          <div class="v12-x-cell car x-cB">
-            <p class="v12-x-k" data-lit="2 3">Order of importance</p>
-            <ul class="v12-x-lad">
-              <li class="r3" data-n="3" data-lit="2"><b>Child seat &#183; Roof carrier</b><i>only with a reason</i></li>
-              <li class="r2" data-n="2" data-lit="2"><b>Extra airbags &#183; ABS</b></li>
-              <li class="r1" data-n="1" data-lit="2 3"><b><span class="hv">Brakes</span> + <span class="ms">Seatbelts</span></b><i>both, first</i></li>
-            </ul>
-            <p class="v12-x-none" data-lit="2 6">All fine &#8594; no message</p>
-          </div>
-          <span class="v12-x-arr car x-a2" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 30 12"><path class="ln" d="M1 6H27"/><path class="hd" d="M23 2l5 4-5 4"/></svg><b>&#215;</b></span>
-          <div class="v12-x-cell car x-cC">
-            <p class="sr-only">Shows, on the dashboard:</p>
-            <div class="v12-x-dash">
-              <div class="v12-x-dials" aria-hidden="true">
-                <span class="dial sp" data-lit="5 6"><svg viewBox="0 0 66 40"><path class="arc" d="M6 36A27 27 0 0 1 60 36"/><path class="tk" d="M13 36L9 36M15.7 26L12.2 24M23 18.7L21 15.2M33 16L33 12M43 18.7L45 15.2M50.3 26L53.8 24M53 36L57 36"/><line class="ndl" x1="33" y1="36" x2="33" y2="17"/></svg><i>Speed</i></span>
-                <span class="dial fu" data-lit="5"><svg viewBox="0 0 66 40"><path class="arc" d="M6 36A27 27 0 0 1 60 36"/><path class="tk" d="M13 36L9 36M33 16L33 12M53 36L57 36"/><text x="6" y="31">E</text><text x="56" y="31">F</text><line class="ndl" x1="33" y1="36" x2="33" y2="17"/></svg><i>Fuel</i></span>
-              </div>
-              <div class="v12-x-msg" data-lit="2 3 4 5 6">
-                <span data-at="0"><b>Low fuel</b><i>38 km left</i></span>
-                <span data-at="1" class="nil"><i>Blank &#8212; no sensor is wired to it</i></span>
-                <span data-at="2"><b>Fasten seatbelt</b><i>fuel is low too; this one wins</i></span>
-                <span data-at="3"><b>Seatbelt fault</b><i>fix it before any upgrade</i></span>
-                <span data-at="4"><s>Low fuel</s><b>Low fuel &#183; 38 km left</b></span>
-                <span data-at="5a"><b>Low fuel</b><i>38 km left</i></span>
-                <span data-at="5b"><b>Door open</b><i>rear left</i></span>
-                <span data-at="5c"><b>Service due</b><i>in 300 km</i></span>
-                <span data-at="6" class="nil"><i>Blank &#8212; all fine</i></span>
-              </div>
+          <div class="v12-s-col v12-s-b">
+            <p class="v12-s-k">Picks</p>
+            <div class="v12-s-eng" data-s-eng>
+              <p class="v12-s-eng-t"><span class="x2"><span class="c">Order of importance</span><span class="p">Engine &#183; 10 rules</span></span></p>
+              <ol class="v12-s-rungs">
+                <li class="r3"><i>3</i><b><span class="x2"><span class="c">Routine</span><span class="p">Only with a reason</span></span></b></li>
+                <li class="r2"><i>2</i><b><span class="x2"><span class="c">Running</span><span class="p">Extends cover</span></span></b><em class="cand wait" data-b="c2 c3 c0">Low fuel</em><em class="cand wait" data-b="p2 p3 p0">Super Top-Up</em></li>
+                <li class="r1"><i>1</i><b><span class="x2"><span class="c">Safety</span><span class="p">Health + life</span></span></b><em class="cand win" data-b="c2 c3 c0">Seatbelt</em><em class="cand win" data-b="p2 p3 p0">Term life</em></li>
+              </ol>
+              <p class="v12-s-none" data-b="c4">All fine &#8594; no message</p><p class="v12-s-none" data-b="p4">Nothing fits &#8594; nothing shown</p>
             </div>
           </div>
-
-          <span class="v12-x-arr v12-x-down x-d1" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 12 22"><path class="ln" d="M6 1V19"/><path class="hd" d="M2 15l4 5 4-5"/></svg><b>&#215;</b></span>
-          <span class="v12-x-arr v12-x-down x-d2" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 12 22"><path class="ln" d="M6 1V19"/><path class="hd" d="M2 15l4 5 4-5"/></svg><b>&#215;</b></span>
-
-          <!-- row 2 · in Portfolio -->
-          <p class="v12-x-row pf x-rp">In Portfolio</p>
-          <div class="v12-x-cell pf x-pA">
-            <p class="sr-only">Already known:</p>
-            <ul class="v12-x-in" data-lit="1 2">
-              <li><b>Onboarding</b><i>what they told us</i></li>
-              <li><b>Policy data</b><i>what is actually stored</i></li>
-              <li><b>CoverRisk</b><i>cover needed, at what premium</i></li>
-              <li><b>Family data</b><i>who depends on them</i></li>
-              <li><b>Know Your Policy</b><i>how good each policy is</i></li>
-            </ul>
-          </div>
-          <span class="v12-x-arr pf x-a3" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 30 12"><path class="ln" d="M1 6H27"/><path class="hd" d="M23 2l5 4-5 4"/></svg><b>&#215;</b></span>
-          <div class="v12-x-cell pf x-pB">
-            <p class="v12-x-k" data-lit="2 3">Engine &#183; 10 rules</p>
-            <ul class="v12-x-lad">
-              <li class="r3" data-n="3" data-lit="2"><b>Personal Accident &#183; Hospicash &#183; Home &#183; Device</b><i>only with a reason</i></li>
-              <li class="r2" data-n="2" data-lit="2"><b>Super Top-Up &#183; Critical Illness</b></li>
-              <li class="r1" data-n="1" data-lit="2 3"><b><span class="hv">Health</span> + <span class="ms">Term life</span></b><i>both, first</i></li>
-            </ul>
-            <p class="v12-x-none" data-lit="2 6">Nothing fits &#8594; nothing promoted</p>
-          </div>
-          <span class="v12-x-arr pf x-a4" data-lit="1 2" aria-hidden="true"><svg viewBox="0 0 30 12"><path class="ln" d="M1 6H27"/><path class="hd" d="M23 2l5 4-5 4"/></svg><b>&#215;</b></span>
-          <div class="v12-x-cell pf x-pC">
-            <p class="sr-only">Shows, in Portfolio:</p>
-            <div class="v12-x-ph">
-              <div class="top" data-lit="5 6">Your policies</div>
-              <div class="fx" data-lit="5">Insurance on Card</div>
-              <div class="v12-x-msg" data-lit="2 3 4 5 6">
-                <span data-at="0"><b>Buy &#8377;1 Cr life cover</b><i>&#8377;500/month, from the risk report</i></span>
-                <span data-at="1" class="nil"><i>Empty &#8212; nothing decides what goes here</i></span>
-                <span data-at="2"><b>Buy Health policy</b><i>From &#8377;200/month</i></span>
-                <span data-at="3"><b>Buy &#8377;1 Cr life cover</b><i>term life completes step one</i></span>
-                <span data-at="4"><s>Buy Life policy</s><b>Buy &#8377;1 Cr life cover &#183; &#8377;500/month</b></span>
-                <span data-at="5a"><b>Buy Health policy</b><i>From &#8377;200/month</i></span>
-                <span data-at="5b"><b>Add Term policy</b><i>You told us you have one</i></span>
-                <span data-at="5c"><b>Buy Super Top-up</b><i>When bills go beyond your cover</i></span>
-                <span data-at="6" class="nil"><i>Nothing promoted</i></span>
+          <div class="v12-s-col v12-s-c">
+            <p class="v12-s-k">Shows</p>
+            <div class="v12-s-scr">
+              <div class="v12-s-dash c">
+                <div class="v12-s-dials fx"><span class="dial sp"><svg viewBox="0 0 66 40" aria-hidden="true"><path class="arc" d="M6 36A27 27 0 0 1 60 36"/><path class="tk" d="M13 36L9 36M15.7 26L12.2 24M23 18.7L21 15.2M33 16L33 12M43 18.7L45 15.2M50.3 26L53.8 24M53 36L57 36"/><line class="ndl" x1="33" y1="36" x2="33" y2="17"/></svg></span><span class="dial fu"><svg viewBox="0 0 66 40" aria-hidden="true"><path class="arc" d="M6 36A27 27 0 0 1 60 36"/><path class="tk" d="M13 36L9 36M33 16L33 12M53 36L57 36"/><text x="6" y="31">E</text><text x="56" y="31">F</text><line class="ndl" x1="33" y1="36" x2="33" y2="17"/></svg></span></div>
+                <div class="v12-s-msg" data-s-msg><span data-b="c1 c2" class="nil"></span><span data-b="c3 c0">Fasten seatbelt</span><span data-b="c4" class="nil">blank &#8212; all clear</span></div>
               </div>
-              <div class="fx" data-lit="5">Download portfolio</div>
-              <div class="fx" data-lit="5">Inactive policies</div>
+              <div class="v12-s-ph p">
+                <div class="fx top">Your policies</div>
+                <div class="fx">Insurance on Card</div>
+                <div class="v12-s-msg" data-s-msg><span data-b="p1 p2" class="nil"></span><span data-b="p3 p0"><b>Buy &#8377;1 Cr life cover</b><small>&#8377;500/month, from CoverRisk</small></span><span data-b="p4" class="nil">nothing promoted</span></div>
+                <div class="fx">Download portfolio</div>
+              </div>
             </div>
           </div>
         </div>
 
-        <p class="sr-only" data-x-live aria-live="polite"></p>
+        <div class="v12-s-ctl">
+          <button class="v12-s-play" type="button" data-s-play data-state="off"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="xp-pause" d="M5 3.5v9M11 3.5v9"/><path class="xp-play" d="M5 3.5l7 4.5-7 4.5z"/></svg><span data-s-play-l>Play</span></button>
+          <div class="v12-s-beats" role="group" aria-label="Beats of the story">
+            <button type="button" data-s-go="1"><i>1</i><span>Knows</span></button>
+            <button type="button" data-s-go="2"><i>2</i><span>Picks</span></button>
+            <button type="button" data-s-go="3"><i>3</i><span>Shows one</span></button>
+            <button type="button" data-s-go="4"><i>4</i><span>Or nothing</span></button>
+          </div>
+        </div>
+        <ol class="sr-only">
+          <li>In a car. It already knows: fuel is low and a seatbelt is off. It picks what matters most: the seatbelt is safety, so it wins over low fuel. It shows one thing, Fasten seatbelt, and the gauges stay where they are. When all is fine, the strip stays blank.</li>
+          <li>In Portfolio. It already knows: only health is held, and CoverRisk says &#8377;1 Cr of life cover is needed. It picks what matters most: term life completes step one, so it wins over Super Top-Up. It shows one thing, Buy &#8377;1 Cr life cover at &#8377;500 a month, and the other slots stay where they are. When nothing fits, nothing is promoted.</li>
+        </ol>
+        <p class="sr-only" data-s-live aria-live="polite"></p>
       </figure>
     </section>
 
@@ -11746,13 +11635,12 @@
 </script>
 
 <script>
-  /* ══════════ V12 · the idea in one picture, and the ladder lens ══════════
-     00 · The whole engine sits on screen at once, a car row above the Portfolio row. When it scrolls
-     into view it walks the six steps once (6s each, a timer hairline on the active step), then rests on
-     "All". It stops for good the moment the reader picks a step, presses Pause or follows a link; Play
-     replays it. Nothing runs off screen, in a hidden tab, under Pause motion or prefers-reduced-motion
-     (there Play is the opt-in). The live region speaks only when a step is chosen by hand.
-     03 · The ladder reads in CoverSure terms or a car's; the toggle swaps labels, not structure. */
+  /* ══════════ V12 · the story (00), the verdict on the card (04), the ladder lens (03) ══════════
+     00 · One scene, four beats, told in a car and then — morphed in place — in Portfolio. It plays once
+     when the whole scene fits on screen, then rests on "Portfolio does the same." It stops for good the
+     moment the reader picks a beat, flips the lens or presses Pause; Play replays it. Nothing runs off
+     screen, in a hidden tab, under Pause motion or prefers-reduced-motion (there Play is the opt-in).
+     The live region speaks only for beats chosen by hand. */
   (function () {
     'use strict';
     var panel = document.getElementById('panel-v12');
@@ -11760,91 +11648,142 @@
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
     function motionOff() { return reduce.matches || document.documentElement.getAttribute('data-motion') === 'off'; }
 
-    var x = panel.querySelector('[data-v12-x]');
-    if (x) {
-      x.classList.add('js');
-      var DUR = 6000, LAST = 6, SUBS = ['a', 'b', 'c'];
-      var steps = [].slice.call(x.querySelectorAll('[data-x-go]'));
-      var play = x.querySelector('[data-x-play]'), playL = x.querySelector('[data-x-play-l]');
-      var live = x.querySelector('[data-x-live]');
-      var step = 0, timer = 0, cyc = 0, playing = false, held = false, done = false, optIn = false, vis = false;
+    var sx = panel.querySelector('[data-v12-s]');
+    if (sx) {
+      sx.classList.add('js');
+      var TITLE = { 1: 'It already knows.', 2: 'It picks what matters most.', 3: 'It shows one thing.', 4: 'Or nothing at all.' };
+      var REST = { car: 'Your car already does this.', pf: 'Portfolio does the same.' };
+      var SAY = {
+        c1: 'It already knows. Fuel is low and a seatbelt is off.',
+        c2: 'It picks what matters most. The seatbelt is safety, so it wins over low fuel.',
+        c3: 'It shows one thing: Fasten seatbelt. The gauges stay where they are.',
+        c4: 'Or nothing at all. When all is fine, the strip stays blank.',
+        p1: 'It already knows. Only health is held, and CoverRisk says 1 crore of life cover is needed.',
+        p2: 'It picks what matters most. Term life completes step one, so it wins over Super Top-Up.',
+        p3: 'It shows one thing: Buy 1 crore life cover at 500 rupees a month. The other slots stay where they are.',
+        p4: 'Or nothing at all. When nothing fits, nothing is promoted.'
+      };
+      /* the story: four beats in a car, the same scene morphs into Portfolio, four beats again, then rest */
+      var SEQ = [['car', 1], ['car', 2], ['car', 3], ['car', 4], ['pf', 0, 'Now the same, in Portfolio.'],
+                 ['pf', 1], ['pf', 2], ['pf', 3], ['pf', 4], ['pf', 0]];
+      var DUR = 3000, MORPH = 1800;
+      var stage = sx.querySelector('[data-s-stage]'), wires = sx.querySelector('[data-s-wires]');
+      var titleEl = sx.querySelector('[data-s-title]'), titleP = titleEl.parentNode, nEl = sx.querySelector('[data-s-n]');
+      var beatsB = [].slice.call(sx.querySelectorAll('[data-s-go]')), lensB = [].slice.call(sx.querySelectorAll('[data-s-lens]'));
+      var playB = sx.querySelector('[data-s-play]'), playL = sx.querySelector('[data-s-play-l]'), liveS = sx.querySelector('[data-s-live]');
+      var lens = 'car', beat = 0, idx = -1, timer = 0, playing = false, held = false, done = false, optInS = false, visS = false;
 
-      var go = function (n, byHand) {
-        step = n;
-        x.setAttribute('data-step', String(n));
-        steps.forEach(function (b) { b.setAttribute('aria-current', b.getAttribute('data-x-go') === String(n) ? 'step' : 'false'); });
-        /* step 5 cycles the one moving message twice, then holds; the gauges and slots never change */
-        window.clearInterval(cyc); cyc = 0; x.setAttribute('data-sub', 'a');
-        if (n === 5 && (!motionOff() || optIn)) {
-          var k = 0;
-          cyc = window.setInterval(function () {
-            k++; x.setAttribute('data-sub', SUBS[k % 3]);
-            if (k >= 6) { window.clearInterval(cyc); cyc = 0; }
-          }, 1500);
-        }
-        if (byHand) {
-          var cap = x.querySelector('[data-cap="' + n + '"]');
-          live.textContent = cap ? cap.textContent.replace(/[↓]/g, '').replace(/\s+/g, ' ').trim() : '';
-        }
+      var set = function (l, b, t, byHand) {
+        lens = l; beat = b;
+        var key = (l === 'car' ? 'c' : 'p') + b;
+        sx.setAttribute('data-lens', l); sx.setAttribute('data-beat', String(b)); sx.setAttribute('data-key', key);
+        titleEl.textContent = t || (b ? TITLE[b] : REST[l]);
+        nEl.textContent = b ? b + ' / 4' : '';
+        titleP.classList.remove('swap'); void titleP.offsetWidth; titleP.classList.add('swap');
+        beatsB.forEach(function (o) { o.setAttribute('aria-current', Number(o.getAttribute('data-s-go')) === b ? 'step' : 'false'); });
+        lensB.forEach(function (o) { o.setAttribute('aria-pressed', String(o.getAttribute('data-s-lens') === l)); });
+        if (byHand) { liveS.textContent = SAY[key] || titleEl.textContent; }
+        window.requestAnimationFrame(draw);
       };
       var label = function () {
-        play.setAttribute('data-state', playing ? 'on' : 'off');
+        playB.setAttribute('data-state', playing ? 'on' : 'off');
         playL.textContent = playing ? 'Pause' : (done ? 'Replay' : 'Play');
-        play.setAttribute('aria-label', playing ? 'Pause the walkthrough' : (done ? 'Replay the walkthrough' : 'Play the walkthrough'));
+        playB.setAttribute('aria-label', playing ? 'Pause the story' : (done ? 'Replay the story' : 'Play the story'));
       };
-      var next = function () {
-        window.clearTimeout(timer);
-        timer = window.setTimeout(function () {
-          if (step >= LAST) { stop(); done = true; go(0); label(); return; }
-          go(step + 1); next();
-        }, DUR);
+      var step = function () {
+        idx++;
+        if (idx >= SEQ.length) { stopS(); done = true; label(); return; }
+        var q = SEQ[idx];
+        set(q[0], q[1], q[2]);
+        if (idx === SEQ.length - 1) { stopS(); done = true; label(); return; }
+        timer = window.setTimeout(step, q[2] ? MORPH : DUR);
       };
-      var start = function () {
+      var startS = function () {
         if (playing) { return; }
-        playing = true;
-        if (step === 0 || done) { done = false; go(1); }
-        x.setAttribute('data-playing', '');
-        next(); label();
+        playing = true; sx.setAttribute('data-playing', '');
+        if (done || idx < 0) { done = false; idx = -1; }
+        else { idx = Math.max(-1, SEQ.findIndex(function (q) { return q[0] === lens && q[1] === beat && !q[2]; }) - 1); }
+        label(); step();
       };
-      var stop = function () {
-        playing = false; window.clearTimeout(timer); timer = 0;
-        x.removeAttribute('data-playing'); label();
-      };
-      /* a walkthrough the reader cannot see whole is not worth starting for them (phones): Play is the opt-in there */
-      var grid = x.querySelector('.v12-x-grid');
-      var fits = function () { return grid.getBoundingClientRect().height <= window.innerHeight * 0.85; };
-      var takeOver = function () { held = true; if (playing) { stop(); } };
-      /* auto-play only once, only while seen, only when motion is welcome */
-      var sync = function () {
-        var ok = vis && !document.hidden && !held && !done && (!motionOff() || optIn) && (optIn || fits());
-        if (ok && !playing) { start(); } else if (!ok && playing) { stop(); }
+      var stopS = function () { playing = false; window.clearTimeout(timer); timer = 0; sx.removeAttribute('data-playing'); label(); };
+      /* the reader is in charge from here: Play continues from wherever they are, not from the top */
+      var takeOverS = function () { held = true; done = false; if (playing) { stopS(); } label(); };
+      var grid = sx.querySelector('.v12-s-fig');
+      var fitsS = function () { return grid.getBoundingClientRect().height <= window.innerHeight * 0.85; };
+      var syncS = function () {
+        var ok = visS && !document.hidden && !held && !done && (!motionOff() || optInS) && (optInS || fitsS());
+        if (ok && !playing) { startS(); } else if (!ok && playing) { stopS(); }
       };
 
-      steps.forEach(function (b, i) {
-        b.addEventListener('click', function () { takeOver(); go(Number(b.getAttribute('data-x-go')), true); });
+      beatsB.forEach(function (b, i) {
+        b.addEventListener('click', function () { takeOverS(); set(lens, Number(b.getAttribute('data-s-go')), null, true); });
         b.addEventListener('keydown', function (e) {
           var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
           if (!d) { return; }
           e.preventDefault();
-          var t = steps[(i + d + steps.length) % steps.length];
-          t.focus(); t.click();
+          var t = beatsB[(i + d + beatsB.length) % beatsB.length]; t.focus(); t.click();
         });
       });
-      play.addEventListener('click', function () {
-        if (playing) { takeOver(); return; }
-        held = false; optIn = true; start();
+      lensB.forEach(function (b) {
+        b.addEventListener('click', function () { takeOverS(); set(b.getAttribute('data-s-lens'), beat, null, true); });
       });
-      [].slice.call(x.querySelectorAll('.v12-x-proof')).forEach(function (a) { a.addEventListener('click', takeOver); });
+      playB.addEventListener('click', function () {
+        if (playing) { takeOverS(); return; }
+        held = false; optInS = true; startS();
+      });
 
-      reduce.addEventListener('change', function () { if (reduce.matches) { optIn = false; } sync(); });
-      document.addEventListener('motionchange', function (e) { if (e.detail && e.detail.off) { optIn = false; window.clearInterval(cyc); cyc = 0; } sync(); });
-      document.addEventListener('visibilitychange', sync);
+      /* wires are drawn from where things actually are, so they follow any layout */
+      var NS = 'http://www.w3.org/2000/svg';
+      function draw() {
+        var st = stage.getBoundingClientRect();
+        if (!st.width) { return; }
+        var R = function (el) { var r = el.getBoundingClientRect(); return { l: r.left - st.left, r: r.right - st.left, t: r.top - st.top, b: r.bottom - st.top, w: r.width, h: r.height }; };
+        var chips = [].slice.call(sx.querySelectorAll('.v12-s-chip'));
+        var eng = R(sx.querySelector('[data-s-eng]'));
+        var msgEl = sx.querySelector((lens === 'car' ? '.v12-s-dash' : '.v12-s-ph') + ' [data-s-msg]');
+        var m = R(msgEl);
+        var vertical = getComputedStyle(stage).gridTemplateColumns.trim().split(/\s+/).length < 2;
+        var out = [];
+        var add = function (d, cls, ex, ey) { out.push({ d: d, cls: cls, ex: ex, ey: ey }); };
+        if (!vertical) {
+          chips.forEach(function (c) {
+            var r = R(c), x1 = r.r + 6, y1 = r.t + r.h / 2, x2 = eng.l - 8, y2 = eng.t + Math.min(eng.h / 2, 90), mx = (x2 - x1) * 0.55;
+            var h = (c.getAttribute('data-hot') || '').split(' ').filter(Boolean).map(function (k) { return 'h-' + k; }).join(' ');
+            add('M' + x1 + ' ' + y1 + ' C' + (x1 + mx) + ' ' + y1 + ',' + (x2 - mx) + ' ' + y2 + ',' + x2 + ' ' + y2, h, x2, y2);
+          });
+          var ox1 = eng.r + 6, oy = eng.t + Math.min(eng.h / 2, 90), ox2 = m.l - 8, my = m.t + m.h / 2, omx = (ox2 - ox1) * 0.55;
+          add('M' + ox1 + ' ' + oy + ' C' + (ox1 + omx) + ' ' + oy + ',' + (ox2 - omx) + ' ' + my + ',' + ox2 + ' ' + my, 'out', ox2, my);
+        } else {
+          var sig = R(sx.querySelector('.v12-s-sig')), scr = R(sx.querySelector('.v12-s-scr'));
+          var hotAll = chips.map(function (c) { return (c.getAttribute('data-hot') || '').split(' ').filter(Boolean).map(function (k) { return 'h-' + k; }).join(' '); }).join(' ');
+          add('M' + (sig.l + sig.w / 2) + ' ' + (sig.b + 6) + ' L' + (eng.l + eng.w / 2) + ' ' + (eng.t - 30), hotAll, eng.l + eng.w / 2, eng.t - 30);
+          add('M' + (eng.l + eng.w / 2) + ' ' + (eng.b + 6) + ' L' + (scr.l + scr.w / 2) + ' ' + (scr.t - 30), 'out', scr.l + scr.w / 2, scr.t - 30);
+        }
+        while (wires.firstChild) { wires.removeChild(wires.firstChild); }
+        wires.setAttribute('viewBox', '0 0 ' + st.width + ' ' + st.height);
+        out.forEach(function (o) {
+          ['wb', 'wp'].forEach(function (k) {
+            var p = document.createElementNS(NS, 'path');
+            p.setAttribute('d', o.d); p.setAttribute('pathLength', '100'); p.setAttribute('class', k + ' ' + o.cls);
+            wires.appendChild(p);
+          });
+          var dot = document.createElementNS(NS, 'circle');
+          dot.setAttribute('cx', o.ex); dot.setAttribute('cy', o.ey); dot.setAttribute('r', '3'); dot.setAttribute('class', 'end ' + o.cls);
+          wires.appendChild(dot);
+        });
+      }
+      if ('ResizeObserver' in window) { new ResizeObserver(function () { window.requestAnimationFrame(draw); }).observe(stage); }
+      window.addEventListener('resize', function () { window.requestAnimationFrame(draw); });
+
+      reduce.addEventListener('change', function () { if (reduce.matches) { optInS = false; } syncS(); });
+      document.addEventListener('motionchange', function (e) { if (e.detail && e.detail.off) { optInS = false; } syncS(); });
+      document.addEventListener('visibilitychange', syncS);
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (es) {
-          es.forEach(function (e) { vis = e.isIntersecting; sync(); });
-        }, { threshold: 0.45 }).observe(x.querySelector('.v12-x-grid'));
+          es.forEach(function (e) { visS = e.isIntersecting; syncS(); });
+        }, { threshold: 0.5 }).observe(stage);
       }
-      go(0); label();
+      set('car', 0); label();
     }
 
     /* 04 · the verdict on the card: each level is the shipped rating component, laid over the card */

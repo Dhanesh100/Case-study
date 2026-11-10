@@ -741,3 +741,23 @@ picture suite (39/39) still pass. Structure checks clean.
 
 **Open.** V11 and V10 still pair ₹1 Cr with ₹80. The Figma REST API is rate-limited until about 14 Nov.
 
+---
+
+## 10 Nov 2026 — Section 00 as a four-beat story
+
+**Asked.** The car picture was still hard to understand and needed too much reading; most of the meaning
+sat outside the diagram. Make it easy, and tell it with motion or interaction.
+
+**Done.** Replaced the 2×3 grid and its caption box with one scene, *Already knows → Picks → Shows*, told
+in four beats with six-word titles: it already knows · it picks what matters most · it shows one thing ·
+or nothing at all. The scene carries the meaning: two signals flag, pulses travel to the engine, the
+higher rung's candidate wins, one message lands while everything else is tagged *fixed*, then all clears.
+It plays in a car, morphs in place into Portfolio, plays again. Also fixed the misaligned caption in the
+old "Everything at once" state (it is gone with the grid).
+
+**Measured.** 45–53 words on screen per beat, against 244 for the old picture at rest.
+
+**Checks.** 38/38 story checks (sequence and timing, the winner each beat, morph, rest, take-over and
+resume, keyboard, Pause motion, reduced motion, phones at 375 and 412, 768, dark mode); the case-study
+suite 44/44 and the component suite 31/31 still pass; structure checks clean.
+

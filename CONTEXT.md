@@ -4,7 +4,7 @@
 touching this repo, so Dhanesh does not have to explain it again. `PROJECT-LOG.md` is the
 chronological record of what happened. **This file is the standing brief.**
 
-Last updated: 9 November 2026 · current version: **V12** (with the everyday layer, §17)
+Last updated: 10 November 2026 · current version: **V12** (with the everyday layer, §17)
 
 ---
 
@@ -610,4 +610,33 @@ simulator. **V11 and V10 still pair ₹1 Cr with ₹80** in their pitch cards �
 
 **Figma rate limit.** The REST API returned 429 with `Retry-After` ≈ 4.6 days after this pass's
 exports (Starter tier, same as 5 Nov). Further exports wait until about 14 Nov 2026, or use the MCP.
+
+### 17.1 · Section 00 rebuilt as a story — 10 November 2026
+
+Dhanesh, on the two-row picture: *"its still complecated to understand. need to read a lot … make it bit
+easy … add motion and animation story or interaction … now most of the things are out side to read."*
+
+**What changed.** The 2×3 grid with a caption box (car row above Portfolio row, 244 words on screen) became
+**one scene and four beats**, read left to right — *Already knows → Picks → Shows*:
+
+| Beat | Title on screen | What moves |
+|---|---|---|
+| 1 | It already knows. | The signals pop in; two get a status (car: Fuel *low*, Seats *belt off* · Portfolio: Policies *health only*, CoverRisk *₹1 Cr needed*) |
+| 2 | It picks what matters most. | Pulses run down the wires into the engine; the lower rung's candidate waits, rung 1's wins with a tick (Seatbelt over Low fuel · Term life over Super Top-Up) |
+| 3 | It shows one thing. | One message slides from the engine into the screen; everything else is tagged *fixed* |
+| 4 | Or nothing at all. | Statuses turn fine, the engine shows *nothing fits*, the message slot is blank |
+
+It plays the four beats **in a car**, then the same scene **morphs in place into Portfolio** (*"Now the same,
+in Portfolio."*) and plays them again, ending on *"Portfolio does the same."* The lens switch flips it by
+hand. On screen: **45–53 words per beat**, almost all one- or two-word labels. The full story is in a
+screen-reader list.
+
+**Engine rungs in this scene (car → Portfolio):** Safety → Health + life · Running → Extends cover ·
+Routine → Only with a reason. This is the dashboard's own order of importance; the beat-03 ladder lens
+keeps the mechanic's version (brakes and seatbelts, airbags, child seat). Both say "most important first".
+
+**Behaviour:** plays once only when the whole scene fits on screen (phones: Play is the opt-in); stops for
+good when the reader picks a beat, flips the lens or presses Pause, and Play then continues from there;
+respects Pause motion, hidden tabs and reduced motion. Wires are drawn from the live layout, so they follow
+any width.
 
