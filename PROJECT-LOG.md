@@ -819,3 +819,35 @@ are removed, along with their CSS. The browser checks still pass (56/56).
 **Open.** State 1 (a health-only policy with Super Top-Up below) contradicts the ladder rule; it was flagged,
 not changed.
 
+---
+
+## 16 Nov 2026 — imagery on the V12 visuals
+
+**Asked.** Add images or background images to the visuals, tables and graphics, wherever needed. Use the repo,
+skills, MCP and plugins saved in Claude.
+
+**Used.**
+- **Figma MCP:** Component 351 icon fills, symbol exports and state screens.
+- **The repo's screen exports.**
+- **Skills:** CoverSure brand guidelines (use 3D icons when there are no photos; Electric Blue and Mint) and
+  design guardrails (an image only where it has a job).
+- **Not used: Magnific.** It would cost credits, and generated art would break "real over impressive".
+
+**Done.**
+- **Hero:** an image of the ladder as depth, built from the real 3D icons.
+- **Simulator** (V12 and V11): an icon in every slot.
+- **UX overlay slot table:** icons beside the card names.
+- **Closing band:** a Portfolio hub image.
+- Details are in CONTEXT §21. The page grew from 4.80 MB to 5.16 MB.
+
+**Checks.**
+- The new suite passes 50/50 at 1440, 1024, 768, 412 and 375 (dark mode, reduced motion). It checks that:
+  - both images decode and are marked decorative;
+  - the hero image clears the kicker, headline and standfirst, and the closing image clears the closing text;
+  - every simulator state, in both V12 and V11, shows the expected icon (and none for Critical Illness);
+  - all ten table rows have their icon;
+  - there is no horizontal scroll and there are no script errors.
+- The earlier suites pass 56/56 and 56/56.
+  - The edge check now allows the hero image, which `.v12-hero` clips on purpose.
+- Structure checks give exactly the same output as before this pass.
+

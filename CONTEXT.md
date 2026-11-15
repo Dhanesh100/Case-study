@@ -4,7 +4,7 @@
 touching this repo, so Dhanesh does not have to explain it again. `PROJECT-LOG.md` is the
 chronological record of what happened. **This file is the standing brief.**
 
-Last updated: 15 November 2026 · current version: **V12**, five beats (00 and 01 removed, §19)
+Last updated: 16 November 2026 · current version: **V12**, five beats (00 and 01 removed, §19); imagery pass §21
 
 ---
 
@@ -724,4 +724,41 @@ show health and life held. This is waiting on Dhanesh; it was not changed.
 **Figma access, 15 Nov.** REST worked for two image exports, then `nodes` returned 429 again, with
 `Retry-After` 265,271 s (about 3 days, until about 18 Nov). **The Figma MCP works on this file**
 (`get_metadata`, `download_assets`, `search_design_system`), so use it while REST is limited.
+
+---
+
+## 21 · Imagery pass — 16 November 2026
+
+Dhanesh: *"whenever required add images or background images to visual, tables or graphics that we created
+to make it visually stunning. and for that use repo, skills, MCP, plugins that we saved in claude."*
+
+**The rule applied: real images only, and only where they do a job.** Every image is built from CoverSure's
+own assets: the shipped 3D icons in Figma Component 351 (`10410:56686`, pulled through the Figma MCP), the
+insurer tile from the shipped policy card, and the CoverRisk gauge from `3526:35823`. The brand guidelines
+ask for 3D icons when there are no photos. **Nothing is AI-generated.** Magnific was checked but not used:
+it would spend credits, and generated imagery would break "real over impressive" (§16).
+
+| Where | Image | Its job |
+|---|---|---|
+| Hero | The protection ladder as depth: health and term life large and sharp in front, Super Top-Up behind, Personal Accident, HospiCash and Home small and soft at the back, on an Electric Blue and Mint glow | Shows the product's world before any reading, and previews the ladder's order |
+| Beat 01 simulator (shared with V11) | Each slot carries the icon its shipped card carries. Primary slots use the insurer tile for *Your … policy*, the gauge for *Check your risk score*, and a plus for *Add …* | The schematic phone now reads like the real bottom section |
+| UX overlay, slot table | The card's icon beside each card name | Matches each table row to the card the reader saw |
+| Closing band | The Portfolio briefcase (the app's own Portfolio icon) at the centre, wired to the card, product and inactive-policy icons | Draws the closing claim, *the connection layer* |
+
+**Kept on purpose:**
+- **Critical Illness and Device still have no icon** (§20), so the *Buy Critical illness* slot in the simulator
+  is text only.
+- **Layout:**
+  - Above 1000px the hero image sits to the right of the headline.
+  - At 1000px and below it sits above the kicker, right-aligned.
+  - Its edges are feathered, so it works on both themes.
+  - The closing image moves above the closing line on phones.
+- **Accessibility:** both large images are decorative (`alt=""`), because what they show is stated in text.
+
+**Files.**
+- The images are embedded as WebP, adding about 0.36 MB; the page went from 4.80 MB to 5.16 MB.
+- Icons are defined once, as CSS classes `.cs-ic[data-ic=…]`, so the simulator and the table share them.
+
+**Rebuild.** The scripts are `build-img.py` (assets) and `build-imagery.py` (inject), in that session's
+scratchpad. To change an image, rebuild it from the same Figma sources. Do not substitute generated art.
 
