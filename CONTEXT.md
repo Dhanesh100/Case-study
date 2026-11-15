@@ -102,6 +102,18 @@ coverage amount and an estimated premium. It names **no specific insurer**.
 > A user holding **health only is still on step one** — the engine recommends **term life**,
 > not Super Top-Up. This was confirmed explicitly and **overrides Appendix A** in the deck.
 
+**What they said at onboarding counts** (Dhanesh, 15 Nov 2026):
+- **Said they have policies, none stored** → the top slot is **Add your policy**: *"they said they have but
+  not added yet and this is most relevant action because of information we have."* The engine band below
+  shows **Super Top-Up**, because declaring health **and** life completes step one.
+- **Said they have none** → the top slot is the **CoverRisk** card (while no report exists), and the band
+  below pitches **health and life**, both. Figma `3526:35823`: *"pitch health and life insurance, as these
+  are the basic essential policies to buy."* Once the report exists (`3526:37417`), the cards carry the exact
+  cover and the approximate premium instead.
+- The Figma annotation beside `3526:37129` (`3526:36961`) says *"Health and Motor → Life, Super Top-up and
+  Personal Accident"*. **Dhanesh's statement above overrides it**, in the same way the ladder rule overrides
+  Appendix A.
+
 **KYP (Know Your Policy)** rates a policy **GREAT / GOOD / AVERAGE / POOR** with ✔ and !
 counts. There is **no numeric score** — an invented `KYP 4.4` was removed. When a rating
 is unavailable, show a coming-soon band so missing data never reads as a poor rating.
@@ -676,4 +688,40 @@ shows** chips (six skill links) and the line *"Recently shipped — no outcome n
 implied. Figures in the screens are placeholders. Each + opens the full reasoning."* The hero now ends on the
 three cards (gap, strategy, system). **Consequence:** V12's surface no longer says there are no outcome numbers,
 or that the figures in the screens are placeholders. Both are still true (§4, §6), so nothing on V12 may imply an outcome.
+
+---
+
+## 20 · Ladder and Restraint reworked — 15 November 2026
+
+**Ladder (beat 02).** Dhanesh: *"its difficult to understand, way they placed. so do proper placement to set
+priority and hierarchy. also add icons to understand quickly and scan. 3d icons are in figma designs."*
+- The diagonal SVG staircase put rung 1 bottom-left and dimmed rungs 2–3 with a looping pulse. It is now an
+  **HTML list read top-down in recommendation order**. Rung 1 is the largest and filled; rung 2 is plain;
+  rung 3 is dashed and lightest. The gates between rungs say what must be true to move down (*only when
+  both are held* · *only when a signal gives a reason*).
+- Rung 1 keeps its example in chips: holds Health only → next is Term life, not Super Top-Up.
+- **Icons are the shipped 3D icons** from Component 351 (`10410:56686`), pulled as the original image fills
+  through the Figma MCP (`download_assets`), trimmed, and embedded as WebP. The set: apple = health,
+  umbrella = life, shield = Super Top-Up, bandaged man = Personal Accident, cash = HospiCash, house = Home.
+  **Critical Illness and Device have no 3D icon in Portfolio's components**, so their chips are text only.
+  Do not invent icons for them.
+- The *In a car* lens swaps every label. Car chips are text only, because there are no car icons.
+- The ladder enters once, top to bottom, when it scrolls in. Nothing loops.
+
+**Restraint (beat 04).** Three states, each starting with what the engine knows (*Said · Stored* chips):
+- **Has policies:** their policies on top, then the engine band.
+- **Said health, life, motor · stored none:** Add your policy on top, with the three words marked on the
+  shipped prompt itself. An arrow runs from the marks, down the canvas gutter, to **Buy Super Top-up**.
+- **Said none · stored none:** the CoverRisk card on top, then Buy health and Buy life. The CoverRisk card
+  is cropped from the 2x export of `3526:35823`; it is not in Component 351.
+- Every slot has a one-line reason under its tag. The grid is 2 × 2, with *Kept out* in the fourth cell,
+  because three in a row would shrink the components below 0.7 of their size.
+
+**Open — state 1 contradicts the ladder.** It shows a single **health** policy with **Super Top-Up** below.
+By the ladder rule, health only → term life next. Either the card should be Buy Life, or the state should
+show health and life held. This is waiting on Dhanesh; it was not changed.
+
+**Figma access, 15 Nov.** REST worked for two image exports, then `nodes` returned 429 again, with
+`Retry-After` 265,271 s (about 3 days, until about 18 Nov). **The Figma MCP works on this file**
+(`get_metadata`, `download_assets`, `search_design_system`), so use it while REST is limited.
 

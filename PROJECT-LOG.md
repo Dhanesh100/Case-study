@@ -785,3 +785,37 @@ Structure checks are clean, and no new colour literals were added.
 **Same day.** The hero's "What this shows" chips and the "Recently shipped — no outcome numbers yet …" line
 are removed, along with their CSS. The browser checks still pass (56/56).
 
+---
+
+## 15 Nov 2026 — Ladder by priority with 3D icons; Restraint in three states
+
+**Asked.**
+- **Ladder:** the placement made priority hard to read. Fix the hierarchy and add the 3D icons from Figma.
+- **Restraint:** explain the "said they have policies, none stored" state with highlights and an arrow.
+  Add the "said none" state (CoverRisk on top, then buy health and life).
+
+**Done.**
+- **Ladder:** the staircase SVG became a top-down list.
+  - Rung 1 is largest and filled; rungs 2–3 step down in weight.
+  - The gates between rungs carry the conditions.
+  - Products carry the shipped 3D icons, pulled from Figma through the MCP.
+- **Restraint:** now three states with *Said · Stored* inputs and a reason under each slot.
+  - In "said some", the words health, life and motor are marked on the prompt, and an arrow is drawn from
+    them to Super Top-Up.
+  - "Said none" shows the CoverRisk card from Figma, then the shipped Buy health and Buy life cards.
+- The page grew from 4.68 MB to 4.80 MB.
+
+**Checks.**
+- The new checks pass 56/56 at 1440, 768, 412, and 375 (dark mode, reduced motion):
+  - the rungs stack in order and rung 1 is the largest;
+  - the reveal runs only when motion is allowed;
+  - the arrow starts at the "health" mark and ends at the card;
+  - the car lens swaps every label;
+  - every component is at least 0.7 of its own size;
+  - there is no horizontal scroll and there are no script errors.
+- The earlier suite passes 56/56. Structure checks are clean, with no new colour literals and no undefined
+  classes.
+
+**Open.** State 1 (a health-only policy with Super Top-Up below) contradicts the ladder rule; it was flagged,
+not changed.
+
