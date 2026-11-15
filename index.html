@@ -2859,7 +2859,7 @@
   }
 
   /* ══════════════ V12 — compact ══════════════
-     Six beats. Each carries one claim, one visual and one opener.
+     Five beats. Each carries one claim, one visual and one opener.
      A founder reads the H2s, the bold and the visuals; the
      See-the-thinking panels carry everything V11 argued.
      ═══════════════════════════════════════════ */
@@ -2886,7 +2886,7 @@
   .v12-min { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0 0 22px; }
   .v12-mcard { display: block; text-decoration: none; border-radius: 18px; padding: 18px;
                box-shadow: inset 0 0 0 1px var(--rule-soft); transition: box-shadow 0.2s ease, background 0.2s ease; }
-  @media (hover:hover) and (pointer:fine){.v12-mcard:hover{ background: var(--ground-2); box-shadow: inset 0 0 0 1px var(--rule); }}
+  @media (hover:hover) and (pointer:fine){a.v12-mcard:hover{ background: var(--ground-2); box-shadow: inset 0 0 0 1px var(--rule); }}
   .v12-mcard span { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em;
                     text-transform: uppercase; color: var(--accent-ink); margin-bottom: 8px; }
   .v12-mcard b { display: block; font-family: var(--display); font-weight: 600; font-size: clamp(17px, 1.7vw, 20px);
@@ -2918,19 +2918,11 @@
              padding: clamp(18px, 3vw, 28px); }
   .v12-fig .v9-scroll { overflow-x: auto; }
   .v12-fig .v9-scroll svg { display: block; width: 100%; min-width: 620px; height: auto; }
-  .v12-cap { margin: 14px 0 0; font-size: 15px; color: var(--ink-2); }
-  .v12-cap b { color: var(--ink); font-weight: 600; }
 
   .v12-seg { display: inline-flex; gap: 2px; padding: 3px; margin: 0 0 16px; border-radius: 980px; background: var(--rule-soft); }
   .v12-seg button { appearance: none; border: none; cursor: pointer; border-radius: 980px; padding: 7px 16px;
                     font: 600 13px/1 var(--body); color: var(--ink-2); background: transparent; transition: background 0.25s ease, color 0.25s ease; }
   .v12-seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.18); }
-  [data-v12-ba] .v12-before, [data-v12-ba] .v12-after { transition: opacity 0.6s ease; }
-  [data-v12-ba][data-state="before"] .v12-after,
-  [data-v12-ba][data-state="after"] .v12-before { opacity: 0; }
-  [data-v12-ba][data-state="before"] .v12-after-t,
-  [data-v12-ba][data-state="after"] .v12-before-t { display: none; }
-  [data-v12-ba][data-state="after"] .v12-after .svg-line-key { stroke-dasharray: 5 4; animation: flow 1.1s linear infinite; }
 
   .v12-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; }
   .v12-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; }
@@ -2997,10 +2989,6 @@
     .v12-pair { grid-template-columns: minmax(0, 1fr); }
     .v12-arrow { transform: rotate(90deg); justify-self: center; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    [data-v12-ba] .v12-before, [data-v12-ba] .v12-after { transition: none; }
-    [data-v12-ba][data-state="after"] .v12-after .svg-line-key { animation: none; }
-  }
 </style>
 <style>
   /* ══════════ INTERACTION PASS · 9 Nov 2026 ══════════
@@ -3046,8 +3034,6 @@
   :is(.vtab, .motion-t, .sc-ov-x, .v12-seg button, .sim-ctl, .mx-ctl button):active { transform: scale(.97); }
 
   :is(#panel-v11, #panel-v12) .sim-swap { animation: simIn .32s cubic-bezier(.23, 1, .32, 1) both; }
-  [data-v12-ba] .v12-before, [data-v12-ba] .v12-after { transition: opacity .3s cubic-bezier(.77, 0, .175, 1); }
-  [data-v12-ba][data-state="after"]:not([data-play="on"]) .v12-after .svg-line-key { animation: none; }
 
   html[data-motion="off"] :is(#panel-v11, #panel-v12) :is(.svg-line, .svg-line-key, .svg-line-dead, .rung, .sim-swap) { animation: none !important; }
   html[data-motion="off"] :is(#panel-v11, #panel-v12) [data-climb] .rung { opacity: 1; }
@@ -3057,8 +3043,8 @@
 </style>
 <style>
   /* ══════════ EVERYDAY LAYER · 9–10 Nov 2026 ══════════
-     The engine told through a car. Section 00 is a four-beat story (below); each beat of the case study
-     gets one everyday line; the ladder gets a car lens. Green = everyday, blue = CoverSure. */
+     The engine told through a car: each beat of the case study gets one everyday line;
+     the ladder gets a car lens. Green = everyday, blue = CoverSure. */
   /* one everyday line under each beat */
   .v12-life { display: flex; align-items: baseline; gap: 10px; margin: 16px 0 0; max-width: 64ch; font-size: 15px; line-height: 1.5; color: var(--ink-2); }
   .v12-life-k { flex: 0 0 auto; padding: 3px 8px 2px; border-radius: 980px; background: var(--life-soft); color: var(--life-ink);
@@ -3074,216 +3060,6 @@
   [data-lens-fig][data-lens="car"] .lx-car .svg-name-key { fill: var(--life-ink); }
   [data-lens-fig][data-lens="car"] .lx-car .x-ink { fill: var(--life-ink); }
   @media (max-width: 760px) { .v12-life { flex-direction: column; gap: 6px; } }
-  @keyframes xbar { to { transform: scaleX(1); } }
-
-  /* ══════════ 00 · THE STORY · 10 Nov 2026 ══════════
-     One scene, read left to right: what it already knows → what it picks → what the screen shows.
-     Four beats, six words or fewer each, told first in a car and then — the same scene, morphed in
-     place — in Portfolio. The scene carries the explanation; there is no caption to read.
-     Keys: data-key = lens + beat (c0–c4, p0–p4); anything with data-b shows only for the keys it lists.
-     Motion: transform and opacity; enter (.23,1,.32,1), standard (.2,0,0,1); linear only for the timer
-     hairline and the signal pulses. The page-wide reduced-motion rule makes every change instant. */
-  .v12-s { --s-cell: color-mix(in srgb, var(--ink) 3%, var(--surface));
-           --s-chip: color-mix(in srgb, var(--ink) 6%, var(--surface));
-           --h: var(--life); --h-soft: var(--life-soft); --h-ink: var(--life-ink); --s-dur: 3s; }
-  .v12-s[data-lens="pf"] { --h: var(--accent); --h-soft: var(--accent-soft); --h-ink: var(--accent-ink); }
-  .v12-s-fig { padding: clamp(16px, 2.8vw, 28px); }
-
-  /* crossfading pairs: the car reading and the Portfolio reading share one place */
-  .v12-s .x2 { display: inline-grid; }
-  .v12-s .x2 > * { grid-area: 1 / 1; transition: opacity .3s cubic-bezier(.2, 0, 0, 1), visibility 0s; }
-  .v12-s[data-lens="car"] .x2 > .p, .v12-s[data-lens="pf"] .x2 > .c,
-  .v12-s[data-lens="car"] .v12-s-scr > .p, .v12-s[data-lens="pf"] .v12-s-scr > .c { opacity: 0; visibility: hidden;
-      transition: opacity .3s cubic-bezier(.2, 0, 0, 1), visibility 0s .3s; }
-  .v12-s-sig li:nth-child(2) .x2 > * { transition-delay: 40ms; }
-  .v12-s-sig li:nth-child(3) .x2 > * { transition-delay: 80ms; }
-  .v12-s-sig li:nth-child(4) .x2 > * { transition-delay: 120ms; }
-  .v12-s-sig li:nth-child(5) .x2 > * { transition-delay: 160ms; }
-
-  /* head: the beat's title and the lens */
-  .v12-s-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 18px; margin: 0 0 22px; }
-  .v12-s-title { display: flex; align-items: center; gap: 10px; margin: 0; min-height: 34px;
-                 font-family: var(--display); font-size: clamp(20px, 2.3vw, 26px); font-weight: 600; letter-spacing: -0.018em; color: var(--ink); }
-  .v12-s-title.swap [data-s-title] { display: inline-block; animation: simIn .32s cubic-bezier(.23, 1, .32, 1) both; }
-  .v12-s-n { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0; padding: 4px 8px; border-radius: 980px;
-             color: var(--h-ink); background: var(--h-soft); }
-  .v12-s-n:empty { display: none; }
-  .v12-s-lens { margin: 0; }
-
-  /* the scene */
-  .v12-s-stage { position: relative; display: grid; align-items: start;
-                 grid-template-columns: minmax(0, .95fr) minmax(0, 1.12fr) minmax(0, .95fr); column-gap: clamp(34px, 5.4vw, 60px); }
-  .v12-s-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
-  .v12-s-col { position: relative; z-index: 1; min-width: 0; transition: opacity .3s cubic-bezier(.2, 0, 0, 1); }
-  .v12-s-k { margin: 0 0 10px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-3); }
-
-  /* A · what it already knows */
-  .v12-s-sig { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-  .v12-s-chip { display: flex; align-items: center; gap: 10px; min-height: 42px; padding: 0 10px; border-radius: 11px; background: var(--s-chip); }
-  .v12-s-chip .ic { flex: 0 0 auto; width: 20px; height: 20px; color: var(--ink-2); }
-  .v12-s-chip .ic svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  .v12-s-chip .lb { min-width: 0; font-size: 14px; font-weight: 600; color: var(--ink); }
-  .v12-s-chip .st { margin-left: auto; display: flex; }
-  .v12-s .st i, .v12-s .cand, .v12-s-none { display: none; }
-  .v12-s .st i { font-style: normal; white-space: nowrap; font: 600 11.5px/1 var(--body); padding: 5px 8px; border-radius: 980px; }
-  .v12-s .st i.warn { color: var(--signal); background: var(--signal-soft); }
-  .v12-s .st i.ok   { color: var(--life-ink); background: var(--life-soft); }
-  .v12-s .st i.info { color: var(--accent-ink); background: var(--accent-soft); }
-
-  /* B · what it picks */
-  .v12-s-eng { padding: 14px; border-radius: 16px; background: var(--s-cell); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--h) 35%, transparent);
-               transition: box-shadow .3s ease-out; }
-  .v12-s-eng-t { margin: 0 0 10px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--h-ink); }
-  .v12-s-rungs { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-  .v12-s-rungs li { display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 9px; border-radius: 10px; background: var(--s-chip);
-                    font-size: 13.5px; transition: background-color .3s ease-out; }
-  .v12-s-rungs li i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
-  .v12-s-rungs li b { font-weight: 600; color: var(--ink); white-space: nowrap; }
-  .v12-s-rungs .r1 { background: var(--h-soft); }
-  .v12-s-rungs .r3 { margin-left: 14px; }
-  .v12-s-rungs .r2 { margin-left: 7px; }
-  .v12-s .cand { margin-left: auto; white-space: nowrap; font: 600 11.5px/1 var(--body); padding: 5px 8px; border-radius: 980px; }
-  .v12-s .cand.wait { color: var(--ink-3); background: var(--rule-soft); }
-  .v12-s .cand.win { color: var(--surface); background: var(--h); }
-  .v12-s .cand.win::before { content: "\2713\00a0"; }
-  .v12-s-none { margin: 8px 0 0; padding: 8px 10px; border-radius: 10px; font-size: 12.5px; color: var(--ink-2);
-                outline: 1px dashed var(--rule); outline-offset: -1px; }
-
-  /* C · what the screen shows: fixed parts, one moving message */
-  .v12-s-scr { display: grid; }
-  .v12-s-scr > * { grid-area: 1 / 1; transition: opacity .3s cubic-bezier(.2, 0, 0, 1), visibility 0s; }
-  .v12-s-dash, .v12-s-ph { display: grid; align-content: start; padding: 12px; border-radius: 16px; background: var(--s-chip); }
-  .v12-s-dash { gap: 14px; padding-top: 16px; }
-  .v12-s-ph { gap: 6px; padding: 10px; }
-  .v12-s-dials { position: relative; display: flex; justify-content: space-around; }
-  .v12-s .dial svg { width: 70px; height: 42px; overflow: visible; }
-  .v12-s .dial .arc { fill: none; stroke: var(--rule); stroke-width: 4; stroke-linecap: round; }
-  .v12-s .dial .tk { stroke: var(--ink-3); stroke-width: 1.3; stroke-linecap: round; }
-  .v12-s .dial text { font: 600 7px var(--mono); fill: var(--ink-3); }
-  .v12-s .dial .ndl { stroke: var(--ink); stroke-width: 2; stroke-linecap: round; transform-box: view-box; transform-origin: 33px 36px;
-                      transition: transform .7s cubic-bezier(.2, 0, 0, 1); }
-  .v12-s .dial.sp .ndl { transform: rotate(-24deg); }
-  .v12-s .dial.fu .ndl { transform: rotate(-68deg); }
-  .v12-s[data-key="c4"] .dial.fu .ndl { transform: rotate(52deg); }
-  .v12-s-ph > .fx { position: relative; padding: 8px 10px; border-radius: 9px; background: var(--s-cell); font-size: 12.5px; color: var(--ink-2); }
-  .v12-s-ph > .top { font-weight: 600; color: var(--ink); }
-  .v12-s-msg { position: relative; display: grid; align-items: center; min-height: 54px; padding: 8px 12px; border-radius: 11px;
-               background: var(--s-cell); box-shadow: inset 0 0 0 1.5px var(--h); transition: box-shadow .3s ease-out; }
-  .v12-s-msg > span { grid-area: 1 / 1; visibility: hidden; opacity: 0; transform: translateX(-16px);
-                      transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .36s cubic-bezier(.23, 1, .32, 1), visibility 0s .36s;
-                      font-size: 14px; font-weight: 600; color: var(--h-ink); }
-  .v12-s-msg > span b { display: block; font-weight: 600; }
-  .v12-s-msg > span small { display: block; font-size: 12px; font-weight: 400; color: var(--ink-2); }
-  .v12-s-msg > span.nil { font-size: 12.5px; font-weight: 400; color: var(--ink-3); transform: none; }
-  .v12-s[data-beat="1"] .v12-s-msg, .v12-s[data-beat="2"] .v12-s-msg, .v12-s[data-beat="4"] .v12-s-msg { box-shadow: inset 0 0 0 1px var(--rule); }
-  /* "fixed" appears on everything that does not move while the message lands */
-  .v12-s .fx::after { content: "fixed"; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font: 500 9px/1 var(--mono);
-                      letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); opacity: 0; transition: opacity .24s ease-out; }
-  .v12-s-dials.fx::after { top: auto; bottom: -6px; right: 50%; transform: translateX(50%); }
-  .v12-s[data-beat="3"] .fx::after { opacity: 1; }
-
-  /* what each key shows (key = lens + beat) */
-  .v12-s[data-key="c0"] :is(.st i, .cand)[data-b~="c0"],
-  .v12-s[data-key="c1"] :is(.st i, .cand)[data-b~="c1"],
-  .v12-s[data-key="c2"] :is(.st i, .cand)[data-b~="c2"],
-  .v12-s[data-key="c3"] :is(.st i, .cand)[data-b~="c3"],
-  .v12-s[data-key="c4"] :is(.st i, .cand)[data-b~="c4"],
-  .v12-s[data-key="p0"] :is(.st i, .cand)[data-b~="p0"],
-  .v12-s[data-key="p1"] :is(.st i, .cand)[data-b~="p1"],
-  .v12-s[data-key="p2"] :is(.st i, .cand)[data-b~="p2"],
-  .v12-s[data-key="p3"] :is(.st i, .cand)[data-b~="p3"],
-  .v12-s[data-key="p4"] :is(.st i, .cand)[data-b~="p4"] { display: inline-flex; }
-  .v12-s[data-key="c0"] .v12-s-none[data-b~="c0"],
-  .v12-s[data-key="c1"] .v12-s-none[data-b~="c1"],
-  .v12-s[data-key="c2"] .v12-s-none[data-b~="c2"],
-  .v12-s[data-key="c3"] .v12-s-none[data-b~="c3"],
-  .v12-s[data-key="c4"] .v12-s-none[data-b~="c4"],
-  .v12-s[data-key="p0"] .v12-s-none[data-b~="p0"],
-  .v12-s[data-key="p1"] .v12-s-none[data-b~="p1"],
-  .v12-s[data-key="p2"] .v12-s-none[data-b~="p2"],
-  .v12-s[data-key="p3"] .v12-s-none[data-b~="p3"],
-  .v12-s[data-key="p4"] .v12-s-none[data-b~="p4"] { display: block; }
-  .v12-s[data-key="c0"] .v12-s-msg > span[data-b~="c0"],
-  .v12-s[data-key="c1"] .v12-s-msg > span[data-b~="c1"],
-  .v12-s[data-key="c2"] .v12-s-msg > span[data-b~="c2"],
-  .v12-s[data-key="c3"] .v12-s-msg > span[data-b~="c3"],
-  .v12-s[data-key="c4"] .v12-s-msg > span[data-b~="c4"],
-  .v12-s[data-key="p0"] .v12-s-msg > span[data-b~="p0"],
-  .v12-s[data-key="p1"] .v12-s-msg > span[data-b~="p1"],
-  .v12-s[data-key="p2"] .v12-s-msg > span[data-b~="p2"],
-  .v12-s[data-key="p3"] .v12-s-msg > span[data-b~="p3"],
-  .v12-s[data-key="p4"] .v12-s-msg > span[data-b~="p4"] { visibility: visible; opacity: 1; transform: none;
-      transition: opacity .2s cubic-bezier(.2, 0, 0, 1), transform .36s cubic-bezier(.23, 1, .32, 1), visibility 0s; }
-
-  /* each beat steps the rest of the scene back, so the eye goes to one place */
-  .v12-s[data-beat="1"] :is(.v12-s-b, .v12-s-c), .v12-s[data-beat="2"] .v12-s-c, .v12-s[data-beat="3"] .v12-s-a { opacity: .32; }
-  .v12-s[data-beat="1"] .v12-s-chip { animation: simIn .36s cubic-bezier(.23, 1, .32, 1) both; }
-  .v12-s[data-beat="1"] .v12-s-chip:nth-child(2) { animation-delay: 60ms; }
-  .v12-s[data-beat="1"] .v12-s-chip:nth-child(3) { animation-delay: 120ms; }
-  .v12-s[data-beat="1"] .v12-s-chip:nth-child(4) { animation-delay: 180ms; }
-  .v12-s[data-beat="1"] .v12-s-chip:nth-child(5) { animation-delay: 240ms; }
-  .v12-s[data-beat="1"] .st i { animation: sPop .32s cubic-bezier(.23, 1, .32, 1) .55s both; }
-  .v12-s[data-beat="2"] .cand.wait { animation: sPop .32s cubic-bezier(.23, 1, .32, 1) .5s both; }
-  .v12-s[data-beat="2"] .cand.win { animation: sPop .32s cubic-bezier(.23, 1, .32, 1) 1.1s both; }
-  .v12-s[data-beat="4"] .st i, .v12-s[data-beat="4"] .v12-s-none { animation: sPop .32s cubic-bezier(.23, 1, .32, 1) .2s both; }
-  @keyframes sPop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
-
-  /* wires: a base line per signal, and a pulse that travels it while the engine reads */
-  .v12-s-wires .wb { fill: none; stroke: var(--rule); stroke-width: 1.5; transition: stroke .3s ease-out, opacity .3s ease-out; }
-  .v12-s-wires .wp { fill: none; stroke: var(--ink-3); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 12 200; stroke-dashoffset: 12; opacity: 0; }
-  .v12-s-wires .end { fill: var(--rule); transition: fill .3s ease-out; }
-  .v12-s[data-lens="car"] .wb.h-cw, .v12-s[data-lens="pf"] .wb.h-pw { stroke: color-mix(in srgb, var(--signal) 55%, transparent); }
-  .v12-s[data-lens="pf"] .wb.h-pi { stroke: color-mix(in srgb, var(--accent) 55%, transparent); }
-  .v12-s[data-lens="car"] .wp.h-cw, .v12-s[data-lens="pf"] .wp.h-pw { stroke: var(--signal); }
-  .v12-s[data-lens="pf"] .wp.h-pi { stroke: var(--accent); }
-  .v12-s[data-beat="1"] .v12-s-wires, .v12-s[data-beat="4"] .wb:is(.h-cw, .h-pw, .h-pi) { opacity: .35; }
-  .v12-s[data-beat="1"] .v12-s-wires .wb.out, .v12-s[data-beat="2"] .v12-s-wires .wb.out { opacity: .35; }
-  .v12-s[data-beat="2"] .wp:not(.out) { opacity: 1; animation: sFlow 1.2s linear 2; }
-  .v12-s[data-beat="2"] .wp:not(.out):is(.h-cw, .h-pw, .h-pi) { animation-delay: .15s; }
-  .v12-s[data-beat="3"] .wp.out { opacity: 1; stroke: var(--h); animation: sFlow .9s linear 1 both; }
-  .v12-s[data-beat="3"] .wb.out, .v12-s[data-beat="0"] .wb.out { stroke: var(--h); }
-  .v12-s[data-beat="3"] .end.out, .v12-s[data-beat="0"] .end.out { fill: var(--h); }
-  @keyframes sFlow { from { stroke-dashoffset: 12; } to { stroke-dashoffset: -100; } }
-
-  /* controls */
-  .v12-s-ctl { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 24px 0 0; }
-  .v12-s:not(.js) :is(.v12-s-ctl, .v12-s-lens) { display: none; }
-  .v12-s-play { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 16px 0 13px; border: none;
-                border-radius: 980px; background: var(--ink); color: var(--ground); cursor: pointer; font: 600 14px/1 var(--body);
-                transition: transform 160ms cubic-bezier(.23, 1, .32, 1); }
-  .v12-s-play svg { width: 14px; height: 14px; }
-  .v12-s-play .xp-pause { display: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
-  .v12-s-play .xp-play { fill: currentColor; }
-  .v12-s-play[data-state="on"] .xp-pause { display: inline; }
-  .v12-s-play[data-state="on"] .xp-play { display: none; }
-  .v12-s-beats { display: flex; gap: 2px; padding: 3px; border-radius: 980px; background: var(--rule-soft); }
-  .v12-s-beats button { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; min-height: 40px;
-                        padding: 0 13px; border: none; border-radius: 980px; overflow: hidden; background: transparent; color: var(--ink-2);
-                        cursor: pointer; font: 500 13.5px/1 var(--body);
-                        transition: background-color .2s ease-out, color .2s ease-out, transform 160ms cubic-bezier(.23, 1, .32, 1); }
-  .v12-s-beats i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
-  .v12-s-beats button[aria-current="step"] { background: var(--surface); color: var(--ink);
-                                             box-shadow: 0 1px 4px -1px color-mix(in srgb, var(--ink) 30%, transparent); }
-  .v12-s-beats button[aria-current="step"] i { color: var(--h-ink); }
-  .v12-s-beats button::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 5px; height: 2px; border-radius: 2px;
-                               background: var(--h); transform: scaleX(0); transform-origin: left; opacity: 0; }
-  .v12-s[data-playing] .v12-s-beats button[aria-current="step"]::after { opacity: 1; animation: xbar var(--s-dur) linear both; }
-  :is(.v12-s-play, .v12-s-beats button):active { transform: scale(.97); }
-
-  @media (max-width: 760px) {
-    .v12-s-stage { grid-template-columns: minmax(0, 1fr); row-gap: 40px; }
-    .v12-s-top { margin-bottom: 18px; }
-    .v12-s-lens { width: 100%; display: flex; }
-    .v12-s-lens button { flex: 1 1 0; }
-    .v12-s-beats { flex: 1 1 100%; }
-    .v12-s-beats button { flex: 1 1 0; min-width: 0; padding: 0 4px; min-height: 44px; }
-    .v12-s .dial svg { width: 62px; height: 38px; }
-    .v12-s-sig { gap: 4px; }
-    .v12-s-chip { min-height: 38px; }
-  }
-  @media (max-width: 420px) {
-    .v12-s-beats span { display: none; }
-  }
 </style>
 <style>
   /* ══════════ UI PRESENTATION · 9 Nov 2026 ══════════
@@ -3401,7 +3177,7 @@
    <div class="vt-list" role="tablist" aria-label="Case study version">
     <span class="versions-label" aria-hidden="true">Version</span>
     <button class="vtab" role="tab" id="tab-v12" aria-controls="panel-v12" aria-selected="true">
-        <b>V12</b><i>compact &#183; 6 beats</i>
+        <b>V12</b><i>compact &#183; 5 beats</i>
       </button>
       <button class="vtab" role="tab" id="tab-v11" aria-controls="panel-v11" aria-selected="false">
         <b>V11</b><i>in motion &#183; 4 min</i>
@@ -6929,7 +6705,7 @@
 
 
 <!-- ═══════════════════════════════════════════════════════════
-     V12 — COMPACT. Six beats, one claim each, one visual each.
+     V12 — COMPACT. Five beats, one claim each, one visual each.
      The surface is for a founder with sixty seconds; every beat's
      See-the-thinking panel carries the full V11 reasoning.
      ═══════════════════════════════════════════════════════════ -->
@@ -6948,7 +6724,7 @@
       </dl>
 
       <div class="v12-min" aria-label="The case study in one minute">
-        <a class="v12-mcard" href="#v12-s1" data-jump><span>The gap</span><b>Portfolio ignored what CoverSure already knew.</b></a>
+        <div class="v12-mcard"><span>The gap</span><b>Portfolio ignored what CoverSure already knew.</b></div>
         <a class="v12-mcard" href="#v12-s3" data-jump><span>The strategy</span><b>Recommend what matters in a life, not what sells.</b></a>
         <a class="v12-mcard" href="#v12-s2" data-jump><span>The system</span><b>Rules pick the next step. The layout never moves.</b></a>
       </div>
@@ -6969,147 +6745,9 @@
 
   <div class="sc-wrap v12-beats">
 
-    <!-- 00 · the whole idea as a four-beat story: a car first, then the same scene as Portfolio ── -->
-    <section class="v12-beat v12-s" id="v12-s0" data-v12-s data-lens="car" data-beat="0" data-key="c0" aria-labelledby="v12-s-h">
-      <p class="v12-tag"><i>00</i>The idea in one picture</p>
-      <h2 class="v12-h2" id="v12-s-h">It works like your car&rsquo;s dashboard.</h2>
-      <p class="v12-line">Your car knows a lot but tells you one thing, or nothing. <b>The engine does the same with what CoverSure already knew.</b></p>
-
-      <figure class="v12-fig v12-s-fig">
-        <div class="v12-s-top">
-          <p class="v12-s-title"><span class="v12-s-n" data-s-n aria-hidden="true"></span><span data-s-title>Your car already does this.</span></p>
-          <div class="v12-seg v12-s-lens" role="group" aria-label="Show it">
-            <button type="button" data-s-lens="car" aria-pressed="true">In a car</button>
-            <button type="button" data-s-lens="pf" aria-pressed="false">In Portfolio</button>
-          </div>
-        </div>
-
-        <div class="v12-s-stage" data-s-stage>
-          <svg class="v12-s-wires" data-s-wires aria-hidden="true"></svg>
-          <div class="v12-s-col v12-s-a">
-            <p class="v12-s-k">Already knows</p>
-            <ul class="v12-s-sig" aria-label="What it already knows">
-              <li class="v12-s-chip"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><path d="M3.5 6.5h13M3.5 13.5h13"/><circle cx="8" cy="6.5" r="2.2"/><circle cx="12.5" cy="13.5" r="2.2"/></svg><svg class="p" viewBox="0 0 20 20"><rect x="4.5" y="4" width="11" height="13.5" rx="2"/><path d="M8 3h4v2.5H8zM7.5 10h5M7.5 13.5h3.5"/></svg></span><span class="lb"><span class="x2"><span class="c">Your settings</span><span class="p">Onboarding</span></span></span></li>
-              <li class="v12-s-chip" data-hot="cw pw"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><rect x="4" y="3.5" width="8" height="14" rx="1.6"/><path d="M4 9h8M12 7.5h1.6l2.4 2.4v5.1a1.5 1.5 0 0 1-3 0v-2.5H12"/></svg><svg class="p" viewBox="0 0 20 20"><path d="M6 2.8h5.8l3.7 3.7v10.3a1.2 1.2 0 0 1-1.2 1.2H6a1.2 1.2 0 0 1-1.2-1.2V4A1.2 1.2 0 0 1 6 2.8z"/><path d="M11.5 3v3.8h3.8M7.8 11h4.6M7.8 14h3"/></svg></span><span class="lb"><span class="x2"><span class="c">Fuel</span><span class="p">Policies</span></span></span><span class="st"><i class="warn" data-b="c1 c2 c3 c0">low</i><i class="ok" data-b="c4">full</i><i class="warn" data-b="p1 p2 p3 p0">health only</i><i class="ok" data-b="p4">all covered</i></span></li>
-              <li class="v12-s-chip" data-hot="pi"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><path d="M12.6 3.2a4 4 0 0 0-4.3 5.4L3.6 13.3a1.6 1.6 0 0 0 2.3 2.3l4.7-4.7a4 4 0 0 0 5.4-4.3l-2.4 2.4-2.2-.4-.4-2.2z"/></svg><svg class="p" viewBox="0 0 20 20"><path d="M3.3 14.5a6.7 6.7 0 0 1 13.4 0"/><path d="M10 14.5l3.2-4.2M5.2 10.4l1 .7M10 7.8v1.2M14.8 10.4l-1 .7"/></svg></span><span class="lb"><span class="x2"><span class="c">Service</span><span class="p">CoverRisk</span></span></span><span class="st"><i class="info" data-b="p1 p2 p3 p0 p4">&#8377;1 Cr needed</i></span></li>
-              <li class="v12-s-chip" data-hot="cw"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><path d="M7.2 2.8h2.6a1 1 0 0 1 1 1.1l-.9 7.9H7.6L6.2 4a1 1 0 0 1 1-1.2z"/><path d="M5.8 11.8h7.4a1.6 1.6 0 0 1 1.6 1.6v1.4H5.8zM8 14.8v2.6M12.8 14.8v2.6"/></svg><svg class="p" viewBox="0 0 20 20"><circle cx="7.5" cy="7" r="2.6"/><circle cx="13.6" cy="8.2" r="2.1"/><path d="M2.8 16.5a4.7 4.7 0 0 1 9.4 0M11.6 13.2a3.6 3.6 0 0 1 5.8 3.3"/></svg></span><span class="lb"><span class="x2"><span class="c">Seats</span><span class="p">Family</span></span></span><span class="st"><i class="warn" data-b="c1 c2 c3 c0">belt off</i><i class="ok" data-b="c4">belt on</i></span></li>
-              <li class="v12-s-chip"><span class="ic x2" aria-hidden="true"><svg class="c" viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.2"/><circle cx="10" cy="10" r="2.8"/><path d="M10 2.8v4.4M10 12.8v4.4M2.8 10h4.4M12.8 10h4.4"/></svg><svg class="p" viewBox="0 0 20 20"><path d="M10 2.6l6 2.4v4.6c0 4-2.6 6.7-6 7.9-3.4-1.2-6-3.9-6-7.9V5z"/><path d="M7.4 10l1.9 1.9 3.4-3.7"/></svg></span><span class="lb"><span class="x2"><span class="c">Tyres</span><span class="p">KYP rating</span></span></span></li>
-            </ul>
-          </div>
-          <div class="v12-s-col v12-s-b">
-            <p class="v12-s-k">Picks</p>
-            <div class="v12-s-eng" data-s-eng>
-              <p class="v12-s-eng-t"><span class="x2"><span class="c">Order of importance</span><span class="p">Engine &#183; 10 rules</span></span></p>
-              <ol class="v12-s-rungs">
-                <li class="r3"><i>3</i><b><span class="x2"><span class="c">Routine</span><span class="p">Only with a reason</span></span></b></li>
-                <li class="r2"><i>2</i><b><span class="x2"><span class="c">Running</span><span class="p">Extends cover</span></span></b><em class="cand wait" data-b="c2 c3 c0">Low fuel</em><em class="cand wait" data-b="p2 p3 p0">Super Top-Up</em></li>
-                <li class="r1"><i>1</i><b><span class="x2"><span class="c">Safety</span><span class="p">Health + life</span></span></b><em class="cand win" data-b="c2 c3 c0">Seatbelt</em><em class="cand win" data-b="p2 p3 p0">Term life</em></li>
-              </ol>
-              <p class="v12-s-none" data-b="c4">All fine &#8594; no message</p><p class="v12-s-none" data-b="p4">Nothing fits &#8594; nothing shown</p>
-            </div>
-          </div>
-          <div class="v12-s-col v12-s-c">
-            <p class="v12-s-k">Shows</p>
-            <div class="v12-s-scr">
-              <div class="v12-s-dash c">
-                <div class="v12-s-dials fx"><span class="dial sp"><svg viewBox="0 0 66 40" aria-hidden="true"><path class="arc" d="M6 36A27 27 0 0 1 60 36"/><path class="tk" d="M13 36L9 36M15.7 26L12.2 24M23 18.7L21 15.2M33 16L33 12M43 18.7L45 15.2M50.3 26L53.8 24M53 36L57 36"/><line class="ndl" x1="33" y1="36" x2="33" y2="17"/></svg></span><span class="dial fu"><svg viewBox="0 0 66 40" aria-hidden="true"><path class="arc" d="M6 36A27 27 0 0 1 60 36"/><path class="tk" d="M13 36L9 36M33 16L33 12M53 36L57 36"/><text x="6" y="31">E</text><text x="56" y="31">F</text><line class="ndl" x1="33" y1="36" x2="33" y2="17"/></svg></span></div>
-                <div class="v12-s-msg" data-s-msg><span data-b="c1 c2" class="nil"></span><span data-b="c3 c0">Fasten seatbelt</span><span data-b="c4" class="nil">blank &#8212; all clear</span></div>
-              </div>
-              <div class="v12-s-ph p">
-                <div class="fx top">Your policies</div>
-                <div class="fx">Insurance on Card</div>
-                <div class="v12-s-msg" data-s-msg><span data-b="p1 p2" class="nil"></span><span data-b="p3 p0"><b>Buy &#8377;1 Cr life cover</b><small>&#8377;500/month, from CoverRisk</small></span><span data-b="p4" class="nil">nothing promoted</span></div>
-                <div class="fx">Download portfolio</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="v12-s-ctl">
-          <button class="v12-s-play" type="button" data-s-play data-state="off"><svg viewBox="0 0 16 16" aria-hidden="true"><path class="xp-pause" d="M5 3.5v9M11 3.5v9"/><path class="xp-play" d="M5 3.5l7 4.5-7 4.5z"/></svg><span data-s-play-l>Play</span></button>
-          <div class="v12-s-beats" role="group" aria-label="Beats of the story">
-            <button type="button" data-s-go="1"><i>1</i><span>Knows</span></button>
-            <button type="button" data-s-go="2"><i>2</i><span>Picks</span></button>
-            <button type="button" data-s-go="3"><i>3</i><span>Shows one</span></button>
-            <button type="button" data-s-go="4"><i>4</i><span>Or nothing</span></button>
-          </div>
-        </div>
-        <ol class="sr-only">
-          <li>In a car. It already knows: fuel is low and a seatbelt is off. It picks what matters most: the seatbelt is safety, so it wins over low fuel. It shows one thing, Fasten seatbelt, and the gauges stay where they are. When all is fine, the strip stays blank.</li>
-          <li>In Portfolio. It already knows: only health is held, and CoverRisk says &#8377;1 Cr of life cover is needed. It picks what matters most: term life completes step one, so it wins over Super Top-Up. It shows one thing, Buy &#8377;1 Cr life cover at &#8377;500 a month, and the other slots stay where they are. When nothing fits, nothing is promoted.</li>
-        </ol>
-        <p class="sr-only" data-s-live aria-live="polite"></p>
-      </figure>
-    </section>
-
-    <!-- 01 ───────────────────────────────────────────── -->
-    <section class="v12-beat" id="v12-s1">
-      <p class="v12-tag"><i>01</i>The problem</p>
-      <h2 class="v12-h2">A bug fix exposed the real gap.</h2>
-      <p class="v12-line">Users kept tapping a control that did nothing. Fixing it showed something bigger: <b>Portfolio used none of what CoverSure knew about them.</b></p>
-
-      <figure class="v12-fig" data-v12-ba data-state="before">
-        <div class="v12-seg" role="group" aria-label="Show before or after">
-          <button type="button" data-ba="before" aria-pressed="true">Before</button>
-          <button type="button" data-ba="after" aria-pressed="false">After</button>
-        </div>
-        <div class="v9-scroll">
-          <svg viewBox="0 0 840 236" role="img" aria-label="Before: five existing sources of context &#8212; onboarding, policy data, CoverRisk, family data and Know Your Policy &#8212; all stop short of Portfolio, which only lists policies. After: a new recommendation engine reads all five and sends one next step into Portfolio.">
-            <defs>
-              <marker id="v12a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 1 L9 5 L0 9 z" fill="var(--accent)"/></marker>
-            </defs>
-            <text class="svg-sub" x="12" y="14">WHAT COVERSURE ALREADY KNEW</text>
-            <rect class="svg-box" x="12" y="24"  width="196" height="30" rx="7"/><text class="svg-name" x="26" y="44">ONBOARDING</text>
-            <rect class="svg-box" x="12" y="64"  width="196" height="30" rx="7"/><text class="svg-name" x="26" y="84">POLICY DATA</text>
-            <rect class="svg-box" x="12" y="104" width="196" height="30" rx="7"/><text class="svg-name" x="26" y="124">COVERRISK</text>
-            <rect class="svg-box" x="12" y="144" width="196" height="30" rx="7"/><text class="svg-name" x="26" y="164">FAMILY DATA</text>
-            <rect class="svg-box" x="12" y="184" width="196" height="30" rx="7"/><text class="svg-name" x="26" y="204">KNOW YOUR POLICY</text>
-
-            <g class="v12-before">
-              <path class="svg-line-dead" d="M212 39 L300 39"/>
-              <path class="svg-line-dead" d="M212 79 L300 79"/>
-              <path class="svg-line-dead" d="M212 119 L300 119"/>
-              <path class="svg-line-dead" d="M212 159 L300 159"/>
-              <path class="svg-line-dead" d="M212 199 L300 199"/>
-              <path class="svg-line-dead" d="M316 20 L316 220"/>
-              <text class="svg-name" x="336" y="114" fill="var(--signal)">NO CONNECTION</text>
-              <text class="svg-sub" x="336" y="132">nothing decided what to show</text>
-            </g>
-
-            <g class="v12-after">
-              <path class="svg-line-key" d="M212 39  C 262 39, 262 108, 300 116"/>
-              <path class="svg-line-key" d="M212 79  C 256 79, 262 112, 300 118"/>
-              <path class="svg-line-key" d="M212 119 L300 119"/>
-              <path class="svg-line-key" d="M212 159 C 256 159, 262 126, 300 121"/>
-              <path class="svg-line-key" d="M212 199 C 262 199, 262 130, 300 123"/>
-              <rect class="svg-box-key" x="304" y="84" width="200" height="70" rx="10"/>
-              <text class="svg-name-key" x="404" y="114" text-anchor="middle">RECOMMENDATION</text>
-              <text class="svg-name-key" x="404" y="132" text-anchor="middle">ENGINE &#183; NEW</text>
-              <path class="svg-line-key" d="M508 119 L600 119" marker-end="url(#v12a1)"/>
-              <text class="svg-sub" x="554" y="108" text-anchor="middle">one next step</text>
-            </g>
-
-            <rect class="svg-box" x="608" y="64" width="220" height="110" rx="12"/>
-            <text class="svg-name" x="718" y="104" text-anchor="middle">PORTFOLIO</text>
-            <text class="svg-sub v12-before" x="718" y="126" text-anchor="middle">lists your policies</text>
-            <text class="svg-sub v12-after" x="718" y="126" text-anchor="middle">lists your policies</text>
-            <text class="svg-name-key v12-after" x="718" y="148" text-anchor="middle">+ THE RIGHT NEXT STEP</text>
-          </svg>
-        </div>
-        <p class="v12-cap v12-before-t"><b>Five sources of context. None reached Portfolio.</b></p>
-        <p class="v12-cap v12-after-t"><b>One new engine reads all five and picks the next step.</b></p>
-      </figure>
-      <p class="v12-life"><span class="v12-life-k">Everyday</span><span>Like a car whose sensors all work, wired to a dashboard that shows nothing.</span></p>
-
-      <div class="v12-foot">
-        <p class="v12-chips"><span class="v12-chips-k">Evidence</span><span>Dead clicks</span><span>Support calls</span><span>B2B onboarding</span></p>
-        <button class="sc-more sub" type="button" data-open="v12-ov-1"><span class="sc-plus" aria-hidden="true">+</span><span><span class="sc-more-k">See the problem in full</span></span></button>
-      </div>
-    </section>
-
     <!-- 02 ───────────────────────────────────────────── -->
     <section class="v12-beat" id="v12-s2">
-      <p class="v12-tag"><i>02</i>The system</p>
+      <p class="v12-tag"><i>01</i>The system</p>
       <h2 class="v12-h2">Ten rules pick one next step <span class="thin">for each user.</span></h2>
       <p class="v12-line">Same layout for everyone. <b>The engine decides what fills it</b> &#8212; and promotes nothing when nothing fits.</p>
 
@@ -7164,7 +6802,7 @@
 
     <!-- 03 ───────────────────────────────────────────── -->
     <section class="v12-beat" id="v12-s3">
-      <p class="v12-tag"><i>03</i>The strategy</p>
+      <p class="v12-tag"><i>02</i>The strategy</p>
       <h2 class="v12-h2">Rank by what matters in a life, <span class="thin">not what sells.</span></h2>
       <p class="v12-line">Health and term life come first &#8212; both of them. <b>The engine never skips a rung</b> because the next product is easier to sell.</p>
 
@@ -7221,7 +6859,7 @@
 
     <!-- 04 ───────────────────────────────────────────── -->
     <section class="v12-beat" id="v12-s4">
-      <p class="v12-tag"><i>04</i>The UX</p>
+      <p class="v12-tag"><i>03</i>The UX</p>
       <h2 class="v12-h2">Personal content, <span class="thin">inside a frame that never moves.</span></h2>
       <p class="v12-line">If everything personalises, the screen changes on every visit. <b>So four slots stay fixed, and only one band moves.</b></p>
 
@@ -7268,7 +6906,7 @@
 
     <!-- 05 ───────────────────────────────────────────── -->
     <section class="v12-beat" id="v12-s5">
-      <p class="v12-tag"><i>05</i>Restraint</p>
+      <p class="v12-tag"><i>04</i>Restraint</p>
       <h2 class="v12-h2">An offer never outranks <span class="thin">the reason you opened the app.</span></h2>
       <p class="v12-line">Recommendations sit below your policies. <b>They take the top only when there is nothing to manage.</b></p>
 
@@ -7307,7 +6945,7 @@
 
     <!-- 06 ───────────────────────────────────────────── -->
     <section class="v12-beat" id="v12-s6">
-      <p class="v12-tag"><i>06</i>My role</p>
+      <p class="v12-tag"><i>05</i>My role</p>
       <h2 class="v12-h2">I built the rules. <span class="thin">Product owns where each policy ranks.</span></h2>
 
       <div class="v12-role">
@@ -7341,49 +6979,6 @@
       <p class="sc-foot"><span>CoverSure &#183; Policy Portfolio</span><span>V12 &#183; compact</span></p>
     </div>
   </footer>
-</div>
-
-<div class="sc-ov" id="v12-ov-1" hidden role="dialog" aria-modal="true" aria-labelledby="v12-ov-1-t">
-  <button class="sc-ov-scrim" type="button" tabindex="-1" aria-label="Close"></button>
-  <div class="sc-ov-panel">
-    <div class="sc-ov-head"><div><span class="sc-skill">The problem</span>
-      <h3 class="sc-ov-title" id="v12-ov-1-t">From a dead click to the real gap.</h3></div>
-      <button class="sc-ov-x" type="button" data-close aria-label="Close">&times;</button></div>
-    <div class="sc-ov-body">
-      <p class="v12-part">The trigger</p>
-      <div class="sc-sec"><h4>Three signals, one interaction</h4>
-        <p><b>Dead clicks</b> &#8212; taps that produced no result, users trying to reach Policy Details and repeating the same one. <b>Support</b> &#8212; the route sometimes had to be explained on the call. <b>B2B onboarding</b> &#8212; the same confusion observed directly, with real users.</p></div>
-      <div class="sc-sec"><h4>The route existed. It did not look like one.</h4>
-        <p class="sc-lede">The route to Policy Details was there, but the interaction beside it looked like the route. Expand/collapse revealed information in place; it did not communicate navigation.</p></div>
-      <div class="sc-sec"><h4>Three signals pointed at the same step</h4>
-        <p>Dead clicks, support calls, and B2B onboarding observations. Three independent sources naming one interaction is what made it worth fixing rather than debating.</p></div>
-      <div class="sc-sec"><h4>The fix was deliberately narrow</h4>
-        <p>Separate the navigation job from the expand/collapse job. <b>The Portfolio architecture did not change.</b> Member-level navigation became explicit, while expand/collapse stayed responsible for revealing information in place.</p></div>
-      <div class="sc-sec"><h4>Why it is here at all</h4>
-        <p>I fixed the navigation defect. <b>The contextual recommendation work was the larger product opportunity that came next</b> — and it is the rest of this case study.</p></div>
-      <div class="sc-sec"><h4>How the problem was framed</h4>
-        <p>The work started with a dead-click issue &#8212; taps that did nothing, leaving users stuck in a loop. I fixed that route. <b>But it exposed something larger: Portfolio was a high-value surface where information from the rest of CoverSure could make product discovery far more relevant.</b></p>
-        <p>Two controls, styled the same, doing different jobs. One revealed detail in place; the other was the way through. Taps landed on the first and produced nothing.</p>
-        <p class="v12-life"><span class="v12-life-k">Everyday</span><span>Like wiper and indicator stalks shaped alike: you flick the wipers when you meant to signal, again and again.</span></p></div>
-      <p class="v12-part">The opportunity</p>
-      <dl class="v10-dec">
-        <div class="d-call"><dt>Decision</dt><dd>Connect the context the product already had</dd></div>
-        <div class="d-alt"><dt>Instead of</dt><dd>Adding another feature to Portfolio</dd></div>
-        <div><dt>Because</dt><dd>People do not browse an insurance app &#8212; they open it for a renewal, a document or a claim. The signals that could make each visit useful already sat in onboarding, CoverRisk, family data and KYP. Nothing new had to be collected.</dd></div>
-      </dl>
-      <div class="sc-sec"><h4>Where it sits</h4>
-        <p class="sc-lede">Portfolio sits between several parts of the product: Onboarding &rarr; Homepage &rarr; Portfolio &rarr; Policy Details.</p>
-        <p><b>Onboarding</b> knows what the user says they already have. <b>Policy data</b> shows what is actually stored. <b>CoverRisk</b> describes protection needs. <b>Family data</b> shows household completeness. <b>KYP</b> explains policy quality.</p></div>
-      <div class="sc-sec"><h4>What I proposed</h4>
-        <p>Keep Portfolio&rsquo;s existing architecture and primary job, then add a contextual recommendation layer on top.</p>
-        <p>The layer reads existing context, evaluates conditions, prioritises competing opportunities, surfaces the most useful action, then reads the new state after the user acts.</p></div>
-      <div class="sc-sec"><h4>Why this surface</h4>
-        <p>Portfolio became the connection point <b>not because it needed more content, but because it already had the right context and the user&rsquo;s attention.</b></p></div>
-      <div class="sc-sec"><h4>Why Portfolio, in full</h4>
-        <p>People do not browse an insurance app. They open it for a renewal, a document, a claim &#8212; and <b>Portfolio is where most of those visits land</b>, which makes each one a rare chance to be useful. CoverSure held information about policies, family, risk and user intent across other features, and <b>none of it was being used here. I proposed connecting it.</b></p>
-        <p><b>The opportunity was not to build another feature.</b> It was to build the layer that connects what already existed. Every line from the right of the diagram stops short &#8212; no system decided what should appear for this user, at this moment. The gap is the opportunity.</p></div>
-    </div>
-  </div>
 </div>
 
 <div class="sc-ov" id="v12-ov-2" hidden role="dialog" aria-modal="true" aria-labelledby="v12-ov-2-t">
@@ -11561,7 +11156,7 @@
 
 <script>
   /* ══════════ V12 — compact ══════════
-     The before/after flip, the one moving band, and in-page jumps.
+     The one moving band, and in-page jumps.
      Everything runs only while on screen and stops under
      prefers-reduced-motion; every state stays reachable by click. */
   (function () {
@@ -11579,28 +11174,6 @@
       new IntersectionObserver(function (es) {
         es.forEach(function (e) { vis = e.isIntersecting; sync(); });
       }, { threshold: 0.3 }).observe(el);
-    }
-
-    /* 01 · before / after — flips itself until the reader takes over */
-    var ba = panel.querySelector('[data-v12-ba]');
-    if (ba) {
-      var segs = [].slice.call(ba.querySelectorAll('[data-ba]'));
-      var t1 = null, held = false;
-      var set = function (s) {
-        ba.setAttribute('data-state', s);
-        segs.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-ba') === s)); });
-      };
-      segs.forEach(function (b) {
-        b.addEventListener('click', function () { held = true; window.clearInterval(t1); set(b.getAttribute('data-ba')); });
-      });
-      whileVisible(ba, function () {
-        ba.setAttribute('data-play', reduce.matches ? 'off' : 'on');
-        if (held || reduce.matches || t1) { return; }
-        t1 = window.setInterval(function () {
-          set(ba.getAttribute('data-state') === 'before' ? 'after' : 'before');
-        }, 3200);
-      }, function () { window.clearInterval(t1); t1 = null; ba.setAttribute('data-play', 'off'); });
-      if (reduce.matches) { set('after'); }
     }
 
     /* 04 · only the engine band changes */
@@ -11635,156 +11208,12 @@
 </script>
 
 <script>
-  /* ══════════ V12 · the story (00), the verdict on the card (04), the ladder lens (03) ══════════
-     00 · One scene, four beats, told in a car and then — morphed in place — in Portfolio. It plays once
-     when the whole scene fits on screen, then rests on "Portfolio does the same." It stops for good the
-     moment the reader picks a beat, flips the lens or presses Pause; Play replays it. Nothing runs off
-     screen, in a hidden tab, under Pause motion or prefers-reduced-motion (there Play is the opt-in).
-     The live region speaks only for beats chosen by hand. */
+  /* ══════════ V12 · the verdict on the card, the ladder lens ══════════ */
   (function () {
     'use strict';
     var panel = document.getElementById('panel-v12');
     if (!panel) { return; }
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function motionOff() { return reduce.matches || document.documentElement.getAttribute('data-motion') === 'off'; }
-
-    var sx = panel.querySelector('[data-v12-s]');
-    if (sx) {
-      sx.classList.add('js');
-      var TITLE = { 1: 'It already knows.', 2: 'It picks what matters most.', 3: 'It shows one thing.', 4: 'Or nothing at all.' };
-      var REST = { car: 'Your car already does this.', pf: 'Portfolio does the same.' };
-      var SAY = {
-        c1: 'It already knows. Fuel is low and a seatbelt is off.',
-        c2: 'It picks what matters most. The seatbelt is safety, so it wins over low fuel.',
-        c3: 'It shows one thing: Fasten seatbelt. The gauges stay where they are.',
-        c4: 'Or nothing at all. When all is fine, the strip stays blank.',
-        p1: 'It already knows. Only health is held, and CoverRisk says 1 crore of life cover is needed.',
-        p2: 'It picks what matters most. Term life completes step one, so it wins over Super Top-Up.',
-        p3: 'It shows one thing: Buy 1 crore life cover at 500 rupees a month. The other slots stay where they are.',
-        p4: 'Or nothing at all. When nothing fits, nothing is promoted.'
-      };
-      /* the story: four beats in a car, the same scene morphs into Portfolio, four beats again, then rest */
-      var SEQ = [['car', 1], ['car', 2], ['car', 3], ['car', 4], ['pf', 0, 'Now the same, in Portfolio.'],
-                 ['pf', 1], ['pf', 2], ['pf', 3], ['pf', 4], ['pf', 0]];
-      var DUR = 3000, MORPH = 1800;
-      var stage = sx.querySelector('[data-s-stage]'), wires = sx.querySelector('[data-s-wires]');
-      var titleEl = sx.querySelector('[data-s-title]'), titleP = titleEl.parentNode, nEl = sx.querySelector('[data-s-n]');
-      var beatsB = [].slice.call(sx.querySelectorAll('[data-s-go]')), lensB = [].slice.call(sx.querySelectorAll('[data-s-lens]'));
-      var playB = sx.querySelector('[data-s-play]'), playL = sx.querySelector('[data-s-play-l]'), liveS = sx.querySelector('[data-s-live]');
-      var lens = 'car', beat = 0, idx = -1, timer = 0, playing = false, held = false, done = false, optInS = false, visS = false;
-
-      var set = function (l, b, t, byHand) {
-        lens = l; beat = b;
-        var key = (l === 'car' ? 'c' : 'p') + b;
-        sx.setAttribute('data-lens', l); sx.setAttribute('data-beat', String(b)); sx.setAttribute('data-key', key);
-        titleEl.textContent = t || (b ? TITLE[b] : REST[l]);
-        nEl.textContent = b ? b + ' / 4' : '';
-        titleP.classList.remove('swap'); void titleP.offsetWidth; titleP.classList.add('swap');
-        beatsB.forEach(function (o) { o.setAttribute('aria-current', Number(o.getAttribute('data-s-go')) === b ? 'step' : 'false'); });
-        lensB.forEach(function (o) { o.setAttribute('aria-pressed', String(o.getAttribute('data-s-lens') === l)); });
-        if (byHand) { liveS.textContent = SAY[key] || titleEl.textContent; }
-        window.requestAnimationFrame(draw);
-      };
-      var label = function () {
-        playB.setAttribute('data-state', playing ? 'on' : 'off');
-        playL.textContent = playing ? 'Pause' : (done ? 'Replay' : 'Play');
-        playB.setAttribute('aria-label', playing ? 'Pause the story' : (done ? 'Replay the story' : 'Play the story'));
-      };
-      var step = function () {
-        idx++;
-        if (idx >= SEQ.length) { stopS(); done = true; label(); return; }
-        var q = SEQ[idx];
-        set(q[0], q[1], q[2]);
-        if (idx === SEQ.length - 1) { stopS(); done = true; label(); return; }
-        timer = window.setTimeout(step, q[2] ? MORPH : DUR);
-      };
-      var startS = function () {
-        if (playing) { return; }
-        playing = true; sx.setAttribute('data-playing', '');
-        if (done || idx < 0) { done = false; idx = -1; }
-        else { idx = Math.max(-1, SEQ.findIndex(function (q) { return q[0] === lens && q[1] === beat && !q[2]; }) - 1); }
-        label(); step();
-      };
-      var stopS = function () { playing = false; window.clearTimeout(timer); timer = 0; sx.removeAttribute('data-playing'); label(); };
-      /* the reader is in charge from here: Play continues from wherever they are, not from the top */
-      var takeOverS = function () { held = true; done = false; if (playing) { stopS(); } label(); };
-      var grid = sx.querySelector('.v12-s-fig');
-      var fitsS = function () { return grid.getBoundingClientRect().height <= window.innerHeight * 0.85; };
-      var syncS = function () {
-        var ok = visS && !document.hidden && !held && !done && (!motionOff() || optInS) && (optInS || fitsS());
-        if (ok && !playing) { startS(); } else if (!ok && playing) { stopS(); }
-      };
-
-      beatsB.forEach(function (b, i) {
-        b.addEventListener('click', function () { takeOverS(); set(lens, Number(b.getAttribute('data-s-go')), null, true); });
-        b.addEventListener('keydown', function (e) {
-          var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-          if (!d) { return; }
-          e.preventDefault();
-          var t = beatsB[(i + d + beatsB.length) % beatsB.length]; t.focus(); t.click();
-        });
-      });
-      lensB.forEach(function (b) {
-        b.addEventListener('click', function () { takeOverS(); set(b.getAttribute('data-s-lens'), beat, null, true); });
-      });
-      playB.addEventListener('click', function () {
-        if (playing) { takeOverS(); return; }
-        held = false; optInS = true; startS();
-      });
-
-      /* wires are drawn from where things actually are, so they follow any layout */
-      var NS = 'http://www.w3.org/2000/svg';
-      function draw() {
-        var st = stage.getBoundingClientRect();
-        if (!st.width) { return; }
-        var R = function (el) { var r = el.getBoundingClientRect(); return { l: r.left - st.left, r: r.right - st.left, t: r.top - st.top, b: r.bottom - st.top, w: r.width, h: r.height }; };
-        var chips = [].slice.call(sx.querySelectorAll('.v12-s-chip'));
-        var eng = R(sx.querySelector('[data-s-eng]'));
-        var msgEl = sx.querySelector((lens === 'car' ? '.v12-s-dash' : '.v12-s-ph') + ' [data-s-msg]');
-        var m = R(msgEl);
-        var vertical = getComputedStyle(stage).gridTemplateColumns.trim().split(/\s+/).length < 2;
-        var out = [];
-        var add = function (d, cls, ex, ey) { out.push({ d: d, cls: cls, ex: ex, ey: ey }); };
-        if (!vertical) {
-          chips.forEach(function (c) {
-            var r = R(c), x1 = r.r + 6, y1 = r.t + r.h / 2, x2 = eng.l - 8, y2 = eng.t + Math.min(eng.h / 2, 90), mx = (x2 - x1) * 0.55;
-            var h = (c.getAttribute('data-hot') || '').split(' ').filter(Boolean).map(function (k) { return 'h-' + k; }).join(' ');
-            add('M' + x1 + ' ' + y1 + ' C' + (x1 + mx) + ' ' + y1 + ',' + (x2 - mx) + ' ' + y2 + ',' + x2 + ' ' + y2, h, x2, y2);
-          });
-          var ox1 = eng.r + 6, oy = eng.t + Math.min(eng.h / 2, 90), ox2 = m.l - 8, my = m.t + m.h / 2, omx = (ox2 - ox1) * 0.55;
-          add('M' + ox1 + ' ' + oy + ' C' + (ox1 + omx) + ' ' + oy + ',' + (ox2 - omx) + ' ' + my + ',' + ox2 + ' ' + my, 'out', ox2, my);
-        } else {
-          var sig = R(sx.querySelector('.v12-s-sig')), scr = R(sx.querySelector('.v12-s-scr'));
-          var hotAll = chips.map(function (c) { return (c.getAttribute('data-hot') || '').split(' ').filter(Boolean).map(function (k) { return 'h-' + k; }).join(' '); }).join(' ');
-          add('M' + (sig.l + sig.w / 2) + ' ' + (sig.b + 6) + ' L' + (eng.l + eng.w / 2) + ' ' + (eng.t - 30), hotAll, eng.l + eng.w / 2, eng.t - 30);
-          add('M' + (eng.l + eng.w / 2) + ' ' + (eng.b + 6) + ' L' + (scr.l + scr.w / 2) + ' ' + (scr.t - 30), 'out', scr.l + scr.w / 2, scr.t - 30);
-        }
-        while (wires.firstChild) { wires.removeChild(wires.firstChild); }
-        wires.setAttribute('viewBox', '0 0 ' + st.width + ' ' + st.height);
-        out.forEach(function (o) {
-          ['wb', 'wp'].forEach(function (k) {
-            var p = document.createElementNS(NS, 'path');
-            p.setAttribute('d', o.d); p.setAttribute('pathLength', '100'); p.setAttribute('class', k + ' ' + o.cls);
-            wires.appendChild(p);
-          });
-          var dot = document.createElementNS(NS, 'circle');
-          dot.setAttribute('cx', o.ex); dot.setAttribute('cy', o.ey); dot.setAttribute('r', '3'); dot.setAttribute('class', 'end ' + o.cls);
-          wires.appendChild(dot);
-        });
-      }
-      if ('ResizeObserver' in window) { new ResizeObserver(function () { window.requestAnimationFrame(draw); }).observe(stage); }
-      window.addEventListener('resize', function () { window.requestAnimationFrame(draw); });
-
-      reduce.addEventListener('change', function () { if (reduce.matches) { optInS = false; } syncS(); });
-      document.addEventListener('motionchange', function (e) { if (e.detail && e.detail.off) { optInS = false; } syncS(); });
-      document.addEventListener('visibilitychange', syncS);
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (es) {
-          es.forEach(function (e) { visS = e.isIntersecting; syncS(); });
-        }, { threshold: 0.5 }).observe(stage);
-      }
-      set('car', 0); label();
-    }
 
     /* 04 · the verdict on the card: each level is the shipped rating component, laid over the card */
     var kyp = panel.querySelector('[data-kyp]');

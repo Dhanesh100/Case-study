@@ -4,7 +4,7 @@
 touching this repo, so Dhanesh does not have to explain it again. `PROJECT-LOG.md` is the
 chronological record of what happened. **This file is the standing brief.**
 
-Last updated: 10 November 2026 · current version: **V12** (with the everyday layer, §17)
+Last updated: 15 November 2026 · current version: **V12**, five beats (00 and 01 removed, §19)
 
 ---
 
@@ -411,7 +411,7 @@ chances are they will skip if there is more reading. we can explain inside more 
 page in each section … create version that hit hard with compact"*.
 
 **Shape.** Eleven sections became **six beats** — Problem · System · Strategy · UX · Restraint ·
-My role. Each beat is: one arguing H2, one line with one bold claim, **one visual**, a row of
+My role. *(15 Nov 2026: the Problem beat was removed; V12 now has five, see §19.)* Each beat is: one arguing H2, one line with one bold claim, **one visual**, a row of
 *Shown* skill chips, and one **See …** opener.
 
 **The hero does the 60-second job on its own:** headline, a two-sentence standfirst, four fact
@@ -544,7 +544,7 @@ routing; Product owns the map). The dead click is told as wiper and indicator st
 the beat-01 overlay only — the engine stays the subject.
 
 **What was built.**
-- **00 · The idea in one picture** (`#v12-s0`), first in the beats. A car row above a Portfolio row, through
+- *(Removed 15 Nov 2026, see §19.)* **00 · The idea in one picture** (`#v12-s0`), first in the beats. A car row above a Portfolio row, through
   the same three columns (Already known → Decides → Shows), so the whole engine and its everyday twin are
   on screen at once. Six steps unfold it: already known · one message · order · specific · frame · quiet.
   Each step dims what is not part of it (never hides it), changes the one moving message, and shows a
@@ -613,6 +613,8 @@ exports (Starter tier, same as 5 Nov). Further exports wait until about 14 Nov 2
 
 ### 17.1 · Section 00 rebuilt as a story — 10 November 2026
 
+*Removed on 15 November 2026 with section 01 (§19). Kept here as the record; the code is in commit `08b65de`.*
+
 Dhanesh, on the two-row picture: *"its still complecated to understand. need to read a lot … make it bit
 easy … add motion and animation story or interaction … now most of the things are out side to read."*
 
@@ -639,4 +641,33 @@ keeps the mechanic's version (brakes and seatbelts, airbags, child seat). Both s
 good when the reader picks a beat, flips the lens or presses Pause, and Play then continues from there;
 respects Pause motion, hidden tabs and reduced motion. Wires are drawn from the live layout, so they follow
 any width.
+
+---
+
+## 19 · Sections 00 and 01 removed from V12 — 15 November 2026
+
+Dhanesh, with screenshots of **01 · The problem** (*"A bug fix exposed the real gap."*, the Before/After
+flip, the Everyday line and the Evidence chips) and of **00 · the car picture**: *"remove this section form
+v12"*, for each. His screenshot of 00 was the older two-row grid; the four-beat story that had replaced it
+(§17.1) was removed too, because it is the same section.
+
+**Removed:** both sections; the problem overlay `v12-ov-1` (*"From a dead click to the real gap."*), which
+only section 01 opened; and the CSS and script that only these two sections used (the Before/After flip,
+the story).
+
+**Kept, on purpose:**
+- The hero's **The gap** card, *"Portfolio ignored what CoverSure already knew."*. It linked to 01, so it
+  is now a plain statement and no longer a link. It is the only place V12's surface still states the
+  problem.
+- The car analogy: the Everyday lines under the remaining beats and the ladder's *In a car* lens.
+- V11 and V10 still tell the problem in full, including the dead click and the evidence.
+
+**Numbering:** the remaining beats are shown as **01 System · 02 Strategy · 03 UX · 04 Restraint · 05 My
+role**, and the tab reads *compact · 5 beats*. The element ids did not change (`v12-s2`…`v12-s6`,
+`v12-ov-2`…`v12-ov-6`), so the visible number is the id minus one. Older notes in this file that say
+"beat 03" or "§04" use the old numbers.
+
+**Measured** (V12 panel text, with scripts and overlays excluded): **1,281 → 909 words**.
+
+**To bring either section back:** both are intact in commit `08b65de`.
 

@@ -761,3 +761,24 @@ old "Everything at once" state (it is gone with the grid).
 resume, keyboard, Pause motion, reduced motion, phones at 375 and 412, 768, dark mode); the case-study
 suite 44/44 and the component suite 31/31 still pass; structure checks clean.
 
+---
+
+## 15 Nov 2026 — V12 sections 00 and 01 removed
+
+**Asked.** Remove section 01 (*"A bug fix exposed the real gap."*) and the car picture (section 00) from V12.
+
+**Done.** Both sections are removed, along with the problem overlay that only 01 opened and the CSS and
+script only those two used. The hero's *The gap* card stays as a statement, without a link. The remaining
+beats are renumbered 01–05, and the tab says *5 beats*; the ids are unchanged. The V12 surface went from
+1,281 to 909 words.
+
+**Checks.** 56/56 browser checks at 1440, 768, 412, and 375 (dark mode, reduced motion):
+- the sections and the overlay are gone;
+- the beats are numbered 01–05;
+- every in-page jump resolves;
+- there is no horizontal scroll;
+- the ladder lens, the KYP rating, the engine band and overlays 2–6 work;
+- there are no script errors.
+
+Structure checks are clean, and no new colour literals were added.
+
