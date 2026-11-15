@@ -671,3 +671,9 @@ role**, and the tab reads *compact · 5 beats*. The element ids did not change (
 
 **To bring either section back:** both are intact in commit `08b65de`.
 
+**Also removed the same day, on request** (a screenshot and *"remove this section"*): the hero's **What this
+shows** chips (six skill links) and the line *"Recently shipped — no outcome numbers yet, and none are
+implied. Figures in the screens are placeholders. Each + opens the full reasoning."* The hero now ends on the
+three cards (gap, strategy, system). **Consequence:** V12's surface no longer says there are no outcome numbers,
+or that the figures in the screens are placeholders. Both are still true (§4, §6), so nothing on V12 may imply an outcome.
+

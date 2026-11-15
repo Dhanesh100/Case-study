@@ -782,3 +782,6 @@ beats are renumbered 01–05, and the tab says *5 beats*; the ids are unchanged.
 
 Structure checks are clean, and no new colour literals were added.
 
+**Same day.** The hero's "What this shows" chips and the "Recently shipped — no outcome numbers yet …" line
+are removed, along with their CSS. The browser checks still pass (56/56).
+
